@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Pressable, Button } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { useState } from 'react';
 import { COLOR } from '../constants/Colors';
 import Style from '../styles/OnBoardingStyle';
@@ -9,16 +9,6 @@ import SubmitButton from '../components/SubmitButton';
 import SkipButton from '../components/onBoarding/SkipButton';
 
 export default function OnBoardingScreen1() {
-  const [pressableSkipIsHovering, SetPressableSkipIsHovering] = useState(false);
-
-  const SkipPressInHandler = () => {
-    SetPressableSkipIsHovering(true);
-  };
-
-  const SkipPressOutHandler = () => {
-    SetPressableSkipIsHovering(false);
-  };
-
   return (
     <View style={Style.container}>
       <Image style={Style.image} source={require('../../resources/images/intro-picture-1.jpg')} />
