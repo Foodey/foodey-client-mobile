@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { background_color } from '../constants/colors';
+import { COLOR } from '../constants/Colors';
 
 export default function IntroScreen() {
   return (
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 
   body: {
     flex: 1,
-    backgroundColor: background_color,
+    backgroundColor: COLOR.background_color,
     alignItems: 'center',
     justifyContent: 'center',
   },

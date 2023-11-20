@@ -40,5 +40,18 @@ const yellow_100 = '#F5A94F';
 const yellow_120 = '#CA7816';
 
 /* ===== PROJECT COLOR DEFINITION ===== */
-export const background_color = light_100;
-export const text_primary_color = dark_100;
+export const COLOR = {
+  background_color: light_100,
+
+  text_primary_color: dark_100,
+  text_secondary_color: dark_80,
+  text_tertiary_color: dark_90,
+  text_hover_color: dark_60,
+
+  notification_color: peach_100,
+
+  button_primary_color: blue_100,
+  button_hover_primary_color: blue_80,
+  button_secondary_color: pink_100,
+  button_hover_secondary_color: pink_120,
+};
