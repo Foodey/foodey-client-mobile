@@ -8,7 +8,15 @@ import Indicator from '../../components/onBoarding/Indicator';
 import SubmitButton from '../../components/SubmitButton';
 import SkipButton from '../../components/onBoarding/SkipButton';
 
-export default function OnBoardingScreen2() {
+export default function OnBoardingScreen2({ navigation }) {
+  const onSkipPressHandler = () => {
+    navigation.navigate('Authenticate');
+  };
+
+  const onNextPressHandler = () => {
+    navigation.navigate('OnBoardingScreen_3');
+  };
+
   return (
     <View style={Style.container}>
       <Image
@@ -21,8 +29,12 @@ export default function OnBoardingScreen2() {
         content="Get your favorite meals delivered to your doorstep as soon as possible!"
       />
       <View style={Style.footer_view}>
-        <SkipButton style={Style.skip_pressable} />
-        <SubmitButton title="Next" style={Style.next_pressable} />
+        <SkipButton style={Style.skip_pressable} onPressFunction={onSkipPressHandler} />
+        <SubmitButton
+          title="Next"
+          style={Style.next_pressable}
+          onPressFunction={onNextPressHandler}
+        />
       </View>
     </View>
   );

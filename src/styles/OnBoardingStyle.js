@@ -63,6 +63,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 49,
+    marginRight: 55,
   },
 
   skip_pressable_text: {
@@ -78,7 +79,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 49,
-    marginLeft: 55,
     borderRadius: 25,
   },
 

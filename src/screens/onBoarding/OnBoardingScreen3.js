@@ -8,7 +8,11 @@ import Indicator from '../../components/onBoarding/Indicator';
 import SubmitButton from '../../components/SubmitButton';
 import SkipButton from '../../components/onBoarding/SkipButton';
 
-export default function OnBoardingScreen3() {
+export default function OnBoardingScreen3({ navigation }) {
+  const onStartPressHandler = () => {
+    navigation.navigate('Authenticate');
+  };
+
   return (
     <View style={Style.container}>
       <Image
@@ -21,8 +25,11 @@ export default function OnBoardingScreen3() {
         content="Please create an account or sign in to your existing account to start browsing our selection of delicious meals from your favorite restaurants."
       />
       <View style={Style.footer_view}>
-        <SkipButton style={Style.skip_pressable} />
-        <SubmitButton title="Start" style={Style.next_pressable} />
+        <SubmitButton
+          title="Start"
+          style={Style.next_pressable}
+          onPressFunction={onStartPressHandler}
+        />
       </View>
     </View>
   );

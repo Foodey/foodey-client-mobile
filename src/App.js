@@ -16,6 +16,7 @@ function App() {
       <NavigationContainer>
         <MainStack.Navigator screenOptions={{ headerShown: false }}>
           <MainStack.Screen name="Intro" component={IntroStackNavigator} />
+          <MainStack.Screen name="Authenticate" component={AuthenticateStackNavigator} />
         </MainStack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

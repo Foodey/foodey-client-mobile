@@ -8,7 +8,15 @@ import Indicator from '../../components/onBoarding/Indicator';
 import SubmitButton from '../../components/SubmitButton';
 import SkipButton from '../../components/onBoarding/SkipButton';
 
-export default function OnBoardingScreen1() {
+export default function OnBoardingScreen1({ navigation }) {
+  const onSkipPressHandler = () => {
+    navigation.navigate('Authenticate');
+  };
+
+  const onNextPressHandler = () => {
+    navigation.navigate('OnBoardingScreen_2');
+  };
+
   return (
     <View style={Style.container}>
       <Image
@@ -21,8 +29,12 @@ export default function OnBoardingScreen1() {
         content="Browse through our extensive list of restaurants and dishes, and when you're ready to order, simply add your desired items to your cart and checkout. It's that easy!"
       />
       <View style={Style.footer_view}>
-        <SkipButton style={Style.skip_pressable} />
-        <SubmitButton title="Next" style={Style.next_pressable} />
+        <SkipButton style={Style.skip_pressable} onPressFunction={onSkipPressHandler} />
+        <SubmitButton
+          title="Next"
+          style={Style.next_pressable}
+          onPressFunction={onNextPressHandler}
+        />
       </View>
     </View>
   );
