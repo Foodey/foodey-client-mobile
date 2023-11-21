@@ -25,7 +25,7 @@ const peach_140 = '#A4602D';
 
 const light_100 = '#FFFFFF';
 const light_80 = '#EFF2F5';
-const light_60 = '#BBE8FB';
+const light_60 = '#D5DEE7';
 
 const green_80 = '#BCEBE0';
 const green_100 = '#28B996';
@@ -48,7 +48,8 @@ export const COLOR = {
   text_tertiary_color: dark_90,
   text_hover_color: dark_60,
 
-  notification_color: peach_100,
+  indicator_color: light_60,
+  indicator_current_color: peach_100,
 
   button_primary_color: blue_100,
   button_hover_primary_color: blue_80,

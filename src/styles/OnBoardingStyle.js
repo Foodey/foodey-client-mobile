@@ -54,7 +54,7 @@ export default StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 100,
-    backgroundColor: COLOR.notification_color,
+    backgroundColor: COLOR.indicator_color,
     margin: 2.5,
   },
 
@@ -77,8 +77,8 @@ export default StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 39,
-    marginLeft: 40,
+    marginVertical: 49,
+    marginLeft: 55,
     borderRadius: 25,
   },
 
