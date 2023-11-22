@@ -14,7 +14,7 @@ export default function OnBoardingScreen3({ navigation }) {
 
   return (
     <View style={Style.container}>
-      <Image style={Style.image} source={require('~/resources/images/intro-picture-3.jpg')} />
+      <Image style={Style.image} source={require('~/resources/images/onboarding-3.webp')} />
       <Indicator styleThirdPage={{ backgroundColor: COLOR.indicator_current_color }} />
       <UtilityCard
         title="Get started on Ordering your Food"

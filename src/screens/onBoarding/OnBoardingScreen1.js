@@ -19,7 +19,7 @@ export default function OnBoardingScreen1({ navigation }) {
 
   return (
     <View style={Style.container}>
-      <Image style={Style.image} source={require('~/resources/images/intro-picture-1.jpg')} />
+      <Image style={Style.image} source={require('~/resources/images/onboarding-1.jpg')} />
       <Indicator styleFirstPage={{ backgroundColor: COLOR.indicator_current_color }} />
       <UtilityCard
         title="Wide range of Food Categories & more"

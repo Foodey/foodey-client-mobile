@@ -4,7 +4,7 @@ import { COLOR } from '~/constants/Colors';
 export default function IntroScreen() {
   return (
     <View style={styles.body}>
-      <Image source={require('~/resources/images/logo-foodey.jpg')} style={styles.image} />
+      <Image source={require('~/resources/images/Foodey-LOGO.png')} style={styles.image} />
     </View>
   );
 }

@@ -19,7 +19,7 @@ export default function OnBoardingScreen2({ navigation }) {
 
   return (
     <View style={Style.container}>
-      <Image style={Style.image} source={require('~/resources/images/intro-picture-2.jpg')} />
+      <Image style={Style.image} source={require('~/resources/images/onboarding-2.webp')} />
       <Indicator styleSecondPage={{ backgroundColor: COLOR.indicator_current_color }} />
       <UtilityCard
         title="Wherever you eat with Fast Deliveries"
