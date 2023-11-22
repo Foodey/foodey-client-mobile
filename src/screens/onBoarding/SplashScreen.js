@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { COLOR } from '../../constants/Colors';
+import { COLOR } from '~/constants/Colors';
 
 export default function IntroScreen() {
   return (
     <View style={styles.body}>
-      <Image source={require('../../resources/images/logo-foodey.jpg')} style={styles.image} />
+      <Image source={require('~/resources/images/logo-foodey.jpg')} style={styles.image} />
     </View>
   );
 }

@@ -4,8 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import IntroStackNavigator from './navigators/IntroStackNavigator';
-import AuthenticateStackNavigator from './screens/authenticate/SignInUpScreen';
+import IntroStackNavigator from '~/navigators/IntroStackNavigator';
+import AuthenticateStackNavigator from '~/screens/authenticate/SignInUpScreen';
 
 const MainStack = createStackNavigator();
 

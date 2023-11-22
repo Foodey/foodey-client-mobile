@@ -1,12 +1,12 @@
 import { Text, View, Image } from 'react-native';
 import { useState } from 'react';
-import { COLOR } from '../../constants/Colors';
-import Style from '../../styles/OnBoardingStyle';
+import { COLOR } from '~/constants/Colors';
+import Style from '~/styles/OnBoardingStyle';
 
-import UtilityCard from '../../components/onBoarding/UtilityCard';
-import Indicator from '../../components/onBoarding/Indicator';
-import SubmitButton from '../../components/SubmitButton';
-import SkipButton from '../../components/onBoarding/SkipButton';
+import UtilityCard from '~/components/onBoarding/UtilityCard';
+import Indicator from '~/components/onBoarding/Indicator';
+import SubmitButton from '~/components/SubmitButton';
+import SkipButton from '~/components/onBoarding/SkipButton';
 
 export default function OnBoardingScreen2({ navigation }) {
   const onSkipPressHandler = () => {
@@ -19,10 +19,7 @@ export default function OnBoardingScreen2({ navigation }) {
 
   return (
     <View style={Style.container}>
-      <Image
-        style={Style.image}
-        source={require('../../../resources/images/intro-picture-2.jpg')}
-      />
+      <Image style={Style.image} source={require('~/resources/images/intro-picture-2.jpg')} />
       <Indicator styleSecondPage={{ backgroundColor: COLOR.indicator_current_color }} />
       <UtilityCard
         title="Wherever you eat with Fast Deliveries"

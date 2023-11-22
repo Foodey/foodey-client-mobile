@@ -1,8 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import OnBoardingScreen1 from '../screens/onBoarding/OnBoardingScreen1';
-import OnBoardingScreen2 from '../screens/onBoarding/OnBoardingScreen2';
-import OnBoardingScreen3 from '../screens/onBoarding/OnBoardingScreen3';
+import OnBoardingScreen1 from '~/screens/onBoarding/OnBoardingScreen1';
+import OnBoardingScreen2 from '~/screens/onBoarding/OnBoardingScreen2';
+import OnBoardingScreen3 from '~/screens/onBoarding/OnBoardingScreen3';
 
 const IntroStack = createStackNavigator();
 

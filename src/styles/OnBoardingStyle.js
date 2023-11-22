@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { COLOR } from '../constants/Colors';
-import { Manrope } from '../constants/Others';
+import { COLOR } from '~/constants/Colors';
+import { Manrope } from '~/constants/Others';
 
 export default StyleSheet.create({
   container: {
