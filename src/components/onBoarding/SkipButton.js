@@ -1,11 +1,11 @@
 import { Pressable, Text } from 'react-native';
 import { SvgXml } from 'react-native-svg';
-import Style from '../../styles/OnBoardingStyle';
+import Style from '~/screens/onBoarding/OnBoardingStyle';
 import { COLOR } from '../../constants/Colors';
 import { ArrowRight } from '../../constants/Icons';
 import { useState } from 'react';
 
-const SkipButton = (props) => {
+function SkipButton(props) {
   const [pressableSkipIsHovering, SetPressableSkipIsHovering] = useState(false);
 
   const SkipPressInHandler = () => {
@@ -33,6 +33,6 @@ const SkipButton = (props) => {
       </Text>
     </Pressable>
   );
-};
+}
 
 export default SkipButton;

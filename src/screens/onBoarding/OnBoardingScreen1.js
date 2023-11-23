@@ -1,12 +1,10 @@
 import { Text, View, Image } from 'react-native';
 import { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
-import Style from '~/styles/OnBoardingStyle';
+import Style from './OnBoardingStyle';
 
-import UtilityCard from '~/components/UtilityCard';
-import Indicator from '~/components/onBoarding/Indicator';
-import SubmitButton from '~/components/SubmitButton';
-import SkipButton from '~/components/onBoarding/SkipButton';
+import { UtilityCard, SubmitButton } from '~/components';
+import { Indicator, SkipButton } from '~/components/onBoarding';
 
 export default function OnBoardingScreen1({ navigation }) {
   const onSkipPressHandler = () => {

@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import Style from '~/styles/SignInUpStyle';
-import UtilityCard from '~/components/UtilityCard';
+import Style from '~/screens/authenticate/SignInUpStyle';
+import { UtilityCard } from '~/components';
 
 export default function SignInUpScreen({ navigation }) {
   return (

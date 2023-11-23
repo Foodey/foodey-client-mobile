@@ -12,14 +12,17 @@ const MainStack = createStackNavigator();
 function App() {
   const [isAppFirstLaunch, setIsAppFirstLaunch] = useState(null);
 
-  useEffect(async () => {
-    const appData = await AsyncStorage.getItem('isAppFirstLaunch');
-    if (appData == null) {
-      setIsAppFirstLaunch(true);
-      AsyncStorage.setItem('isAppFirstLaunch', 'false');
-    } else {
-      setIsAppFirstLaunch(false);
+  useEffect(() => {
+    async function fetchData() {
+      const appData = await AsyncStorage.getItem('isAppFirstLaunch');
+      if (appData == null) {
+        setIsAppFirstLaunch(true);
+        AsyncStorage.setItem('isAppFirstLaunch', 'false');
+      } else {
+        setIsAppFirstLaunch(false);
+      }
     }
+    fetchData();
   }, []);
 
   return (

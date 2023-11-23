@@ -1,12 +1,12 @@
-import { View, Text, Pressable } from 'react-native';
-import Style from '~/styles/SignInUpStyle';
+import { View, Text } from 'react-native';
+import React from 'react';
 
-const AuthToggle = (props) => {
+function ToggleButton() {
   return (
-    <Pressable style={[{ alignItems: 'center', ...props.style }]}>
-      <Text>{props.title}</Text>
-    </Pressable>
+    <View>
+      <Text>ToggleButton</Text>
+    </View>
   );
-};
+}
 
-export default AuthToggle;
+export default ToggleButton;

@@ -1,11 +1,10 @@
 import { View, Image } from 'react-native';
 import { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
-import Style from '~/styles/OnBoardingStyle';
+import Style from './OnBoardingStyle';
 
-import UtilityCard from '~/components/UtilityCard';
-import Indicator from '~/components/onBoarding/Indicator';
-import SubmitButton from '~/components/SubmitButton';
+import { UtilityCard, SubmitButton } from '~/components';
+import { Indicator } from '~/components/onBoarding';
 
 export default function OnBoardingScreen3({ navigation }) {
   const onStartPressHandler = () => {

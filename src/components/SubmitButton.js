@@ -1,10 +1,10 @@
 import { Pressable, Text } from 'react-native';
-import Style from '../styles/OnBoardingStyle';
+import Style from '~/screens/onBoarding/OnBoardingStyle';
 import { COLOR } from '../constants/Colors';
 import { ArrowRight } from '../constants/Icons';
 import { SvgXml } from 'react-native-svg';
 
-const SubmitButton = (props) => {
+function SubmitButton(props) {
   return (
     <Pressable
       onPress={props.onPressFunction}
@@ -18,6 +18,6 @@ const SubmitButton = (props) => {
       <Text style={Style.next_pressable_text}>{props.title}</Text>
     </Pressable>
   );
-};
+}
 
 export default SubmitButton;

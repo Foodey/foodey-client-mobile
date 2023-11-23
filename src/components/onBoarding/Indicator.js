@@ -1,7 +1,7 @@
 import { View } from 'react-native';
-import Style from '../../styles/OnBoardingStyle';
+import Style from '~/screens/onBoarding/OnBoardingStyle';
 
-const Indicator = (props) => {
+function Indicator(props) {
   return (
     <View style={{ flexDirection: 'row', marginLeft: 31 }}>
       <View style={[Style.circle, { ...props.styleFirstPage }]} />
@@ -9,6 +9,6 @@ const Indicator = (props) => {
       <View style={[Style.circle, { ...props.styleThirdPage }]} />
     </View>
   );
-};
+}
 
 export default Indicator;
