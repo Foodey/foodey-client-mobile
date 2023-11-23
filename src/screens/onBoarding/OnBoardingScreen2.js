@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
 import Style from '~/styles/OnBoardingStyle';
 
-import UtilityCard from '~/components/onBoarding/UtilityCard';
+import UtilityCard from '~/components/UtilityCard';
 import Indicator from '~/components/onBoarding/Indicator';
 import SubmitButton from '~/components/SubmitButton';
 import SkipButton from '~/components/onBoarding/SkipButton';
@@ -22,6 +22,7 @@ export default function OnBoardingScreen2({ navigation }) {
       <Image style={Style.image} source={require('~/resources/images/onboarding-2.webp')} />
       <Indicator styleSecondPage={{ backgroundColor: COLOR.indicator_current_color }} />
       <UtilityCard
+        style={Style.info_container}
         title="Wherever you eat with Fast Deliveries"
         content="Get your favorite meals delivered to your doorstep as soon as possible!"
       />

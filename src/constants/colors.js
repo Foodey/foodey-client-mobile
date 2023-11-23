@@ -55,4 +55,9 @@ export const COLOR = {
   button_hover_primary_color: blue_80,
   button_secondary_color: pink_100,
   button_hover_secondary_color: pink_120,
+
+  toggleButton_onToggle_color: pink_100,
+  toggleButton_text_onToggle_color: light_100,
+  toggleButton_onToggle_color: pink_100,
+  toggleButton_text_onToggle_color: light_100,
 };

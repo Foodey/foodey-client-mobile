@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { COLOR } from '~/constants/Colors';
-import { Manrope } from '~/constants/Others';
 
 export default StyleSheet.create({
   container: {
@@ -41,7 +40,7 @@ export default StyleSheet.create({
     marginBottom: 13,
   },
 
-  utils_info_text: {
+  utils_content_text: {
     fontSize: 16,
     fontWeight: '400',
     fontFamily: 'Manrope-Regular',
