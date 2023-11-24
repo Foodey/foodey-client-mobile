@@ -23,8 +23,10 @@ export default function OnBoardingScreen3({ navigation }) {
       <View style={Style.footer_view}>
         <SubmitButton
           title="Start"
-          style={Style.next_pressable}
           onPressFunction={onStartPressHandler}
+          style={{ flex: 1, marginVertical: 49 }}
+          buttonColor={COLOR.button_primary_color}
+          hoverColor={COLOR.button_hover_primary_color}
         />
       </View>
     </View>

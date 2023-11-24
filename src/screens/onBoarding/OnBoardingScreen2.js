@@ -25,11 +25,13 @@ export default function OnBoardingScreen2({ navigation }) {
         content="Get your favorite meals delivered to your doorstep as soon as possible!"
       />
       <View style={Style.footer_view}>
-        <SkipButton style={Style.skip_pressable} onPressFunction={onSkipPressHandler} />
+        <SkipButton style={Style.skip_button} onPressFunction={onSkipPressHandler} />
         <SubmitButton
           title="Next"
-          style={Style.next_pressable}
           onPressFunction={onNextPressHandler}
+          style={Style.next_button}
+          buttonColor={COLOR.button_primary_color}
+          hoverColor={COLOR.button_hover_primary_color}
         />
       </View>
     </View>

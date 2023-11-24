@@ -25,11 +25,13 @@ export default function OnBoardingScreen1({ navigation }) {
         content="Browse through our extensive list of restaurants and dishes, and when you're ready to order, simply add your desired items to your cart and checkout. It's that easy!"
       />
       <View style={Style.footer_view}>
-        <SkipButton style={Style.skip_pressable} onPressFunction={onSkipPressHandler} />
+        <SkipButton style={Style.skip_button} onPressFunction={onSkipPressHandler} />
         <SubmitButton
           title="Next"
-          style={Style.next_pressable}
           onPressFunction={onNextPressHandler}
+          style={Style.next_button}
+          buttonColor={COLOR.button_primary_color}
+          hoverColor={COLOR.button_hover_primary_color}
         />
       </View>
     </View>

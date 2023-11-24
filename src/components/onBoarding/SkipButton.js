@@ -1,8 +1,5 @@
-import { Pressable, Text } from 'react-native';
-import { SvgXml } from 'react-native-svg';
-import Style from '~/screens/onBoarding/OnBoardingStyle';
+import { Pressable, Text, StyleSheet } from 'react-native';
 import { COLOR } from '../../constants/Colors';
-import { ArrowRight } from '../../constants/Icons';
 import { useState } from 'react';
 
 function SkipButton(props) {
@@ -21,11 +18,11 @@ function SkipButton(props) {
       onPressIn={SkipPressInHandler}
       onPressOut={SkipPressOutHandler}
       onPress={props.onPressFunction}
-      style={({ pressed }) => [{ ...props.style }]}
+      style={[styles.button, { ...props.style }]}
     >
       <Text
         style={[
-          Style.skip_pressable_text,
+          styles.button_text,
           { color: pressableSkipIsHovering ? COLOR.text_tertiary_color : COLOR.text_hover_color },
         ]}
       >
@@ -34,5 +31,19 @@ function SkipButton(props) {
     </Pressable>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  button_text: {
+    color: COLOR.text_tertiary_color,
+    fontSize: 18,
+    fontWeight: '700',
+    fontFamily: 'Manrope-Bold',
+  },
+});
 
 export default SkipButton;
