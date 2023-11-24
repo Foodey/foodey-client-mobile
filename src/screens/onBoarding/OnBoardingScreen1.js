@@ -1,4 +1,4 @@
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, SafeAreaView, StatusBar } from 'react-native';
 import { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
 import Style from './OnBoardingStyle';
@@ -16,7 +16,8 @@ export default function OnBoardingScreen1({ navigation }) {
   };
 
   return (
-    <View style={Style.container}>
+    <SafeAreaView style={Style.container}>
+      <StatusBar backgroundColor={COLOR.backgroundColor} />
       <Image style={Style.image} source={require('~/resources/images/onboarding-1.jpg')} />
       <Indicator styleFirstPage={{ backgroundColor: COLOR.indicator_current_color }} />
       <UtilityCard
@@ -31,9 +32,9 @@ export default function OnBoardingScreen1({ navigation }) {
           onPressFunction={onNextPressHandler}
           style={Style.next_button}
           buttonColor={COLOR.button_primary_color}
-          hoverColor={COLOR.button_hover_primary_color}
+          hoverColor={COLOR.button_press_primary_color}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

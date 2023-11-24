@@ -23,7 +23,7 @@ function SkipButton(props) {
       <Text
         style={[
           styles.button_text,
-          { color: pressableSkipIsHovering ? COLOR.text_tertiary_color : COLOR.text_hover_color },
+          { color: pressableSkipIsHovering ? COLOR.text_tertiary_color : COLOR.text_press_color },
         ]}
       >
         Skip

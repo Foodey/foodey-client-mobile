@@ -7,21 +7,19 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  header_title_text: {
-    fontSize: 36,
-    fontWeight: '500',
-    fontFamily: 'Manrope-Bold',
-    color: COLOR.text_primary_color,
-    marginStart: 31,
-    marginEnd: 31,
+  header_content_container: {
+    flex: 1,
   },
 
-  header_info_text: {
-    fontSize: 17,
-    fontWeight: '400',
-    fontFamily: 'Manrope-Regular',
-    color: COLOR.text_secondary_color,
-    marginStart: 31,
-    marginEnd: 31,
+  switcher_container: {
+    flex: 1,
+  },
+
+  auth_section_container: {
+    flex: 5,
+  },
+
+  footer_container: {
+    flex: 1,
   },
 });

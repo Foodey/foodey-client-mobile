@@ -1,5 +1,4 @@
 import { React, useState, useEffect } from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -27,15 +26,12 @@ function App() {
 
   return (
     isAppFirstLaunch != null && (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
-        <StatusBar backgroundColor="#FFFFFF" />
-        <NavigationContainer>
-          <MainStack.Navigator screenOptions={{ headerShown: false }}>
-            {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
-            <MainStack.Screen name="Authenticate" component={AuthenticateStackNavigator} />
-          </MainStack.Navigator>
-        </NavigationContainer>
-      </SafeAreaView>
+      <NavigationContainer>
+        <MainStack.Navigator screenOptions={{ headerShown: false }}>
+          {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
+          <MainStack.Screen name="Authenticate" component={AuthenticateStackNavigator} />
+        </MainStack.Navigator>
+      </NavigationContainer>
     )
   );
 }

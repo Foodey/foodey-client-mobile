@@ -1,4 +1,4 @@
-import { View, Image } from 'react-native';
+import { View, Image, SafeAreaView, StatusBar } from 'react-native';
 import { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
 import Style from './OnBoardingStyle';
@@ -12,7 +12,8 @@ export default function OnBoardingScreen3({ navigation }) {
   };
 
   return (
-    <View style={Style.container}>
+    <SafeAreaView style={Style.container}>
+      <StatusBar backgroundColor={COLOR.backgroundColor} />
       <Image style={Style.image} source={require('~/resources/images/onboarding-3.webp')} />
       <Indicator styleThirdPage={{ backgroundColor: COLOR.indicator_current_color }} />
       <UtilityCard
@@ -26,9 +27,9 @@ export default function OnBoardingScreen3({ navigation }) {
           onPressFunction={onStartPressHandler}
           style={{ flex: 1, marginVertical: 49 }}
           buttonColor={COLOR.button_primary_color}
-          hoverColor={COLOR.button_hover_primary_color}
+          hoverColor={COLOR.button_press_primary_color}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

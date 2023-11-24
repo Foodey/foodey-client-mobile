@@ -46,18 +46,14 @@ export const COLOR = {
   text_primary_color: dark_100,
   text_secondary_color: dark_80,
   text_tertiary_color: dark_90,
-  text_hover_color: dark_60,
+  text_press_color: dark_60,
 
   indicator_color: light_60,
   indicator_current_color: peach_100,
 
   button_primary_color: blue_100,
-  button_hover_primary_color: blue_80,
-  button_secondary_color: pink_100,
-  button_hover_secondary_color: pink_120,
+  button_press_primary_color: blue_80,
 
-  toggleButton_onToggle_color: pink_100,
-  toggleButton_text_onToggle_color: light_100,
-  toggleButton_onToggle_color: pink_100,
-  toggleButton_text_onToggle_color: light_100,
+  button_secondary_color: pink_100,
+  button_press_secondary_color: pink_80,
 };
