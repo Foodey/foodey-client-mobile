@@ -3,52 +3,75 @@ import { COLOR } from '~/constants/Colors';
 
 function AuthSwitcher(props) {
   return (
-    <View style={[{ ...props.style }, styles.container]}>
-      <Pressable
-        style={({ pressed }) => [
-          styles.button,
-          {
-            backgroundColor: pressed
-              ? COLOR.button_press_secondary_color
-              : COLOR.button_secondary_color,
-          },
-          { ...props.style },
-        ]}
-      >
-        <Text style={styles.button_text}>Login</Text>
-      </Pressable>
+    <View style={[{ ...props.style }]}>
+      <View style={styles.container}>
+        <Pressable
+          onPress={props.onLoginPress}
+          style={[
+            styles.button,
+            {
+              backgroundColor: props.isLogin
+                ? COLOR.button_secondary_color
+                : COLOR.switcher_background_color,
+            },
+            { ...props.style },
+          ]}
+        >
+          <Text
+            style={[
+              styles.button_text,
+              {
+                color: props.isLogin ? COLOR.text_light_color : COLOR.button_secondary_color,
+              },
+            ]}
+          >
+            Login
+          </Text>
+        </Pressable>
 
-      <Pressable
-        style={({ pressed }) => [
-          styles.button,
-          {
-            backgroundColor: pressed
-              ? COLOR.button_press_secondary_color
-              : COLOR.button_secondary_color,
-          },
-          { ...props.style },
-        ]}
-      >
-        <Text style={styles.button_text}>SignUp</Text>
-      </Pressable>
+        <Pressable
+          onPress={props.onSignUpPress}
+          style={[
+            styles.button,
+            {
+              backgroundColor: !props.isLogin
+                ? COLOR.button_secondary_color
+                : COLOR.switcher_background_color,
+            },
+            { ...props.style },
+          ]}
+        >
+          <Text
+            style={[
+              styles.button_text,
+              {
+                color: !props.isLogin ? COLOR.text_light_color : COLOR.button_secondary_color,
+              },
+            ]}
+          >
+            Sign Up
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#0f0',
+    flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#fdd3e166',
-    borderRadius: 50,
-    margin: 21,
+    backgroundColor: COLOR.switcher_background_color,
+    borderRadius: 40,
+    marginVertical: 15,
   },
 
   button: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 25,
-    marginVertical: 25,
+    borderRadius: 30,
+    marginVertical: 14,
     marginHorizontal: 10,
   },
 
@@ -56,6 +79,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     fontFamily: 'Manrope-Regular',
+    color: COLOR.text_light_color,
   },
 });
 

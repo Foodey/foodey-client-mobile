@@ -13,7 +13,7 @@ export default function OnBoardingScreen3({ navigation }) {
 
   return (
     <SafeAreaView style={Style.container}>
-      <StatusBar backgroundColor={COLOR.backgroundColor} />
+      <StatusBar backgroundColor={COLOR.background_color} />
       <Image style={Style.image} source={require('~/resources/images/onboarding-3.webp')} />
       <Indicator styleThirdPage={{ backgroundColor: COLOR.indicator_current_color }} />
       <UtilityCard

@@ -12,6 +12,7 @@ const blue_120 = '#3294BD';
 const blue_140 = '#1A6C8E';
 
 const pink_60 = '#FDD3E1';
+const pink_60_trans = '#FDD3E1';
 const pink_80 = '#F69DBB';
 const pink_100 = '#F4739E';
 const pink_120 = '#D55881';
@@ -47,13 +48,15 @@ export const COLOR = {
   text_secondary_color: dark_80,
   text_tertiary_color: dark_90,
   text_press_color: dark_60,
+  text_light_color: light_100,
 
   indicator_color: light_60,
   indicator_current_color: peach_100,
 
   button_primary_color: blue_100,
   button_press_primary_color: blue_80,
-
   button_secondary_color: pink_100,
   button_press_secondary_color: pink_80,
+
+  switcher_background_color: pink_60_trans,
 };

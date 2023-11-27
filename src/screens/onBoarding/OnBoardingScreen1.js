@@ -2,7 +2,6 @@ import { Text, View, Image, SafeAreaView, StatusBar } from 'react-native';
 import { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
 import Style from './OnBoardingStyle';
-
 import { UtilityCard, SubmitButton } from '~/components';
 import { Indicator, SkipButton } from '~/components/onBoarding';
 
@@ -17,7 +16,7 @@ export default function OnBoardingScreen1({ navigation }) {
 
   return (
     <SafeAreaView style={Style.container}>
-      <StatusBar backgroundColor={COLOR.backgroundColor} />
+      <StatusBar backgroundColor={COLOR.background_color} />
       <Image style={Style.image} source={require('~/resources/images/onboarding-1.jpg')} />
       <Indicator styleFirstPage={{ backgroundColor: COLOR.indicator_current_color }} />
       <UtilityCard

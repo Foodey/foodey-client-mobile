@@ -17,7 +17,7 @@ export default function OnBoardingScreen2({ navigation }) {
 
   return (
     <SafeAreaView style={Style.container}>
-      <StatusBar backgroundColor={COLOR.backgroundColor} />
+      <StatusBar backgroundColor={COLOR.background_color} />
       <Image style={Style.image} source={require('~/resources/images/onboarding-2.webp')} />
       <Indicator styleSecondPage={{ backgroundColor: COLOR.indicator_current_color }} />
       <UtilityCard

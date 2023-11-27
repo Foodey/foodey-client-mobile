@@ -13,6 +13,7 @@ export default StyleSheet.create({
 
   switcher_container: {
     flex: 1,
+    margin: 21,
   },
 
   auth_section_container: {
