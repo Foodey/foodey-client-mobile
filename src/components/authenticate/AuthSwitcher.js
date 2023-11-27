@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontFamily: 'Manrope-Regular',
     color: COLOR.text_light_color,
+    marginVertical: 8,
   },
 });
 
