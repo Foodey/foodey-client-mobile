@@ -17,7 +17,12 @@ export default StyleSheet.create({
   },
 
   auth_section_container: {
-    flex: 5,
+    flex: 3,
+    marginHorizontal: 21,
+  },
+
+  third_party_container: {
+    flex: 2,
   },
 
   footer_container: {

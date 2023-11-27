@@ -59,4 +59,6 @@ export const COLOR = {
   button_press_secondary_color: pink_80,
 
   switcher_background_color: pink_60_trans,
+
+  text_errorMessage_color: red_100,
 };

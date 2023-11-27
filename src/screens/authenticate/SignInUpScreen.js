@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView, StatusBar } from 'react-native';
 import React from 'react';
 import Style from '~/screens/authenticate/SignInUpStyle';
 import { UtilityCard } from '~/components';
-import { AuthSwitcher } from '~/components/authenticate';
+import { AuthSwitcher, InputBox, PasswordBox } from '~/components/authenticate';
 import { COLOR } from '~/constants/Colors';
 import { useState } from 'react';
 
@@ -31,7 +31,19 @@ export default function SignInUpScreen({ navigation }) {
         onLoginPress={ToggleLogin}
         onSignUpPress={ToggleSignUp}
       />
-      <View style={Style.auth_section_container}></View>
+      <View style={Style.auth_section_container}>
+        <InputBox
+          title="Email"
+          errorMessage="The phone number is invalid"
+          style={{ marginBottom: 6 }}
+        />
+        <PasswordBox
+          title="Password"
+          errorMessage="The phone number is invalid"
+          style={{ marginBottom: 6 }}
+        />
+      </View>
+      <View style={Style.third_party_container}></View>
       <View style={Style.footer_container}></View>
     </SafeAreaView>
   );
