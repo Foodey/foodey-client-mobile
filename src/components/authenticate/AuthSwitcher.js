@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: COLOR.switcher_background_color,
     borderRadius: 40,
-    marginVertical: 15,
+    marginVertical: 18,
   },
 
   button: {
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
 
   button_text: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '700',
     fontFamily: 'Manrope-Regular',
     color: COLOR.text_light_color,

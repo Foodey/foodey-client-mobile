@@ -1,7 +1,7 @@
 <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="vuesax/linear/arrow-right">
     <g id="arrow-right">
-        <path id="Vector" d="M9.40991 19.92L15.9299 13.4C16.6999 12.63 16.6999 11.37 15.9299 10.6L9.40991 4.07996" stroke="#46505D" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="Vector" d="M9.40991 19.92L15.9299 13.4C16.6999 12.63 16.6999 11.37 15.9299 10.6L9.40991 4.07996" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
     </g>
     </g>
 </svg>

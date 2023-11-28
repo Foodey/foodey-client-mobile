@@ -1,7 +1,6 @@
 import { Pressable, Text, StyleSheet } from 'react-native';
 import { COLOR } from '../constants/Colors';
-import { ArrowRight } from '../constants/Icons';
-import { SvgXml } from 'react-native-svg';
+import ArrowRight from '~/resources/icons/arrow-right.svg';
 
 function SubmitButton(props) {
   return (
@@ -16,6 +15,7 @@ function SubmitButton(props) {
       ]}
     >
       <Text style={styles.button_text}>{props.title}</Text>
+      <ArrowRight width={24} height={24} style={{ color: COLOR.background_color }} />
     </Pressable>
   );
 }
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 8,
     borderRadius: 25,
+    flexDirection: 'row',
   },
 
   button_text: {
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     fontFamily: 'Manrope-Regular',
+    marginStart: 14,
   },
 });
 

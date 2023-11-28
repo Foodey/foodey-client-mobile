@@ -1,4 +1,4 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { ScrollView, Text, Pressable, StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import { InputBox, PasswordBox } from '~/components/authenticate';
 

@@ -1,6 +1,7 @@
 import { Pressable, Text, StyleSheet } from 'react-native';
 import { COLOR } from '../../constants/Colors';
 import { useState } from 'react';
+import ArrowRight from '~/resources/icons/arrow-right.svg';
 
 function SkipButton(props) {
   const [pressableSkipIsHovering, SetPressableSkipIsHovering] = useState(false);
@@ -28,6 +29,14 @@ function SkipButton(props) {
       >
         Skip
       </Text>
+      <ArrowRight
+        width={24}
+        height={24}
+        style={[
+          styles.button_text,
+          { color: pressableSkipIsHovering ? COLOR.text_tertiary_color : COLOR.text_press_color },
+        ]}
+      />
     </Pressable>
   );
 }
@@ -36,6 +45,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
   },
 
   button_text: {

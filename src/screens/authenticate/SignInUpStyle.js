@@ -13,7 +13,7 @@ export default StyleSheet.create({
 
   switcher_container: {
     flex: 1,
-    margin: 21,
+    marginHorizontal: 21,
   },
 
   auth_section_container: {
@@ -23,9 +23,11 @@ export default StyleSheet.create({
 
   third_party_container: {
     flex: 2,
+    height: 300,
   },
 
   footer_container: {
-    flex: 1,
+    height: 100,
+    backgroundColor: '#0f0',
   },
 });

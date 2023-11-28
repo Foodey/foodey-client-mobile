@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import Style from '~/screens/authenticate/SignInUpStyle';
 import { UtilityCard } from '~/components';
-import { AuthSwitcher, Login, SignUp } from '~/components/authenticate';
+import { AuthSwitcher, Login, SignUp, ThirdPartyAuth } from '~/components/authenticate';
 import { SubmitButton } from '~/components';
 import { COLOR } from '~/constants/Colors';
 import { useState } from 'react';
@@ -27,8 +27,7 @@ export default function SignInUpScreen({ navigation }) {
 
   return (
     <SafeAreaView style={Style.container}>
-      <StatusBar backgroundColor={COLOR.background_color} />
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <UtilityCard
           style={Style.header_content_container}
           title="Welcome!"
@@ -42,11 +41,16 @@ export default function SignInUpScreen({ navigation }) {
           onSignUpPress={ToggleSignUp}
         />
         <View style={Style.auth_section_container}>{isLogin ? <Login /> : <SignUp />}</View>
-        <View style={Style.third_party_container}></View>
+        <View style={Style.third_party_container}>
+          <ThirdPartyAuth
+            title={isLogin ? 'Login' : 'Sign Up'}
+            lineStyle={isLogin ? { marginStart: 0 } : { marginStart: 16 }}
+          />
+        </View>
         <View style={Style.footer_container}>
           <SubmitButton
-            style={{ flex: 1 }}
-            title="Login"
+            style={{ flex: 1, margin: 21 }}
+            title={isLogin ? 'Login' : 'Next'}
             buttonColor={COLOR.button_primary_color}
             hoverColor={COLOR.button_press_primary_color}
           />
