@@ -1,28 +1,27 @@
 import { ScrollView, Text, Pressable, StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { COLOR } from '~/constants/Colors';
-import { InputBox, PasswordBox } from '~/components/authenticate';
+import { InputBox, PasswordBox, PhoneNumberBox } from '~/components/authenticate';
 
 function SignUp(props) {
   return (
     <View style={{ flex: 1 }}>
       <InputBox
-        title="Email"
-        errorMessage="The phone number is invalid"
+        title="Full Name"
+        placeholder="Enter your full name"
+        errorMessage="*The phone number is invalid"
         style={{ marginBottom: 6 }}
       />
-      <InputBox
-        title="Email"
-        errorMessage="The phone number is invalid"
-        style={{ marginBottom: 6 }}
-      />
-      <InputBox
-        title="Email"
-        errorMessage="The phone number is invalid"
+      <PhoneNumberBox errorMessage="*The phone number is invalid" style={{ marginBottom: 6 }} />
+      <PasswordBox
+        title="Password"
+        placeholder="Enter your password"
+        errorMessage="*The phone number is invalid"
         style={{ marginBottom: 6 }}
       />
       <PasswordBox
-        title="Password"
-        errorMessage="The phone number is invalid"
+        title="Re-enter Password"
+        placeholder="Re-enter your password"
+        errorMessage="*The phone number is invalid"
         style={{ marginBottom: 6 }}
       />
     </View>

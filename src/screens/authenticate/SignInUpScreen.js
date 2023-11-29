@@ -27,6 +27,7 @@ export default function SignInUpScreen({ navigation }) {
 
   return (
     <SafeAreaView style={Style.container}>
+      <StatusBar backgroundColor={COLOR.background_color} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <UtilityCard
           style={Style.header_content_container}

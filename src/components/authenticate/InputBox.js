@@ -6,12 +6,12 @@ function InputBox(props) {
     <View style={[styles.container, { ...props.style }]}>
       <Text style={styles.title_text}>{props.title}</Text>
       <TextInput
-        placeholder="Enter your username"
+        placeholder={props.placeholder}
         style={styles.text_input}
         placeholderTextColor={COLOR.text_press_color}
         onChangeText={props.onChangeText}
       />
-      <Text style={styles.text_errorMessage}>*{props.errorMessage}</Text>
+      <Text style={styles.errorMessage_text}>{props.errorMessage}</Text>
     </View>
   );
 }
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
 
   text_input: {
-    height: 48,
+    height: 52,
     borderWidth: 1.2,
     borderColor: COLOR.text_primary_color,
     borderRadius: 14,
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Manrope',
   },
 
-  text_errorMessage: {
+  errorMessage_text: {
     marginStart: 13,
     marginTop: 3,
     color: COLOR.text_errorMessage_color,

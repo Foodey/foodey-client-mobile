@@ -1,6 +1,6 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { COLOR } from '~/constants/Colors';
-import { InputBox, PasswordBox } from '~/components/authenticate';
+import { PasswordBox, PhoneNumberBox } from '~/components/authenticate';
 import { useState } from 'react';
 
 function Login(props) {
@@ -16,14 +16,11 @@ function Login(props) {
 
   return (
     <View style={{ flex: 1 }}>
-      <InputBox
-        title="Email"
-        errorMessage="The phone number is invalid"
-        style={{ marginBottom: 6 }}
-      />
+      <PhoneNumberBox errorMessage="*The phone number is invalid" style={{ marginBottom: 6 }} />
       <PasswordBox
         title="Password"
-        errorMessage="The phone number is invalid"
+        placeholder="Enter your password"
+        errorMessage="*The phone number is invalid"
         style={{ marginBottom: 6 }}
       />
       <Pressable

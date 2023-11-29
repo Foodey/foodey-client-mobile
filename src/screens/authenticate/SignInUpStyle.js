@@ -28,6 +28,5 @@ export default StyleSheet.create({
 
   footer_container: {
     height: 100,
-    backgroundColor: '#0f0',
   },
 });
