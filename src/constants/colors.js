@@ -61,4 +61,6 @@ export const COLOR = {
   switcher_background_color: pink_60_trans,
 
   text_errorMessage_color: red_100,
+
+  input_background_color: light_80,
 };

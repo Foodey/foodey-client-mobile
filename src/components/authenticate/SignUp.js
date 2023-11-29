@@ -8,20 +8,20 @@ function SignUp(props) {
       <InputBox
         title="Full Name"
         placeholder="Enter your full name"
-        errorMessage="*The phone number is invalid"
+        errorMessage=""
         style={{ marginBottom: 6 }}
       />
-      <PhoneNumberBox errorMessage="*The phone number is invalid" style={{ marginBottom: 6 }} />
+      <PhoneNumberBox errorMessage="" style={{ marginBottom: 6 }} />
       <PasswordBox
         title="Password"
         placeholder="Enter your password"
-        errorMessage="*The phone number is invalid"
+        errorMessage=""
         style={{ marginBottom: 6 }}
       />
       <PasswordBox
         title="Re-enter Password"
         placeholder="Re-enter your password"
-        errorMessage="*The phone number is invalid"
+        errorMessage=""
         style={{ marginBottom: 6 }}
       />
     </View>

@@ -16,12 +16,12 @@ function Login(props) {
 
   return (
     <View style={{ flex: 1 }}>
-      <PhoneNumberBox errorMessage="*The phone number is invalid" style={{ marginBottom: 6 }} />
+      <PhoneNumberBox errorMessage="" style={{ marginBottom: 5 }} />
       <PasswordBox
         title="Password"
         placeholder="Enter your password"
-        errorMessage="*The phone number is invalid"
-        style={{ marginBottom: 6 }}
+        errorMessage=""
+        style={{ marginBottom: 5 }}
       />
       <Pressable
         style={[styles.button]}

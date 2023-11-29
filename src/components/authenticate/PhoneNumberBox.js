@@ -4,15 +4,28 @@ import { CountryPicker } from 'react-native-country-codes-picker';
 import { useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 import ArrowDown from '~/resources/icons/arrow-down.svg';
+import CloseCircle from '~/resources/icons/close-circle.svg';
 
 function PhoneNumberBox(props) {
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+1');
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
     <View style={{ ...props.style }}>
       <Text style={styles.title_text}>Phone Number</Text>
-      <View style={styles.input_container}>
+      <View
+        style={[
+          styles.input_container,
+          {
+            borderColor: props.errorMessage
+              ? COLOR.text_errorMessage_color
+              : isFocused
+              ? COLOR.text_primary_color
+              : COLOR.background_color,
+          },
+        ]}
+      >
         <Pressable onPress={() => setShow(true)} style={styles.button_select_countryCode}>
           <Text style={styles.countryCode_text}>{countryCode}</Text>
           <ArrowDown
@@ -31,12 +44,21 @@ function PhoneNumberBox(props) {
           <View style={styles.vertical_split} />
         </Pressable>
         <TextInput
+          keyboardType="numeric"
           placeholder="Enter your phone number"
           style={styles.phone_number_input}
           placeholderTextColor={COLOR.text_press_color}
           onChangeText={props.onChangeText}
+          onFocus={() => {
+            props.onFocus, setIsFocused(true);
+          }}
+          onBlur={() => setIsFocused(false)}
         />
-        <Pressable style={styles.button_delete_input}></Pressable>
+        {isFocused && (
+          <Pressable style={styles.button_delete_input}>
+            <CloseCircle width={24} height={24} />
+          </Pressable>
+        )}
       </View>
       <Text style={styles.text_errorMessage}>{props.errorMessage}</Text>
     </View>
@@ -48,7 +70,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 17,
     color: COLOR.text_primary_color,
-    marginBottom: 10,
+    marginBottom: 5,
     marginStart: 13,
     fontFamily: 'Manrope',
   },
@@ -58,8 +80,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1.2,
-    borderColor: COLOR.text_primary_color,
+    borderColor: COLOR.background_color,
     borderRadius: 14,
+    backgroundColor: COLOR.input_background_color,
   },
 
   button_select_countryCode: {
@@ -90,12 +113,12 @@ const styles = StyleSheet.create({
   },
 
   button_delete_input: {
-    flex: 1,
+    flex: 0.75,
   },
 
   text_errorMessage: {
     marginStart: 13,
-    marginTop: 3,
+    marginTop: 1,
     color: COLOR.text_errorMessage_color,
   },
 });
