@@ -14,6 +14,10 @@ function Login(props) {
     SetPressableSkipIsHovering(false);
   };
 
+  const [countryCode, setCountryCode] = useState('+1');
+
+  const handleCountryCodeChanged = countryCode;
+
   return (
     <View style={{ flex: 1 }}>
       <PhoneNumberBox errorMessage="" style={{ marginBottom: 5 }} />

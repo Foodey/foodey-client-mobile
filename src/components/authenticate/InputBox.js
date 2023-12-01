@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
   },
 
   button_delete_input: {
-    flex: 0.75,
+    alignItems: 'center',
+    flex: 1,
   },
 
   errorMessage_text: {

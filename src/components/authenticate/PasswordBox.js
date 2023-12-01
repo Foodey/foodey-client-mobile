@@ -34,15 +34,29 @@ function PasswordBox(props) {
           }}
           onBlur={() => setIsFocused(false)}
         />
-        {/* Remain bug when handle hide-unhide password */}
-        {isFocused && (
-          <Pressable
-            style={styles.button_delete_input}
-            onPress={() => setHidePassword(!hidePassword)}
-          >
-            <ShowPassword width={24} height={24} />
-          </Pressable>
-        )}
+        <Pressable
+          focusable={false}
+          style={styles.button_delete_input}
+          onPress={() => setHidePassword(!hidePassword)}
+        >
+          {hidePassword ? (
+            <ShowPassword
+              focusable={false}
+              width={24}
+              height={24}
+              style={styles.button_delete_input}
+              onPress={() => setHidePassword(!hidePassword)}
+            />
+          ) : (
+            <HidePassword
+              focusable={false}
+              width={24}
+              height={24}
+              style={styles.button_delete_input}
+              onPress={() => setHidePassword(!hidePassword)}
+            />
+          )}
+        </Pressable>
       </View>
       <Text style={styles.errorMessage_text}>{props.errorMessage}</Text>
     </View>
@@ -79,7 +93,8 @@ const styles = StyleSheet.create({
   },
 
   button_delete_input: {
-    flex: 0.75,
+    alignItems: 'center',
+    flex: 1,
   },
 
   errorMessage_text: {
