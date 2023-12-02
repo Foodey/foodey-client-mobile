@@ -10,6 +10,7 @@ export default StyleSheet.create({
   info_container: {
     alignSelf: 'center',
     flex: 1.75,
+    marginHorizontal: 21,
   },
 
   footer_view: {
@@ -23,7 +24,7 @@ export default StyleSheet.create({
   image: {
     flex: 3,
     alignSelf: 'center',
-    width: 348,
+    width: 368,
     height: 367,
     margin: 21,
     marginTop: 28,

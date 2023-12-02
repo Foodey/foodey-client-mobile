@@ -12,12 +12,10 @@ function UtilityCard(props) {
 
 const styles = StyleSheet.create({
   title_text: {
-    fontSize: 36,
+    fontSize: 34,
     fontWeight: '500',
     fontFamily: 'Manrope-Bold',
     color: COLOR.text_primary_color,
-    marginStart: 31,
-    marginEnd: 31,
     marginBottom: 13,
   },
 
@@ -26,8 +24,6 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontFamily: 'Manrope-Regular',
     color: COLOR.text_secondary_color,
-    marginStart: 31,
-    marginEnd: 31,
   },
 });
 

@@ -1,8 +1,7 @@
 import { View, SafeAreaView, StatusBar, ScrollView, StyleSheet } from 'react-native';
 import React from 'react';
-import { UtilityCard } from '~/components';
+import { UtilityCard, SubmitButton } from '~/components';
 import { AuthSwitcher, Login, SignUp, ThirdPartyAuth } from '~/components/authenticate';
-import { SubmitButton } from '~/components';
 import { COLOR } from '~/constants/Colors';
 import { useState } from 'react';
 
@@ -61,6 +60,7 @@ const styles = StyleSheet.create({
 
   header_content_container: {
     flex: 1,
+    marginHorizontal: 21,
   },
 
   switcher_container: {

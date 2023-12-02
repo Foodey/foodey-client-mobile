@@ -3,7 +3,7 @@ import { COLOR } from '~/constants/Colors';
 
 function Indicator(props) {
   return (
-    <View style={{ flexDirection: 'row', marginLeft: 31 }}>
+    <View style={{ flexDirection: 'row', marginLeft: 21 }}>
       <View style={[styles.circle, { ...props.styleFirstPage }]} />
       <View style={[styles.circle, { ...props.styleSecondPage }]} />
       <View style={[styles.circle, { ...props.styleThirdPage }]} />

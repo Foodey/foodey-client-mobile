@@ -33,8 +33,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: 42,
     height: 24,
-    marginLeft: 21,
-    marginTop: 5,
   },
 
   button_text: {
