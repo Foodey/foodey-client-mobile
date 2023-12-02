@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import IntroStackNavigator from '~/navigators/IntroStackNavigator';
 import AuthenticateStackNavigator from '~/screens/authenticate/SignInUpScreen';
+import PhoneVerifyScreen from './screens/authenticate/PhoneVerifyScreen';
 
 const MainStack = createStackNavigator();
 
@@ -24,15 +25,22 @@ function App() {
     fetchData();
   }, []);
 
+  // return (
+  //   isAppFirstLaunch != null && (
+  //     <NavigationContainer>
+  //       <MainStack.Navigator screenOptions={{ headerShown: false }}>
+  //         {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
+  //         <MainStack.Screen name="Authenticate" component={AuthenticateStackNavigator} />
+  //       </MainStack.Navigator>
+  //     </NavigationContainer>
+  //   )
+  // );
   return (
-    isAppFirstLaunch != null && (
-      <NavigationContainer>
-        <MainStack.Navigator screenOptions={{ headerShown: false }}>
-          {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
-          <MainStack.Screen name="Authenticate" component={AuthenticateStackNavigator} />
-        </MainStack.Navigator>
-      </NavigationContainer>
-    )
+    <NavigationContainer>
+      <MainStack.Navigator screenOptions={{ headerShown: false }}>
+        <MainStack.Screen name="PhoneVerify" component={PhoneVerifyScreen} />
+      </MainStack.Navigator>
+    </NavigationContainer>
   );
 }
 
