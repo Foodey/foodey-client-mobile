@@ -13,6 +13,18 @@ import { COLOR } from '~/constants/Colors';
 import { useState } from 'react';
 
 export default function PhoneVerifyScreen({ navigation }) {
+  const [OTPCode, setOTPCode] = useState(0);
+
+  //Testing OTP code: (PASSED)
+  const OTPCodeTest = 123456;
+  function VerifyCode() {
+    if (parseInt(OTPCode) === parseInt(OTPCodeTest)) {
+      console.log('Correct');
+    } else {
+      console.log('Incorrect');
+    }
+  }
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -28,13 +40,19 @@ export default function PhoneVerifyScreen({ navigation }) {
         content="We have sent you a 6-digit code. Please enter here to verify your number."
       />
       <View style={styles.edit_phoneNum_container} />
-      <OTPInputBox style={styles.code_input_container} />
+      <OTPInputBox
+        style={styles.code_input_container}
+        onOtpInputChange={(combinedOtp) => {
+          setOTPCode(combinedOtp);
+        }}
+      />
       <View style={styles.footer_container}>
         <SubmitButton
           style={{ flex: 1, marginHorizontal: 21, marginBottom: 320 }}
           title="Verify and Continue"
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}
+          onPressFunction={VerifyCode}
         />
       </View>
     </KeyboardAvoidingView>

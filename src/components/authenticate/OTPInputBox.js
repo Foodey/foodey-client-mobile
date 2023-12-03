@@ -15,12 +15,15 @@ const OTPInputBox = (props) => {
 
     // Combine the OTP values and pass it to the parent component
     const combinedOtp = newOtp.join('');
-    onOtpInputChange(combinedOtp); //FIX THIS ONE
+    console.log('Hello' + combinedOtp);
+    props.onOtpInputChange(combinedOtp);
   };
 
   const handleKeyPress = (index, key) => {
     if (key === 'Backspace' && index > 0) {
       inputRefs.current[index - 1].focus();
+    } else if (key === 'Backspace' && index === 0) {
+      inputRefs.current[index].focus();
     } else if (index < otp.length - 1) {
       inputRefs.current[index + 1].focus();
     }
@@ -32,8 +35,8 @@ const OTPInputBox = (props) => {
         {otp.map((value, index) => (
           <TextInput
             key={index}
-            style={styles.inputBox}
             value={value}
+            style={styles.input_box}
             onChangeText={(text) => handleOtpChange(index, text)}
             keyboardType="numeric"
             maxLength={1}
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  inputBox: {
+  input_box: {
     borderRadius: 14,
     borderColor: COLOR.background_color,
     backgroundColor: COLOR.input_background_color,
