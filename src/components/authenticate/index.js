@@ -5,3 +5,4 @@ export { default as Login } from './Login';
 export { default as SignUp } from './SignUp';
 export { default as ThirdPartyAuth } from './ThirdPartyAuth';
 export { default as PhoneNumberBox } from './PhoneNumberBox';
+export { default as OTPInputBox } from './OTPInputBox';

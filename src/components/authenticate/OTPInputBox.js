@@ -1,0 +1,101 @@
+// OTPInputBox.js
+import React, { useState, useRef } from 'react';
+import { View, TextInput, StyleSheet, Text, Pressable } from 'react-native';
+import { COLOR } from '~/constants/Colors';
+
+const OTPInputBox = (props) => {
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const inputRefs = useRef([]);
+
+  const handleOtpChange = (index, value) => {
+    const newOtp = [...otp];
+    newOtp[index] = value;
+
+    setOtp(newOtp);
+
+    // Combine the OTP values and pass it to the parent component
+    const combinedOtp = newOtp.join('');
+    onOtpInputChange(combinedOtp); //FIX THIS ONE
+  };
+
+  const handleKeyPress = (index, key) => {
+    if (key === 'Backspace' && index > 0) {
+      inputRefs.current[index - 1].focus();
+    } else if (index < otp.length - 1) {
+      inputRefs.current[index + 1].focus();
+    }
+  };
+
+  return (
+    <View style={[{ ...props.style }]}>
+      <View style={styles.otp_input_container}>
+        {otp.map((value, index) => (
+          <TextInput
+            key={index}
+            style={styles.inputBox}
+            value={value}
+            onChangeText={(text) => handleOtpChange(index, text)}
+            keyboardType="numeric"
+            maxLength={1}
+            ref={(ref) => (inputRefs.current[index] = ref)}
+            onKeyPress={({ nativeEvent }) => handleKeyPress(index, nativeEvent.key)}
+          />
+        ))}
+      </View>
+      <View style={styles.resent_otp_container}>
+        <Text style={styles.resend_otp_text}>Didn’t receive code?</Text>
+        <Pressable style={styles.resend_otp_button}>
+          <Text
+            style={[
+              styles.resend_otp_text,
+              { color: COLOR.button_secondary_color, textDecorationLine: 'underline' },
+            ]}
+          >
+            Get a new one
+          </Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  otp_input_container: {
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  resent_otp_container: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  inputBox: {
+    borderRadius: 14,
+    borderColor: COLOR.background_color,
+    backgroundColor: COLOR.input_background_color,
+    width: 49,
+    height: 58,
+    textAlign: 'center',
+    fontSize: 21,
+    margin: 5,
+    fontFamily: 'Manrope',
+    fontWeight: '500',
+  },
+
+  resend_otp_text: {
+    fontFamily: 'Manrope',
+    fontWeight: '400',
+    fontSize: 17,
+  },
+
+  resend_otp_button: {
+    marginStart: 3,
+  },
+});
+
+export default OTPInputBox;

@@ -1,13 +1,23 @@
-import { View, SafeAreaView, StatusBar, ScrollView, StyleSheet } from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  StatusBar,
+  ScrollView,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from 'react-native';
 import React from 'react';
-import { AuthSwitcher, Login, SignUp, ThirdPartyAuth } from '~/components/authenticate';
+import { OTPInputBox, Login, SignUp, ThirdPartyAuth } from '~/components/authenticate';
 import { SubmitButton, BackButton, UtilityCard } from '~/components';
 import { COLOR } from '~/constants/Colors';
 import { useState } from 'react';
 
 export default function PhoneVerifyScreen({ navigation }) {
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <StatusBar backgroundColor={COLOR.background_color} />
       <View style={styles.header_container}>
         <BackButton />
@@ -18,16 +28,16 @@ export default function PhoneVerifyScreen({ navigation }) {
         content="We have sent you a 6-digit code. Please enter here to verify your number."
       />
       <View style={styles.edit_phoneNum_container} />
-      <View style={styles.code_input_container} />
+      <OTPInputBox style={styles.code_input_container} />
       <View style={styles.footer_container}>
         <SubmitButton
-          style={{ flex: 1, marginHorizontal: 21, marginBottom: 260 }}
+          style={{ flex: 1, marginHorizontal: 21, marginBottom: 320 }}
           title="Verify and Continue"
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}
         />
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -49,14 +59,15 @@ const styles = StyleSheet.create({
   },
 
   edit_phoneNum_container: {
-    flex: 1,
+    flex: 0.25,
   },
 
   code_input_container: {
     flex: 3,
+    marginHorizontal: 21,
   },
 
   footer_container: {
-    flex: 4.25,
+    flex: 5,
   },
 });
