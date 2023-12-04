@@ -4,7 +4,7 @@ import { InputBox, PasswordBox, PhoneNumberBox } from '~/components/authenticate
 
 function SignUp(props) {
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <InputBox
         title="Full Name"
         placeholder="Enter your full name"
@@ -24,7 +24,7 @@ function SignUp(props) {
         errorMessage=""
         style={{ marginBottom: 6 }}
       />
-    </View>
+    </ScrollView>
   );
 }
 

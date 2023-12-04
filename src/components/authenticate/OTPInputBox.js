@@ -15,7 +15,6 @@ const OTPInputBox = (props) => {
 
     // Combine the OTP values and pass it to the parent component
     const combinedOtp = newOtp.join('');
-    console.log('Hello' + combinedOtp);
     props.onOtpInputChange(combinedOtp);
   };
 

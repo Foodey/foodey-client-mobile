@@ -1,4 +1,11 @@
-import { View, SafeAreaView, StatusBar, ScrollView, StyleSheet } from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  StatusBar,
+  ScrollView,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from 'react-native';
 import React from 'react';
 import { UtilityCard, SubmitButton } from '~/components';
 import { AuthSwitcher, Login, SignUp, ThirdPartyAuth } from '~/components/authenticate';
@@ -17,38 +24,36 @@ export default function SignInUpScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <UtilityCard
-          style={styles.header_content_container}
-          title="Welcome!"
-          title_style={{ marginBottom: 0 }}
-          content="Sign up or Login to your Account"
+      <UtilityCard
+        style={styles.header_content_container}
+        title="Welcome!"
+        title_style={{ marginBottom: 0 }}
+        content="Sign up or Login to your Account"
+      />
+      <AuthSwitcher
+        style={styles.switcher_container}
+        isLogin={isLogin}
+        onLoginPress={ToggleLogin}
+        onSignUpPress={ToggleSignUp}
+      />
+      <View style={styles.auth_section_container}>{isLogin ? <Login /> : <SignUp />}</View>
+      <View style={styles.third_party_container}>
+        <ThirdPartyAuth
+          title={isLogin ? 'Login' : 'Sign Up'}
+          lineStyle={isLogin ? { marginStart: 0 } : { marginStart: 16 }}
         />
-        <AuthSwitcher
-          style={styles.switcher_container}
-          isLogin={isLogin}
-          onLoginPress={ToggleLogin}
-          onSignUpPress={ToggleSignUp}
+      </View>
+      <View style={styles.footer_container}>
+        <SubmitButton
+          style={{ flex: 1, marginHorizontal: 21, marginBottom: 42 }}
+          title={isLogin ? 'Login' : 'Next'}
+          buttonColor={COLOR.button_primary_color}
+          hoverColor={COLOR.button_press_primary_color}
         />
-        <View style={styles.auth_section_container}>{isLogin ? <Login /> : <SignUp />}</View>
-        <View style={styles.third_party_container}>
-          <ThirdPartyAuth
-            title={isLogin ? 'Login' : 'Sign Up'}
-            lineStyle={isLogin ? { marginStart: 0 } : { marginStart: 16 }}
-          />
-        </View>
-        <View style={styles.footer_container}>
-          <SubmitButton
-            style={{ flex: 1, margin: 21 }}
-            title={isLogin ? 'Login' : 'Next'}
-            buttonColor={COLOR.button_primary_color}
-            hoverColor={COLOR.button_press_primary_color}
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -75,10 +80,9 @@ const styles = StyleSheet.create({
 
   third_party_container: {
     flex: 2,
-    height: 300,
   },
 
   footer_container: {
-    height: 100,
+    flex: 1,
   },
 });

@@ -25,23 +25,23 @@ function App() {
     fetchData();
   }, []);
 
-  // return (
-  //   isAppFirstLaunch != null && (
-  //     <NavigationContainer>
-  //       <MainStack.Navigator screenOptions={{ headerShown: false }}>
-  //         {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
-  //         <MainStack.Screen name="Authenticate" component={AuthenticateStackNavigator} />
-  //       </MainStack.Navigator>
-  //     </NavigationContainer>
-  //   )
-  // );
   return (
-    <NavigationContainer>
-      <MainStack.Navigator screenOptions={{ headerShown: false }}>
-        <MainStack.Screen name="PhoneVerify" component={PhoneVerifyScreen} />
-      </MainStack.Navigator>
-    </NavigationContainer>
+    isAppFirstLaunch != null && (
+      <NavigationContainer>
+        <MainStack.Navigator screenOptions={{ headerShown: false }}>
+          {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
+          <MainStack.Screen name="Authenticate" component={AuthenticateStackNavigator} />
+        </MainStack.Navigator>
+      </NavigationContainer>
+    )
   );
+  // return (
+  //   <NavigationContainer>
+  //     <MainStack.Navigator screenOptions={{ headerShown: false }}>
+  //       <MainStack.Screen name="PhoneVerify" component={PhoneVerifyScreen} />
+  //     </MainStack.Navigator>
+  //   </NavigationContainer>
+  // );
 }
 
 export default App;

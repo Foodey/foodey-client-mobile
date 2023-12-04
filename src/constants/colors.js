@@ -63,4 +63,7 @@ export const COLOR = {
   text_errorMessage_color: red_100,
 
   input_background_color: light_80,
+
+  edtButton_background_color: peach_60,
+  edtButton_pressed_background_color: peach_80,
 };

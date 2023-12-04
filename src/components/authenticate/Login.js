@@ -1,4 +1,4 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet, ScrollView } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import { PasswordBox, PhoneNumberBox } from '~/components/authenticate';
 import { useState } from 'react';
@@ -19,13 +19,13 @@ function Login(props) {
   const handleCountryCodeChanged = countryCode;
 
   return (
-    <View style={{ flex: 1 }}>
-      <PhoneNumberBox errorMessage="" style={{ marginBottom: 5 }} />
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <PhoneNumberBox errorMessage="" style={{ marginBottom: 6 }} />
       <PasswordBox
         title="Password"
         placeholder="Enter your password"
         errorMessage=""
-        style={{ marginBottom: 5 }}
+        style={{ marginBottom: 6 }}
       />
       <Pressable
         style={[styles.button]}
@@ -44,7 +44,7 @@ function Login(props) {
           Forgot Password?
         </Text>
       </Pressable>
-    </View>
+    </ScrollView>
   );
 }
 
