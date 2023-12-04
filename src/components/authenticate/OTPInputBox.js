@@ -30,19 +30,29 @@ const OTPInputBox = (props) => {
 
   return (
     <View style={[{ ...props.style }]}>
-      <View style={styles.otp_input_container}>
-        {otp.map((value, index) => (
-          <TextInput
-            key={index}
-            value={value}
-            style={styles.input_box}
-            onChangeText={(text) => handleOtpChange(index, text)}
-            keyboardType="numeric"
-            maxLength={1}
-            ref={(ref) => (inputRefs.current[index] = ref)}
-            onKeyPress={({ nativeEvent }) => handleKeyPress(index, nativeEvent.key)}
-          />
-        ))}
+      <View style={styles.otp_input_and_error_container}>
+        <View style={styles.otp_input_container}>
+          {otp.map((value, index) => (
+            <TextInput
+              key={index}
+              value={value}
+              style={[
+                styles.input_box,
+                {
+                  borderColor: props.errorMessage
+                    ? COLOR.text_errorMessage_color
+                    : COLOR.background_color,
+                },
+              ]}
+              onChangeText={(text) => handleOtpChange(index, text)}
+              keyboardType="numeric"
+              maxLength={1}
+              ref={(ref) => (inputRefs.current[index] = ref)}
+              onKeyPress={({ nativeEvent }) => handleKeyPress(index, nativeEvent.key)}
+            />
+          ))}
+        </View>
+        <Text style={styles.otp_input_error_text}>{props.errorMessage}</Text>
       </View>
       <View style={styles.resent_otp_container}>
         <Text style={styles.resend_otp_text}>Didn’t receive code?</Text>
@@ -62,8 +72,13 @@ const OTPInputBox = (props) => {
 };
 
 const styles = StyleSheet.create({
-  otp_input_container: {
+  otp_input_and_error_container: {
     flex: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  otp_input_container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -78,6 +93,7 @@ const styles = StyleSheet.create({
 
   input_box: {
     borderRadius: 14,
+    borderWidth: 1,
     borderColor: COLOR.background_color,
     backgroundColor: COLOR.input_background_color,
     width: 49,
@@ -87,6 +103,14 @@ const styles = StyleSheet.create({
     margin: 5,
     fontFamily: 'Manrope',
     fontWeight: '500',
+  },
+
+  otp_input_error_text: {
+    fontFamily: 'Manrope',
+    fontWeight: '500',
+    fontSize: 13,
+    color: COLOR.text_errorMessage_color,
+    marginTop: 3,
   },
 
   resend_otp_text: {

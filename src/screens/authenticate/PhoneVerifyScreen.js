@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Text,
   Pressable,
+  Modal,
 } from 'react-native';
 import React from 'react';
 import { OTPInputBox } from '~/components/authenticate';
@@ -16,8 +17,15 @@ import { useState } from 'react';
 import Edit from '~/resources/icons/edit.svg';
 
 export default function PhoneVerifyScreen({ navigation }) {
+  //NAVIGATORS:
+  onBackPressHandler = () => {
+    navigation.goBack();
+  };
+
+  //USE STATES:
   const [OTPCode, setOTPCode] = useState(0);
   const [phoneNumber, SetPhoneNumber] = useState('865 474 654');
+  const [errorMessage, setErrorMessage] = useState('');
 
   //Testing OTP code: (PASSED)
   const OTPCodeTest = 123456;
@@ -30,51 +38,50 @@ export default function PhoneVerifyScreen({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.header_container}>
-          <BackButton />
+      <View style={styles.header_container}>
+        <BackButton onPressFunction={onBackPressHandler} />
+      </View>
+      <UtilityCard
+        style={styles.title_content_container}
+        title="Verify Phone Number"
+        content="We have sent you a 6-digit code. Please enter here to verify your number."
+      />
+      <View style={styles.edit_phoneNum_container}>
+        <View style={styles.phoneNum_display_container}>
+          <Text style={styles.phoneNum_display_text}>+84 {phoneNumber}</Text>
         </View>
-        <UtilityCard
-          style={styles.title_content_container}
-          title="Verify Phone Number"
-          content="We have sent you a 6-digit code. Please enter here to verify your number."
+        <Pressable
+          style={({ pressed }) => [
+            styles.phoneNum_edit_button,
+            {
+              backgroundColor: pressed
+                ? COLOR.edtButton_pressed_background_color
+                : COLOR.edtButton_background_color,
+            },
+          ]}
+        >
+          <Edit width={17} height={17} />
+        </Pressable>
+      </View>
+      <OTPInputBox
+        errorMessage={errorMessage}
+        style={styles.code_input_container}
+        onOtpInputChange={(combinedOtp) => {
+          setOTPCode(combinedOtp);
+        }}
+      />
+      <View style={styles.footer_container}>
+        <SubmitButton
+          style={{ flex: 1, marginHorizontal: 21, marginBottom: 320 }}
+          title="Verify and Continue"
+          buttonColor={COLOR.button_primary_color}
+          hoverColor={COLOR.button_press_primary_color}
+          onPressFunction={VerifyCode}
         />
-        <View style={styles.edit_phoneNum_container}>
-          <View style={styles.phoneNum_display_container}>
-            <Text style={styles.phoneNum_display_text}>+84 {phoneNumber}</Text>
-          </View>
-          <Pressable
-            style={({ pressed }) => [
-              styles.phoneNum_edit_button,
-              {
-                backgroundColor: pressed
-                  ? COLOR.edtButton_pressed_background_color
-                  : COLOR.edtButton_background_color,
-              },
-            ]}
-          >
-            <Edit width={17} height={17} />
-          </Pressable>
-        </View>
-        <OTPInputBox
-          style={styles.code_input_container}
-          onOtpInputChange={(combinedOtp) => {
-            setOTPCode(combinedOtp);
-          }}
-        />
-        <View style={styles.footer_container}>
-          <SubmitButton
-            style={{ flex: 1, marginHorizontal: 21, marginBottom: 320 }}
-            title="Verify and Continue"
-            buttonColor={COLOR.button_primary_color}
-            hoverColor={COLOR.button_press_primary_color}
-            onPressFunction={VerifyCode}
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 

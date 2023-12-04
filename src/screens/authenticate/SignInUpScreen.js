@@ -13,6 +13,17 @@ import { COLOR } from '~/constants/Colors';
 import { useState } from 'react';
 
 export default function SignInUpScreen({ navigation }) {
+  //NAVIGATORS:
+  const onLoginPressHandler = () => {
+    // navigation.navigate('Home_Screen');
+    console.log('Navigate to the Home Screen');
+  };
+
+  const onNextPressHandler = () => {
+    navigation.navigate('PhoneVerify_Screen');
+  };
+
+  //USE STATES
   const [isLogin, setIsLogin] = useState(true);
 
   const ToggleLogin = () => {
@@ -51,6 +62,7 @@ export default function SignInUpScreen({ navigation }) {
           title={isLogin ? 'Login' : 'Next'}
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}
+          onPressFunction={isLogin ? onLoginPressHandler : onNextPressHandler}
         />
       </View>
     </KeyboardAvoidingView>
