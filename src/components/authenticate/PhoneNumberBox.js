@@ -31,7 +31,7 @@ function PhoneNumberBox(props) {
           <ArrowDown
             width={22}
             height={27}
-            style={{ color: COLOR.text_secondary_color, marginStart: 4, marginEnd: 15 }}
+            style={{ color: COLOR.text_secondary_color, marginStart: 4, marginEnd: 10 }}
           />
           <CountryPicker
             style={{}}
@@ -44,7 +44,7 @@ function PhoneNumberBox(props) {
           <View style={styles.vertical_split} />
         </Pressable>
         <TextInput
-          keyboardType="numeric"
+          keyboardType="phone-pad"
           placeholder="Enter your phone number"
           style={styles.phone_number_input}
           placeholderTextColor={COLOR.text_press_color}
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
 
   button_select_countryCode: {
-    flex: 2,
+    flex: 1.5,
     flexDirection: 'row',
   },
 
@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
 
   phone_number_input: {
     flex: 4.25,
-    height: 52,
     fontSize: 17,
     color: COLOR.text_primary_color,
     paddingLeft: 12,
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
 
   button_delete_input: {
     alignItems: 'center',
-    flex: 1,
+    flex: 0.5,
   },
 
   text_errorMessage: {

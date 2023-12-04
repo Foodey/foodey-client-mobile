@@ -15,7 +15,9 @@ function SubmitButton(props) {
       ]}
     >
       <Text style={styles.button_text}>{props.title}</Text>
-      <ArrowRight width={24} height={24} style={{ color: COLOR.background_color }} />
+      {props.showIcon && (
+        <ArrowRight width={24} height={24} style={{ color: COLOR.background_color }} />
+      )}
     </Pressable>
   );
 }
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     fontFamily: 'Manrope-Regular',
-    marginStart: 14,
+    marginStart: 0,
   },
 });
 
