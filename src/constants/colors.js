@@ -31,6 +31,7 @@ const light_60 = '#D5DEE7';
 const green_80 = '#BCEBE0';
 const green_100 = '#28B996';
 const green_120 = '#276D5C';
+const green_malachite = '#0BDA51';
 
 const red_80 = '#FAD6D6';
 const red_100 = '#E47070';
@@ -61,6 +62,7 @@ export const COLOR = {
   switcher_background_color: pink_60_trans,
 
   text_errorMessage_color: red_100,
+  // border_correct_color: green_malachite,
 
   input_background_color: light_80,
 

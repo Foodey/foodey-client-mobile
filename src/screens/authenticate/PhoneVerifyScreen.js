@@ -15,31 +15,87 @@ import { SubmitButton, BackButton, UtilityCard } from '~/components';
 import { COLOR } from '~/constants/Colors';
 import { useState } from 'react';
 import Edit from '~/resources/icons/edit.svg';
+import { EditPhoneNumModal, SuccessNotifyModal } from '~/components/messageBoxes';
 
 export default function PhoneVerifyScreen({ navigation }) {
   //NAVIGATORS:
-  onBackPressHandler = () => {
+  const onBackPressHandler = () => {
     navigation.goBack();
   };
 
   //USE STATES:
   const [OTPCode, setOTPCode] = useState(0);
-  const [phoneNumber, SetPhoneNumber] = useState('865 474 654');
+  const [phoneNumber, setPhoneNumber] = useState('865 474 654');
   const [errorMessage, setErrorMessage] = useState('');
+  const [editPhoneNumberVisible, setEditPhoneNumberVisible] = useState(false);
+  const [verifiedNotifyVisible, setVerifiedNotifyVisible] = useState(false);
+  const [resendCodeNotifyVisible, setResendCodeNotifyVisible] = useState(false);
+
+  //Functions:
+
+  function onResendCodeHandler() {
+    //Resend the OTP code:
+    // if(codeSentSuccess)
+    // {
+    console.log('New OTP code sent!!');
+    setResendCodeNotifyVisible(true);
+    // }
+    // else
+    // {
+    //   throw new Error();
+    // }
+  }
+
+  function closeResendCodeNotifyMsgBox() {
+    setResendCodeNotifyVisible(false);
+  }
+
+  function closeVerifiedNotifyMsgBox() {
+    //Navigate to HomeScreen
+    setVerifiedNotifyVisible(false);
+  }
+
+  function closeEditPhoneNumMsgBox() {
+    setVerifiedNotifyVisible(false);
+  }
+
+  function onOKPressHandler(newPhoneNumber) {
+    setPhoneNumber(newPhoneNumber);
+    onResendCodeHandler();
+    closeEditPhoneNumMsgBox();
+  }
 
   //Testing OTP code: (PASSED)
   const OTPCodeTest = 123456;
   function VerifyCode() {
     if (parseInt(OTPCode) === parseInt(OTPCodeTest)) {
       console.log('Correct');
+      setErrorMessage('');
+      setVerifiedNotifyVisible(true);
     } else {
       console.log('Incorrect');
+      setErrorMessage('*OTP Code not match');
     }
   }
 
   return (
     <KeyboardAvoidingView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
+      <EditPhoneNumModal
+        visible={editPhoneNumberVisible}
+        onClose={closeEditPhoneNumMsgBox}
+        onOKPressHandler={onOKPressHandler}
+      />
+      <SuccessNotifyModal
+        title="You’re successfully verified!"
+        visible={verifiedNotifyVisible}
+        onOKPressHandler={closeVerifiedNotifyMsgBox}
+      />
+      <SuccessNotifyModal
+        title="We have sent you a new OTP code, please re-check!!"
+        visible={resendCodeNotifyVisible}
+        onOKPressHandler={closeResendCodeNotifyMsgBox}
+      />
       <View style={styles.header_container}>
         <BackButton onPressFunction={onBackPressHandler} />
       </View>
@@ -53,6 +109,9 @@ export default function PhoneVerifyScreen({ navigation }) {
           <Text style={styles.phoneNum_display_text}>+84 {phoneNumber}</Text>
         </View>
         <Pressable
+          onPress={() => {
+            setEditPhoneNumberVisible(true);
+          }}
           style={({ pressed }) => [
             styles.phoneNum_edit_button,
             {
@@ -66,6 +125,7 @@ export default function PhoneVerifyScreen({ navigation }) {
         </Pressable>
       </View>
       <OTPInputBox
+        onResendCodePress={onResendCodeHandler}
         errorMessage={errorMessage}
         style={styles.code_input_container}
         onOtpInputChange={(combinedOtp) => {

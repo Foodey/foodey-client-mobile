@@ -13,7 +13,6 @@ import { UtilityCard, SubmitButton } from '~/components';
 import { AuthSwitcher, Login, SignUp, ThirdPartyAuth } from '~/components/authenticate';
 import { COLOR } from '~/constants/Colors';
 import { useState } from 'react';
-import { EditPhoneNumModal, SuccessNotifyModal } from '~/components/messageBoxes';
 
 export default function SignInUpScreen({ navigation }) {
   //NAVIGATORS:
@@ -40,8 +39,6 @@ export default function SignInUpScreen({ navigation }) {
   return (
     <KeyboardAvoidingView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <EditPhoneNumModal visible={false} />
-      <SuccessNotifyModal title="You’re successfully verified!" />
       <UtilityCard
         style={styles.header_content_container}
         title="Welcome!"

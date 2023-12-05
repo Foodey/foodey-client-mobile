@@ -10,7 +10,6 @@ const OTPInputBox = (props) => {
   const handleOtpChange = (index, value) => {
     const newOtp = [...otp];
     newOtp[index] = value;
-
     setOtp(newOtp);
 
     // Combine the OTP values and pass it to the parent component
@@ -56,7 +55,7 @@ const OTPInputBox = (props) => {
       </View>
       <View style={styles.resent_otp_container}>
         <Text style={styles.resend_otp_text}>Didn’t receive code?</Text>
-        <Pressable style={styles.resend_otp_button}>
+        <Pressable style={styles.resend_otp_button} onPress={props.onResendCodePress}>
           <Text
             style={[
               styles.resend_otp_text,

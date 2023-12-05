@@ -7,7 +7,12 @@ import { useState } from 'react';
 
 function SuccessNotifyModal(props) {
   return (
-    <Modal transparent={true} transition="fade" visible={props.visible}>
+    <Modal
+      transparent={true}
+      transition="fade"
+      visible={props.visible}
+      onRequestClose={props.onOKPressHandler}
+    >
       <View style={styles.overlay_background} />
       <View style={styles.wrapped_container}>
         <View style={styles.modal_container}>
@@ -16,6 +21,9 @@ function SuccessNotifyModal(props) {
           </View>
           <View style={styles.actions_container}>
             <SubmitButton
+              onPressFunction={() => {
+                props.onOKPressHandler();
+              }}
               title="OK"
               showIcon={false}
               style={{ flex: 1, marginBottom: 28, marginHorizontal: 100, marginTop: 10 }}
@@ -58,6 +66,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Manrope-Bold',
     fontSize: 23,
     color: COLOR.text_primary_color,
+    textAlign: 'center',
   },
 
   actions_container: {
