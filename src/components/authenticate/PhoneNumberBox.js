@@ -8,7 +8,7 @@ import CloseCircle from '~/resources/icons/close-circle.svg';
 
 function PhoneNumberBox(props) {
   const [show, setShow] = useState(false);
-  const [countryCode, setCountryCode] = useState('+1');
+  const [countryCode, setCountryCode] = useState('+84');
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -26,7 +26,11 @@ function PhoneNumberBox(props) {
           },
         ]}
       >
-        <Pressable onPress={() => setShow(true)} style={styles.button_select_countryCode}>
+        <Pressable
+          disabled={true}
+          onPress={() => setShow(true)}
+          style={styles.button_select_countryCode}
+        >
           <Text style={styles.countryCode_text}>{countryCode}</Text>
           <ArrowDown
             width={22}
@@ -34,6 +38,7 @@ function PhoneNumberBox(props) {
             style={{ color: COLOR.text_secondary_color, marginStart: 4, marginEnd: 10 }}
           />
           <CountryPicker
+            initialState="+84"
             style={{}}
             show={show}
             pickerButtonOnPress={(item) => {

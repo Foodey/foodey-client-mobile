@@ -28,6 +28,29 @@ export default function SignInUpScreen({ navigation }) {
   //USE STATES
   const [isLogin, setIsLogin] = useState(true);
 
+  const [loginInputs, setLoginInputs] = useState({
+    phoneNumber: '',
+    password: '',
+  });
+  const [signUpInputs, setSignUpInputs] = useState({
+    fullName: '',
+    phoneNumber: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  //Function:
+  //  Login:
+  const handleLoginInputsChanged = (newInputs) => {
+    setLoginInputs(newInputs);
+  };
+
+  //  SignUp:
+  const handleSignUpInputsChanged = (newInputs) => {
+    setSignUpInputs(newInputs);
+  };
+
+  //  General:
   const ToggleLogin = () => {
     if (!isLogin) setIsLogin(!isLogin);
   };

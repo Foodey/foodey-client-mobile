@@ -56,13 +56,13 @@ export default function PhoneVerifyScreen({ navigation }) {
   }
 
   function closeEditPhoneNumMsgBox() {
-    setVerifiedNotifyVisible(false);
+    setEditPhoneNumberVisible(false);
   }
 
   function onOKPressHandler(newPhoneNumber) {
     setPhoneNumber(newPhoneNumber);
-    onResendCodeHandler();
     closeEditPhoneNumMsgBox();
+    onResendCodeHandler();
   }
 
   //Testing OTP code: (PASSED)

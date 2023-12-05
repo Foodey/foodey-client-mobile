@@ -3,6 +3,27 @@ import { COLOR } from '~/constants/Colors';
 import { InputBox, PasswordBox, PhoneNumberBox } from '~/components/authenticate';
 
 function SignUp(props) {
+  const [inputs, setInputs] = useState({
+    fullName: '',
+    phoneNumber: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [errorMessages, setErrorMessages] = useState({
+    fullName: '',
+    phoneNumber: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const handleInputsChanged = (text, input) => {
+    setInputs((prevState) => ({ ...prevState, [input]: text }));
+  };
+
+  const handleErrorsChanged = (text, input) => {
+    setErrorMessages((prevState) => ({ ...prevState, [input]: text }));
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <InputBox
