@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import { useState } from 'react';
 import HidePassword from '~/resources/icons/hide-password.svg';
@@ -29,34 +29,25 @@ function PasswordBox(props) {
           style={styles.phone_number_input}
           placeholderTextColor={COLOR.text_press_color}
           onChangeText={props.onChangeText}
+          onEndEditing={props.onEndEditing}
           onFocus={() => {
-            props.onFocus, setIsFocused(true);
+            props.onFocus = () => {};
+            setIsFocused(true);
           }}
           onBlur={() => setIsFocused(false)}
         />
-        <Pressable
-          focusable={false}
+        <TouchableWithoutFeedback
           style={styles.button_delete_input}
-          onPress={() => setHidePassword(!hidePassword)}
+          onPressIn={() => setHidePassword(!hidePassword)}
         >
-          {hidePassword ? (
-            <ShowPassword
-              focusable={false}
-              width={24}
-              height={24}
-              style={styles.button_delete_input}
-              onPress={() => setHidePassword(!hidePassword)}
-            />
-          ) : (
-            <HidePassword
-              focusable={false}
-              width={24}
-              height={24}
-              style={styles.button_delete_input}
-              onPress={() => setHidePassword(!hidePassword)}
-            />
-          )}
-        </Pressable>
+          <View style={styles.button_delete_input}>
+            {hidePassword ? (
+              <ShowPassword width={24} height={24} onPress={() => setHidePassword(!hidePassword)} />
+            ) : (
+              <HidePassword width={24} height={24} onPress={() => setHidePassword(!hidePassword)} />
+            )}
+          </View>
+        </TouchableWithoutFeedback>
       </View>
       <Text style={styles.errorMessage_text}>{props.errorMessage}</Text>
     </View>

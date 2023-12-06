@@ -17,22 +17,62 @@ import { useState } from 'react';
 export default function SignInUpScreen({ navigation }) {
   //NAVIGATORS:
   const onLoginPressHandler = () => {
-    // navigation.navigate('Home_Screen');
-    console.log('Navigate to the Home Screen');
+    if (loginInputs.phoneNumber === '') {
+      handleLoginErrors('Please input phone number', 'phoneNumber');
+    }
+    if (loginInputs.password === '') {
+      handleLoginErrors('Please input password', 'password');
+    }
+    // if(*VERIFY ACCOUNT FAILED*){
+    //   handleLoginErrors('Invalid Phone Number or Password, please try again!!')
+    // }
+    else {
+      //
+      // navigation.navigate('Home_Screen');
+      console.log('Navigate to the Home Screen');
+    }
   };
 
   const onNextPressHandler = () => {
-    navigation.navigate('PhoneVerify_Screen');
+    // navigation.navigate('PhoneVerify_Screen');
+    if (signUpInputs.fullName === '') {
+      handleSignUpErrors('Please input your full name', 'fullName');
+    }
+    if (signUpInputs.phoneNumber === '') {
+      handleSignUpErrors('Please input phone number', 'phoneNumber');
+    }
+    if (signUpInputs.password === '') {
+      handleSignUpErrors('Please input password', 'password');
+    }
+    if (signUpInputs.confirmPassword === '') {
+      handleSignUpErrors('Please input confirm password', 'confirmPassword');
+    }
+    console.log(signUpInputs);
   };
 
   //USE STATES
   const [isLogin, setIsLogin] = useState(true);
 
+  //  Login:
   const [loginInputs, setLoginInputs] = useState({
     phoneNumber: '',
     password: '',
   });
+
+  const [loginErrorMessages, setLoginErrorMessages] = useState({
+    phoneNumber: '',
+    password: '',
+  });
+
+  //  SignUp:
   const [signUpInputs, setSignUpInputs] = useState({
+    fullName: '',
+    phoneNumber: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const [signUpErrorMessages, setSignUpErrorMessages] = useState({
     fullName: '',
     phoneNumber: '',
     password: '',
@@ -45,18 +85,30 @@ export default function SignInUpScreen({ navigation }) {
     setLoginInputs(newInputs);
   };
 
+  const handleLoginErrors = (errorMessage, input) => {
+    setLoginErrorMessages((prevState) => ({ ...prevState, [input]: errorMessage }));
+  };
+
   //  SignUp:
   const handleSignUpInputsChanged = (newInputs) => {
     setSignUpInputs(newInputs);
   };
 
+  const handleSignUpErrors = (errorMessage, input) => {
+    setSignUpErrorMessages((prevState) => ({ ...prevState, [input]: errorMessage }));
+  };
+
   //  General:
   const ToggleLogin = () => {
     if (!isLogin) setIsLogin(!isLogin);
+    setSignUpInputs({ fullName: '', phoneNumber: '', password: '', confirmPassword: '' });
+    setSignUpErrorMessages({ fullName: '', phoneNumber: '', password: '', confirmPassword: '' });
   };
 
   const ToggleSignUp = () => {
     if (isLogin) setIsLogin(!isLogin);
+    setLoginInputs({ phoneNumber: '', password: '' });
+    setLoginErrorMessages({ phoneNumber: '', password: '' });
   };
 
   return (
@@ -74,7 +126,19 @@ export default function SignInUpScreen({ navigation }) {
         onLoginPress={ToggleLogin}
         onSignUpPress={ToggleSignUp}
       />
-      <View style={styles.auth_section_container}>{isLogin ? <Login /> : <SignUp />}</View>
+      <View style={styles.auth_section_container}>
+        {isLogin ? (
+          <Login
+            handleLoginInputsChanged={handleLoginInputsChanged}
+            errorMessages={loginErrorMessages}
+          />
+        ) : (
+          <SignUp
+            handleSignUpInputsChanged={handleSignUpInputsChanged}
+            errorMessages={signUpErrorMessages}
+          />
+        )}
+      </View>
       <View style={styles.third_party_container}>
         <ThirdPartyAuth
           title={isLogin ? 'Login' : 'Sign Up'}

@@ -4,6 +4,8 @@ import { PasswordBox, PhoneNumberBox } from '~/components/authenticate';
 import { useState } from 'react';
 
 function Login(props) {
+  const { phoneNumber, password } = props.errorMessages;
+
   const [forgotPasswordPress, setForgotPasswordPress] = useState(false);
 
   const ForgotPassPressInHandler = () => {
@@ -14,12 +16,7 @@ function Login(props) {
     setForgotPasswordPress(false);
   };
 
-  const [countryCode, setCountryCode] = useState('+1');
   const [inputs, setInputs] = useState({
-    phoneNumber: '',
-    password: '',
-  });
-  const [errorMessages, setErrorMessages] = useState({
     phoneNumber: '',
     password: '',
   });
@@ -28,19 +25,38 @@ function Login(props) {
     setInputs((prevState) => ({ ...prevState, [input]: text }));
   };
 
-  const handleErrorsChanged = (text, input) => {
-    setErrorMessages((prevState) => ({ ...prevState, [input]: text }));
+  //Notify the parent component when the user done editing the Inputs
+  const handleEndEditing = () => {
+    props.handleLoginInputsChanged(inputs);
   };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <PhoneNumberBox style={{ marginBottom: 6 }} />
-      <PasswordBox title="Password" placeholder="Enter your password" style={{ marginBottom: 6 }} />
+      <PhoneNumberBox
+        value={inputs.phoneNumber}
+        style={{ marginBottom: 6 }}
+        errorMessage={phoneNumber}
+        onChangeText={(text) => {
+          handleInputsChanged(text, 'phoneNumber');
+        }}
+        onEndEditing={handleEndEditing}
+        onDeletePress={() => {
+          handleInputsChanged('', 'phoneNumber');
+        }}
+      />
+      <PasswordBox
+        title="Password"
+        placeholder="Enter your password"
+        style={{ marginBottom: 6 }}
+        errorMessage={password}
+        onChangeText={(text) => handleInputsChanged(text, 'password')}
+        onEndEditing={handleEndEditing}
+      />
       <Pressable
         style={[styles.button]}
         onPressIn={ForgotPassPressInHandler}
         onPressOut={ForgotPassPressOutHandler}
-        onPress={props.onPressFunction}
+        onPress={props.onForgotPassPress}
       >
         <Text
           style={[

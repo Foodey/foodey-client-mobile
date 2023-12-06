@@ -23,16 +23,19 @@ function InputBox(props) {
       >
         <TextInput
           placeholder={props.placeholder}
+          value={props.value}
           style={styles.phone_number_input}
           placeholderTextColor={COLOR.text_press_color}
           onChangeText={props.onChangeText}
+          onEndEditing={props.onEndEditing}
           onFocus={() => {
-            props.onFocus, setIsFocused(true);
+            props.onFocus = () => {};
+            setIsFocused(true);
           }}
           onBlur={() => setIsFocused(false)}
         />
         {isFocused && (
-          <Pressable style={styles.button_delete_input}>
+          <Pressable style={styles.button_delete_input} onPress={props.onDeletePress}>
             <CloseCircle width={24} height={24} />
           </Pressable>
         )}

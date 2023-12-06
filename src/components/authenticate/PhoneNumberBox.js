@@ -1,8 +1,14 @@
-import { View, StyleSheet, Text, Pressable } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Pressable,
+  TouchableWithoutFeedback,
+  TextInput,
+} from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import { CountryPicker } from 'react-native-country-codes-picker';
-import { useState } from 'react';
-import { TextInput } from 'react-native-gesture-handler';
+import { useState, useRef } from 'react';
 import ArrowDown from '~/resources/icons/arrow-down.svg';
 import CloseCircle from '~/resources/icons/close-circle.svg';
 
@@ -10,6 +16,9 @@ function PhoneNumberBox(props) {
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+84');
   const [isFocused, setIsFocused] = useState(false);
+  const [isDeleteButtonFocused, setIsDeleteButtonFocused] = useState(false);
+
+  const textInputRef = useRef();
 
   return (
     <View style={{ ...props.style }}>
@@ -48,22 +57,28 @@ function PhoneNumberBox(props) {
           />
           <View style={styles.vertical_split} />
         </Pressable>
-        <TextInput
-          keyboardType="phone-pad"
-          placeholder="Enter your phone number"
-          style={styles.phone_number_input}
-          placeholderTextColor={COLOR.text_press_color}
-          onChangeText={props.onChangeText}
-          onFocus={() => {
-            props.onFocus, setIsFocused(true);
-          }}
-          onBlur={() => setIsFocused(false)}
-        />
-        {isFocused && (
-          <Pressable style={styles.button_delete_input}>
-            <CloseCircle width={24} height={24} />
-          </Pressable>
-        )}
+        <View style={{ flexDirection: 'row', flex: 4.75, alignItems: 'center' }}>
+          <TextInput
+            ref={textInputRef}
+            value={props.value}
+            keyboardType="phone-pad"
+            placeholder="Enter your phone number"
+            style={styles.phone_number_input}
+            placeholderTextColor={COLOR.text_press_color}
+            onChangeText={props.onChangeText}
+            onEndEditing={props.onEndEditing}
+            onFocus={() => {
+              props.onFocus = () => {};
+              setIsFocused(true);
+            }}
+            onBlur={() => setIsFocused(false)}
+          />
+          {isFocused && (
+            <Pressable onPress={props.onDeletePress} style={styles.button_delete_input}>
+              <CloseCircle focusable={false} width={24} height={24} />
+            </Pressable>
+          )}
+        </View>
       </View>
       <Text style={styles.text_errorMessage}>{props.errorMessage}</Text>
     </View>
@@ -118,7 +133,7 @@ const styles = StyleSheet.create({
 
   button_delete_input: {
     alignItems: 'center',
-    flex: 0.5,
+    flex: 1,
   },
 
   text_errorMessage: {
