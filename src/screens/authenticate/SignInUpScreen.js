@@ -15,66 +15,111 @@ import { COLOR } from '~/constants/Colors';
 import { AuthProvider, AuthContext } from '~/contexts/AuthContext';
 
 export default function SignInUpScreen({ navigation }) {
+  const tempAccount = { phoneNumber: '0123456789', password: '12345678' };
+
   const {
     loginInputs,
-    setLoginInputs,
     loginErrorMessages,
-    setLoginErrorMessages,
-    handleLoginInputsChanged,
     handleLoginErrors,
     clearLoginInputs,
     clearLoginErrorMessages,
 
     signUpInputs,
-    setSignUpInputs,
     signUpErrorMessages,
-    setSignUpErrorMessages,
-    handleSignUpInputsChanged,
     handleSignUpErrors,
     clearSignUpInputs,
     clearSignUpErrorMessages,
   } = useContext(AuthContext);
 
-  //NAVIGATORS:
-  const onLoginPressHandler = () => {
-    if (loginInputs.phoneNumber === '') {
-      handleLoginErrors('Please input phone number', 'phoneNumber');
-    }
-    if (loginInputs.password === '') {
-      handleLoginErrors('Please input password', 'password');
-    }
-    // if(*VERIFY ACCOUNT FAILED*){
-    //   handleLoginErrors('Invalid Phone Number or Password, please try again!!')
-    // }
-    else {
-      //
-      // navigation.navigate('Home_Screen');
-      // console.log('Navigate to the Home Screen');
-      console.log(loginInputs);
-    }
-  };
-
-  const onNextPressHandler = () => {
-    // navigation.navigate('PhoneVerify_Screen');
-    if (signUpInputs.fullName === '') {
-      handleSignUpErrors('Please input your full name', 'fullName');
-    }
-    if (signUpInputs.phoneNumber === '') {
-      handleSignUpErrors('Please input phone number', 'phoneNumber');
-    }
-    if (signUpInputs.password === '') {
-      handleSignUpErrors('Please input password', 'password');
-    }
-    if (signUpInputs.confirmPassword === '') {
-      handleSignUpErrors('Please input confirm password', 'confirmPassword');
-    }
-    console.log(signUpInputs);
-  };
-
   //USE STATES
   const [isLogin, setIsLogin] = useState(true);
 
   //Functions:
+  //  Login:
+  const onLoginPressHandler = () => {
+    let valid = true;
+
+    if (loginInputs.phoneNumber === '') {
+      handleLoginErrors('* Please input phone number', 'phoneNumber');
+      valid = false;
+    }
+    // else if (!loginInputs.phoneNumber.match('^(+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])d{7,9}$'))
+    // {
+    //   handleLoginErrors('* Invalid phone number format', 'phoneNumber');
+    //   valid = false;
+    // }
+
+    if (loginInputs.password === '') {
+      handleLoginErrors('* Please input password', 'password');
+      valid = false;
+    } else if (loginInputs.password.length < 8 || loginInputs.password.length > 30) {
+      handleLoginErrors(
+        '* Password must be at least 8 characters and maximum of 30 characters',
+        'password',
+      );
+      valid = false;
+    }
+
+    if (valid) login();
+  };
+
+  const login = () => {
+    //**Communicate with BE to authenticate the account**
+    if (
+      loginInputs.phoneNumber === tempAccount.phoneNumber &&
+      loginInputs.password === tempAccount.password
+    ) {
+      clearLoginErrorMessages();
+      console.log('Navigate to the Home Screen');
+      // navigation.navigate('Home_Screen');
+    } else handleLoginErrors('* Incorrect phone number or password', 'password');
+  };
+
+  //  SignUp:
+  const onNextPressHandler = () => {
+    let valid = true;
+
+    if (signUpInputs.fullName === '') {
+      handleSignUpErrors('* Please input your full name', 'fullName');
+      valid = false;
+    } else if (signUpInputs.fullName.length > 255) {
+      handleSignUpErrors('* Full name must be less than 255 characters', 'fullName');
+      valid = false;
+    }
+
+    if (signUpInputs.phoneNumber === '') {
+      handleSignUpErrors('* Please input phone number', 'phoneNumber');
+      valid = false;
+    }
+    // else if (!signUpInputs.phoneNumber.match('^(+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])d{7,9}$'))
+    // {
+    //   handleSignUpErrors('* Invalid phone number format', 'phoneNumber');
+    //   valid = false;
+    // }
+
+    if (signUpInputs.password === '') {
+      handleSignUpErrors('* Please input password', 'password');
+      valid = false;
+    } else if (signUpInputs.password.length < 8 || signUpInputs.password.length > 30) {
+      handleSignUpErrors(
+        '* Password must be at least 8 characters and maximum of 30 characters',
+        'password',
+      );
+      valid = false;
+    }
+
+    if (signUpInputs.confirmPassword === '') {
+      handleSignUpErrors('* Please input confirm password', 'confirmPassword');
+      valid = false;
+    } else if (signUpInputs.confirmPassword !== signUpInputs.password) {
+      handleSignUpErrors('* Confirm password does not match the password', 'confirmPassword');
+      valid = false;
+    }
+
+    if (valid) {
+      navigation.navigate('PhoneVerify_Screen');
+    }
+  };
 
   //  General:
   const ToggleLogin = () => {

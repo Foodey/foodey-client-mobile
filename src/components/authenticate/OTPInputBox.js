@@ -1,11 +1,18 @@
 // OTPInputBox.js
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { View, TextInput, StyleSheet, Text, Pressable } from 'react-native';
 import { COLOR } from '~/constants/Colors';
+import { AuthContext } from '~/contexts/AuthContext';
 
 const OTPInputBox = (props) => {
+  const { setOTPCode, setOTPErrorMessage } = useContext(AuthContext);
+
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const inputRefs = useRef([]);
+
+  useEffect(() => {
+    setTimeout(() => inputRefs.current[0].focus(), 0);
+  }, []);
 
   const handleOtpChange = (index, value) => {
     const newOtp = [...otp];
@@ -14,7 +21,7 @@ const OTPInputBox = (props) => {
 
     // Combine the OTP values and pass it to the parent component
     const combinedOtp = newOtp.join('');
-    props.onOtpInputChange(combinedOtp);
+    setOTPCode(combinedOtp);
   };
 
   const handleKeyPress = (index, key) => {
@@ -43,7 +50,10 @@ const OTPInputBox = (props) => {
                     : COLOR.background_color,
                 },
               ]}
-              onChangeText={(text) => handleOtpChange(index, text)}
+              onChangeText={(text) => {
+                handleOtpChange(index, text);
+                setOTPErrorMessage('');
+              }}
               keyboardType="numeric"
               maxLength={1}
               ref={(ref) => (inputRefs.current[index] = ref)}

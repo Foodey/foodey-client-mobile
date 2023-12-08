@@ -3,24 +3,44 @@ import React from 'react';
 import { SubmitButton } from '~/components';
 import { COLOR } from '~/constants/Colors';
 import { PhoneNumberBox } from '../authenticate';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from '~/contexts/AuthContext';
 
 function EditPhoneNumModal(props) {
+  const { handleSignUpInputsChanged, handleSignUpErrors, signUpErrorMessages } =
+    useContext(AuthContext);
+
   const [newPhoneNumber, setNewPhoneNumber] = useState('');
 
   function onPhoneNumberTextChange(value) {
+    handleSignUpErrors('', 'phoneNumber');
     setNewPhoneNumber(value);
-    console.log(newPhoneNumber);
   }
 
   function onEditPhoneNumCancelPress() {
     setNewPhoneNumber('');
+    handleSignUpErrors('', 'phoneNumber');
     props.onClose();
   }
 
   function onEditPhoneNumOKPress() {
-    props.onOKPressHandler(newPhoneNumber);
-    setNewPhoneNumber('');
+    let valid = true;
+
+    if (newPhoneNumber === '') {
+      handleSignUpErrors('* Please input phone number', 'phoneNumber');
+      valid = false;
+    }
+    // else if (!signUpInputs.phoneNumber.match('^(+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])d{7,9}$'))
+    // {
+    //   handleSignUpErrors('* Invalid phone number format', 'phoneNumber');
+    //   valid = false;
+    // }
+
+    if (valid) {
+      handleSignUpInputsChanged(newPhoneNumber, 'phoneNumber');
+      setNewPhoneNumber('');
+      props.onClose();
+    }
   }
 
   return (
@@ -37,6 +57,8 @@ function EditPhoneNumModal(props) {
             <Text style={styles.title_text}>Edit Phone Number</Text>
           </View>
           <PhoneNumberBox
+            value={newPhoneNumber}
+            errorMessage={signUpErrorMessages.phoneNumber}
             style={{ flex: 1, marginHorizontal: 25 }}
             onChangeText={onPhoneNumberTextChange}
           />

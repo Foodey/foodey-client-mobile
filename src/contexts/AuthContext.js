@@ -30,6 +30,10 @@ export const AuthProvider = ({ children }) => {
     confirmPassword: '',
   });
 
+  //    PhoneVerify:
+  const [OTPCode, setOTPCode] = useState();
+  const [otpErrorMessage, setOTPErrorMessage] = useState('');
+
   //FUNCTION:
   //    Login:
   const handleLoginInputsChanged = (text, input) => {
@@ -71,6 +75,7 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
+        //Login
         loginInputs,
         setLoginInputs,
         loginErrorMessages,
@@ -80,6 +85,7 @@ export const AuthProvider = ({ children }) => {
         clearLoginInputs,
         clearLoginErrorMessages,
 
+        //SignUp
         signUpInputs,
         setSignUpInputs,
         signUpErrorMessages,
@@ -88,6 +94,12 @@ export const AuthProvider = ({ children }) => {
         handleSignUpErrors,
         clearSignUpInputs,
         clearSignUpErrorMessages,
+
+        //PhoneVerify
+        OTPCode,
+        setOTPCode,
+        otpErrorMessage,
+        setOTPErrorMessage,
       }}
     >
       {children}

@@ -8,25 +8,35 @@ import {
   Text,
   Pressable,
   Modal,
+  Keyboard,
 } from 'react-native';
 import React from 'react';
 import { OTPInputBox } from '~/components/authenticate';
 import { SubmitButton, BackButton, UtilityCard } from '~/components';
 import { COLOR } from '~/constants/Colors';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Edit from '~/resources/icons/edit.svg';
 import { EditPhoneNumModal, SuccessNotifyModal } from '~/components/messageBoxes';
+import { AuthContext } from '~/contexts/AuthContext';
 
 export default function PhoneVerifyScreen({ navigation }) {
+  const {
+    signUpInputs,
+    handleSignUpInputsChanged,
+    OTPCode,
+    setOTPCode,
+    otpErrorMessage,
+    setOTPErrorMessage,
+  } = useContext(AuthContext);
+
   //NAVIGATORS:
   const onBackPressHandler = () => {
+    setOTPErrorMessage('');
+    Keyboard.dismiss();
     navigation.goBack();
   };
 
   //USE STATES:
-  const [OTPCode, setOTPCode] = useState(0);
-  const [phoneNumber, setPhoneNumber] = useState('865 474 654');
-  const [errorMessage, setErrorMessage] = useState('');
   const [editPhoneNumberVisible, setEditPhoneNumberVisible] = useState(false);
   const [verifiedNotifyVisible, setVerifiedNotifyVisible] = useState(false);
   const [resendCodeNotifyVisible, setResendCodeNotifyVisible] = useState(false);
@@ -51,8 +61,8 @@ export default function PhoneVerifyScreen({ navigation }) {
   }
 
   function closeVerifiedNotifyMsgBox() {
-    //Navigate to HomeScreen
     setVerifiedNotifyVisible(false);
+    //Navigate to HomeScreen
   }
 
   function closeEditPhoneNumMsgBox() {
@@ -60,7 +70,7 @@ export default function PhoneVerifyScreen({ navigation }) {
   }
 
   function onOKPressHandler(newPhoneNumber) {
-    setPhoneNumber(newPhoneNumber);
+    handleSignUpInputsChanged(newPhoneNumber, 'phoneNumber');
     closeEditPhoneNumMsgBox();
     onResendCodeHandler();
   }
@@ -70,11 +80,11 @@ export default function PhoneVerifyScreen({ navigation }) {
   function VerifyCode() {
     if (parseInt(OTPCode) === parseInt(OTPCodeTest)) {
       console.log('Correct');
-      setErrorMessage('');
+      setOTPErrorMessage('');
       setVerifiedNotifyVisible(true);
     } else {
       console.log('Incorrect');
-      setErrorMessage('*OTP Code not match');
+      setOTPErrorMessage('*OTP Code not match');
     }
   }
 
@@ -106,7 +116,7 @@ export default function PhoneVerifyScreen({ navigation }) {
       />
       <View style={styles.edit_phoneNum_container}>
         <View style={styles.phoneNum_display_container}>
-          <Text style={styles.phoneNum_display_text}>+84 {phoneNumber}</Text>
+          <Text style={styles.phoneNum_display_text}>+84 {signUpInputs.phoneNumber}</Text>
         </View>
         <Pressable
           onPress={() => {
@@ -126,11 +136,8 @@ export default function PhoneVerifyScreen({ navigation }) {
       </View>
       <OTPInputBox
         onResendCodePress={onResendCodeHandler}
-        errorMessage={errorMessage}
+        errorMessage={otpErrorMessage}
         style={styles.code_input_container}
-        onOtpInputChange={(combinedOtp) => {
-          setOTPCode(combinedOtp);
-        }}
       />
       <View style={styles.footer_container}>
         <SubmitButton
