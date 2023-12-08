@@ -1,11 +1,10 @@
 import { View, Text, Pressable, StyleSheet, ScrollView } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import { PasswordBox, PhoneNumberBox } from '~/components/authenticate';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from '~/contexts/AuthContext';
 
 function Login(props) {
-  const { phoneNumber, password } = props.errorMessages;
-
   const [forgotPasswordPress, setForgotPasswordPress] = useState(false);
 
   const ForgotPassPressInHandler = () => {
@@ -16,41 +15,39 @@ function Login(props) {
     setForgotPasswordPress(false);
   };
 
-  const [inputs, setInputs] = useState({
-    phoneNumber: '',
-    password: '',
-  });
-
-  const handleInputsChanged = (text, input) => {
-    setInputs((prevState) => ({ ...prevState, [input]: text }));
-  };
-
-  //Notify the parent component when the user done editing the Inputs
-  const handleEndEditing = () => {
-    props.handleLoginInputsChanged(inputs);
-  };
+  const {
+    loginInputs,
+    handleLoginInputsChanged,
+    clearLoginInputs,
+    loginErrorMessages,
+    handleLoginErrors,
+    clearLoginErrors,
+  } = useContext(AuthContext);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <PhoneNumberBox
-        value={inputs.phoneNumber}
+        value={loginInputs.phoneNumber}
         style={{ marginBottom: 6 }}
-        errorMessage={phoneNumber}
+        errorMessage={loginErrorMessages.phoneNumber}
         onChangeText={(text) => {
-          handleInputsChanged(text, 'phoneNumber');
+          handleLoginErrors('', 'phoneNumber');
+          handleLoginInputsChanged(text, 'phoneNumber');
         }}
-        onEndEditing={handleEndEditing}
         onDeletePress={() => {
-          handleInputsChanged('', 'phoneNumber');
+          handleLoginInputsChanged('', 'phoneNumber');
         }}
       />
       <PasswordBox
+        value={loginInputs.password}
         title="Password"
         placeholder="Enter your password"
         style={{ marginBottom: 6 }}
-        errorMessage={password}
-        onChangeText={(text) => handleInputsChanged(text, 'password')}
-        onEndEditing={handleEndEditing}
+        errorMessage={loginErrorMessages.password}
+        onChangeText={(text) => {
+          handleLoginErrors('', 'password');
+          handleLoginInputsChanged(text, 'password');
+        }}
       />
       <Pressable
         style={[styles.button]}

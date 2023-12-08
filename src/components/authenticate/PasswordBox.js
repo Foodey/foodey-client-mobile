@@ -24,12 +24,12 @@ function PasswordBox(props) {
         ]}
       >
         <TextInput
+          value={props.value}
           secureTextEntry={hidePassword}
           placeholder={props.placeholder}
           style={styles.phone_number_input}
           placeholderTextColor={COLOR.text_press_color}
           onChangeText={props.onChangeText}
-          onEndEditing={props.onEndEditing}
           onFocus={() => {
             props.onFocus = () => {};
             setIsFocused(true);

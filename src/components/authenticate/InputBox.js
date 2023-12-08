@@ -27,7 +27,6 @@ function InputBox(props) {
           style={styles.phone_number_input}
           placeholderTextColor={COLOR.text_press_color}
           onChangeText={props.onChangeText}
-          onEndEditing={props.onEndEditing}
           onFocus={() => {
             props.onFocus = () => {};
             setIsFocused(true);

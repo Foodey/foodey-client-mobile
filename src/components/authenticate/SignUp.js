@@ -1,74 +1,68 @@
 import { ScrollView, Text, Pressable, StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import { InputBox, PasswordBox, PhoneNumberBox } from '~/components/authenticate';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from '~/contexts/AuthContext';
 
 function SignUp(props) {
-  const { fullName, phoneNumber, password, confirmPassword } = props.errorMessages;
-
-  const [inputs, setInputs] = useState({
-    fullName: '',
-    phoneNumber: '',
-    password: '',
-    confirmPassword: '',
-  });
-
-  const handleInputsChanged = (text, input) => {
-    setInputs((prevState) => ({ ...prevState, [input]: text }));
-  };
-
-  //Notify the parent component when the user done editing the Inputs
-  const handleEndEditing = () => {
-    props.handleSignUpInputsChanged(inputs);
-  };
+  const {
+    signUpInputs,
+    handleSignUpInputsChanged,
+    clearSignUpInputs,
+    signUpErrorMessages,
+    handleSignUpErrors,
+    clearSignUpErrors,
+  } = useContext(AuthContext);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <InputBox
-        value={inputs.fullName}
+        value={signUpInputs.fullName}
         title="Full Name"
         placeholder="Enter your full name"
-        errorMessage={fullName}
+        errorMessage={signUpErrorMessages.fullName}
         style={{ marginBottom: 6 }}
         onChangeText={(text) => {
-          handleInputsChanged(text, 'fullName');
+          handleSignUpErrors('', 'fullName');
+          handleSignUpInputsChanged(text, 'fullName');
         }}
-        onEndEditing={handleEndEditing}
         onDeletePress={() => {
-          handleInputsChanged('', 'fullName');
+          handleSignUpInputsChanged('', 'fullName');
         }}
       />
       <PhoneNumberBox
-        value={inputs.phoneNumber}
-        errorMessage={phoneNumber}
+        value={signUpInputs.phoneNumber}
+        errorMessage={signUpErrorMessages.phoneNumber}
         style={{ marginBottom: 6 }}
         onChangeText={(text) => {
-          handleInputsChanged(text, 'phoneNumber');
+          handleSignUpErrors('', 'phoneNumber');
+          handleSignUpInputsChanged(text, 'phoneNumber');
         }}
-        onEndEditing={handleEndEditing}
         onDeletePress={() => {
-          handleInputsChanged('', 'phoneNumber');
+          handleSignUpInputsChanged('', 'phoneNumber');
         }}
       />
       <PasswordBox
+        value={signUpInputs.password}
         title="Password"
         placeholder="Enter your password"
-        errorMessage={password}
+        errorMessage={signUpErrorMessages.password}
         style={{ marginBottom: 6 }}
         onChangeText={(text) => {
-          handleInputsChanged(text, 'password');
+          handleSignUpErrors('', 'password');
+          handleSignUpInputsChanged(text, 'password');
         }}
-        onEndEditing={handleEndEditing}
       />
       <PasswordBox
+        value={signUpInputs.confirmPassword}
         title="Re-enter Password"
         placeholder="Re-enter your password"
-        errorMessage={confirmPassword}
+        errorMessage={signUpErrorMessages.confirmPassword}
         style={{ marginBottom: 6 }}
         onChangeText={(text) => {
-          handleInputsChanged(text, 'confirmPassword');
+          handleSignUpErrors('', 'confirmPassword');
+          handleSignUpInputsChanged(text, 'confirmPassword');
         }}
-        onEndEditing={handleEndEditing}
       />
     </ScrollView>
   );

@@ -16,7 +16,6 @@ function PhoneNumberBox(props) {
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+84');
   const [isFocused, setIsFocused] = useState(false);
-  const [isDeleteButtonFocused, setIsDeleteButtonFocused] = useState(false);
 
   const textInputRef = useRef();
 
@@ -66,7 +65,6 @@ function PhoneNumberBox(props) {
             style={styles.phone_number_input}
             placeholderTextColor={COLOR.text_press_color}
             onChangeText={props.onChangeText}
-            onEndEditing={props.onEndEditing}
             onFocus={() => {
               props.onFocus = () => {};
               setIsFocused(true);
