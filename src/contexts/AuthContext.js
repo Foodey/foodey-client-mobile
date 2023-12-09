@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   });
 
   //    PhoneVerify:
-  const [OTPCode, setOTPCode] = useState();
+  const [OTPCode, setOTPCode] = useState('');
   const [otpErrorMessage, setOTPErrorMessage] = useState('');
 
   //FUNCTION:

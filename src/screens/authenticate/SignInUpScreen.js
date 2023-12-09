@@ -158,6 +158,7 @@ export default function SignInUpScreen({ navigation }) {
       </View>
       <View style={styles.footer_container}>
         <SubmitButton
+          showIcon={true}
           style={{ flex: 1, marginHorizontal: 21, marginBottom: 42 }}
           title={isLogin ? 'Login' : 'Next'}
           buttonColor={COLOR.button_primary_color}

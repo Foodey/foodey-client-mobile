@@ -28,6 +28,7 @@ export default function OnBoardingScreen2({ navigation }) {
       <View style={Style.footer_view}>
         <SkipButton style={Style.skip_button} onPressFunction={onSkipPressHandler} />
         <SubmitButton
+          showIcon={true}
           title="Next"
           onPressFunction={onNextPressHandler}
           style={Style.next_button}

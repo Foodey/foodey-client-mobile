@@ -1,13 +1,10 @@
 import {
   View,
-  SafeAreaView,
   StatusBar,
-  ScrollView,
   StyleSheet,
   KeyboardAvoidingView,
   Text,
   Pressable,
-  Modal,
   Keyboard,
 } from 'react-native';
 import React from 'react';
@@ -23,6 +20,7 @@ export default function PhoneVerifyScreen({ navigation }) {
   const {
     signUpInputs,
     handleSignUpInputsChanged,
+    handleSignUpErrors,
     OTPCode,
     setOTPCode,
     otpErrorMessage,
@@ -40,6 +38,8 @@ export default function PhoneVerifyScreen({ navigation }) {
   const [editPhoneNumberVisible, setEditPhoneNumberVisible] = useState(false);
   const [verifiedNotifyVisible, setVerifiedNotifyVisible] = useState(false);
   const [resendCodeNotifyVisible, setResendCodeNotifyVisible] = useState(false);
+
+  const [newPhoneNumber, setNewPhoneNumber] = useState('');
 
   //Functions:
 
@@ -65,22 +65,37 @@ export default function PhoneVerifyScreen({ navigation }) {
     //Navigate to HomeScreen
   }
 
-  function closeEditPhoneNumMsgBox() {
-    setEditPhoneNumberVisible(false);
+  //  Edit phone number modal:
+  function onPhoneNumberTextChange(value) {
+    handleSignUpErrors('', 'phoneNumber');
+    setNewPhoneNumber(value);
   }
 
-  function onOKPressHandler(newPhoneNumber) {
-    handleSignUpInputsChanged(newPhoneNumber, 'phoneNumber');
-    closeEditPhoneNumMsgBox();
-    onResendCodeHandler();
+  function onEditPhoneNumOKPress() {
+    let valid = true;
+    if (newPhoneNumber === '') {
+      handleSignUpErrors('* Please input phone number', 'phoneNumber');
+      valid = false;
+    }
+    // else if (!signUpInputs.phoneNumber.match('^(+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])d{7,9}$'))
+    // {
+    //   handleSignUpErrors('* Invalid phone number format', 'phoneNumber');
+    //   valid = false;
+    // }
+    if (valid) {
+      handleSignUpInputsChanged(newPhoneNumber, 'phoneNumber');
+      setNewPhoneNumber('');
+      setEditPhoneNumberVisible(false);
+      onResendCodeHandler();
+    }
   }
 
   //Testing OTP code: (PASSED)
-  const OTPCodeTest = 123456;
+  let OTPCodeTest = 123456;
   function VerifyCode() {
     if (parseInt(OTPCode) === parseInt(OTPCodeTest)) {
       console.log('Correct');
-      setOTPErrorMessage('');
+      setOTPCode('');
       setVerifiedNotifyVisible(true);
     } else {
       console.log('Incorrect');
@@ -93,8 +108,15 @@ export default function PhoneVerifyScreen({ navigation }) {
       <StatusBar backgroundColor={COLOR.background_color} />
       <EditPhoneNumModal
         visible={editPhoneNumberVisible}
-        onClose={closeEditPhoneNumMsgBox}
-        onOKPressHandler={onOKPressHandler}
+        newPhoneNumber={newPhoneNumber}
+        onClose={() => {
+          setEditPhoneNumberVisible(false);
+        }}
+        onPhoneNumberTextChange={onPhoneNumberTextChange}
+        onEditPhoneNumCancelPress={() => {
+          setEditPhoneNumberVisible(false);
+        }}
+        onEditPhoneNumOKPress={onEditPhoneNumOKPress}
       />
       <SuccessNotifyModal
         title="You’re successfully verified!"

@@ -7,41 +7,7 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '~/contexts/AuthContext';
 
 function EditPhoneNumModal(props) {
-  const { handleSignUpInputsChanged, handleSignUpErrors, signUpErrorMessages } =
-    useContext(AuthContext);
-
-  const [newPhoneNumber, setNewPhoneNumber] = useState('');
-
-  function onPhoneNumberTextChange(value) {
-    handleSignUpErrors('', 'phoneNumber');
-    setNewPhoneNumber(value);
-  }
-
-  function onEditPhoneNumCancelPress() {
-    setNewPhoneNumber('');
-    handleSignUpErrors('', 'phoneNumber');
-    props.onClose();
-  }
-
-  function onEditPhoneNumOKPress() {
-    let valid = true;
-
-    if (newPhoneNumber === '') {
-      handleSignUpErrors('* Please input phone number', 'phoneNumber');
-      valid = false;
-    }
-    // else if (!signUpInputs.phoneNumber.match('^(+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])d{7,9}$'))
-    // {
-    //   handleSignUpErrors('* Invalid phone number format', 'phoneNumber');
-    //   valid = false;
-    // }
-
-    if (valid) {
-      handleSignUpInputsChanged(newPhoneNumber, 'phoneNumber');
-      setNewPhoneNumber('');
-      props.onClose();
-    }
-  }
+  const { signUpErrorMessages } = useContext(AuthContext);
 
   return (
     <Modal
@@ -57,14 +23,14 @@ function EditPhoneNumModal(props) {
             <Text style={styles.title_text}>Edit Phone Number</Text>
           </View>
           <PhoneNumberBox
-            value={newPhoneNumber}
+            value={props.newPhoneNumber}
             errorMessage={signUpErrorMessages.phoneNumber}
             style={{ flex: 1, marginHorizontal: 25 }}
-            onChangeText={onPhoneNumberTextChange}
+            onChangeText={props.onPhoneNumberTextChange}
           />
           <View style={styles.actions_container}>
             <SubmitButton
-              onPressFunction={onEditPhoneNumCancelPress}
+              onPressFunction={props.onEditPhoneNumCancelPress}
               showIcon={false}
               title="Cancel"
               style={{ flex: 1, marginEnd: 8, marginVertical: 25 }}
@@ -72,7 +38,7 @@ function EditPhoneNumModal(props) {
               hoverColor={COLOR.button_press_secondary_color}
             />
             <SubmitButton
-              onPressFunction={onEditPhoneNumOKPress}
+              onPressFunction={props.onEditPhoneNumOKPress}
               title="OK"
               showIcon={false}
               style={{ flex: 1, marginStart: 8, marginVertical: 25 }}
