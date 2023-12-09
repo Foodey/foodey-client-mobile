@@ -4,6 +4,13 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   //USE STATES
+
+  const [systemOTPCode, setSystemOTPCode] = useState('123456');
+  // const generateOTP = () => {
+  //   Doing something for OTP;
+  //   setSystemOTPCode(something);
+  // }
+
   //  Login:
   const [loginInputs, setLoginInputs] = useState({
     phoneNumber: '',
@@ -34,6 +41,19 @@ export const AuthProvider = ({ children }) => {
   const [OTPCode, setOTPCode] = useState('');
   const [otpErrorMessage, setOTPErrorMessage] = useState('');
 
+  //  ForgotPass:
+  const [forgotPassInputs, setForgotPassInputs] = useState({
+    phoneNumber: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const [forgotPassErrorMessages, setForgotPassErrorMessages] = useState({
+    phoneNumber: '',
+    password: '',
+    confirmPassword: '',
+  });
+
   //FUNCTION:
   //    Login:
   const handleLoginInputsChanged = (text, input) => {
@@ -51,6 +71,15 @@ export const AuthProvider = ({ children }) => {
 
   const handleSignUpErrors = (errorMessage, input) => {
     setSignUpErrorMessages((prevState) => ({ ...prevState, [input]: errorMessage }));
+  };
+
+  //  ForgotPass:
+  const handleForgotPassInputsChanged = (text, input) => {
+    setForgotPassInputs((prevState) => ({ ...prevState, [input]: text }));
+  };
+
+  const handleForgotPassErrors = (errorMessage, input) => {
+    setForgotPassErrorMessages((prevState) => ({ ...prevState, [input]: errorMessage }));
   };
 
   //CLEAR INPUT FUNCTIONS:
@@ -75,6 +104,9 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
+        systemOTPCode,
+        setSystemOTPCode,
+
         //Login
         loginInputs,
         setLoginInputs,
@@ -100,6 +132,14 @@ export const AuthProvider = ({ children }) => {
         setOTPCode,
         otpErrorMessage,
         setOTPErrorMessage,
+
+        //ForgotPass
+        forgotPassInputs,
+        setForgotPassInputs,
+        forgotPassErrorMessages,
+        setForgotPassErrorMessages,
+        handleForgotPassInputsChanged,
+        handleForgotPassErrors,
       }}
     >
       {children}

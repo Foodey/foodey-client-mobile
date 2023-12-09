@@ -19,9 +19,16 @@ const OTPInputBox = (props) => {
     newOtp[index] = value;
     setOtp(newOtp);
 
-    // Combine the OTP values and pass it to the parent component
+    // Combine the OTP values and pass it to the variable store in the AuthContext
     const combinedOtp = newOtp.join('');
     setOTPCode(combinedOtp);
+  };
+
+  const onPress = () => {
+    setOTPErrorMessage('');
+    setOtp(['', '', '', '', '', '']);
+    inputRefs.current[0].focus();
+    props.onResendCodePress();
   };
 
   const handleKeyPress = (index, key) => {
@@ -65,7 +72,7 @@ const OTPInputBox = (props) => {
       </View>
       <View style={styles.resent_otp_container}>
         <Text style={styles.resend_otp_text}>Didn’t receive code?</Text>
-        <Pressable style={styles.resend_otp_button} onPress={props.onResendCodePress}>
+        <Pressable style={styles.resend_otp_button} onPress={onPress}>
           <Text
             style={[
               styles.resend_otp_text,

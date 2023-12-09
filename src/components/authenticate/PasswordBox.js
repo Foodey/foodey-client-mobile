@@ -9,7 +9,7 @@ function PasswordBox(props) {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <View style={[styles.container, { ...props.style }]}>
+    <View style={[{ ...props.style }]}>
       <Text style={styles.title_text}>{props.title}</Text>
       <View
         style={[

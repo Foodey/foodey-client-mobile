@@ -34,6 +34,11 @@ export default function SignInUpScreen({ navigation }) {
   //USE STATES
   const [isLogin, setIsLogin] = useState(true);
 
+  //Navigation:
+  const onForgotPassPress = () => {
+    navigation.navigate('ForgotPass_Screen');
+  };
+
   //Functions:
   //  Login:
   const onLoginPressHandler = () => {
@@ -117,7 +122,7 @@ export default function SignInUpScreen({ navigation }) {
     }
 
     if (valid) {
-      navigation.navigate('PhoneVerify_Screen');
+      navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
     }
   };
 
@@ -149,7 +154,9 @@ export default function SignInUpScreen({ navigation }) {
         onLoginPress={ToggleLogin}
         onSignUpPress={ToggleSignUp}
       />
-      <View style={styles.auth_section_container}>{isLogin ? <Login /> : <SignUp />}</View>
+      <View style={styles.auth_section_container}>
+        {isLogin ? <Login onForgotPassPress={onForgotPassPress} /> : <SignUp />}
+      </View>
       <View style={styles.third_party_container}>
         <ThirdPartyAuth
           title={isLogin ? 'Login' : 'Sign Up'}

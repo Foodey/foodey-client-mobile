@@ -16,11 +16,21 @@ import Edit from '~/resources/icons/edit.svg';
 import { EditPhoneNumModal, SuccessNotifyModal } from '~/components/messageBoxes';
 import { AuthContext } from '~/contexts/AuthContext';
 
-export default function PhoneVerifyScreen({ navigation }) {
+export default function PhoneVerifyScreen({ navigation, route }) {
+  const { isForgotPassVerify } = route.params;
+
   const {
+    systemOTPCode,
+    setSystemOTPCode,
+
     signUpInputs,
     handleSignUpInputsChanged,
     handleSignUpErrors,
+
+    forgotPassInputs,
+    handleForgotPassInputsChanged,
+    handleForgotPassErrors,
+
     OTPCode,
     setOTPCode,
     otpErrorMessage,
@@ -44,6 +54,8 @@ export default function PhoneVerifyScreen({ navigation }) {
   //Functions:
 
   function onResendCodeHandler() {
+    setSystemOTPCode('');
+    //generateOTP();
     //Resend the OTP code:
     // if(codeSentSuccess)
     // {
@@ -62,40 +74,51 @@ export default function PhoneVerifyScreen({ navigation }) {
 
   function closeVerifiedNotifyMsgBox() {
     setVerifiedNotifyVisible(false);
-    //Navigate to HomeScreen
+    isForgotPassVerify
+      ? navigation.replace('ResetPass_Screen')
+      : console.log('Navigate to HomeScreen'); //navigation.replace('HomeScreen');
   }
 
   //  Edit phone number modal:
   function onPhoneNumberTextChange(value) {
-    handleSignUpErrors('', 'phoneNumber');
+    isForgotPassVerify
+      ? handleForgotPassErrors('', 'phoneNumber')
+      : handleSignUpErrors('', 'phoneNumber');
     setNewPhoneNumber(value);
   }
 
   function onEditPhoneNumOKPress() {
     let valid = true;
     if (newPhoneNumber === '') {
-      handleSignUpErrors('* Please input phone number', 'phoneNumber');
+      isForgotPassVerify
+        ? handleForgotPassErrors('* Please input phone number', 'phoneNumber')
+        : handleSignUpErrors('* Please input phone number', 'phoneNumber');
       valid = false;
     }
     // else if (!signUpInputs.phoneNumber.match('^(+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])d{7,9}$'))
     // {
-    //   handleSignUpErrors('* Invalid phone number format', 'phoneNumber');
-    //   valid = false;
+    //   isForgotPassVerify
+    //    ? handleForgotPassErrors('* Invalid phone number format', 'phoneNumber');
+    //   valid = format', 'phoneNumber')
+    //    : handleSignUpErrors('* Invalid phone number format', 'phoneNumber';
     // }
     if (valid) {
-      handleSignUpInputsChanged(newPhoneNumber, 'phoneNumber');
+      isForgotPassVerify
+        ? handleForgotPassInputsChanged(newPhoneNumber, 'phoneNumber')
+        : handleSignUpInputsChanged(newPhoneNumber, 'phoneNumber');
       setNewPhoneNumber('');
       setEditPhoneNumberVisible(false);
+      setOTPErrorMessage('');
       onResendCodeHandler();
     }
   }
 
   //Testing OTP code: (PASSED)
-  let OTPCodeTest = 123456;
   function VerifyCode() {
-    if (parseInt(OTPCode) === parseInt(OTPCodeTest)) {
+    if (parseInt(OTPCode) === parseInt(systemOTPCode)) {
       console.log('Correct');
       setOTPCode('');
+      setSystemOTPCode('');
       setVerifiedNotifyVisible(true);
     } else {
       console.log('Incorrect');
@@ -133,12 +156,14 @@ export default function PhoneVerifyScreen({ navigation }) {
       </View>
       <UtilityCard
         style={styles.title_content_container}
-        title="Verify Phone Number"
+        title={isForgotPassVerify ? 'Reset Password' : 'Verify Phone Number'}
         content="We have sent you a 6-digit code. Please enter here to verify your number."
       />
       <View style={styles.edit_phoneNum_container}>
         <View style={styles.phoneNum_display_container}>
-          <Text style={styles.phoneNum_display_text}>+84 {signUpInputs.phoneNumber}</Text>
+          <Text style={styles.phoneNum_display_text}>
+            +84 {isForgotPassVerify ? forgotPassInputs.phoneNumber : signUpInputs.phoneNumber}
+          </Text>
         </View>
         <Pressable
           onPress={() => {
@@ -163,8 +188,9 @@ export default function PhoneVerifyScreen({ navigation }) {
       />
       <View style={styles.footer_container}>
         <SubmitButton
+          showIcon={true}
           style={{ flex: 1, marginHorizontal: 21, marginBottom: 320 }}
-          title="Verify and Continue"
+          title="Next"
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}
           onPressFunction={VerifyCode}
