@@ -7,12 +7,14 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Modal,
+  Keyboard,
 } from 'react-native';
 import React, { useContext, useState } from 'react';
 import { UtilityCard, SubmitButton } from '~/components';
 import { AuthSwitcher, Login, SignUp, ThirdPartyAuth } from '~/components/authenticate';
 import { COLOR } from '~/constants/Colors';
 import { AuthProvider, AuthContext } from '~/contexts/AuthContext';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 export default function SignInUpScreen({ navigation }) {
   const tempAccount = { phoneNumber: '0123456789', password: '12345678' };
@@ -122,11 +124,17 @@ export default function SignInUpScreen({ navigation }) {
     }
 
     if (valid) {
+      handleForgotPassErrors('', 'confirmPassword');
       navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
     }
   };
 
   //  General:
+
+  const looseFocus = () => {
+    Keyboard.dismiss();
+  };
+
   const ToggleLogin = () => {
     if (!isLogin) setIsLogin(!isLogin);
     clearLoginInputs();
@@ -155,13 +163,18 @@ export default function SignInUpScreen({ navigation }) {
         onSignUpPress={ToggleSignUp}
       />
       <View style={styles.auth_section_container}>
+        {/* <TouchableWithoutFeedback onPress={looseFocus}>
+          {isLogin ? <Login onForgotPassPress={onForgotPassPress} /> : <SignUp />}
+        </TouchableWithoutFeedback> */}
         {isLogin ? <Login onForgotPassPress={onForgotPassPress} /> : <SignUp />}
       </View>
       <View style={styles.third_party_container}>
-        <ThirdPartyAuth
-          title={isLogin ? 'Login' : 'Sign Up'}
-          lineStyle={isLogin ? { marginStart: 0 } : { marginStart: 16 }}
-        />
+        <TouchableWithoutFeedback onPress={looseFocus}>
+          <ThirdPartyAuth
+            title={isLogin ? 'Login' : 'Sign Up'}
+            lineStyle={isLogin ? { marginStart: 0 } : { marginStart: 16 }}
+          />
+        </TouchableWithoutFeedback>
       </View>
       <View style={styles.footer_container}>
         <SubmitButton

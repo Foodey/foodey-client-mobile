@@ -64,6 +64,7 @@ export default function ResetPassScreen({ navigation }) {
     if (valid) {
       //Reset password code;
       //if(Reset Password successful)
+      handleForgotPassErrors('', 'confirmPassword');
       console.log(forgotPassInputs);
       console.log('Navigate to HomeScreen');
       setResetPassNotifyVisible(true);

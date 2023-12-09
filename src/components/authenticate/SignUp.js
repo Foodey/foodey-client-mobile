@@ -15,7 +15,7 @@ function SignUp(props) {
   } = useContext(AuthContext);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always">
       <InputBox
         value={signUpInputs.fullName}
         title="Full Name"

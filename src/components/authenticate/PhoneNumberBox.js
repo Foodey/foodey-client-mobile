@@ -17,8 +17,6 @@ function PhoneNumberBox(props) {
   const [countryCode, setCountryCode] = useState('+84');
   const [isFocused, setIsFocused] = useState(false);
 
-  const textInputRef = useRef();
-
   return (
     <View style={{ ...props.style }}>
       <Text style={styles.title_text}>Phone Number</Text>
@@ -58,7 +56,6 @@ function PhoneNumberBox(props) {
         </Pressable>
         <View style={{ flexDirection: 'row', flex: 4.75, alignItems: 'center' }}>
           <TextInput
-            ref={textInputRef}
             value={props.value}
             keyboardType="phone-pad"
             placeholder="Enter your phone number"
