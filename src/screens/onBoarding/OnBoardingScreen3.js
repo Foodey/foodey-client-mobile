@@ -1,11 +1,10 @@
-import { View, Image } from 'react-native';
+import { View, Image, SafeAreaView, StatusBar } from 'react-native';
 import { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
-import Style from '~/styles/OnBoardingStyle';
+import Style from './OnBoardingStyle';
 
-import UtilityCard from '~/components/onBoarding/UtilityCard';
-import Indicator from '~/components/onBoarding/Indicator';
-import SubmitButton from '~/components/SubmitButton';
+import { UtilityCard, SubmitButton } from '~/components';
+import { Indicator } from '~/components/onBoarding';
 
 export default function OnBoardingScreen3({ navigation }) {
   const onStartPressHandler = () => {
@@ -13,20 +12,24 @@ export default function OnBoardingScreen3({ navigation }) {
   };
 
   return (
-    <View style={Style.container}>
+    <SafeAreaView style={Style.container}>
+      <StatusBar backgroundColor={COLOR.background_color} />
       <Image style={Style.image} source={require('~/resources/images/onboarding-3.webp')} />
       <Indicator styleThirdPage={{ backgroundColor: COLOR.indicator_current_color }} />
       <UtilityCard
+        style={Style.info_container}
         title="Get started on Ordering your Food"
         content="Please create an account or sign in to your existing account to start browsing our selection of delicious meals from your favorite restaurants."
       />
       <View style={Style.footer_view}>
         <SubmitButton
           title="Start"
-          style={Style.next_pressable}
           onPressFunction={onStartPressHandler}
+          style={{ flex: 1, marginVertical: 49 }}
+          buttonColor={COLOR.button_primary_color}
+          hoverColor={COLOR.button_press_primary_color}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

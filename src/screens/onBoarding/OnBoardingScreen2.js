@@ -1,12 +1,10 @@
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, SafeAreaView, StatusBar } from 'react-native';
 import { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
-import Style from '~/styles/OnBoardingStyle';
+import Style from './OnBoardingStyle';
 
-import UtilityCard from '~/components/onBoarding/UtilityCard';
-import Indicator from '~/components/onBoarding/Indicator';
-import SubmitButton from '~/components/SubmitButton';
-import SkipButton from '~/components/onBoarding/SkipButton';
+import { UtilityCard, SubmitButton } from '~/components';
+import { Indicator, SkipButton } from '~/components/onBoarding';
 
 export default function OnBoardingScreen2({ navigation }) {
   const onSkipPressHandler = () => {
@@ -18,21 +16,26 @@ export default function OnBoardingScreen2({ navigation }) {
   };
 
   return (
-    <View style={Style.container}>
+    <SafeAreaView style={Style.container}>
+      <StatusBar backgroundColor={COLOR.background_color} />
       <Image style={Style.image} source={require('~/resources/images/onboarding-2.webp')} />
       <Indicator styleSecondPage={{ backgroundColor: COLOR.indicator_current_color }} />
       <UtilityCard
+        style={Style.info_container}
         title="Wherever you eat with Fast Deliveries"
         content="Get your favorite meals delivered to your doorstep as soon as possible!"
       />
       <View style={Style.footer_view}>
-        <SkipButton style={Style.skip_pressable} onPressFunction={onSkipPressHandler} />
+        <SkipButton style={Style.skip_button} onPressFunction={onSkipPressHandler} />
         <SubmitButton
+          showIcon={true}
           title="Next"
-          style={Style.next_pressable}
           onPressFunction={onNextPressHandler}
+          style={Style.next_button}
+          buttonColor={COLOR.button_primary_color}
+          hoverColor={COLOR.button_press_primary_color}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

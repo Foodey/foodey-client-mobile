@@ -1,23 +1,43 @@
-import { Pressable, Text } from 'react-native';
-import Style from '../styles/OnBoardingStyle';
+import { Pressable, Text, StyleSheet } from 'react-native';
 import { COLOR } from '../constants/Colors';
-import { ArrowRight } from '../constants/Icons';
-import { SvgXml } from 'react-native-svg';
+import ArrowRight from '~/resources/icons/arrow-right.svg';
 
-const SubmitButton = (props) => {
+function SubmitButton(props) {
   return (
     <Pressable
       onPress={props.onPressFunction}
       style={({ pressed }) => [
+        styles.button,
         {
-          backgroundColor: pressed ? COLOR.button_hover_primary_color : COLOR.button_primary_color,
+          backgroundColor: pressed ? props.hoverColor : props.buttonColor,
         },
         { ...props.style },
       ]}
     >
-      <Text style={Style.next_pressable_text}>{props.title}</Text>
+      <Text style={styles.button_text}>{props.title}</Text>
+      {props.showIcon && (
+        <ArrowRight width={24} height={24} style={{ color: COLOR.background_color }} />
+      )}
     </Pressable>
   );
-};
+}
+
+const styles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+    borderRadius: 25,
+    flexDirection: 'row',
+  },
+
+  button_text: {
+    color: COLOR.background_color,
+    fontSize: 18,
+    fontWeight: '700',
+    fontFamily: 'Manrope-Regular',
+    marginStart: 0,
+  },
+});
 
 export default SubmitButton;
