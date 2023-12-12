@@ -22,6 +22,8 @@ import {
   ProfileScreen,
 } from '~/screens/main';
 
+import { CustomTabLabel } from '~/components';
+
 const BottomTab = createBottomTabNavigator();
 
 const MainBottomTabNavigator = () => {
@@ -52,6 +54,8 @@ const MainBottomTabNavigator = () => {
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? <HomeFocused height={30} width={30} /> : <Home height={30} width={30} />,
+
+          tabBarLabel: ({ focused }) => <CustomTabLabel focused={focused} label="Home" />,
         }}
       />
       <BottomTab.Screen
@@ -64,6 +68,7 @@ const MainBottomTabNavigator = () => {
             ) : (
               <Discovery height={30} width={30} />
             ),
+          tabBarLabel: ({ focused }) => <CustomTabLabel focused={focused} label="Discovery" />,
         }}
       />
       <BottomTab.Screen
@@ -76,6 +81,8 @@ const MainBottomTabNavigator = () => {
             ) : (
               <Favorite height={30} width={30} />
             ),
+
+          tabBarLabel: ({ focused }) => <CustomTabLabel focused={focused} label="Favorite" />,
         }}
       />
       <BottomTab.Screen
@@ -84,6 +91,8 @@ const MainBottomTabNavigator = () => {
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? <OrderFocused height={30} width={30} /> : <Order height={30} width={30} />,
+
+          tabBarLabel: ({ focused }) => <CustomTabLabel focused={focused} label="Order" />,
         }}
       />
       <BottomTab.Screen
@@ -96,6 +105,8 @@ const MainBottomTabNavigator = () => {
             ) : (
               <Profile height={30} width={30} />
             ),
+
+          tabBarLabel: ({ focused }) => <CustomTabLabel focused={focused} label="Profile" />,
         }}
       />
     </BottomTab.Navigator>
