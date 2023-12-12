@@ -22,17 +22,17 @@ function CustomTabLabel({ focused, label }) {
 
 const styles = StyleSheet.create({
   circle: {
-    width: 6,
-    height: 6,
+    width: 10,
+    height: 10,
     borderRadius: 50,
     backgroundColor: COLOR.text_primary_color,
-    margin: 2.5,
   },
 
   label_text: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '400',
     color: COLOR.text_primary_color,
+    marginBottom: 2,
   },
 });
 
