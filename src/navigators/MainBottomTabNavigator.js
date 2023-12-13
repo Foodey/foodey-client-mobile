@@ -38,13 +38,6 @@ const MainBottomTabNavigator = () => {
           paddingLeft: 8,
           paddingRight: 8,
         },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontFamily: 'Manrope',
-          fontWeight: '400',
-          marginBottom: 21,
-          color: COLOR.text_primary_color,
-        },
       })}
       initialRouteName="Home"
     >

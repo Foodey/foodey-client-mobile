@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   },
 
   label_text: {
+    fontFamily: 'Manrope-Regular',
     fontSize: 14,
     fontWeight: '400',
     color: COLOR.text_primary_color,

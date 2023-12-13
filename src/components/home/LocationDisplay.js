@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
 
   location_text: {
-    fontFamily: 'Manrope',
+    fontFamily: 'Manrope-Regular',
     fontWeight: '400',
     fontSize: 17.5,
     color: COLOR.indicator_current_color,
