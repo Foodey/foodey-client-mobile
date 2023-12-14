@@ -124,7 +124,7 @@ export default function SignInUpScreen({ navigation }) {
     }
 
     if (valid) {
-      handleForgotPassErrors('', 'confirmPassword');
+      handleSignUpErrors('', 'confirmPassword');
       navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
     }
   };
@@ -170,10 +170,7 @@ export default function SignInUpScreen({ navigation }) {
       </View>
       <View style={styles.third_party_container}>
         <TouchableWithoutFeedback onPress={looseFocus}>
-          <ThirdPartyAuth
-            title={isLogin ? 'Login' : 'Sign Up'}
-            lineStyle={isLogin ? { marginStart: 0 } : { marginStart: 16 }}
-          />
+          <ThirdPartyAuth title={isLogin ? 'Login' : 'Sign Up'} />
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.footer_container}>

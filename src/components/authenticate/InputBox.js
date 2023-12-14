@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     color: COLOR.text_primary_color,
     marginBottom: 5,
     marginStart: 13,
-    fontFamily: 'Manrope',
+    fontFamily: 'Manrope-Regular',
   },
 
   input_container: {
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: COLOR.text_primary_color,
     paddingLeft: 12,
-    fontFamily: 'Manrope',
+    fontFamily: 'Manrope-Regular',
   },
 
   button_delete_input: {

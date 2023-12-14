@@ -55,9 +55,9 @@ const styles = StyleSheet.create({
   },
 
   split_text: {
-    width: 130,
+    width: 136,
     textAlign: 'left',
-    fontFamily: 'Manrope',
+    fontFamily: 'Manrope-Regular',
     fontWeight: '400',
     fontSize: 17,
   },
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 1,
     backgroundColor: '#000',
+    marginStart: 12,
   },
 
   third_party_container: {

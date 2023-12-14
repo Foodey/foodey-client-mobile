@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 
   button_text: {
     color: COLOR.text_primary_color,
-    fontFamily: 'Manrope',
+    fontFamily: 'Manrope-Regular',
     fontWeight: '500',
     fontSize: 15,
     marginStart: 3,
