@@ -18,6 +18,7 @@ const pink_100 = '#F4739E';
 const pink_120 = '#D55881';
 const pink_140 = '#953756';
 
+const peach_trans = '#FCE2CF80';
 const peach_60 = '#FCE2CF';
 const peach_80 = '#F6BA8D';
 const peach_100 = '#EA985B';
@@ -53,6 +54,7 @@ export const COLOR = {
 
   indicator_color: light_60,
   indicator_current_color: peach_100,
+  indicator_trans_color: peach_trans,
 
   button_primary_color: blue_100,
   button_press_primary_color: blue_80,
