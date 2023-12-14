@@ -17,7 +17,7 @@ function BackButton(props) {
 
   return (
     <Pressable
-      style={styles.button}
+      style={[styles.button, props.style]}
       onPressIn={BackPressInHandler}
       onPressOut={BackPressOutHandler}
       onPress={props.onPressFunction}

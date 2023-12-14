@@ -14,3 +14,4 @@ export { default as ProfileFocused } from './profile-focused.svg';
 export { default as Location } from './location.svg';
 export { default as Search } from './search.svg';
 export { default as FullArrowRight } from './full-arrow-right.svg';
+export { default as Filter } from './filter.svg';

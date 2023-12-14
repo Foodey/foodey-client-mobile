@@ -8,6 +8,8 @@ import AuthStackNavigator from '~/navigators/AuthStackNavigator';
 
 import MainBottomTabNavigator from './navigators/MainBottomTabNavigator';
 
+import { SearchScreen } from '~/screens/main';
+
 const MainStack = createStackNavigator();
 
 function App() {
@@ -37,13 +39,15 @@ function App() {
   //   )
   // );
 
-  return (
-    <NavigationContainer>
-      <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
-        <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
-      </MainStack.Navigator>
-    </NavigationContainer>
-  );
+  // return (
+  //   <NavigationContainer>
+  //     <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
+  //       <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
+  //     </MainStack.Navigator>
+  //   </NavigationContainer>
+  // );
+
+  return <SearchScreen />;
 }
 
 export default App;

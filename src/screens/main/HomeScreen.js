@@ -13,19 +13,20 @@ import { LocationDisplay, CircleCategory } from '~/components/home';
 import { SearchBar } from '~/components';
 import { FullArrowRight } from '~/resources/icons';
 import { categories } from '~/constants/TempData';
+import Style from './HomeStyle';
 
 const HomeScreen = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={Style.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <LocationDisplay style={styles.header} location="69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương" />
-      <SearchBar style={styles.search_bar} placeholder="Search Foods, Restaurants etc." />
+      <LocationDisplay style={Style.header} location="69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương" />
+      <SearchBar style={Style.search_bar} placeholder="Search Foods, Restaurants etc." />
       <ScrollView style={styles.scrollView_container} showsVerticalScrollIndicator={false}>
         <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
-          <Text style={styles.greeting_text}>Good evening, </Text>
+          <Text style={Style.screen_title_text}>Good evening, </Text>
           <Text
             style={[
-              styles.greeting_text,
+              Style.screen_title_text,
               { color: COLOR.button_primary_color, fontFamily: 'Manrope-Bold' },
             ]}
           >
@@ -82,7 +83,7 @@ const HomeScreen = () => {
                 />
                 <Text
                   style={{
-                    fontFamily: 'Manrope-Regular',
+                    fontFamily: 'Manrope-Medium',
                     fontWeight: '500',
                     fontSize: 16.5,
                     color: COLOR.button_primary_color,
@@ -94,43 +95,26 @@ const HomeScreen = () => {
             </View>
           </View>
         </View>
-        <View style={{ width: '100%', height: 305 }}></View>
-        <View style={{ width: '100%', height: 305 }}></View>
+        <View style={styles.offerNearby_container}>
+          <Text style={[styles.section_title_text, { marginTop: 15, marginStart: 21 }]}>
+            Offers Near you
+          </Text>
+        </View>
+        <View style={styles.new_trending_container}>
+          <Text style={[styles.section_title_text, { marginTop: 15, marginStart: 21 }]}>
+            New & Trending
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLOR.background_color,
-  },
-
-  header: {
-    height: 47,
-    marginHorizontal: 21,
-    marginVertical: 15,
-  },
-
-  search_bar: {
-    height: 50,
-    marginHorizontal: 21,
-    marginBottom: 15,
-  },
-
   scrollView_container: {},
 
-  greeting_text: {
-    fontFamily: 'Manrope-Regular',
-    fontWeight: '400',
-    fontSize: 33,
-    color: COLOR.text_primary_color,
-    marginBottom: 24,
-  },
-
   section_title_text: {
-    fontFamily: 'Manrope-Regular',
+    fontFamily: 'Manrope-Medium',
     fontWeight: '500',
     fontSize: 21,
     color: COLOR.text_primary_color,
@@ -146,6 +130,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+
+  offerNearby_container: {
+    width: '100%',
+    height: 305,
+    borderTopWidth: 1,
+    borderTopColor: COLOR.indicator_color,
+    marginTop: 15,
+  },
+
+  new_trending_container: {
+    width: '100%',
+    height: 305,
+    marginTop: 15,
   },
 });
 
