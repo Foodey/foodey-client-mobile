@@ -12,6 +12,7 @@ import { COLOR } from '~/constants/Colors';
 import { LocationDisplay, CircleCategory } from '~/components/home';
 import { SearchBar } from '~/components';
 import { FullArrowRight } from '~/resources/icons';
+import { categories } from '~/constants/TempData';
 
 const HomeScreen = () => {
   return (
@@ -28,7 +29,7 @@ const HomeScreen = () => {
               { color: COLOR.button_primary_color, fontFamily: 'Manrope-Bold' },
             ]}
           >
-            Trí
+            Thịnh
           </Text>
         </View>
         <View style={{ width: '90%', height: 290, marginHorizontal: 21 }}>
@@ -36,21 +37,28 @@ const HomeScreen = () => {
           <View style={styles.categories_container}>
             <View style={styles.categories_row_container}>
               <CircleCategory
-                imageLink={require('~/resources/images/burger.png')}
-                title="Burgers"
+                imageStyle={{ marginStart: 5 }}
+                imageLink={categories[0].imageLink}
+                title={categories[0].name}
               />
               <CircleCategory
-                imageLink={require('~/resources/images/burger.png')}
-                title="Milk Tea"
+                imageStyle={{ width: 60, height: 60 }}
+                imageLink={categories[1].imageLink}
+                title={categories[1].name}
               />
               <CircleCategory
-                imageLink={require('~/resources/images/burger.png')}
-                title="Western"
+                imageStyle={{ width: 55, height: 55 }}
+                imageLink={categories[2].imageLink}
+                title={categories[2].name}
               />
             </View>
             <View style={styles.categories_row_container}>
-              <CircleCategory imageLink={require('~/resources/images/burger.png')} title="Pizzas" />
-              <CircleCategory imageLink={require('~/resources/images/burger.png')} title="Sweets" />
+              <CircleCategory imageLink={categories[3].imageLink} title={categories[3].name} />
+              <CircleCategory
+                imageStyle={{ marginStart: 20 }}
+                imageLink={categories[4].imageLink}
+                title={categories[4].name}
+              />
               <Pressable
                 style={({ pressed }) => [
                   {
@@ -78,7 +86,6 @@ const HomeScreen = () => {
                     fontWeight: '500',
                     fontSize: 16.5,
                     color: COLOR.button_primary_color,
-                    marginTop: 9,
                   }}
                 >
                   See alls
@@ -117,7 +124,7 @@ const styles = StyleSheet.create({
   greeting_text: {
     fontFamily: 'Manrope-Regular',
     fontWeight: '400',
-    fontSize: 34,
+    fontSize: 33,
     color: COLOR.text_primary_color,
     marginBottom: 24,
   },

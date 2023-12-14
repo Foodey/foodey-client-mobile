@@ -1,12 +1,15 @@
-import { TransitionIOSSpec } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionSpecs';
 import { View, StyleSheet, Pressable, Text, Image } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 
-function CircleCategory({ style, title, imageLink, onPressFunction }) {
+function CircleCategory({ style, title, imageLink, imageStyle, onPressFunction }) {
   return (
     <Pressable style={[styles.circle, style]} onPress={onPressFunction}>
-      <Image source={imageLink} />
-      <Text style={styles.title_text}>{title}</Text>
+      <View style={{ flex: 2.25, alignItems: 'center', justifyContent: 'center' }}>
+        <Image style={imageStyle} onPress={onPressFunction} source={imageLink} />
+      </View>
+      <View style={{ flex: 1.25 }}>
+        <Text style={styles.title_text}>{title}</Text>
+      </View>
     </Pressable>
   );
 }
@@ -26,7 +29,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 16.5,
     color: COLOR.text_primary_color,
-    marginTop: 9,
   },
 });
 
