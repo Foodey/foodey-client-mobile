@@ -7,7 +7,7 @@ export const categories = [
   },
   {
     id: '2',
-    name: 'Milk Teas',
+    name: 'Milk Tea',
     description: '',
     image_link: '~/resources/images/burger.png',
   },
