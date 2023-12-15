@@ -72,3 +72,41 @@ export const categories = [
     imageLink: require('~/resources/images/japanese.png'),
   },
 ];
+
+export const restaurants = [
+  {
+    name: 'Restaurant 1',
+    wallpaperLink: require('~/resources/images/kfc-wallpaper.png'),
+    logoLink: require('~/resources/images/kfc-logo.png'),
+    phone: '0123456789',
+    email: 'testdata@gmai.com',
+  },
+  {
+    name: 'Restaurant 2',
+    wallpaperLink: require('~/resources/images/kfc-wallpaper.png'),
+    logoLink: require('~/resources/images/kfc-logo.png'),
+    phone: '0123456789',
+    email: 'testdata@gmai.com',
+  },
+  {
+    name: 'Restaurant 3',
+    wallpaperLink: require('~/resources/images/kfc-wallpaper.png'),
+    logoLink: require('~/resources/images/kfc-logo.png'),
+    phone: '0123456789',
+    email: 'testdata@gmai.com',
+  },
+  {
+    name: 'Restaurant 4',
+    wallpaperLink: require('~/resources/images/kfc-wallpaper.png'),
+    logoLink: require('~/resources/images/kfc-logo.png'),
+    phone: '0123456789',
+    email: 'testdata@gmai.com',
+  },
+  {
+    name: 'Restaurant 5',
+    wallpaperLink: require('~/resources/images/kfc-wallpaper.png'),
+    logoLink: require('~/resources/images/kfc-logo.png'),
+    phone: '0123456789',
+    email: 'testdata@gmai.com',
+  },
+];

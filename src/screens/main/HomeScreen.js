@@ -6,13 +6,14 @@ import {
   StyleSheet,
   ScrollView,
   Pressable,
+  FlatList,
 } from 'react-native';
 import React, { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
-import { LocationDisplay, CircleCategory } from '~/components/home';
+import { LocationDisplay, CircleCategory, RestaurantScrollCard } from '~/components/home';
 import { SearchBar } from '~/components';
 import { FullArrowRight } from '~/resources/icons';
-import { categories } from '~/constants/TempData';
+import { categories, restaurants } from '~/constants/TempData';
 import Style from './HomeStyle';
 
 const HomeScreen = () => {
@@ -83,11 +84,41 @@ const HomeScreen = () => {
           <Text style={[styles.section_title_text, { marginTop: 15, marginStart: 21 }]}>
             Offers Near you
           </Text>
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ marginTop: 15 }}
+            data={restaurants}
+            renderItem={({ item }) => (
+              <RestaurantScrollCard
+                style={{ marginStart: 21 }}
+                wallpaperLink={item.wallpaperLink}
+                logoLink={item.logoLink}
+                name={item.name}
+                distance={1.2} // this distance should be calculated depends on the current location of user
+              />
+            )}
+          />
         </View>
         <View style={styles.new_trending_container}>
           <Text style={[styles.section_title_text, { marginTop: 15, marginStart: 21 }]}>
             New & Trending
           </Text>
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ marginTop: 15 }}
+            data={restaurants}
+            renderItem={({ item }) => (
+              <RestaurantScrollCard
+                style={{ marginStart: 21 }}
+                wallpaperLink={item.wallpaperLink}
+                logoLink={item.logoLink}
+                name={item.name}
+                distance={1.2} // this distance should be calculated depends on the current location of user
+              />
+            )}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -118,7 +149,7 @@ const styles = StyleSheet.create({
 
   offerNearby_container: {
     width: '100%',
-    height: 305,
+    height: 230,
     borderTopWidth: 1,
     borderTopColor: COLOR.indicator_color,
     marginTop: 15,
@@ -126,7 +157,7 @@ const styles = StyleSheet.create({
 
   new_trending_container: {
     width: '100%',
-    height: 305,
+    height: 280,
     marginTop: 15,
   },
 });
