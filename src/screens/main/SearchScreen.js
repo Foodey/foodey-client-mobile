@@ -1,19 +1,10 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-} from 'react-native';
+import { View, Text, SafeAreaView, StatusBar, StyleSheet, Pressable, FlatList } from 'react-native';
 import React, { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
-import { LocationDisplay, CircleCategory } from '~/components/home';
 import { SearchBar, BackButton } from '~/components';
 import { Filter } from '~/resources/icons';
-import { categories } from '~/constants/TempData';
 import Style from './HomeStyle';
+import { searchHistory } from '~/constants/TempData';
 
 const SearchScreen = () => {
   return (
@@ -36,6 +27,14 @@ const SearchScreen = () => {
           <Text style={styles.clear_all_text}>CLEAR ALL</Text>
         </Pressable>
       </View>
+      <FlatList
+        data={searchHistory}
+        renderItem={({ item }) => (
+          <Pressable style={styles.search_history_button}>
+            <Text style={styles.search_history_text}>{item}</Text>
+          </Pressable>
+        )}
+      />
     </SafeAreaView>
   );
 };
@@ -64,6 +63,20 @@ const styles = StyleSheet.create({
     color: COLOR.text_errorMessage_color,
     margin: 10,
     fontSize: 14,
+  },
+
+  search_history_button: {
+    height: 55,
+    justifyContent: 'center',
+    borderBottomWidth: 2,
+    borderBottomColor: COLOR.indicator_color,
+  },
+
+  search_history_text: {
+    fontFamily: 'Manrope-Regular',
+    fontSize: 18,
+    color: COLOR.text_primary_color,
+    marginStart: 21,
   },
 });
 

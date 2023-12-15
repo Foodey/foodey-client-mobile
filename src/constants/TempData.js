@@ -110,3 +110,11 @@ export const restaurants = [
     email: 'testdata@gmai.com',
   },
 ];
+
+export const searchHistory = [
+  'chicken',
+  'salad',
+  'Hồng trà Ngô Gia',
+  'Cơm tấm Ngô Quyền',
+  'Gong Cha',
+];

@@ -8,7 +8,7 @@ import AuthStackNavigator from '~/navigators/AuthStackNavigator';
 
 import MainBottomTabNavigator from './navigators/MainBottomTabNavigator';
 
-import { CategoriesScreen } from '~/screens/main';
+import { CategoriesScreen, SearchScreen } from '~/screens/main';
 
 const MainStack = createStackNavigator();
 
@@ -39,15 +39,15 @@ function App() {
   //   )
   // );
 
-  return (
-    <NavigationContainer>
-      <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
-        <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
-      </MainStack.Navigator>
-    </NavigationContainer>
-  );
+  // return (
+  //   <NavigationContainer>
+  //     <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
+  //       <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
+  //     </MainStack.Navigator>
+  //   </NavigationContainer>
+  // );
 
-  // return <CategoriesScreen />;
+  return <SearchScreen />;
 }
 
 export default App;
