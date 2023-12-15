@@ -15,6 +15,7 @@ import { SearchBar } from '~/components';
 import { FullArrowRight } from '~/resources/icons';
 import { categories, restaurants } from '~/constants/TempData';
 import Style from './HomeStyle';
+import ArrowRight from '~/resources/icons/arrow-right';
 
 const HomeScreen = () => {
   return (
@@ -81,9 +82,25 @@ const HomeScreen = () => {
           </View>
         </View>
         <View style={styles.offerNearby_container}>
-          <Text style={[styles.section_title_text, { marginTop: 15, marginStart: 21 }]}>
-            Offers Near you
-          </Text>
+          <View style={styles.offerNearby_header_container}>
+            <Text style={styles.section_title_text}>Offers Near you</Text>
+            <Pressable style={{ marginLeft: 'auto', flexDirection: 'row' }}>
+              <Text
+                style={{
+                  fontFamily: 'Manrope-Medium',
+                  fontSize: 15,
+                  color: COLOR.text_secondary_color,
+                }}
+              >
+                See all
+              </Text>
+              <FullArrowRight
+                width={24}
+                height={24}
+                style={{ color: COLOR.text_secondary_color, marginStart: 5 }}
+              />
+            </Pressable>
+          </View>
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -98,12 +115,44 @@ const HomeScreen = () => {
                 distance={1.2} // this distance should be calculated depends on the current location of user
               />
             )}
+            ListFooterComponent={() => (
+              <View style={styles.list_footer_container}>
+                <Pressable style={styles.seeAll_round_button}>
+                  <ArrowRight width={18} height={18} style={{ color: COLOR.background_color }} />
+                </Pressable>
+                <Text
+                  style={{
+                    fontFamily: 'Manrope-Medium',
+                    fontSize: 15,
+                    color: COLOR.text_secondary_color,
+                  }}
+                >
+                  See All
+                </Text>
+              </View>
+            )}
           />
         </View>
         <View style={styles.new_trending_container}>
-          <Text style={[styles.section_title_text, { marginTop: 15, marginStart: 21 }]}>
-            New & Trending
-          </Text>
+          <View style={styles.offerNearby_header_container}>
+            <Text style={styles.section_title_text}>New & Trending</Text>
+            <Pressable style={{ marginLeft: 'auto', flexDirection: 'row' }}>
+              <Text
+                style={{
+                  fontFamily: 'Manrope-Medium',
+                  fontSize: 15,
+                  color: COLOR.text_secondary_color,
+                }}
+              >
+                See all
+              </Text>
+              <FullArrowRight
+                width={24}
+                height={24}
+                style={{ color: COLOR.text_secondary_color, marginStart: 5 }}
+              />
+            </Pressable>
+          </View>
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -117,6 +166,22 @@ const HomeScreen = () => {
                 name={item.name}
                 distance={1.2} // this distance should be calculated depends on the current location of user
               />
+            )}
+            ListFooterComponent={() => (
+              <View style={styles.list_footer_container}>
+                <Pressable style={styles.seeAll_round_button}>
+                  <ArrowRight width={18} height={18} style={{ color: COLOR.background_color }} />
+                </Pressable>
+                <Text
+                  style={{
+                    fontFamily: 'Manrope-Medium',
+                    fontSize: 15,
+                    color: COLOR.text_secondary_color,
+                  }}
+                >
+                  See All
+                </Text>
+              </View>
             )}
           />
         </View>
@@ -155,10 +220,33 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
 
+  offerNearby_header_container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 15,
+    marginHorizontal: 21,
+  },
+
   new_trending_container: {
     width: '100%',
     height: 280,
     marginTop: 15,
+  },
+
+  list_footer_container: {
+    width: 100,
+    height: 111,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  seeAll_round_button: {
+    width: 32,
+    height: 32,
+    borderRadius: 100,
+    backgroundColor: COLOR.text_secondary_color,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
