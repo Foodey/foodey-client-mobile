@@ -39,15 +39,15 @@ function App() {
   //   )
   // );
 
-  // return (
-  //   <NavigationContainer>
-  //     <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
-  //       <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
-  //     </MainStack.Navigator>
-  //   </NavigationContainer>
-  // );
+  return (
+    <NavigationContainer>
+      <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
+        <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
+      </MainStack.Navigator>
+    </NavigationContainer>
+  );
 
-  return <SearchScreen />;
+  // return <SearchScreen />;
 }
 
 export default App;

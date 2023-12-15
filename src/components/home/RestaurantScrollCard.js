@@ -1,33 +1,35 @@
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import { Location, Search } from '~/resources/icons';
 
-function RestaurantScrollCard({ style, wallpaperLink, logoLink, name, distance }) {
+function RestaurantScrollCard({ style, imageStyle, wallpaperLink, logoLink, name, distance }) {
   return (
-    <View style={[styles.container, style]}>
-      <Image source={wallpaperLink} style={styles.wallpaper}></Image>
+    <Pressable style={[styles.container, style]}>
+      <Image source={wallpaperLink} style={[styles.wallpaper, imageStyle]}></Image>
       <View style={styles.content_container}>
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Image source={logoLink} style={styles.logo} />
         </View>
         <View style={styles.res_info_container}>
-          <Text style={styles.name_text}>{name}</Text>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.name_text}>
+            {name}
+          </Text>
           <Text style={styles.distance_text}>{distance} km</Text>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: 230,
-    height: 155,
+    width: 150,
+    height: 195,
   },
 
   wallpaper: {
     width: '100%',
-    height: '72%',
+    height: 150,
     borderRadius: 10,
   },
 
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
   },
 
   res_info_container: {
-    width: '100%',
+    flex: 1,
     justifyContent: 'center',
   },
 

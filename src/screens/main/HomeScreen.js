@@ -13,7 +13,7 @@ import { COLOR } from '~/constants/Colors';
 import { LocationDisplay, CircleCategory, RestaurantScrollCard } from '~/components/home';
 import { SearchBar } from '~/components';
 import { FullArrowRight } from '~/resources/icons';
-import { categories, restaurants } from '~/constants/TempData';
+import { categories, restaurants, offers } from '~/constants/TempData';
 import Style from './HomeStyle';
 import ArrowRight from '~/resources/icons/arrow-right';
 
@@ -105,18 +105,18 @@ const HomeScreen = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ marginTop: 15 }}
-            data={restaurants}
+            data={offers}
             renderItem={({ item }) => (
               <RestaurantScrollCard
                 style={{ marginStart: 21 }}
-                wallpaperLink={item.wallpaperLink}
+                wallpaperLink={item.voucherImageLink}
                 logoLink={item.logoLink}
-                name={item.name}
+                name={item.owner}
                 distance={1.2} // this distance should be calculated depends on the current location of user
               />
             )}
             ListFooterComponent={() => (
-              <View style={styles.list_footer_container}>
+              <View style={[styles.list_footer_container, { width: 100, height: 195 }]}>
                 <Pressable style={styles.seeAll_round_button}>
                   <ArrowRight width={18} height={18} style={{ color: COLOR.background_color }} />
                 </Pressable>
@@ -160,7 +160,8 @@ const HomeScreen = () => {
             data={restaurants}
             renderItem={({ item }) => (
               <RestaurantScrollCard
-                style={{ marginStart: 21 }}
+                style={{ marginStart: 21, width: 202, height: 158 }}
+                imageStyle={{ height: 113 }}
                 wallpaperLink={item.wallpaperLink}
                 logoLink={item.logoLink}
                 name={item.name}
@@ -168,7 +169,7 @@ const HomeScreen = () => {
               />
             )}
             ListFooterComponent={() => (
-              <View style={styles.list_footer_container}>
+              <View style={[styles.list_footer_container, { width: 100, height: 158 }]}>
                 <Pressable style={styles.seeAll_round_button}>
                   <ArrowRight width={18} height={18} style={{ color: COLOR.background_color }} />
                 </Pressable>
@@ -214,7 +215,7 @@ const styles = StyleSheet.create({
 
   offerNearby_container: {
     width: '100%',
-    height: 230,
+    height: 280,
     borderTopWidth: 1,
     borderTopColor: COLOR.indicator_color,
     marginTop: 15,
@@ -234,8 +235,6 @@ const styles = StyleSheet.create({
   },
 
   list_footer_container: {
-    width: 100,
-    height: 111,
     alignItems: 'center',
     justifyContent: 'center',
   },

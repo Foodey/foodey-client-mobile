@@ -10,7 +10,8 @@ export default StyleSheet.create({
   header: {
     height: 47,
     marginHorizontal: 21,
-    marginVertical: 15,
+    marginBottom: 15,
+    marginTop: 2,
   },
 
   screen_title_text: {
@@ -18,7 +19,7 @@ export default StyleSheet.create({
     fontWeight: '400',
     fontSize: 33,
     color: COLOR.text_primary_color,
-    marginBottom: 15,
+    marginBottom: 6,
   },
 
   search_bar: {

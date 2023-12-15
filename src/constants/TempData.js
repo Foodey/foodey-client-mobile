@@ -75,7 +75,7 @@ export const categories = [
 
 export const restaurants = [
   {
-    name: 'Restaurant 1',
+    name: 'KFC',
     wallpaperLink: require('~/resources/images/kfc-wallpaper.png'),
     logoLink: require('~/resources/images/kfc-logo.png'),
     phone: '0123456789',
@@ -117,4 +117,37 @@ export const searchHistory = [
   'Hồng trà Ngô Gia',
   'Cơm tấm Ngô Quyền',
   'Gong Cha',
+];
+
+export const offers = [
+  {
+    id: '1',
+    voucherImageLink: require('~/resources/images/kfc-voucher.png'),
+    logoLink: require('~/resources/images/kfc-logo.png'),
+    owner: 'KFC Lê Văn Lương',
+  },
+  {
+    id: '2',
+    voucherImageLink: require('~/resources/images/kfc-voucher.png'),
+    logoLink: require('~/resources/images/kfc-logo.png'),
+    owner: 'Restaurant 2',
+  },
+  {
+    id: '3',
+    voucherImageLink: require('~/resources/images/kfc-voucher.png'),
+    logoLink: require('~/resources/images/kfc-logo.png'),
+    owner: 'Restaurant 3',
+  },
+  {
+    id: '4',
+    voucherImageLink: require('~/resources/images/kfc-voucher.png'),
+    logoLink: require('~/resources/images/kfc-logo.png'),
+    owner: 'Restaurant 4',
+  },
+  {
+    id: '5',
+    voucherImageLink: require('~/resources/images/kfc-voucher.png'),
+    logoLink: require('~/resources/images/kfc-logo.png'),
+    owner: 'Restaurant 5',
+  },
 ];
