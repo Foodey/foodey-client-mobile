@@ -73,4 +73,6 @@ export const COLOR = {
   edtButton_pressed_background_color: peach_80,
 
   circleCategory_background_color: pink_100_trans,
+
+  star_background_color: yellow_100,
 };

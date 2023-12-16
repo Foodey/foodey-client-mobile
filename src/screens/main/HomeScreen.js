@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
-import { LocationDisplay, CircleCategory, RestaurantScrollCard } from '~/components/home';
+import { LocationDisplay, CircleCategory, TruncateRestaurantCard } from '~/components/home';
 import { SearchBar } from '~/components';
 import { FullArrowRight } from '~/resources/icons';
 import { categories, restaurants, offers } from '~/constants/TempData';
@@ -18,6 +18,10 @@ import Style from './HomeStyle';
 import ArrowRight from '~/resources/icons/arrow-right';
 
 const HomeScreen = () => {
+  const [categoriesList, setCategoriesList] = useState(categories);
+  const [restaurantsList, setRestaurantsList] = useState(restaurants);
+  const [offersList, setOffersList] = useState(offers);
+
   return (
     <SafeAreaView style={Style.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
@@ -39,13 +43,28 @@ const HomeScreen = () => {
           <Text style={styles.section_title_text}>Categories</Text>
           <View style={styles.categories_container}>
             <View style={styles.categories_row_container}>
-              <CircleCategory imageLink={categories[0].imageLink} title={categories[0].name} />
-              <CircleCategory imageLink={categories[1].imageLink} title={categories[1].name} />
-              <CircleCategory imageLink={categories[2].imageLink} title={categories[2].name} />
+              <CircleCategory
+                imageLink={categoriesList[0].imageLink}
+                title={categoriesList[0].name}
+              />
+              <CircleCategory
+                imageLink={categoriesList[1].imageLink}
+                title={categoriesList[1].name}
+              />
+              <CircleCategory
+                imageLink={categoriesList[2].imageLink}
+                title={categoriesList[2].name}
+              />
             </View>
             <View style={styles.categories_row_container}>
-              <CircleCategory imageLink={categories[3].imageLink} title={categories[3].name} />
-              <CircleCategory imageLink={categories[4].imageLink} title={categories[4].name} />
+              <CircleCategory
+                imageLink={categoriesList[3].imageLink}
+                title={categoriesList[3].name}
+              />
+              <CircleCategory
+                imageLink={categoriesList[4].imageLink}
+                title={categoriesList[4].name}
+              />
               <Pressable
                 style={({ pressed }) => [
                   {
@@ -105,9 +124,9 @@ const HomeScreen = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ marginTop: 15 }}
-            data={offers}
+            data={offersList}
             renderItem={({ item }) => (
-              <RestaurantScrollCard
+              <TruncateRestaurantCard
                 style={{ marginStart: 21 }}
                 wallpaperLink={item.voucherImageLink}
                 logoLink={item.logoLink}
@@ -116,7 +135,7 @@ const HomeScreen = () => {
               />
             )}
             ListFooterComponent={() => (
-              <View style={[styles.list_footer_container, { width: 100, height: 195 }]}>
+              <View style={[styles.list_footer_container, { width: 100, height: 200 }]}>
                 <Pressable style={styles.seeAll_round_button}>
                   <ArrowRight width={18} height={18} style={{ color: COLOR.background_color }} />
                 </Pressable>
@@ -157,10 +176,10 @@ const HomeScreen = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ marginTop: 15 }}
-            data={restaurants}
+            data={restaurantsList}
             renderItem={({ item }) => (
-              <RestaurantScrollCard
-                style={{ marginStart: 21, width: 202, height: 158 }}
+              <TruncateRestaurantCard
+                style={{ marginStart: 21, width: 202, height: 163 }}
                 imageStyle={{ height: 113 }}
                 wallpaperLink={item.wallpaperLink}
                 logoLink={item.logoLink}
@@ -169,7 +188,7 @@ const HomeScreen = () => {
               />
             )}
             ListFooterComponent={() => (
-              <View style={[styles.list_footer_container, { width: 100, height: 158 }]}>
+              <View style={[styles.list_footer_container, { width: 100, height: 163 }]}>
                 <Pressable style={styles.seeAll_round_button}>
                   <ArrowRight width={18} height={18} style={{ color: COLOR.background_color }} />
                 </Pressable>
@@ -215,7 +234,7 @@ const styles = StyleSheet.create({
 
   offerNearby_container: {
     width: '100%',
-    height: 280,
+
     borderTopWidth: 1,
     borderTopColor: COLOR.indicator_color,
     marginTop: 15,
@@ -230,8 +249,8 @@ const styles = StyleSheet.create({
 
   new_trending_container: {
     width: '100%',
-    height: 280,
     marginTop: 15,
+    marginBottom: 20,
   },
 
   list_footer_container: {

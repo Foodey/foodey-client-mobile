@@ -80,6 +80,7 @@ export const restaurants = [
     logoLink: require('~/resources/images/kfc-logo.png'),
     phone: '0123456789',
     email: 'testdata@gmai.com',
+    avgReview: '4.8',
   },
   {
     name: 'Restaurant 2',
@@ -87,6 +88,7 @@ export const restaurants = [
     logoLink: require('~/resources/images/kfc-logo.png'),
     phone: '0123456789',
     email: 'testdata@gmai.com',
+    avgReview: '5.0',
   },
   {
     name: 'Restaurant 3',
@@ -94,6 +96,7 @@ export const restaurants = [
     logoLink: require('~/resources/images/kfc-logo.png'),
     phone: '0123456789',
     email: 'testdata@gmai.com',
+    avgReview: '4.8',
   },
   {
     name: 'Restaurant 4',
@@ -101,6 +104,7 @@ export const restaurants = [
     logoLink: require('~/resources/images/kfc-logo.png'),
     phone: '0123456789',
     email: 'testdata@gmai.com',
+    avgReview: '4.8',
   },
   {
     name: 'Restaurant 5',
@@ -108,6 +112,7 @@ export const restaurants = [
     logoLink: require('~/resources/images/kfc-logo.png'),
     phone: '0123456789',
     email: 'testdata@gmai.com',
+    avgReview: '4.8',
   },
 ];
 
@@ -146,6 +151,24 @@ export const offers = [
   },
   {
     id: '5',
+    voucherImageLink: require('~/resources/images/kfc-voucher.png'),
+    logoLink: require('~/resources/images/kfc-logo.png'),
+    owner: 'Restaurant 5',
+  },
+  {
+    id: '6',
+    voucherImageLink: require('~/resources/images/kfc-voucher.png'),
+    logoLink: require('~/resources/images/kfc-logo.png'),
+    owner: 'Restaurant 5',
+  },
+  {
+    id: '7',
+    voucherImageLink: require('~/resources/images/kfc-voucher.png'),
+    logoLink: require('~/resources/images/kfc-logo.png'),
+    owner: 'Restaurant 5',
+  },
+  {
+    id: '8',
     voucherImageLink: require('~/resources/images/kfc-voucher.png'),
     logoLink: require('~/resources/images/kfc-logo.png'),
     owner: 'Restaurant 5',
