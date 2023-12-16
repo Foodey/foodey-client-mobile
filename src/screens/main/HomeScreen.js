@@ -16,17 +16,26 @@ import { FullArrowRight } from '~/resources/icons';
 import { categories, restaurants, offers } from '~/constants/TempData';
 import Style from './HomeStyle';
 import ArrowRight from '~/resources/icons/arrow-right';
+import { SearchScreen, SearchResultScreen } from '~/screens/main';
 
 const HomeScreen = () => {
   const [categoriesList, setCategoriesList] = useState(categories);
   const [restaurantsList, setRestaurantsList] = useState(restaurants);
   const [offersList, setOffersList] = useState(offers);
 
+  const [searchVisible, setSearchVisible] = useState(false);
+
   return (
     <SafeAreaView style={Style.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
+      <SearchScreen visible={searchVisible} onClosePress={() => setSearchVisible(false)} />
       <LocationDisplay style={Style.header} location="69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương" />
-      <SearchBar style={Style.search_bar} placeholder="Search Foods, Restaurants etc." />
+      <SearchBar
+        style={Style.search_bar}
+        placeholder="Search Foods, Restaurants etc."
+        editable={false}
+        onPressFunction={() => setSearchVisible(true)}
+      />
       <ScrollView style={styles.scrollView_container} showsVerticalScrollIndicator={false}>
         <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
           <Text style={Style.screen_title_text}>Good evening, </Text>

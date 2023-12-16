@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
 
   header: {
-    height: 47,
+    height: 35,
     marginHorizontal: 21,
     marginBottom: 15,
     marginTop: 2,

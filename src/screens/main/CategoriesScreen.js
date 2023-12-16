@@ -16,7 +16,7 @@ import { Filter } from '~/resources/icons';
 import { categories } from '~/constants/TempData';
 import Style from './HomeStyle';
 
-const SearchScreen = () => {
+const SearchScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />

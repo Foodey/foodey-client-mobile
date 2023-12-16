@@ -5,23 +5,8 @@ import { COLOR } from '~/constants/Colors';
 import FullArrowLeft from '~/resources/icons/full-arrow-left.svg';
 
 function BackButton(props) {
-  const [backButtonIsPressing, SetBackButtonIsPressing] = useState(false);
-
-  const BackPressInHandler = () => {
-    SetBackButtonIsPressing(true);
-  };
-
-  const BackPressOutHandler = () => {
-    SetBackButtonIsPressing(false);
-  };
-
   return (
-    <Pressable
-      style={[styles.button, props.style]}
-      onPressIn={BackPressInHandler}
-      onPressOut={BackPressOutHandler}
-      onPress={props.onPressFunction}
-    >
+    <Pressable style={[styles.button, props.style]} onPress={props.onPressFunction}>
       <FullArrowLeft width={24} height={24} />
       <Text style={styles.button_text}>Back</Text>
     </Pressable>
@@ -31,7 +16,7 @@ function BackButton(props) {
 const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
-    width: 42,
+    width: 60,
     height: 24,
   },
 

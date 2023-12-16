@@ -1,13 +1,4 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Pressable,
-  FlatList,
-  Modal,
-} from 'react-native';
+import { View, Text, SafeAreaView, StatusBar, StyleSheet, Pressable, FlatList } from 'react-native';
 import React, { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { SearchBar, BackButton } from '~/components';
@@ -15,21 +6,11 @@ import { Filter } from '~/resources/icons';
 import Style from './HomeStyle';
 import { searchHistory } from '~/constants/TempData';
 
-const SearchScreen = ({ visible, onClosePress }) => {
+const SearchResultScreen = ({ navigation }) => {
   return (
-    <Modal style={styles.container} visible={visible} transition="fade">
+    <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <BackButton
-        style={[Style.header, { marginBottom: 15, marginTop: 5 }]}
-        onPressFunction={onClosePress}
-      />
-      <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
-        <Text style={Style.screen_title_text}>Search</Text>
-        {/* <Pressable style={styles.filter_button}>
-          <Filter />
-          <Text style={styles.filter_button_text}>Filter</Text>
-        </Pressable> */}
-      </View>
+      <BackButton style={[Style.header, { marginBottom: 0 }]} />
       <SearchBar style={Style.search_bar} placeholder="Search Foods, Restaurants etc." />
       <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 21 }}>
         <Text
@@ -52,7 +33,7 @@ const SearchScreen = ({ visible, onClosePress }) => {
           </Pressable>
         )}
       />
-    </Modal>
+    </SafeAreaView>
   );
 };
 
@@ -97,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchScreen;
+export default SearchResultScreen;

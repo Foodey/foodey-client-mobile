@@ -6,7 +6,7 @@ import { FullyRestaurantCard } from '~/components/home';
 import Style from './HomeStyle';
 import { restaurants } from '~/constants/TempData';
 
-const NewTrendingScreen = () => {
+const NewTrendingScreen = ({ navigation }) => {
   const [restaurantsList, setRestaurantsList] = useState(restaurants);
 
   return (

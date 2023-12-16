@@ -24,10 +24,12 @@ export default function PhoneVerifyScreen({ navigation, route }) {
     setSystemOTPCode,
 
     signUpInputs,
+    signUpErrorMessages,
     handleSignUpInputsChanged,
     handleSignUpErrors,
 
     forgotPassInputs,
+    forgotPassErrorMessages,
     handleForgotPassInputsChanged,
     handleForgotPassErrors,
 
@@ -132,6 +134,9 @@ export default function PhoneVerifyScreen({ navigation, route }) {
       <EditPhoneNumModal
         visible={editPhoneNumberVisible}
         newPhoneNumber={newPhoneNumber}
+        errorMessage={
+          isForgotPassVerify ? forgotPassErrorMessages.phoneNumber : signUpErrorMessages.phoneNumber
+        }
         onClose={() => {
           setEditPhoneNumberVisible(false);
         }}

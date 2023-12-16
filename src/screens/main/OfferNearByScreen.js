@@ -6,7 +6,7 @@ import { TruncateRestaurantCard } from '~/components/home';
 import Style from './HomeStyle';
 import { offers } from '~/constants/TempData';
 
-const OfferNearByScreen = () => {
+const OfferNearByScreen = ({ navigation }) => {
   const [offersList, setOffersList] = useState(offers);
 
   return (

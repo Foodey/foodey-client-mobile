@@ -11,6 +11,7 @@ import MainBottomTabNavigator from './navigators/MainBottomTabNavigator';
 import {
   CategoriesScreen,
   SearchScreen,
+  SearchResultScreen,
   OfferNearByScreen,
   NewTrendingScreen,
 } from '~/screens/main';
@@ -52,7 +53,7 @@ function App() {
   //   </NavigationContainer>
   // );
 
-  return <NewTrendingScreen />;
+  return <SearchResultScreen />;
 }
 
 export default App;
