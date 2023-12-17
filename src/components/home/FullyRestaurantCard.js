@@ -11,9 +11,10 @@ function FullyRestaurantCard({
   distance,
   estimateTime,
   avgReview,
+  onPressFunction,
 }) {
   return (
-    <Pressable style={[styles.container, style]}>
+    <Pressable style={[styles.container, style]} onPress={onPressFunction}>
       <Image source={wallpaperLink} style={[styles.wallpaper, imageStyle]}></Image>
       <View style={styles.content_container}>
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>

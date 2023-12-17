@@ -14,13 +14,12 @@ const NewTrendingScreen = ({ navigation }) => {
       <StatusBar backgroundColor={COLOR.background_color} />
       <BackButton style={[Style.header, { marginBottom: 0 }]} />
       <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
-        <Text style={Style.screen_title_text}>New & Trending</Text>
+        <Text style={[Style.screen_title_text, { marginBottom: 20 }]}>New & Trending</Text>
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           marginTop: 15,
-          alignContent: 'space-between',
           marginHorizontal: 21,
           alignItems: 'center',
           paddingBottom: 120,

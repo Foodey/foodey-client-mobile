@@ -21,7 +21,6 @@ const OfferNearByScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           marginTop: 15,
-          alignContent: 'space-between',
           marginHorizontal: 21,
           alignItems: 'center',
           paddingBottom: 130,

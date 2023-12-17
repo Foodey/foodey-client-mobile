@@ -23,13 +23,6 @@ const SearchScreen = ({ visible, onClosePress }) => {
         style={[Style.header, { marginBottom: 15, marginTop: 5 }]}
         onPressFunction={onClosePress}
       />
-      <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
-        <Text style={Style.screen_title_text}>Search</Text>
-        {/* <Pressable style={styles.filter_button}>
-          <Filter />
-          <Text style={styles.filter_button_text}>Filter</Text>
-        </Pressable> */}
-      </View>
       <SearchBar style={Style.search_bar} placeholder="Search Foods, Restaurants etc." />
       <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 21 }}>
         <Text

@@ -1,29 +1,33 @@
 import { View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { COLOR } from '~/constants/Colors';
-import { Location, Search } from '~/resources/icons';
+import { Star } from '~/resources/icons';
+import ArrowRight from '~/resources/icons/arrow-right.svg';
 
-function TruncateRestaurantCard({
+function RestaurantBar({
   style,
-  imageStyle,
-  wallpaperLink,
   logoLink,
   name,
   distance,
+  estimateTime,
+  avgReview,
   onPressFunction,
 }) {
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
-      <Image source={wallpaperLink} style={[styles.wallpaper, imageStyle]}></Image>
       <View style={styles.content_container}>
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Image source={logoLink} style={styles.logo} />
-        </View>
+        <Image source={logoLink} style={styles.logo} />
         <View style={styles.res_info_container}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.name_text}>
             {name}
           </Text>
-          <Text style={styles.distance_text}>{distance} km</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Star width={17} height={17} style={{ color: COLOR.star_background_color }} />
+            <Text style={styles.distance_text}>
+              {avgReview} | {distance} km | {estimateTime} mins
+            </Text>
+          </View>
         </View>
+        <ArrowRight width={24} height={24} style={{ color: COLOR.text_primary_color }} />
       </View>
     </Pressable>
   );
@@ -31,19 +35,17 @@ function TruncateRestaurantCard({
 
 const styles = StyleSheet.create({
   container: {
-    width: 150,
-    height: 201,
-  },
-
-  wallpaper: {
     width: '100%',
-    height: 150,
-    borderRadius: 10,
+    height: 80,
+    borderBottomWidth: 1,
+    borderBottomColor: COLOR.indicator_color,
+    justifyContent: 'center',
   },
 
   content_container: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginHorizontal: 21,
+    alignItems: 'center',
   },
 
   logo: {
@@ -60,13 +62,14 @@ const styles = StyleSheet.create({
   name_text: {
     fontFamily: 'Manrope-Medium',
     color: COLOR.text_primary_color,
-    fontSize: 17,
+    fontSize: 18,
   },
 
   distance_text: {
     fontFamily: 'Manrope-Medium',
-    fontSize: 13,
+    fontSize: 14,
+    marginStart: 5,
   },
 });
 
-export default TruncateRestaurantCard;
+export default RestaurantBar;
