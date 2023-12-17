@@ -1,16 +1,23 @@
 import { View, StyleSheet, Pressable, TextInput } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import { Location, Search } from '~/resources/icons';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import CloseCircle from '~/resources/icons/close-circle.svg';
 
-function SearchBar({ style, placeholder, onDeletePress, editable, onPressFunction }) {
+function SearchBar({ style, placeholder, onDeletePress, editable, onPressFunction, ref }) {
   const [isFocused, setIsFocused] = useState(false);
+
+  const searchRef = useRef();
+
+  useEffect(() => {
+    setTimeout(() => searchRef.current.focus(), 0);
+  }, []);
 
   return (
     <Pressable onPress={onPressFunction} style={[styles.container, style]}>
       <Search width={24} height={24} style={{ marginStart: 12, flex: 1 }} />
       <TextInput
+        ref={(ref) => (searchRef.current = ref)}
         editable={editable}
         style={[styles.location_text]}
         placeholder={placeholder}

@@ -8,7 +8,7 @@ import {
   Pressable,
   FlatList,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { LocationDisplay, CircleCategory, TruncateRestaurantCard } from '~/components/home';
 import { SearchBar } from '~/components';
@@ -16,9 +16,29 @@ import { FullArrowRight } from '~/resources/icons';
 import { categories, restaurants, offers } from '~/constants/TempData';
 import Style from './HomeStyle';
 import ArrowRight from '~/resources/icons/arrow-right';
-import { SearchScreen, SearchResultScreen } from '~/screens/main';
+import { SearchScreen } from '~/screens/home';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
+  //Navigation:
+
+  const seeAllCategoriesHandler = () => {
+    navigation.navigate('Categories_Screen');
+  };
+
+  const seeAllOfferNearbyHandler = () => {
+    navigation.navigate('OfferNearBy_Screen');
+  };
+
+  const seeAllNewTrendingHandler = () => {
+    navigation.navigate('NewTrending_Screen');
+  };
+
+  const seeSearchResultHandler = () => {
+    setSearchVisible(false);
+    navigation.navigate('SearchResult_Screen');
+  };
+
+  //Use states:
   const [categoriesList, setCategoriesList] = useState(categories);
   const [restaurantsList, setRestaurantsList] = useState(restaurants);
   const [offersList, setOffersList] = useState(offers);
@@ -28,7 +48,11 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={Style.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <SearchScreen visible={searchVisible} onClosePress={() => setSearchVisible(false)} />
+      <SearchScreen
+        visible={searchVisible}
+        onClosePress={() => setSearchVisible(false)}
+        onSelectedItem={seeSearchResultHandler}
+      />
       <LocationDisplay style={Style.header} location="69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương" />
       <SearchBar
         style={Style.search_bar}
@@ -75,6 +99,7 @@ const HomeScreen = () => {
                 title={categoriesList[4].name}
               />
               <Pressable
+                onPress={seeAllCategoriesHandler}
                 style={({ pressed }) => [
                   {
                     width: 112,
@@ -112,7 +137,10 @@ const HomeScreen = () => {
         <View style={styles.offerNearby_container}>
           <View style={styles.offerNearby_header_container}>
             <Text style={styles.section_title_text}>Offers Near you</Text>
-            <Pressable style={{ marginLeft: 'auto', flexDirection: 'row' }}>
+            <Pressable
+              style={{ marginLeft: 'auto', flexDirection: 'row' }}
+              onPress={seeAllOfferNearbyHandler}
+            >
               <Text
                 style={{
                   fontFamily: 'Manrope-Medium',
@@ -145,7 +173,7 @@ const HomeScreen = () => {
             )}
             ListFooterComponent={() => (
               <View style={[styles.list_footer_container, { width: 100, height: 200 }]}>
-                <Pressable style={styles.seeAll_round_button}>
+                <Pressable style={styles.seeAll_round_button} onPress={seeAllOfferNearbyHandler}>
                   <ArrowRight width={18} height={18} style={{ color: COLOR.background_color }} />
                 </Pressable>
                 <Text
@@ -164,7 +192,10 @@ const HomeScreen = () => {
         <View style={styles.new_trending_container}>
           <View style={styles.offerNearby_header_container}>
             <Text style={styles.section_title_text}>New & Trending</Text>
-            <Pressable style={{ marginLeft: 'auto', flexDirection: 'row' }}>
+            <Pressable
+              style={{ marginLeft: 'auto', flexDirection: 'row' }}
+              onPress={seeAllNewTrendingHandler}
+            >
               <Text
                 style={{
                   fontFamily: 'Manrope-Medium',
@@ -198,7 +229,7 @@ const HomeScreen = () => {
             )}
             ListFooterComponent={() => (
               <View style={[styles.list_footer_container, { width: 100, height: 163 }]}>
-                <Pressable style={styles.seeAll_round_button}>
+                <Pressable style={styles.seeAll_round_button} onPress={seeAllNewTrendingHandler}>
                   <ArrowRight width={18} height={18} style={{ color: COLOR.background_color }} />
                 </Pressable>
                 <Text

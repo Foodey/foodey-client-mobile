@@ -1,9 +1,11 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import SignInUpScreen from '~/screens/authenticate/SignInUpScreen';
-import PhoneVerifyScreen from '~/screens/authenticate/PhoneVerifyScreen';
-import ForgotPassScreen from '~/screens/authenticate/ForgotPassScreen';
-import ResetPassScreen from '~/screens/authenticate/ResetPassScreen';
+import {
+  SignInUpScreen,
+  PhoneVerifyScreen,
+  ForgotPassScreen,
+  ResetPassScreen,
+} from '~/screens/authenticate';
 
 import { AuthProvider } from '~/contexts/AuthContext';
 

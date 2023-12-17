@@ -7,23 +7,27 @@ import Style from './HomeStyle';
 import { offers } from '~/constants/TempData';
 
 const OfferNearByScreen = ({ navigation }) => {
+  const onBackHandler = () => {
+    navigation.goBack();
+  };
+
   const [offersList, setOffersList] = useState(offers);
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <BackButton style={[Style.header, { marginBottom: 0 }]} />
+      <BackButton style={[Style.header, { marginBottom: 0 }]} onPressFunction={onBackHandler} />
       <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
         <Text style={[Style.screen_title_text, { marginBottom: 20 }]}>Offer Near you</Text>
       </View>
       <FlatList
         numColumns={2}
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
         contentContainerStyle={{
           marginTop: 15,
           marginHorizontal: 21,
           alignItems: 'center',
-          paddingBottom: 130,
+          paddingBottom: 110,
         }}
         data={offersList}
         renderItem={({ item }) => (
@@ -41,6 +45,10 @@ const OfferNearByScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: COLOR.background_color,
+  },
+
   filter_button: {
     flexDirection: 'row',
     width: 100,

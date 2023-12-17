@@ -2,14 +2,16 @@ import { View, Text, SafeAreaView, StatusBar, StyleSheet, Pressable, FlatList } 
 import React, { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { SearchBar, BackButton, RestaurantBar } from '~/components';
-import { Filter } from '~/resources/icons';
 import Style from './HomeStyle';
-import { searchHistory } from '~/constants/TempData';
-import { SearchScreen } from '~/screens/main';
+import { SearchScreen } from '~/screens/home';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { restaurants } from '~/constants/TempData';
 
 const SearchResultScreen = ({ navigation }) => {
+  const onBackHandler = () => {
+    navigation.goBack();
+  };
+
   const [searchVisible, setSearchVisible] = useState(false);
 
   const [dropDownOpen, setDropDownOpen] = useState(false);
@@ -35,7 +37,10 @@ const SearchResultScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
       <SearchScreen visible={searchVisible} onClosePress={() => setSearchVisible(false)} />
-      <BackButton style={[Style.header, { marginBottom: 15, marginTop: 5 }]} />
+      <BackButton
+        style={[Style.header, { marginBottom: 15, marginTop: 5 }]}
+        onPressFunction={onBackHandler}
+      />
       <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
         <Text style={Style.screen_title_text}>Search</Text>
         {/* <Pressable style={styles.filter_button}>
@@ -84,7 +89,7 @@ const SearchResultScreen = ({ navigation }) => {
         />
       </View>
       <FlatList
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
         contentContainerStyle={{
           marginTop: 15,
           paddingBottom: 260,
@@ -106,6 +111,10 @@ const SearchResultScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: COLOR.background_color,
+  },
+
   filter_button: {
     flexDirection: 'row',
     width: 100,

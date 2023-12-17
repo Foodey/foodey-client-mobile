@@ -7,12 +7,16 @@ import Style from './HomeStyle';
 import { restaurants } from '~/constants/TempData';
 
 const NewTrendingScreen = ({ navigation }) => {
+  const onBackHandler = () => {
+    navigation.goBack();
+  };
+
   const [restaurantsList, setRestaurantsList] = useState(restaurants);
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <BackButton style={[Style.header, { marginBottom: 0 }]} />
+      <BackButton style={[Style.header, { marginBottom: 0 }]} onPressFunction={onBackHandler} />
       <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
         <Text style={[Style.screen_title_text, { marginBottom: 20 }]}>New & Trending</Text>
       </View>
@@ -42,6 +46,10 @@ const NewTrendingScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: COLOR.background_color,
+  },
+
   filter_button: {
     flexDirection: 'row',
     width: 100,

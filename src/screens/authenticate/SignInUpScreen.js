@@ -77,8 +77,7 @@ export default function SignInUpScreen({ navigation }) {
       loginInputs.password === tempAccount.password
     ) {
       clearLoginErrorMessages();
-      console.log('Navigate to the Home Screen');
-      // navigation.navigate('Home_Screen');
+      navigation.replace('Main');
     } else handleLoginErrors('* Incorrect phone number or password', 'password');
   };
 

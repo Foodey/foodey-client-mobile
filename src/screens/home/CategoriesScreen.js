@@ -7,6 +7,7 @@ import {
   ScrollView,
   Pressable,
   FlatList,
+  Keyboard,
 } from 'react-native';
 import React, { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
@@ -17,16 +18,21 @@ import { categories } from '~/constants/TempData';
 import Style from './HomeStyle';
 
 const SearchScreen = ({ navigation }) => {
+  const onBackHandler = () => {
+    Keyboard.dismiss();
+    navigation.goBack();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <BackButton style={[Style.header, { marginBottom: 0 }]} />
+      <BackButton style={[Style.header, { marginBottom: 0 }]} onPressFunction={onBackHandler} />
       <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
         <Text style={Style.screen_title_text}>All Categories</Text>
       </View>
       <SearchBar style={Style.search_bar} placeholder="Search by Category" />
       <FlatList
-        contentContainerStyle={{ marginHorizontal: 21, alignItems: 'center' }}
+        contentContainerStyle={{ marginHorizontal: 21, alignItems: 'center', height: '100%' }}
         numColumns={3}
         data={categories}
         renderItem={({ item }) => (
@@ -38,6 +44,10 @@ const SearchScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: COLOR.background_color,
+  },
+
   filter_button: {
     flexDirection: 'row',
     width: 100,

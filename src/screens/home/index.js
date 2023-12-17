@@ -1,9 +1,5 @@
-export { default as HomeScreen } from './HomeScreen';
-export { default as DiscoverScreen } from '../discovery/DiscoverScreen';
-export { default as FavoriteScreen } from '../favorite/FavoriteScreen';
-export { default as OrderScreen } from '../order/OrderScreen';
-export { default as ProfileScreen } from '../profile/ProfileScreen';
 export { default as SearchScreen } from './SearchScreen';
+export { default as HomeScreen } from './HomeScreen';
 export { default as SearchResultScreen } from './SearchResultScreen';
 export { default as CategoriesScreen } from './CategoriesScreen';
 export { default as OfferNearByScreen } from './OfferNearByScreen';

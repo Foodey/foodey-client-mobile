@@ -76,9 +76,7 @@ export default function PhoneVerifyScreen({ navigation, route }) {
 
   function closeVerifiedNotifyMsgBox() {
     setVerifiedNotifyVisible(false);
-    isForgotPassVerify
-      ? navigation.replace('ResetPass_Screen')
-      : console.log('Navigate to HomeScreen'); //navigation.replace('HomeScreen');
+    isForgotPassVerify ? navigation.popToTop() : navigation.replace('Main');
   }
 
   //  Edit phone number modal:
