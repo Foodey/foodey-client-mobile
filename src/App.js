@@ -10,6 +10,7 @@ import MainBottomTabNavigator from './navigators/MainBottomTabNavigator';
 
 import {
   CategoriesScreen,
+  CategoryDetailScreen,
   SearchScreen,
   SearchResultScreen,
   OfferNearByScreen,
@@ -45,15 +46,15 @@ function App() {
   //   )
   // );
 
-  // return (
-  //   <NavigationContainer>
-  //     <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
-  //       <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
-  //     </MainStack.Navigator>
-  //   </NavigationContainer>
-  // );
+  return (
+    <NavigationContainer>
+      <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
+        <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
+      </MainStack.Navigator>
+    </NavigationContainer>
+  );
 
-  return <SearchResultScreen />;
+  // return <CategoryDetailScreen />;
 }
 
 export default App;
