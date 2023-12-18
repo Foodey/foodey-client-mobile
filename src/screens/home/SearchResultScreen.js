@@ -6,9 +6,16 @@ import Style from './HomeStyle';
 import { SearchScreen } from '~/screens/home';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { restaurants } from '~/constants/TempData';
+import { useContext } from 'react';
+import { HomeContext } from '~/contexts/HomeContext';
 
 const SearchResultScreen = ({ navigation }) => {
+  const { searchValue, setSearchValue, searchResultSelected, setSearchResultSelected } =
+    useContext(HomeContext);
+
   const onBackHandler = () => {
+    setSearchValue('');
+    setSearchResultSelected('');
     navigation.goBack();
   };
 
@@ -33,16 +40,27 @@ const SearchResultScreen = ({ navigation }) => {
 
   const [restaurantsList, setRestaurantsList] = useState(restaurants);
 
+  const seeSearchResultHandler = () => {
+    setSearchVisible(false);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <SearchScreen visible={searchVisible} onClosePress={() => setSearchVisible(false)} />
+      <SearchScreen
+        visible={searchVisible}
+        onClosePress={() => setSearchVisible(false)}
+        onSelectedItem={seeSearchResultHandler}
+        onSubmitEditing={() => setSearchVisible(false)}
+      />
       <BackButton
         style={[Style.header, { marginBottom: 15, marginTop: 5 }]}
         onPressFunction={onBackHandler}
       />
       <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
-        <Text style={Style.screen_title_text}>Search</Text>
+        <Text ellipsizeMode="tail" numberOfLines={2} style={Style.screen_title_text}>
+          {searchResultSelected}
+        </Text>
         {/* <Pressable style={styles.filter_button}>
           <Filter />
           <Text style={styles.filter_button_text}>Filter</Text>
@@ -53,6 +71,7 @@ const SearchResultScreen = ({ navigation }) => {
         placeholder="Search Foods, Restaurants etc."
         editable={false}
         onPressFunction={() => setSearchVisible(true)}
+        onDeletePress={() => setSearchValue('')}
       />
       <View
         style={{

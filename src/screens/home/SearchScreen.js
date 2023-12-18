@@ -1,37 +1,64 @@
 import { View, Text, StatusBar, StyleSheet, Pressable, FlatList, Modal } from 'react-native';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { BackButton } from '~/components';
 import SearchBar from '../../components/SearchBar';
 import Style from './HomeStyle';
 import { searchHistory } from '~/constants/TempData';
+import { HomeContext } from '~/contexts/HomeContext';
 
-const SearchScreen = ({ visible, onClosePress, onSelectedItem }) => {
+const SearchScreen = ({ visible, onClosePress, onSelectedItem, onSubmitEditing }) => {
+  const { searchValue, setSearchValue, searchResultSelected, setSearchResultSelected } =
+    useContext(HomeContext);
+
+  const onBackPress = () => {
+    setSearchValue('');
+    onClosePress();
+  };
+
   return (
     <Modal style={styles.container} visible={visible} transition="fade">
       <StatusBar backgroundColor={COLOR.background_color} />
       <BackButton
         style={[{ marginBottom: 15, marginTop: 5, marginStart: 21 }]}
-        onPressFunction={onClosePress}
+        onPressFunction={onBackPress}
       />
-      <SearchBar style={Style.search_bar} placeholder="Search Foods, Restaurants etc." />
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 21 }}>
-        <Text
-          style={[
-            Style.screen_title_text,
-            { fontSize: 23, marginBottom: 0, color: COLOR.text_blue_color },
-          ]}
-        >
-          Recently Searched
-        </Text>
-        <Pressable style={{ marginLeft: 'auto' }}>
-          <Text style={styles.clear_all_text}>CLEAR ALL</Text>
-        </Pressable>
-      </View>
+      <SearchBar
+        style={Style.search_bar}
+        placeholder="Search Foods, Restaurants etc."
+        searchValue={searchValue}
+        onChangeText={(text) => setSearchValue(text)}
+        onDeletePress={() => setSearchValue('')}
+        onSubmitEditing={() => {
+          setSearchResultSelected(searchValue);
+          onSubmitEditing();
+        }}
+      />
+      {!searchValue && (
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 21 }}>
+          <Text
+            style={[
+              Style.screen_title_text,
+              { fontSize: 23, marginBottom: 0, color: COLOR.text_blue_color },
+            ]}
+          >
+            Recently Searched
+          </Text>
+          <Pressable style={{ marginLeft: 'auto' }}>
+            <Text style={styles.clear_all_text}>CLEAR ALL</Text>
+          </Pressable>
+        </View>
+      )}
       <FlatList
         data={searchHistory}
         renderItem={({ item }) => (
-          <Pressable style={styles.search_history_button} onPress={onSelectedItem}>
+          <Pressable
+            style={styles.search_history_button}
+            onPress={() => {
+              setSearchResultSelected(item);
+              onSelectedItem();
+            }}
+          >
             <Text style={styles.search_history_text}>{item}</Text>
           </Pressable>
         )}

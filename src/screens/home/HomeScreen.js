@@ -9,7 +9,7 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useContext } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { LocationDisplay, CircleCategory, TruncateRestaurantCard } from '~/components/home';
 import { SearchBar } from '~/components';
@@ -18,10 +18,10 @@ import { categories, restaurants, offers } from '~/constants/TempData';
 import Style from './HomeStyle';
 import ArrowRight from '~/resources/icons/arrow-right';
 import { SearchScreen } from '~/screens/home';
+import { HomeContext } from '~/contexts/HomeContext';
 
 const HomeScreen = ({ navigation }) => {
   //Navigation:
-
   const seeAllCategoriesHandler = () => {
     navigation.navigate('Categories_Screen');
   };
@@ -51,7 +51,9 @@ const HomeScreen = ({ navigation }) => {
       <StatusBar backgroundColor={COLOR.background_color} />
       <SearchScreen
         visible={searchVisible}
-        onClosePress={() => setSearchVisible(false)}
+        onClosePress={() => {
+          setSearchVisible(false);
+        }}
         onSelectedItem={seeSearchResultHandler}
       />
       <LocationDisplay style={Style.header} location="69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương" />
@@ -86,24 +88,39 @@ const HomeScreen = ({ navigation }) => {
               <CircleCategory
                 imageLink={categoriesList[0].imageLink}
                 title={categoriesList[0].name}
+                onPressFunction={() =>
+                  navigation.navigate('CategoryDetail_Screen', { category: categoriesList[0].name })
+                }
               />
               <CircleCategory
                 imageLink={categoriesList[1].imageLink}
                 title={categoriesList[1].name}
+                onPressFunction={() =>
+                  navigation.navigate('CategoryDetail_Screen', { category: categoriesList[1].name })
+                }
               />
               <CircleCategory
                 imageLink={categoriesList[2].imageLink}
                 title={categoriesList[2].name}
+                onPressFunction={() =>
+                  navigation.navigate('CategoryDetail_Screen', { category: categoriesList[2].name })
+                }
               />
             </View>
             <View style={styles.categories_row_container}>
               <CircleCategory
                 imageLink={categoriesList[3].imageLink}
                 title={categoriesList[3].name}
+                onPressFunction={() =>
+                  navigation.navigate('CategoryDetail_Screen', { category: categoriesList[3].name })
+                }
               />
               <CircleCategory
                 imageLink={categoriesList[4].imageLink}
                 title={categoriesList[4].name}
+                onPressFunction={() =>
+                  navigation.navigate('CategoryDetail_Screen', { category: categoriesList[4].name })
+                }
               />
               <Pressable
                 onPress={seeAllCategoriesHandler}

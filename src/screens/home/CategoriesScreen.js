@@ -9,17 +9,21 @@ import {
   FlatList,
   Keyboard,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { LocationDisplay, CircleCategory } from '~/components/home';
 import { SearchBar, BackButton } from '~/components';
 import { Filter } from '~/resources/icons';
 import { categories } from '~/constants/TempData';
 import Style from './HomeStyle';
+import { HomeContext } from '~/contexts/HomeContext';
 
-const SearchScreen = ({ navigation }) => {
+const CategoriesScreen = ({ navigation }) => {
+  const { categorySearchValue, setCategorySearchValue } = useContext(HomeContext);
+
   const onBackHandler = () => {
     Keyboard.dismiss();
+    setCategorySearchValue('');
     navigation.goBack();
   };
 
@@ -30,7 +34,17 @@ const SearchScreen = ({ navigation }) => {
       <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
         <Text style={Style.screen_title_text}>All Categories</Text>
       </View>
-      <SearchBar style={[Style.search_bar, { marginTop: 20 }]} placeholder="Search by Category" />
+      <SearchBar
+        style={[Style.search_bar, { marginTop: 20 }]}
+        placeholder="Search by Category"
+        searchValue={categorySearchValue}
+        onChangeText={(text) => setCategorySearchValue(text)}
+        onDeletePress={() => setCategorySearchValue('')}
+        onSubmitEditing={() => {
+          setCategorySearchValue(categorySearchValue);
+          navigation.navigate('CategoryDetail_Screen', { category: categorySearchValue });
+        }}
+      />
       <FlatList
         contentContainerStyle={{
           marginHorizontal: 21,
@@ -41,7 +55,14 @@ const SearchScreen = ({ navigation }) => {
         numColumns={3}
         data={categories}
         renderItem={({ item }) => (
-          <CircleCategory style={{ margin: 10 }} imageLink={item.imageLink} title={item.name} />
+          <CircleCategory
+            style={{ margin: 10 }}
+            imageLink={item.imageLink}
+            title={item.name}
+            onPressFunction={() => {
+              navigation.navigate('CategoryDetail_Screen', { category: item.name });
+            }}
+          />
         )}
       />
     </SafeAreaView>
@@ -79,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchScreen;
+export default CategoriesScreen;

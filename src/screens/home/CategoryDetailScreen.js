@@ -1,23 +1,33 @@
 import { View, Text, SafeAreaView, StatusBar, StyleSheet, Pressable, FlatList } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { SearchBar, BackButton, RestaurantBar } from '~/components';
 import { Filter } from '~/resources/icons';
 import Style from './HomeStyle';
-import { searchHistory } from '~/constants/TempData';
-import { SearchScreen } from '~/screens/main';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { restaurants } from '~/constants/TempData';
+import { HomeContext } from '~/contexts/HomeContext';
 
-const CategoryDetailScreen = ({ navigation }) => {
+const CategoryDetailScreen = ({ navigation, route }) => {
+  const { setCategorySearchValue } = useContext(HomeContext);
+
+  const { category } = route.params;
+
+  const onBackHandler = () => {
+    setCategorySearchValue('');
+    navigation.goBack();
+  };
+
   const [restaurantsList, setRestaurantsList] = useState(restaurants);
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <BackButton style={[Style.header, { marginBottom: 15, marginTop: 5 }]} />
+      <BackButton
+        style={[Style.header, { marginBottom: 15, marginTop: 5 }]}
+        onPressFunction={onBackHandler}
+      />
       <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
-        <Text style={Style.screen_title_text}>Search</Text>
+        <Text style={Style.screen_title_text}>{category}</Text>
         {/* <Pressable style={styles.filter_button}>
           <Filter />
           <Text style={styles.filter_button_text}>Filter</Text>
@@ -46,6 +56,10 @@ const CategoryDetailScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: COLOR.background_color,
+  },
+
   filter_button: {
     flexDirection: 'row',
     width: 100,

@@ -33,7 +33,6 @@ const MainBottomTabNavigator = () => {
         tabBarStyle: {
           backgroundColor: COLOR.input_background_color,
           height: 88,
-          borderTopWidth: 0,
           paddingLeft: 8,
           paddingRight: 8,
         },

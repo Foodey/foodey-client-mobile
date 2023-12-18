@@ -13,7 +13,7 @@ import React, { useContext, useState } from 'react';
 import { UtilityCard, SubmitButton } from '~/components';
 import { AuthSwitcher, Login, SignUp, ThirdPartyAuth } from '~/components/authenticate';
 import { COLOR } from '~/constants/Colors';
-import { AuthProvider, AuthContext } from '~/contexts/AuthContext';
+import { AuthContext } from '~/contexts/AuthContext';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 export default function SignInUpScreen({ navigation }) {
@@ -122,10 +122,12 @@ export default function SignInUpScreen({ navigation }) {
       valid = false;
     }
 
-    if (valid) {
-      handleSignUpErrors('', 'confirmPassword');
-      navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
-    }
+    if (valid) signUp();
+  };
+
+  const signUp = () => {
+    handleSignUpErrors('', 'confirmPassword');
+    navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
   };
 
   //  General:
