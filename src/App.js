@@ -35,25 +35,25 @@ function App() {
     fetchData();
   }, []);
 
-  return (
-    isAppFirstLaunch != null && (
-      <NavigationContainer>
-        <MainStack.Navigator screenOptions={{ headerShown: false }}>
-          {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
-          <MainStack.Screen name="Authenticate" component={AuthStackNavigator} />
-          <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
-        </MainStack.Navigator>
-      </NavigationContainer>
-    )
-  );
-
   // return (
-  //   <NavigationContainer>
-  //     <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
-  //       <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
-  //     </MainStack.Navigator>
-  //   </NavigationContainer>
+  //   isAppFirstLaunch != null && (
+  //     <NavigationContainer>
+  //       <MainStack.Navigator screenOptions={{ headerShown: false }}>
+  //         {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
+  //         <MainStack.Screen name="Authenticate" component={AuthStackNavigator} />
+  //         <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
+  //       </MainStack.Navigator>
+  //     </NavigationContainer>
+  //   )
   // );
+
+  return (
+    <NavigationContainer>
+      <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
+        <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
+      </MainStack.Navigator>
+    </NavigationContainer>
+  );
 
   // return <SearchResultScreen />;
 }

@@ -7,12 +7,13 @@ import {
   ScrollView,
   Pressable,
   FlatList,
+  TextInput,
 } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { LocationDisplay, CircleCategory, TruncateRestaurantCard } from '~/components/home';
 import { SearchBar } from '~/components';
-import { FullArrowRight } from '~/resources/icons';
+import { FullArrowRight, Search } from '~/resources/icons';
 import { categories, restaurants, offers } from '~/constants/TempData';
 import Style from './HomeStyle';
 import ArrowRight from '~/resources/icons/arrow-right';
@@ -54,15 +55,21 @@ const HomeScreen = ({ navigation }) => {
         onSelectedItem={seeSearchResultHandler}
       />
       <LocationDisplay style={Style.header} location="69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương" />
-      <SearchBar
-        style={Style.search_bar}
-        placeholder="Search Foods, Restaurants etc."
-        editable={false}
-        onPressFunction={() => setSearchVisible(true)}
-      />
+      <Pressable
+        onPress={() => setSearchVisible(true)}
+        style={[styles.searchBar_container, Style.search_bar]}
+      >
+        <Search width={24} height={24} style={{ marginStart: 12, flex: 1 }} />
+        <TextInput
+          editable={false}
+          style={[styles.searchBar_location_text]}
+          placeholder="Search Foods, Restaurants etc"
+          placeholderTextColor={COLOR.text_press_color}
+        />
+      </Pressable>
       <ScrollView style={styles.scrollView_container} showsVerticalScrollIndicator={false}>
         <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
-          <Text style={Style.screen_title_text}>Good evening, </Text>
+          <Text style={Style.screen_title_text}>Hi, </Text>
           <Text
             style={[
               Style.screen_title_text,
@@ -305,6 +312,45 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.text_secondary_color,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  searchBar_container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLOR.input_background_color,
+    borderRadius: 12,
+  },
+
+  searchBar_location_text: {
+    flex: 9,
+    fontFamily: 'Manrope-Regular',
+    fontWeight: '400',
+    fontSize: 17.5,
+    color: COLOR.text_primary_color,
+    marginStart: 10,
+  },
+
+  searchBar_button_delete_input: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginEnd: 3,
+  },
+
+  searchBar_container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLOR.input_background_color,
+    borderRadius: 12,
+  },
+
+  searchBar_location_text: {
+    flex: 9,
+    fontFamily: 'Manrope-Regular',
+    fontWeight: '400',
+    fontSize: 17.5,
+    color: COLOR.text_primary_color,
+    marginStart: 10,
   },
 });
 

@@ -30,9 +30,14 @@ const SearchScreen = ({ navigation }) => {
       <View style={{ flexDirection: 'row', marginHorizontal: 21 }}>
         <Text style={Style.screen_title_text}>All Categories</Text>
       </View>
-      <SearchBar style={Style.search_bar} placeholder="Search by Category" />
+      <SearchBar style={[Style.search_bar, { marginTop: 20 }]} placeholder="Search by Category" />
       <FlatList
-        contentContainerStyle={{ marginHorizontal: 21, alignItems: 'center', height: '100%' }}
+        contentContainerStyle={{
+          marginHorizontal: 21,
+          alignItems: 'center',
+          height: '100%',
+          marginTop: 30,
+        }}
         numColumns={3}
         data={categories}
         renderItem={({ item }) => (

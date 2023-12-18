@@ -4,10 +4,12 @@ import { Location, Search } from '~/resources/icons';
 import { useState, useEffect, useRef } from 'react';
 import CloseCircle from '~/resources/icons/close-circle.svg';
 
-function SearchBar({ style, placeholder, onDeletePress, editable, onPressFunction, ref }) {
+function SearchBar({ style, placeholder, onDeletePress, editable, onPressFunction }) {
   const [isFocused, setIsFocused] = useState(false);
 
-  const searchRef = useRef();
+  const searchRef = useRef(3);
+
+  console.log('Render Seach Bar');
 
   useEffect(() => {
     setTimeout(() => searchRef.current.focus(), 0);
@@ -17,7 +19,7 @@ function SearchBar({ style, placeholder, onDeletePress, editable, onPressFunctio
     <Pressable onPress={onPressFunction} style={[styles.container, style]}>
       <Search width={24} height={24} style={{ marginStart: 12, flex: 1 }} />
       <TextInput
-        ref={(ref) => (searchRef.current = ref)}
+        ref={searchRef}
         editable={editable}
         style={[styles.location_text]}
         placeholder={placeholder}

@@ -1,11 +1,12 @@
 import { View, Text, StatusBar, StyleSheet, Pressable, FlatList, Modal } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { COLOR } from '~/constants/Colors';
-import { SearchBar, BackButton } from '~/components';
+import { BackButton } from '~/components';
+import SearchBar from '../../components/SearchBar';
 import Style from './HomeStyle';
 import { searchHistory } from '~/constants/TempData';
 
-const SearchScreen = ({ visible, onClosePress, searchRef, onSelectedItem }) => {
+const SearchScreen = ({ visible, onClosePress, onSelectedItem }) => {
   return (
     <Modal style={styles.container} visible={visible} transition="fade">
       <StatusBar backgroundColor={COLOR.background_color} />
@@ -13,11 +14,7 @@ const SearchScreen = ({ visible, onClosePress, searchRef, onSelectedItem }) => {
         style={[{ marginBottom: 15, marginTop: 5, marginStart: 21 }]}
         onPressFunction={onClosePress}
       />
-      <SearchBar
-        style={Style.search_bar}
-        placeholder="Search Foods, Restaurants etc."
-        ref={searchRef}
-      />
+      <SearchBar style={Style.search_bar} placeholder="Search Foods, Restaurants etc." />
       <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 21 }}>
         <Text
           style={[
