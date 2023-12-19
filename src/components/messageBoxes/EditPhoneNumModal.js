@@ -7,8 +7,6 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '~/contexts/AuthContext';
 
 function EditPhoneNumModal(props) {
-  const { signUpErrorMessages } = useContext(AuthContext);
-
   return (
     <Modal
       transparent={true}
@@ -24,7 +22,7 @@ function EditPhoneNumModal(props) {
           </View>
           <PhoneNumberBox
             value={props.newPhoneNumber}
-            errorMessage={signUpErrorMessages.phoneNumber}
+            errorMessage={props.errorMessage}
             style={{ flex: 1, marginHorizontal: 25 }}
             onChangeText={props.onPhoneNumberTextChange}
           />

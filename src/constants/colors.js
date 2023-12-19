@@ -15,6 +15,7 @@ const pink_60 = '#FDD3E1';
 const pink_60_trans = '#FDD3E1';
 const pink_80 = '#F69DBB';
 const pink_100 = '#F4739E';
+const pink_100_trans = '#f4739e1f';
 const pink_120 = '#D55881';
 const pink_140 = '#953756';
 
@@ -51,6 +52,7 @@ export const COLOR = {
   text_tertiary_color: dark_90,
   text_press_color: dark_60,
   text_light_color: light_100,
+  text_blue_color: blue_120,
 
   indicator_color: light_60,
   indicator_current_color: peach_100,
@@ -70,4 +72,8 @@ export const COLOR = {
 
   edtButton_background_color: peach_60,
   edtButton_pressed_background_color: peach_80,
+
+  circleCategory_background_color: pink_100_trans,
+
+  star_background_color: yellow_100,
 };

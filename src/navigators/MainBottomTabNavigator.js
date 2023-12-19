@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import {
   Home,
@@ -14,13 +13,13 @@ import {
   Profile,
   ProfileFocused,
 } from '~/resources/icons';
-import {
-  HomeScreen,
-  DiscoverScreen,
-  FavoriteScreen,
-  OrderScreen,
-  ProfileScreen,
-} from '~/screens/main';
+
+import { DiscoverScreen } from '~/screens/discover';
+import { FavoriteScreen } from '~/screens/favorite';
+import { OrderScreen } from '~/screens/order';
+import { ProfileScreen } from '~/screens/profile';
+
+import HomeStackNavigator from './HomeStackNavigator';
 
 import { CustomTabLabel } from '~/components';
 
@@ -34,7 +33,6 @@ const MainBottomTabNavigator = () => {
         tabBarStyle: {
           backgroundColor: COLOR.input_background_color,
           height: 88,
-          borderTopWidth: 0,
           paddingLeft: 8,
           paddingRight: 8,
         },
@@ -43,7 +41,7 @@ const MainBottomTabNavigator = () => {
     >
       <BottomTab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStackNavigator}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? <HomeFocused height={30} width={30} /> : <Home height={30} width={30} />,
@@ -61,7 +59,7 @@ const MainBottomTabNavigator = () => {
             ) : (
               <Discovery height={30} width={30} />
             ),
-          tabBarLabel: ({ focused }) => <CustomTabLabel focused={focused} label="Discovery" />,
+          tabBarLabel: ({ focused }) => <CustomTabLabel focused={focused} label="Discover" />,
         }}
       />
       <BottomTab.Screen

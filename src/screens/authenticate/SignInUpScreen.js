@@ -13,7 +13,7 @@ import React, { useContext, useState } from 'react';
 import { UtilityCard, SubmitButton } from '~/components';
 import { AuthSwitcher, Login, SignUp, ThirdPartyAuth } from '~/components/authenticate';
 import { COLOR } from '~/constants/Colors';
-import { AuthProvider, AuthContext } from '~/contexts/AuthContext';
+import { AuthContext } from '~/contexts/AuthContext';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 export default function SignInUpScreen({ navigation }) {
@@ -77,8 +77,7 @@ export default function SignInUpScreen({ navigation }) {
       loginInputs.password === tempAccount.password
     ) {
       clearLoginErrorMessages();
-      console.log('Navigate to the Home Screen');
-      // navigation.navigate('Home_Screen');
+      navigation.replace('Main');
     } else handleLoginErrors('* Incorrect phone number or password', 'password');
   };
 
@@ -123,10 +122,12 @@ export default function SignInUpScreen({ navigation }) {
       valid = false;
     }
 
-    if (valid) {
-      handleForgotPassErrors('', 'confirmPassword');
-      navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
-    }
+    if (valid) signUp();
+  };
+
+  const signUp = () => {
+    handleSignUpErrors('', 'confirmPassword');
+    navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
   };
 
   //  General:
@@ -170,10 +171,7 @@ export default function SignInUpScreen({ navigation }) {
       </View>
       <View style={styles.third_party_container}>
         <TouchableWithoutFeedback onPress={looseFocus}>
-          <ThirdPartyAuth
-            title={isLogin ? 'Login' : 'Sign Up'}
-            lineStyle={isLogin ? { marginStart: 0 } : { marginStart: 16 }}
-          />
+          <ThirdPartyAuth title={isLogin ? 'Login' : 'Sign Up'} />
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.footer_container}>

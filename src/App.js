@@ -6,7 +6,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 import IntroStackNavigator from '~/navigators/IntroStackNavigator';
 import AuthStackNavigator from '~/navigators/AuthStackNavigator';
 
-import MainBottomTabNavigator from './navigators/MainBottomTabNavigator';
+import MainBottomTabNavigator from '~/navigators/MainBottomTabNavigator';
+
+import {
+  CategoriesScreen,
+  CategoryDetailScreen,
+  SearchScreen,
+  SearchResultScreen,
+  OfferNearByScreen,
+  NewTrendingScreen,
+} from '~/screens/main';
 
 const MainStack = createStackNavigator();
 
@@ -32,6 +41,7 @@ function App() {
   //       <MainStack.Navigator screenOptions={{ headerShown: false }}>
   //         {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
   //         <MainStack.Screen name="Authenticate" component={AuthStackNavigator} />
+  //         <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
   //       </MainStack.Navigator>
   //     </NavigationContainer>
   //   )
@@ -44,6 +54,8 @@ function App() {
       </MainStack.Navigator>
     </NavigationContainer>
   );
+
+  // return <SearchResultScreen />;
 }
 
 export default App;

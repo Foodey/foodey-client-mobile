@@ -28,6 +28,7 @@ export default function ForgotPassScreen({ navigation }) {
   const onBackPressHandler = () => {
     Keyboard.dismiss();
     handleForgotPassInputsChanged('', 'phoneNumber');
+    handleForgotPassErrors('', 'phoneNumber');
     navigation.goBack();
   };
 
