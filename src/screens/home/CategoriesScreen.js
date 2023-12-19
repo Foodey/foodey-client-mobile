@@ -14,17 +14,25 @@ import { COLOR } from '~/constants/Colors';
 import { LocationDisplay, CircleCategory } from '~/components/home';
 import { SearchBar, BackButton } from '~/components';
 import { Filter } from '~/resources/icons';
-import { categories } from '~/constants/TempData';
 import Style from './HomeStyle';
 import { HomeContext } from '~/contexts/HomeContext';
 
 const CategoriesScreen = ({ navigation }) => {
-  const { categorySearchValue, setCategorySearchValue } = useContext(HomeContext);
+  const { categorySearchValue, setCategorySearchValue, categoriesList, setCategoriesList } =
+    useContext(HomeContext);
 
   const onBackHandler = () => {
     Keyboard.dismiss();
     setCategorySearchValue('');
     navigation.goBack();
+  };
+
+  const onSubmitEditingHandler = () => {
+    if (categorySearchValue === '') Keyboard.dismiss();
+    else {
+      setCategorySearchValue(categorySearchValue);
+      navigation.navigate('CategoryDetail_Screen', { category: categorySearchValue });
+    }
   };
 
   return (
@@ -40,10 +48,7 @@ const CategoriesScreen = ({ navigation }) => {
         searchValue={categorySearchValue}
         onChangeText={(text) => setCategorySearchValue(text)}
         onDeletePress={() => setCategorySearchValue('')}
-        onSubmitEditing={() => {
-          setCategorySearchValue(categorySearchValue);
-          navigation.navigate('CategoryDetail_Screen', { category: categorySearchValue });
-        }}
+        onSubmitEditing={onSubmitEditingHandler}
       />
       <FlatList
         contentContainerStyle={{
@@ -53,7 +58,7 @@ const CategoriesScreen = ({ navigation }) => {
           marginTop: 30,
         }}
         numColumns={3}
-        data={categories}
+        data={categoriesList}
         renderItem={({ item }) => (
           <CircleCategory
             style={{ margin: 10 }}

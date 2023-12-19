@@ -1,17 +1,17 @@
 import { View, Text, SafeAreaView, StatusBar, StyleSheet, Pressable, FlatList } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { SearchBar, BackButton } from '~/components';
 import { FullyRestaurantCard } from '~/components/home';
 import Style from './HomeStyle';
-import { restaurants } from '~/constants/TempData';
+import { HomeContext } from '~/contexts/HomeContext';
 
 const NewTrendingScreen = ({ navigation }) => {
   const onBackHandler = () => {
     navigation.goBack();
   };
 
-  const [restaurantsList, setRestaurantsList] = useState(restaurants);
+  const { restaurantsList, setRestaurantsList } = useContext(HomeContext);
 
   return (
     <SafeAreaView style={styles.container}>

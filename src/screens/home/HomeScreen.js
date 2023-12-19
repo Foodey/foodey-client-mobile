@@ -21,6 +21,15 @@ import { SearchScreen } from '~/screens/home';
 import { HomeContext } from '~/contexts/HomeContext';
 
 const HomeScreen = ({ navigation }) => {
+  const {
+    categoriesList,
+    setCategoriesList,
+    restaurantsList,
+    setRestaurantsList,
+    offersList,
+    setOffersList,
+  } = useContext(HomeContext);
+
   //Navigation:
   const seeAllCategoriesHandler = () => {
     navigation.navigate('Categories_Screen');
@@ -39,11 +48,7 @@ const HomeScreen = ({ navigation }) => {
     navigation.navigate('SearchResult_Screen');
   };
 
-  //Use states:
-  const [categoriesList, setCategoriesList] = useState(categories);
-  const [restaurantsList, setRestaurantsList] = useState(restaurants);
-  const [offersList, setOffersList] = useState(offers);
-
+  //Use states
   const [searchVisible, setSearchVisible] = useState(false);
 
   return (
@@ -55,6 +60,10 @@ const HomeScreen = ({ navigation }) => {
           setSearchVisible(false);
         }}
         onSelectedItem={seeSearchResultHandler}
+        onSubmitEditing={() => {
+          setSearchVisible(false);
+          navigation.navigate('SearchResult_Screen');
+        }}
       />
       <LocationDisplay style={Style.header} location="69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương" />
       <Pressable
