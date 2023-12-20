@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
   },
 
   forgotPass_text: {
-    fontFamily: 'Manrope',
-    fontSize: 17,
+    fontFamily: 'Manrope-Medium',
+    fontSize: 16,
     fontWeight: '400',
     textAlign: 'right',
   },

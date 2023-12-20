@@ -25,6 +25,7 @@ export default function SignInUpScreen({ navigation }) {
     handleLoginErrors,
     clearLoginInputs,
     clearLoginErrorMessages,
+    login,
 
     signUpInputs,
     signUpErrorMessages,
@@ -45,45 +46,50 @@ export default function SignInUpScreen({ navigation }) {
   //  Login:
   const onLoginPressHandler = () => {
     let valid = true;
+    const phoneRegex = '^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])\\d{7}$';
+    const passwordRegex =
+      '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$';
 
     if (loginInputs.phoneNumber === '') {
       handleLoginErrors('* Please input phone number', 'phoneNumber');
       valid = false;
+    } else if (!loginInputs.phoneNumber.match(phoneRegex)) {
+      handleLoginErrors('* Invalid phone number format', 'phoneNumber');
+      valid = false;
     }
-    // else if (!loginInputs.phoneNumber.match('^(+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])d{7,9}$'))
-    // {
-    //   handleLoginErrors('* Invalid phone number format', 'phoneNumber');
-    //   valid = false;
-    // }
 
     if (loginInputs.password === '') {
       handleLoginErrors('* Please input password', 'password');
       valid = false;
-    } else if (loginInputs.password.length < 8 || loginInputs.password.length > 30) {
+    } else if (!loginInputs.password.match(passwordRegex)) {
       handleLoginErrors(
-        '* Password must be at least 8 characters and maximum of 30 characters',
+        '* Password must be between 8 and 20 characters and at least one uppercase letter, one' +
+          ' lowercase letter, one number and one special character',
         'password',
       );
       valid = false;
     }
 
-    if (valid) login();
+    if (valid) login(loginInputs.phoneNumber, loginInputs.password);
   };
 
-  const login = () => {
-    //**Communicate with BE to authenticate the account**
-    if (
-      loginInputs.phoneNumber === tempAccount.phoneNumber &&
-      loginInputs.password === tempAccount.password
-    ) {
-      clearLoginErrorMessages();
-      navigation.replace('Main');
-    } else handleLoginErrors('* Incorrect phone number or password', 'password');
-  };
+  // const login = () => {
+  //   //**Communicate with BE to authenticate the account**
+  //   if (
+  //     loginInputs.phoneNumber === tempAccount.phoneNumber &&
+  //     loginInputs.password === tempAccount.password
+  //   ) {
+  //     clearLoginErrorMessages();
+  //     navigation.replace('Main');
+  //   } else handleLoginErrors('* Incorrect phone number or password', 'password');
+  // };
 
   //  SignUp:
   const onNextPressHandler = () => {
     let valid = true;
+    const phoneRegex = '^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])\\d{7}$';
+    const passwordRegex =
+      '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$';
 
     if (signUpInputs.fullName === '') {
       handleSignUpErrors('* Please input your full name', 'fullName');
@@ -96,19 +102,18 @@ export default function SignInUpScreen({ navigation }) {
     if (signUpInputs.phoneNumber === '') {
       handleSignUpErrors('* Please input phone number', 'phoneNumber');
       valid = false;
+    } else if (!signUpInputs.phoneNumber.match(phoneRegex)) {
+      handleSignUpErrors('* Invalid phone number format', 'phoneNumber');
+      valid = false;
     }
-    // else if (!signUpInputs.phoneNumber.match('^(+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])d{7,9}$'))
-    // {
-    //   handleSignUpErrors('* Invalid phone number format', 'phoneNumber');
-    //   valid = false;
-    // }
 
     if (signUpInputs.password === '') {
       handleSignUpErrors('* Please input password', 'password');
       valid = false;
-    } else if (signUpInputs.password.length < 8 || signUpInputs.password.length > 30) {
+    } else if (!signUpInputs.password.match(passwordRegex)) {
       handleSignUpErrors(
-        '* Password must be at least 8 characters and maximum of 30 characters',
+        '* Password must be between 8 and 20 characters and at least one uppercase letter, one' +
+          ' lowercase letter, one number and one special character',
         'password',
       );
       valid = false;
@@ -182,6 +187,7 @@ export default function SignInUpScreen({ navigation }) {
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}
           onPressFunction={isLogin ? onLoginPressHandler : onNextPressHandler}
+          // onPressFunction={test}
         />
       </View>
     </KeyboardAvoidingView>
