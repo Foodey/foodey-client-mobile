@@ -12,9 +12,7 @@ import {
 import React, { useState, useContext } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { LocationDisplay, CircleCategory, TruncateRestaurantCard } from '~/components/home';
-import { SearchBar } from '~/components';
 import { FullArrowRight, Search } from '~/resources/icons';
-import { categories, restaurants, offers } from '~/constants/TempData';
 import Style from './HomeStyle';
 import ArrowRight from '~/resources/icons/arrow-right';
 import { SearchScreen } from '~/screens/home';
@@ -70,7 +68,11 @@ const HomeScreen = ({ navigation }) => {
         onPress={() => setSearchVisible(true)}
         style={[styles.searchBar_container, Style.search_bar]}
       >
-        <Search width={24} height={24} style={{ marginStart: 12, flex: 1 }} />
+        <Search
+          width={24}
+          height={24}
+          style={{ marginStart: 12, flex: 1, color: COLOR.button_primary_color }}
+        />
         <TextInput
           editable={false}
           style={[styles.searchBar_location_text]}

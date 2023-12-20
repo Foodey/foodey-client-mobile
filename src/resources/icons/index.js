@@ -16,3 +16,7 @@ export { default as Search } from './search.svg';
 export { default as FullArrowRight } from './full-arrow-right.svg';
 export { default as Filter } from './filter.svg';
 export { default as Star } from './star.svg';
+
+//DiscoverScreen icons:
+export { default as Detail } from './detail.svg';
+export { default as ShoppingBag } from './shopping-bag.svg';

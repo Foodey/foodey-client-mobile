@@ -82,6 +82,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '4.8',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '2',
@@ -91,6 +92,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '5.0',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '3',
@@ -100,6 +102,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '4.8',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '4',
@@ -109,6 +112,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '4.8',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '5',
@@ -118,6 +122,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '4.8',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '6',
@@ -127,6 +132,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '4.8',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '7',
@@ -136,6 +142,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '5.0',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '8',
@@ -145,6 +152,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '4.8',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '9',
@@ -154,6 +162,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '4.8',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '10',
@@ -163,6 +172,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '4.8',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '11',
@@ -172,6 +182,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '4.8',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '12',
@@ -181,6 +192,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '5.0',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '13',
@@ -190,6 +202,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '4.8',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '14',
@@ -199,6 +212,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '4.8',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
     id: '15',
@@ -208,6 +222,7 @@ export const restaurants = [
     phone: '0123456789',
     email: 'testdata@gmai.com',
     avgReview: '4.8',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
 ];
 
