@@ -66,9 +66,6 @@ function AppNav() {
     fetchData();
   }, []);
 
-  console.log(isAppFirstLaunch);
-  console.log('accessToken: ' + accessToken.toString());
-
   const handleRender = () => {
     if (accessToken === '') {
       return (
@@ -77,9 +74,11 @@ function AppNav() {
         </>
       );
     } else if (accessToken === '1') {
+      //accessToken = 1 when we want to navigate to the authenticate
       return (
         <>
           <MainStack.Screen name="Authenticate" component={AuthStackNavigator} />
+          {/* <MainStack.Screen name="Main" component={MainBottomTabNavigator} /> */}
         </>
       );
     } else {
@@ -96,11 +95,6 @@ function AppNav() {
       <NavigationContainer>
         <MainStack.Navigator screenOptions={{ headerShown: false }}>
           {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
-          {/* {accessToken !== '1' ? (
-            <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
-          ) : (
-            <MainStack.Screen name="Authenticate" component={AuthStackNavigator} />
-          )} */}
           {handleRender()}
         </MainStack.Navigator>
       </NavigationContainer>

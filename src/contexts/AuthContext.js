@@ -6,15 +6,8 @@ import { AppContext } from './AppContext';
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const {
-    BASE_URL,
-    userInfo,
-    setUserInfo,
-    accessToken,
-    setAccessToken,
-    setIsLoading,
-    setIsAppFirstLaunch,
-  } = useContext(AppContext);
+  const { BASE_URL, userInfo, setUserInfo, accessToken, setAccessToken, setIsLoading } =
+    useContext(AppContext);
 
   //USE STATES
   const [systemOTPCode, setSystemOTPCode] = useState('123456');
@@ -113,60 +106,40 @@ export const AuthProvider = ({ children }) => {
     setSignUpErrorMessages({ fullName: '', phoneNumber: '', password: '', confirmPassword: '' });
   };
 
-  const login = (username, password) => {
-    setIsLoading(true);
-    axios
-      .post(`${BASE_URL}/v1/auth/login`, {
-        username,
-        password,
-      })
-      .then((res) => {
-        handleLoginErrors('', 'phoneNumber');
-        handleLoginErrors('', 'password');
+  const sendingOTPCode = async () => {
+    try {
+      const response = await axios.post(`${BASE_URL}/v1/auth/sms/otp/${signUpInputs.phoneNumber}`);
 
-        console.log(res.data);
-        let tempUserInfo = res.data;
-        setUserInfo(tempUserInfo);
-        setAccessToken(tempUserInfo.accessToken);
-
-        AsyncStorage.setItem('userInfo', JSON.stringify(tempUserInfo));
-        AsyncStorage.setItem('accessToken', tempUserInfo.accessToken);
-
-        console.log(tempUserInfo);
-        console.log('Access token ' + tempUserInfo.accessToken);
-
-        setIsAppFirstLaunch(false);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        if (err.response.status === 404) {
-          handleLoginErrors('   ', 'phoneNumber');
-          handleLoginErrors('* Wrong phone number or password, please re-check', 'password');
-        } else {
-          console.log(err.response.status);
-        }
-        setIsLoading(false);
-      });
+      if (response.status >= 200 && response.status < 300) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log('API call failed: ', error);
+      return false;
+    }
   };
 
-  // const isLoggedIn = async () => {
-  //   try {
-  //     let userInfo = await AsyncStorage.getItem('userInfo');
-  //     let accessToken = await AsyncStorage.getItem('accessToken');
-  //     userInfo = JSON.parse(userInfo);
+  const verifyOTPCode = async () => {
+    console.log(OTPCode);
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/v1/auth/sms/otp/verification/${signUpInputs.phoneNumber}/${OTPCode}`,
+      );
 
-  //     if (userInfo) {
-  //       setAccessToken(accessToken);
-  //       setUserInfo(userInfo);
-  //     }
-  //   } catch (e) {
-  //     console.log('Is logged in error ' + e);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   isLoggedIn();
-  // }, [])
+      if (response.status >= 200 && response.status < 300) {
+        console.log('Success status: ' + response.status);
+        return true;
+      } else {
+        console.log('Error status: ' + response.status);
+        return false;
+      }
+    } catch {
+      console.log('API call failed: ', error);
+      return false;
+    }
+  };
 
   return (
     <AuthContext.Provider
@@ -183,7 +156,6 @@ export const AuthProvider = ({ children }) => {
         handleLoginErrors,
         clearLoginInputs,
         clearLoginErrorMessages,
-        login,
 
         //SignUp
         signUpInputs,
@@ -200,6 +172,8 @@ export const AuthProvider = ({ children }) => {
         setOTPCode,
         otpErrorMessage,
         setOTPErrorMessage,
+        sendingOTPCode,
+        verifyOTPCode,
 
         //ForgotPass
         forgotPassInputs,

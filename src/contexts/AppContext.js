@@ -19,25 +19,6 @@ export const AppProvider = ({ children }) => {
     setAccessToken('1');
   };
 
-  // const isLoggedIn = async () => {
-  //   try {
-  //     let userInfo = await AsyncStorage.getItem('userInfo');
-  //     let accessToken = await AsyncStorage.getItem('accessToken');
-  //     userInfo = JSON.parse(userInfo);
-
-  //     if (userInfo) {
-  //       setAccessToken(accessToken);
-  //       setUserInfo(userInfo);
-  //     }
-  //   } catch (e) {
-  //     console.log('Is logged in error ' + e);
-  //   }
-  // };
-
-  //   useEffect(() => {
-  //     isLoggedIn();
-  //   }, []);
-
   return (
     <AppContext.Provider
       value={{

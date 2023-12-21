@@ -3,10 +3,8 @@ import {
   Text,
   SafeAreaView,
   StatusBar,
-  ScrollView,
   StyleSheet,
   KeyboardAvoidingView,
-  Modal,
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -17,6 +15,8 @@ import { COLOR } from '~/constants/Colors';
 import { AuthContext } from '~/contexts/AuthContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { AppContext } from '../../contexts/AppContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 export default function SignInUpScreen({ navigation }) {
   const {
@@ -25,7 +25,6 @@ export default function SignInUpScreen({ navigation }) {
     handleLoginErrors,
     clearLoginInputs,
     clearLoginErrorMessages,
-    login,
 
     signUpInputs,
     signUpErrorMessages,
@@ -34,7 +33,15 @@ export default function SignInUpScreen({ navigation }) {
     clearSignUpErrorMessages,
   } = useContext(AuthContext);
 
-  const { isLoading, setIsLoading } = useContext(AppContext);
+  const {
+    isLoading,
+    setIsLoading,
+    BASE_URL,
+    isAppFirstLaunch,
+    setIsAppFirstLaunch,
+    setUserInfo,
+    setAccessToken,
+  } = useContext(AppContext);
 
   //USE STATES
   const [isLogin, setIsLogin] = useState(true);
@@ -85,8 +92,11 @@ export default function SignInUpScreen({ navigation }) {
     if (signUpInputs.fullName === '') {
       handleSignUpErrors('* Please input your full name', 'fullName');
       valid = false;
-    } else if (signUpInputs.fullName.length > 255) {
-      handleSignUpErrors('* Full name must be less than 255 characters', 'fullName');
+    } else if (signUpInputs.fullName.length > 255 || signUpInputs.fullName.length < 3) {
+      handleSignUpErrors(
+        '* Full name must be at least 3 characters and less than 255 characters',
+        'fullName',
+      );
       valid = false;
     }
 
@@ -118,12 +128,71 @@ export default function SignInUpScreen({ navigation }) {
       valid = false;
     }
 
-    if (valid) signUp();
+    console.log('Before calling API');
+
+    if (valid) signUp(signUpInputs.phoneNumber, signUpInputs.password, signUpInputs.fullName);
   };
 
-  const signUp = () => {
-    handleSignUpErrors('', 'confirmPassword');
-    navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
+  const login = (username, password) => {
+    setIsLoading(true);
+    axios
+      .post(`${BASE_URL}/v1/auth/login`, {
+        username,
+        password,
+      })
+      .then((res) => {
+        let tempUserInfo = res.data;
+        setUserInfo(tempUserInfo);
+        setAccessToken(tempUserInfo.accessToken);
+
+        AsyncStorage.setItem('userInfo', JSON.stringify(tempUserInfo));
+        AsyncStorage.setItem('accessToken', tempUserInfo.accessToken);
+
+        console.log(tempUserInfo);
+        console.log('Access token ' + tempUserInfo.accessToken);
+
+        handleLoginErrors('', 'phoneNumber');
+        handleLoginErrors('', 'password');
+
+        if (isAppFirstLaunch) setIsAppFirstLaunch(false);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          handleLoginErrors('   ', 'phoneNumber');
+          handleLoginErrors('* Wrong phone number or password, please re-check', 'password');
+        } else {
+          console.log(err.response.status);
+        }
+        setIsLoading(false);
+      });
+  };
+
+  const signUp = (username, password, name) => {
+    setIsLoading(true);
+    console.log('Calling API');
+    axios
+      .post(`${BASE_URL}/v1/auth/register/customers`, {
+        username,
+        password,
+        name,
+      })
+      .then((res) => {
+        console.log('Success');
+        handleSignUpErrors('', 'confirmPassword');
+        navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        if (err.response.status === 403) {
+          handleSignUpErrors('* Username already exists', 'phoneNumber');
+        } else {
+          console.log(err.response.status);
+        }
+        setIsLoading(false);
+      });
+
+    setIsLoading(false);
   };
 
   //  General:
