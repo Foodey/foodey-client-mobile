@@ -1,5 +1,4 @@
 import { React, useState, useEffect, useContext } from 'react';
-import { View, ActivityIndicator } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
@@ -10,14 +9,50 @@ import AuthStackNavigator from '~/navigators/AuthStackNavigator';
 import MainBottomTabNavigator from '~/navigators/MainBottomTabNavigator';
 
 import { RestaurantMenuScreen } from '~/screens/discover';
+import SplashScreen from '~/screens/onBoarding/SplashScreen';
 
 import { AppProvider, AppContext } from '~/contexts/AppContext';
 
 const MainStack = createStackNavigator();
 
 function AppNav() {
-  const [isAppFirstLaunch, setIsAppFirstLaunch] = useState(null);
+  const { accessToken, setAccessToken, setUserInfo, isAppFirstLaunch, setIsAppFirstLaunch } =
+    useContext(AppContext);
 
+  //Check if the user has already logged in
+  const isLoggedIn = async () => {
+    try {
+      let userInfo = await AsyncStorage.getItem('userInfo');
+      let accessToken = await AsyncStorage.getItem('accessToken');
+      userInfo = JSON.parse(userInfo);
+
+      if (userInfo) {
+        setAccessToken(accessToken);
+        setUserInfo(userInfo);
+      } else {
+        setAccessToken('1');
+      }
+    } catch (e) {
+      console.log('Is logged in error ' + e);
+    }
+  };
+
+  const fetchData = async () => {
+    const appData = await AsyncStorage.getItem('isAppFirstLaunch');
+    if (appData == null) {
+      setIsAppFirstLaunch(true);
+      AsyncStorage.setItem('isAppFirstLaunch', 'false');
+    } else {
+      setIsAppFirstLaunch(false);
+    }
+  };
+
+  useEffect(() => {
+    isLoggedIn();
+    fetchData();
+  }, []);
+
+  //Check if the app is first launched
   useEffect(() => {
     async function fetchData() {
       const appData = await AsyncStorage.getItem('isAppFirstLaunch');
@@ -31,25 +66,45 @@ function AppNav() {
     fetchData();
   }, []);
 
-  const { accessToken, isLoading } = useContext(AppContext);
+  console.log(isAppFirstLaunch);
+  console.log('accessToken: ' + accessToken.toString());
 
-  if (isLoading) {
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <ActivityIndicator size="large" />
-    </View>;
-  }
+  const handleRender = () => {
+    if (accessToken === '') {
+      return (
+        <>
+          <MainStack.Screen name="Splash_Screen" component={SplashScreen} />
+        </>
+      );
+    } else if (accessToken === '1') {
+      return (
+        <>
+          <MainStack.Screen name="Authenticate" component={AuthStackNavigator} />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
+        </>
+      );
+    }
+  };
 
   return (
-    <NavigationContainer>
-      <MainStack.Navigator screenOptions={{ headerShown: false }}>
-        {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
-        {accessToken !== null ? (
-          <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
-        ) : (
-          <MainStack.Screen name="Authenticate" component={AuthStackNavigator} />
-        )}
-      </MainStack.Navigator>
-    </NavigationContainer>
+    isAppFirstLaunch !== null && (
+      <NavigationContainer>
+        <MainStack.Navigator screenOptions={{ headerShown: false }}>
+          {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
+          {/* {accessToken !== '1' ? (
+            <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
+          ) : (
+            <MainStack.Screen name="Authenticate" component={AuthStackNavigator} />
+          )} */}
+          {handleRender()}
+        </MainStack.Navigator>
+      </NavigationContainer>
+    )
   );
 
   // return (

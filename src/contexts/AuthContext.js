@@ -1,13 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 import { AppContext } from './AppContext';
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const { BASE_URL, userInfo, setUserInfo, accessToken, setAccessToken, setIsLoading } =
-    useContext(AppContext);
+  const {
+    BASE_URL,
+    userInfo,
+    setUserInfo,
+    accessToken,
+    setAccessToken,
+    setIsLoading,
+    setIsAppFirstLaunch,
+  } = useContext(AppContext);
 
   //USE STATES
   const [systemOTPCode, setSystemOTPCode] = useState('123456');
@@ -122,11 +129,13 @@ export const AuthProvider = ({ children }) => {
         setUserInfo(tempUserInfo);
         setAccessToken(tempUserInfo.accessToken);
 
-        // AsyncStorage.setItem('userInfo', JSON.stringify(tempUserInfo));
-        // AsyncStorage.setItem('accessToken', tempUserInfo.accessToken);
+        AsyncStorage.setItem('userInfo', JSON.stringify(tempUserInfo));
+        AsyncStorage.setItem('accessToken', tempUserInfo.accessToken);
 
         console.log(tempUserInfo);
         console.log('Access token ' + tempUserInfo.accessToken);
+
+        setIsAppFirstLaunch(false);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -136,29 +145,28 @@ export const AuthProvider = ({ children }) => {
         } else {
           console.log(err.response.status);
         }
+        setIsLoading(false);
       });
   };
 
-  const logout = () => {
-    setAccessToken(null);
-    // AsyncStorage.removeItem('userInfo');
-    // AsyncStorage.removeItem('accessToken');
-  };
+  // const isLoggedIn = async () => {
+  //   try {
+  //     let userInfo = await AsyncStorage.getItem('userInfo');
+  //     let accessToken = await AsyncStorage.getItem('accessToken');
+  //     userInfo = JSON.parse(userInfo);
 
-  const isLoggedIn = async () => {
-    try {
-      // let userInfo = await AsyncStorage.getItem('userInfo');
-      // let accessToken = await AsyncStorage.getItem('accessToken');
-      userInfo = JSON.parse(userInfo);
+  //     if (userInfo) {
+  //       setAccessToken(accessToken);
+  //       setUserInfo(userInfo);
+  //     }
+  //   } catch (e) {
+  //     console.log('Is logged in error ' + e);
+  //   }
+  // };
 
-      if (userInfo) {
-        setAccessToken(accessToken);
-        setUserInfo(userInfo);
-      }
-    } catch (e) {
-      console.log('Is logged in error ' + e);
-    }
-  };
+  // useEffect(() => {
+  //   isLoggedIn();
+  // }, [])
 
   return (
     <AuthContext.Provider
@@ -200,6 +208,9 @@ export const AuthProvider = ({ children }) => {
         setForgotPassErrorMessages,
         handleForgotPassInputsChanged,
         handleForgotPassErrors,
+
+        //Others
+        // isLoggedIn,
       }}
     >
       {children}

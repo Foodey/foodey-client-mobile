@@ -17,6 +17,7 @@ import Style from './HomeStyle';
 import ArrowRight from '~/resources/icons/arrow-right';
 import { SearchScreen } from '~/screens/home';
 import { HomeContext } from '~/contexts/HomeContext';
+import { AppContext } from '~/contexts/AppContext';
 
 const HomeScreen = ({ navigation }) => {
   const {
@@ -27,6 +28,8 @@ const HomeScreen = ({ navigation }) => {
     offersList,
     setOffersList,
   } = useContext(HomeContext);
+
+  const { userInfo, setUserInfo } = useContext(AppContext);
 
   //Navigation:
   const seeAllCategoriesHandler = () => {
@@ -89,7 +92,7 @@ const HomeScreen = ({ navigation }) => {
               { color: COLOR.button_primary_color, fontFamily: 'Manrope-Bold' },
             ]}
           >
-            Thịnh
+            {userInfo.name}
           </Text>
         </View>
         <View style={{ width: '90%', height: 290, marginHorizontal: 21 }}>

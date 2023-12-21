@@ -5,10 +5,16 @@ import Style from './OnBoardingStyle';
 
 import { UtilityCard, SubmitButton } from '~/components';
 import { Indicator } from '~/components/onBoarding';
+import { CommonActions } from '@react-navigation/native';
 
 export default function OnBoardingScreen3({ navigation }) {
-  const onStartPressHandler = () => {
-    navigation.navigate('Authenticate');
+  const handleSignInNavigation = () => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'Authenticate' }],
+      }),
+    );
   };
 
   return (
@@ -24,7 +30,7 @@ export default function OnBoardingScreen3({ navigation }) {
       <View style={Style.footer_view}>
         <SubmitButton
           title="Start"
-          onPressFunction={onStartPressHandler}
+          onPressFunction={handleSignInNavigation}
           style={{ flex: 1, marginVertical: 49 }}
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}

@@ -1,7 +1,8 @@
-import { React } from 'react';
+import React, { useContext, useEffect } from 'react';
 
-import { AppProvider } from '~/contexts/AppContext';
+import { AppProvider, AppContext } from '~/contexts/AppContext';
 import AppNav from '~/navigators/AppNav';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function App() {
   return (

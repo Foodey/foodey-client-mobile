@@ -8,17 +8,17 @@ import {
   KeyboardAvoidingView,
   Modal,
   Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import React, { useContext, useState } from 'react';
 import { UtilityCard, SubmitButton } from '~/components';
 import { AuthSwitcher, Login, SignUp, ThirdPartyAuth } from '~/components/authenticate';
 import { COLOR } from '~/constants/Colors';
 import { AuthContext } from '~/contexts/AuthContext';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { AppContext } from '../../contexts/AppContext';
 
 export default function SignInUpScreen({ navigation }) {
-  const tempAccount = { phoneNumber: '0123456789', password: '12345678' };
-
   const {
     loginInputs,
     loginErrorMessages,
@@ -33,6 +33,8 @@ export default function SignInUpScreen({ navigation }) {
     clearSignUpInputs,
     clearSignUpErrorMessages,
   } = useContext(AuthContext);
+
+  const { isLoading, setIsLoading } = useContext(AppContext);
 
   //USE STATES
   const [isLogin, setIsLogin] = useState(true);
@@ -72,17 +74,6 @@ export default function SignInUpScreen({ navigation }) {
 
     if (valid) login(loginInputs.phoneNumber, loginInputs.password);
   };
-
-  // const login = () => {
-  //   //**Communicate with BE to authenticate the account**
-  //   if (
-  //     loginInputs.phoneNumber === tempAccount.phoneNumber &&
-  //     loginInputs.password === tempAccount.password
-  //   ) {
-  //     clearLoginErrorMessages();
-  //     navigation.replace('Main');
-  //   } else handleLoginErrors('* Incorrect phone number or password', 'password');
-  // };
 
   //  SignUp:
   const onNextPressHandler = () => {
@@ -156,6 +147,7 @@ export default function SignInUpScreen({ navigation }) {
   return (
     <KeyboardAvoidingView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
+      <Spinner visible={isLoading} />
       <UtilityCard
         style={styles.header_content_container}
         title="Welcome!"
