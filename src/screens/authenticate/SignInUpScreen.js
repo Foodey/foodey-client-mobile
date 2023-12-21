@@ -8,7 +8,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UtilityCard, SubmitButton } from '~/components';
 import { AuthSwitcher, Login, SignUp, ThirdPartyAuth } from '~/components/authenticate';
 import { COLOR } from '~/constants/Colors';
@@ -45,6 +45,10 @@ export default function SignInUpScreen({ navigation }) {
 
   //USE STATES
   const [isLogin, setIsLogin] = useState(true);
+
+  useEffect(() => {
+    setIsLogin(true);
+  }, []);
 
   //Navigation:
   const onForgotPassPress = () => {
@@ -131,6 +135,7 @@ export default function SignInUpScreen({ navigation }) {
     console.log('Before calling API');
 
     if (valid) signUp(signUpInputs.phoneNumber, signUpInputs.password, signUpInputs.fullName);
+    // if(valid) navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
   };
 
   const login = (username, password) => {
@@ -203,14 +208,14 @@ export default function SignInUpScreen({ navigation }) {
 
   const ToggleLogin = () => {
     if (!isLogin) setIsLogin(!isLogin);
-    clearLoginInputs();
-    clearLoginErrorMessages();
+    clearSignUpInputs();
+    clearSignUpErrorMessages();
   };
 
   const ToggleSignUp = () => {
     if (isLogin) setIsLogin(!isLogin);
-    clearSignUpInputs();
-    clearSignUpErrorMessages();
+    clearLoginInputs();
+    clearLoginErrorMessages();
   };
 
   return (

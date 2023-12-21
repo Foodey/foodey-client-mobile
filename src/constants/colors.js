@@ -76,4 +76,7 @@ export const COLOR = {
   circleCategory_background_color: pink_100_trans,
 
   star_background_color: yellow_100,
+
+  not_disabled_resendCode_text: pink_100,
+  disabled_resendCode_text: pink_60,
 };

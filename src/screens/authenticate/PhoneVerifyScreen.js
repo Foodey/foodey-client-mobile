@@ -53,7 +53,8 @@ export default function PhoneVerifyScreen({ navigation, route }) {
   //USE STATES:
   const [codeSentFailedVisible, setCodeSentFailedVisible] = useState(false);
   const [verifiedNotifyVisible, setVerifiedNotifyVisible] = useState(false);
-  const [resendCodeNotifyVisible, setResendCodeNotifyVisible] = useState(false);
+
+  const [isAllowGetNewCode, setIsAllowGetNewCode] = useState(true);
   // const [sendOTPFlag, setSendOTPFlag] = useState(false);
 
   useEffect(() => {
@@ -71,16 +72,35 @@ export default function PhoneVerifyScreen({ navigation, route }) {
       });
   }, []);
 
+  useEffect(() => {
+    if (!isAllowGetNewCode) {
+      setTimeout(() => {
+        setIsAllowGetNewCode(true);
+        console.log(isAllowGetNewCode);
+      }, 10000);
+    }
+  }, [isAllowGetNewCode]);
+
   //Functions:
 
   function onResendCodeHandler() {
-    setSystemOTPCode('');
     //generateOTP();
     //Resend the OTP code:
     // if(codeSentSuccess)
     // {
-    console.log('New OTP code sent!!');
-    setResendCodeNotifyVisible(true);
+    sendingOTPCode()
+      .then((success) => {
+        if (success) {
+          console.log('Already re-sent code');
+          setIsAllowGetNewCode(false);
+        } else {
+          console.log('Failed re-sending code');
+          setCodeSentFailedVisible(true);
+        }
+      })
+      .catch((err) => {
+        console.log('Unexpected error while re-sending code: ', err);
+      });
     // }
     // else
     // {
@@ -88,13 +108,9 @@ export default function PhoneVerifyScreen({ navigation, route }) {
     // }
   }
 
-  function closeResendCodeNotifyMsgBox() {
-    setResendCodeNotifyVisible(false);
-  }
-
   function closeVerifiedNotifyMsgBox() {
     setVerifiedNotifyVisible(false);
-    navigation.popToTop();
+    navigation.replace('SignInUp_Screen');
   }
 
   // //  Edit phone number modal:
@@ -183,11 +199,6 @@ export default function PhoneVerifyScreen({ navigation, route }) {
         onOKPressHandler={closeVerifiedNotifyMsgBox}
       />
       <SuccessNotifyModal
-        title="We have sent you a new OTP code, please re-check!!"
-        visible={resendCodeNotifyVisible}
-        onOKPressHandler={closeResendCodeNotifyMsgBox}
-      />
-      <SuccessNotifyModal
         title="OTP code sent failed, please try again later!!"
         visible={codeSentFailedVisible}
         onOKPressHandler={() => setCodeSentFailedVisible(false)}
@@ -211,6 +222,7 @@ export default function PhoneVerifyScreen({ navigation, route }) {
         onResendCodePress={onResendCodeHandler}
         errorMessage={otpErrorMessage}
         style={styles.code_input_container}
+        disabled={!isAllowGetNewCode}
       />
       <View style={styles.footer_container}>
         <SubmitButton

@@ -72,11 +72,16 @@ const OTPInputBox = (props) => {
       </View>
       <View style={styles.resent_otp_container}>
         <Text style={styles.resend_otp_text}>Didn’t receive code?</Text>
-        <Pressable style={styles.resend_otp_button} onPress={onPress}>
+        <Pressable style={styles.resend_otp_button} disabled={props.disabled} onPress={onPress}>
           <Text
             style={[
               styles.resend_otp_text,
-              { color: COLOR.button_secondary_color, textDecorationLine: 'underline' },
+              { textDecorationLine: 'underline' },
+              {
+                color: props.disabled
+                  ? COLOR.disabled_resendCode_text
+                  : COLOR.not_disabled_resendCode_text,
+              },
             ]}
           >
             Get a new one

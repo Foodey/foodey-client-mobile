@@ -35,17 +35,15 @@ export default function ForgotPassScreen({ navigation }) {
   //Functions:
   const onNextPressHandler = () => {
     let valid = true;
+    const phoneRegex = '^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])\\d{7}$';
 
     if (forgotPassInputs.phoneNumber === '') {
       handleForgotPassErrors('* Please input phone number', 'phoneNumber');
       valid = false;
+    } else if (!forgotPassInputs.phoneNumber.match(phoneRegex)) {
+      handleForgotPassErrors('* Invalid phone number format', 'phoneNumber');
+      valid = false;
     }
-    // else if (!forgotPassInputs.phoneNumber.match('^(+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])d{7,9}$'))
-    // {
-    //   handleForgotPassErrors('* Invalid phone number format', 'phoneNumber');
-    //   valid = false;
-    // }
-
     if (valid) {
       navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: true });
     }
