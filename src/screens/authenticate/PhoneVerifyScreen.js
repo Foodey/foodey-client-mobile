@@ -11,7 +11,7 @@ import React from 'react';
 import { OTPInputBox } from '~/components/authenticate';
 import { SubmitButton, BackButton, UtilityCard } from '~/components';
 import { COLOR } from '~/constants/Colors';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Edit from '~/resources/icons/edit.svg';
 import { EditPhoneNumModal, SuccessNotifyModal } from '~/components/messageBoxes';
 import { AuthContext } from '~/contexts/AuthContext';
@@ -37,32 +37,70 @@ export default function PhoneVerifyScreen({ navigation, route }) {
     setOTPCode,
     otpErrorMessage,
     setOTPErrorMessage,
+    sendingOTPCode,
+    verifyOTPCode,
   } = useContext(AuthContext);
 
   //NAVIGATORS:
   const onBackPressHandler = () => {
     setOTPErrorMessage('');
+    handleForgotPassInputsChanged('', 'phoneNumber');
+    handleForgotPassInputsChanged;
     Keyboard.dismiss();
-    navigation.goBack();
+    isForgotPassVerify ? navigation.popToTop() : navigation.goBack();
   };
 
   //USE STATES:
-  const [editPhoneNumberVisible, setEditPhoneNumberVisible] = useState(false);
+  const [codeSentFailedVisible, setCodeSentFailedVisible] = useState(false);
   const [verifiedNotifyVisible, setVerifiedNotifyVisible] = useState(false);
-  const [resendCodeNotifyVisible, setResendCodeNotifyVisible] = useState(false);
 
-  const [newPhoneNumber, setNewPhoneNumber] = useState('');
+  const [isAllowGetNewCode, setIsAllowGetNewCode] = useState(true);
+  // const [sendOTPFlag, setSendOTPFlag] = useState(false);
+
+  useEffect(() => {
+    sendingOTPCode()
+      .then((success) => {
+        if (success) {
+          console.log('Already sent code');
+        } else {
+          console.log('Failed sending code');
+          setCodeSentFailedVisible(true);
+        }
+      })
+      .catch((err) => {
+        console.log('Unexpected error while sending code: ', err);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!isAllowGetNewCode) {
+      setTimeout(() => {
+        setIsAllowGetNewCode(true);
+        console.log(isAllowGetNewCode);
+      }, 10000);
+    }
+  }, [isAllowGetNewCode]);
 
   //Functions:
 
   function onResendCodeHandler() {
-    setSystemOTPCode('');
     //generateOTP();
     //Resend the OTP code:
     // if(codeSentSuccess)
     // {
-    console.log('New OTP code sent!!');
-    setResendCodeNotifyVisible(true);
+    sendingOTPCode()
+      .then((success) => {
+        if (success) {
+          console.log('Already re-sent code');
+          setIsAllowGetNewCode(false);
+        } else {
+          console.log('Failed re-sending code');
+          setCodeSentFailedVisible(true);
+        }
+      })
+      .catch((err) => {
+        console.log('Unexpected error while re-sending code: ', err);
+      });
     // }
     // else
     // {
@@ -70,66 +108,77 @@ export default function PhoneVerifyScreen({ navigation, route }) {
     // }
   }
 
-  function closeResendCodeNotifyMsgBox() {
-    setResendCodeNotifyVisible(false);
-  }
-
   function closeVerifiedNotifyMsgBox() {
     setVerifiedNotifyVisible(false);
-    isForgotPassVerify ? navigation.popToTop() : navigation.replace('Main');
+    navigation.replace('SignInUp_Screen');
   }
 
-  //  Edit phone number modal:
-  function onPhoneNumberTextChange(value) {
-    isForgotPassVerify
-      ? handleForgotPassErrors('', 'phoneNumber')
-      : handleSignUpErrors('', 'phoneNumber');
-    setNewPhoneNumber(value);
-  }
+  // //  Edit phone number modal:
+  // function onPhoneNumberTextChange(value) {
+  //   isForgotPassVerify
+  //     ? handleForgotPassErrors('', 'phoneNumber')
+  //     : handleSignUpErrors('', 'phoneNumber');
+  //   setNewPhoneNumber(value);
+  // }
 
-  function onEditPhoneNumOKPress() {
-    let valid = true;
-    if (newPhoneNumber === '') {
-      isForgotPassVerify
-        ? handleForgotPassErrors('* Please input phone number', 'phoneNumber')
-        : handleSignUpErrors('* Please input phone number', 'phoneNumber');
-      valid = false;
-    }
-    // else if (!signUpInputs.phoneNumber.match('^(+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])d{7,9}$'))
-    // {
-    //   isForgotPassVerify
-    //    ? handleForgotPassErrors('* Invalid phone number format', 'phoneNumber');
-    //   valid = format', 'phoneNumber')
-    //    : handleSignUpErrors('* Invalid phone number format', 'phoneNumber';
-    // }
-    if (valid) {
-      isForgotPassVerify
-        ? handleForgotPassInputsChanged(newPhoneNumber, 'phoneNumber')
-        : handleSignUpInputsChanged(newPhoneNumber, 'phoneNumber');
-      setNewPhoneNumber('');
-      setEditPhoneNumberVisible(false);
-      setOTPErrorMessage('');
-      onResendCodeHandler();
-    }
-  }
+  // function onEditPhoneNumOKPress() {
+  //   let valid = true;
+  //   if (newPhoneNumber === '') {
+  //     isForgotPassVerify
+  //       ? handleForgotPassErrors('* Please input phone number', 'phoneNumber')
+  //       : handleSignUpErrors('* Please input phone number', 'phoneNumber');
+  //     valid = false;
+  //   }
+  //   // else if (!signUpInputs.phoneNumber.match('^(+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])d{7,9}$'))
+  //   // {
+  //   //   isForgotPassVerify
+  //   //    ? handleForgotPassErrors('* Invalid phone number format', 'phoneNumber');
+  //   //   valid = format', 'phoneNumber')
+  //   //    : handleSignUpErrors('* Invalid phone number format', 'phoneNumber';
+  //   // }
+  //   if (valid) {
+  //     isForgotPassVerify
+  //       ? handleForgotPassInputsChanged(newPhoneNumber, 'phoneNumber')
+  //       : handleSignUpInputsChanged(newPhoneNumber, 'phoneNumber');
+  //     setNewPhoneNumber('');
+  //     setEditPhoneNumberVisible(false);
+  //     setOTPErrorMessage('');
+  //     onResendCodeHandler();
+  //   }
+  // }
 
   //Testing OTP code: (PASSED)
   function VerifyCode() {
-    if (parseInt(OTPCode) === parseInt(systemOTPCode)) {
-      console.log('Correct');
-      setOTPCode('');
-      setSystemOTPCode('');
-      setVerifiedNotifyVisible(true);
-    } else {
-      console.log('Incorrect');
-      setOTPErrorMessage('*OTP Code not match');
-    }
+    // if (parseInt(OTPCode) === parseInt(systemOTPCode)) {
+    //   console.log('Correct');
+    //   setOTPCode('');
+    //   setSystemOTPCode('');
+    //   setVerifiedNotifyVisible(true);
+    // } else {
+    //   console.log('Incorrect');
+    //   setOTPErrorMessage('*OTP Code not match');
+    // }
+    verifyOTPCode()
+      .then((success) => {
+        if (success) {
+          console.log('Correct');
+          setOTPCode('');
+          setSystemOTPCode('');
+          setVerifiedNotifyVisible(true);
+        } else {
+          console.log('Incorrect');
+          setOTPErrorMessage('* OTP Code does not match');
+        }
+      })
+      .catch((err) => {
+        console.log('Unexpected error while verify code: ', err);
+      });
   }
 
   return (
     <KeyboardAvoidingView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <EditPhoneNumModal
+      {/* <EditPhoneNumModal
         visible={editPhoneNumberVisible}
         newPhoneNumber={newPhoneNumber}
         errorMessage={
@@ -143,16 +192,16 @@ export default function PhoneVerifyScreen({ navigation, route }) {
           setEditPhoneNumberVisible(false);
         }}
         onEditPhoneNumOKPress={onEditPhoneNumOKPress}
-      />
+      /> */}
       <SuccessNotifyModal
         title="You’re successfully verified!"
         visible={verifiedNotifyVisible}
         onOKPressHandler={closeVerifiedNotifyMsgBox}
       />
       <SuccessNotifyModal
-        title="We have sent you a new OTP code, please re-check!!"
-        visible={resendCodeNotifyVisible}
-        onOKPressHandler={closeResendCodeNotifyMsgBox}
+        title="OTP code sent failed, please try again later!!"
+        visible={codeSentFailedVisible}
+        onOKPressHandler={() => setCodeSentFailedVisible(false)}
       />
       <View style={styles.header_container}>
         <BackButton onPressFunction={onBackPressHandler} />
@@ -168,26 +217,12 @@ export default function PhoneVerifyScreen({ navigation, route }) {
             +84 {isForgotPassVerify ? forgotPassInputs.phoneNumber : signUpInputs.phoneNumber}
           </Text>
         </View>
-        <Pressable
-          onPress={() => {
-            setEditPhoneNumberVisible(true);
-          }}
-          style={({ pressed }) => [
-            styles.phoneNum_edit_button,
-            {
-              backgroundColor: pressed
-                ? COLOR.edtButton_pressed_background_color
-                : COLOR.edtButton_background_color,
-            },
-          ]}
-        >
-          <Edit width={17} height={17} />
-        </Pressable>
       </View>
       <OTPInputBox
         onResendCodePress={onResendCodeHandler}
         errorMessage={otpErrorMessage}
         style={styles.code_input_container}
+        disabled={!isAllowGetNewCode}
       />
       <View style={styles.footer_container}>
         <SubmitButton

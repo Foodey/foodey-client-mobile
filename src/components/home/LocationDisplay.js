@@ -5,7 +5,11 @@ import { Location, Search } from '~/resources/icons';
 function LocationDisplay({ style, location }) {
   return (
     <View style={[styles.container, style]}>
-      <Location width={24} height={24} style={{ marginStart: 12 }} />
+      <Location
+        width={24}
+        height={24}
+        style={{ marginStart: 12, color: COLOR.indicator_current_color }}
+      />
       <Text style={[styles.location_text]} ellipsizeMode="tail" numberOfLines={1}>
         {location}
       </Text>

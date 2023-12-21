@@ -24,7 +24,11 @@ function SearchBar({
 
   return (
     <Pressable onPress={onPressFunction} style={[styles.container, style]}>
-      <Search width={24} height={24} style={{ marginStart: 12, flex: 1 }} />
+      <Search
+        width={24}
+        height={24}
+        style={{ marginStart: 12, flex: 1, color: COLOR.button_primary_color }}
+      />
       <TextInput
         value={searchValue}
         ref={searchRef}

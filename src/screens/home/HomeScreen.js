@@ -12,13 +12,12 @@ import {
 import React, { useState, useContext } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { LocationDisplay, CircleCategory, TruncateRestaurantCard } from '~/components/home';
-import { SearchBar } from '~/components';
 import { FullArrowRight, Search } from '~/resources/icons';
-import { categories, restaurants, offers } from '~/constants/TempData';
 import Style from './HomeStyle';
 import ArrowRight from '~/resources/icons/arrow-right';
 import { SearchScreen } from '~/screens/home';
 import { HomeContext } from '~/contexts/HomeContext';
+import { AppContext } from '~/contexts/AppContext';
 
 const HomeScreen = ({ navigation }) => {
   const {
@@ -29,6 +28,8 @@ const HomeScreen = ({ navigation }) => {
     offersList,
     setOffersList,
   } = useContext(HomeContext);
+
+  const { userInfo, setUserInfo } = useContext(AppContext);
 
   //Navigation:
   const seeAllCategoriesHandler = () => {
@@ -70,7 +71,11 @@ const HomeScreen = ({ navigation }) => {
         onPress={() => setSearchVisible(true)}
         style={[styles.searchBar_container, Style.search_bar]}
       >
-        <Search width={24} height={24} style={{ marginStart: 12, flex: 1 }} />
+        <Search
+          width={24}
+          height={24}
+          style={{ marginStart: 12, flex: 1, color: COLOR.button_primary_color }}
+        />
         <TextInput
           editable={false}
           style={[styles.searchBar_location_text]}
@@ -87,7 +92,7 @@ const HomeScreen = ({ navigation }) => {
               { color: COLOR.button_primary_color, fontFamily: 'Manrope-Bold' },
             ]}
           >
-            Thịnh
+            {userInfo.name}
           </Text>
         </View>
         <View style={{ width: '90%', height: 290, marginHorizontal: 21 }}>
