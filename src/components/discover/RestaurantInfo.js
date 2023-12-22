@@ -33,6 +33,7 @@ function RestaurantInfo({ style, avgRating, estimateTime, category, viewDetailPr
 
 const styles = StyleSheet.create({
   container: {
+    height: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLOR.resInfo_background_color,

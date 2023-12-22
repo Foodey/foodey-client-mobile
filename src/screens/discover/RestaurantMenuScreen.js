@@ -7,21 +7,48 @@ import {
   ScrollView,
   Pressable,
   FlatList,
-  TextInput,
   Image,
+  Animated,
 } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { BackButton } from '~/components';
 import { Search, Detail, ShoppingBag } from '~/resources/icons';
-import { RestaurantTitle, FavoriteButton, RestaurantInfo } from '~/components/discover';
-import { restaurants } from '~/constants/TempData';
+import { RestaurantTitle, FavoriteButton, DishBar } from '~/components/discover';
+import { products, restaurants } from '~/constants/TempData';
 
 const RestaurantMenuScreen = ({ navigation }) => {
   //Navigation:
 
   //Use states
   const [isFavorite, setIsFavorite] = useState(false);
+
+  //Animations:
+  // const scrollY = useRef(new Animated.Value(0)).current;
+
+  // const translateHeaderImage = scrollY.interpolate({
+  //   inputRange: [0, 217],
+  //   outputRange: [0, -217],
+  //   extrapolate: 'clamp',
+  // });
+
+  // const opacityHeaderImage = scrollY.interpolate({
+  //   inputRange: [0, 217],
+  //   outputRange: [1, 0],
+  //   extrapolate: 'clamp',
+  // });
+
+  // const translateResTitle = scrollY.interpolate({
+  //   inputRange: [0, 183],
+  //   outputRange: [0, -183],
+  //   extrapolate: 'clamp',
+  // });
+
+  // const translateFlatList = scrollY.interpolate({
+  //   inputRange: [0, 183],
+  //   outputRange: [0, -183],
+  //   extrapolate: 'clamp',
+  // });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,12 +65,19 @@ const RestaurantMenuScreen = ({ navigation }) => {
           <ShoppingBag width={25} height={25} />
         </Pressable>
       </View>
-      <ScrollView style={styles.scrollView_container} showsVerticalScrollIndicator={false}>
-        <Image
+      <Animated.View>
+        <Animated.Image
           source={require('~/resources/images/kfc-wallpaper.png')}
-          style={{ width: '100%', height: 180 }}
+          style={[
+            {
+              width: '100%',
+              height: 180,
+              // transform: [{ translateY: translateHeaderImage }],
+              // opacity: opacityHeaderImage,
+            },
+          ]}
         />
-        <View style={styles.res_title_container}>
+        <View style={[styles.res_title_container]}>
           <RestaurantTitle
             style={{ flex: 3 }}
             logoLink={restaurants[1].logoLink}
@@ -55,13 +89,37 @@ const RestaurantMenuScreen = ({ navigation }) => {
             onPressFunction={() => setIsFavorite(!isFavorite)}
           />
         </View>
-        <RestaurantInfo
-          style={styles.res_info_container}
-          avgRating={4.5}
-          estimateTime={30}
-          category="Burgers"
-        />
-      </ScrollView>
+        {/* <Animated.View
+          style={[
+            styles.res_info_container,
+            // { transform: [{ translateY: translateResInfo }] },
+            { opacity: opacityResInfo },
+          ]}
+        >
+          <RestaurantInfo avgRating={4.5} estimateTime={30} category="Burgers" />
+        </Animated.View> */}
+      </Animated.View>
+      <View style={styles.separator}>
+        <Text style={styles.separator_text}>MENU</Text>
+      </View>
+      <Animated.FlatList
+        style={[styles.scrollView_container]}
+        showsVerticalScrollIndicator={false}
+        // onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+        //   useNativeDriver: true,
+        // })}
+        // scrollEventThrottle={1}
+        data={products}
+        renderItem={({ item }) => (
+          <DishBar
+            // style={{ margin: 25 }}
+            image={item.image}
+            name={item.name}
+            price={item.price}
+            afterDiscountPrice="50.000"
+          />
+        )}
+      />
     </SafeAreaView>
   );
 };
@@ -80,6 +138,7 @@ const styles = StyleSheet.create({
   },
 
   res_title_container: {
+    position: 'relative',
     flexDirection: 'row',
     width: 'auto',
     height: 100,
@@ -88,14 +147,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 21,
   },
 
-  res_info_container: {
-    width: 'auto',
-    height: 150,
-    marginHorizontal: 21,
-    marginVertical: 15,
+  scrollView_container: {},
+
+  separator: {
+    width: '100%',
+    height: 60,
+    backgroundColor: COLOR.indicator_color,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
-  scrollView_container: {},
+  separator_text: {
+    fontFamily: 'Manrope-Bold',
+    fontSize: 17,
+    color: COLOR.text_primary_color,
+  },
 });
 
 export default RestaurantMenuScreen;

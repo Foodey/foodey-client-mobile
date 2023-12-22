@@ -7,7 +7,7 @@ import { Location } from '~/resources/icons';
 function RestaurantTitle({ style, logoLink, name, address }) {
   return (
     <View style={[styles.container, style]}>
-      <Image source={logoLink} style={{ width: 64, height: 64, marginEnd: 18 }} />
+      <Image source={logoLink} style={{ width: 60, height: 60, marginEnd: 18 }} />
       <View>
         <Text ellipsizeMode="tail" numberOfLines={1} style={styles.title_text}>
           {name}
@@ -35,13 +35,13 @@ const styles = StyleSheet.create({
 
   title_text: {
     fontFamily: 'Manrope-Medium',
-    fontSize: 36,
+    fontSize: 33,
     color: COLOR.text_primary_color,
   },
 
   address_text: {
     fontFamily: 'Manrope-Regular',
-    fontSize: 17,
+    fontSize: 15,
     color: COLOR.text_primary_color,
   },
 });

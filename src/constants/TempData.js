@@ -181,7 +181,7 @@ export const restaurants = [
     logoLink: require('~/resources/images/kfc-logo.png'),
     phone: '0123456789',
     email: 'testdata@gmai.com',
-    avgReview: '4.8',
+    avgReview: '1.1',
     address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
   },
   {
@@ -282,5 +282,68 @@ export const offers = [
     voucherImageLink: require('~/resources/images/kfc-voucher.png'),
     logoLink: require('~/resources/images/kfc-logo.png'),
     owner: 'Restaurant 5',
+  },
+];
+
+export const products = [
+  {
+    id: '1',
+    name: 'Classic Cheese Hamburger',
+    image: require('~/resources/images/product-1.png'),
+    price: '100.000',
+  },
+  {
+    id: '2',
+    name: 'Simply Cheese with Sesame Seed bunsClassic Cheese Hamburger',
+    image: require('~/resources/images/product-1.png'),
+    price: '100.000',
+  },
+  {
+    id: '3',
+    name: 'Classic Cheese Hamburger',
+    image: require('~/resources/images/product-1.png'),
+    price: '100.000',
+  },
+  {
+    id: '4',
+    name: 'Simply Cheese with Sesame Seed bunsClassic Cheese Hamburger',
+    image: require('~/resources/images/product-1.png'),
+    price: '100.000',
+  },
+  {
+    id: '5',
+    name: 'Classic Cheese Hamburger',
+    image: require('~/resources/images/product-1.png'),
+    price: '100.000',
+  },
+  {
+    id: '6',
+    name: 'Simply Cheese with Sesame Seed bunsClassic Cheese Hamburger',
+    image: require('~/resources/images/product-1.png'),
+    price: '100.000',
+  },
+  {
+    id: '7',
+    name: 'Classic Cheese Hamburger',
+    image: require('~/resources/images/product-1.png'),
+    price: '100.000',
+  },
+  {
+    id: '8',
+    name: 'Simply Cheese with Sesame Seed bunsClassic Cheese Hamburger',
+    image: require('~/resources/images/product-1.png'),
+    price: '100.000',
+  },
+  {
+    id: '9',
+    name: 'Classic Cheese Hamburger',
+    image: require('~/resources/images/product-1.png'),
+    price: '100.000',
+  },
+  {
+    id: '10',
+    name: 'Simply Cheese with Sesame Seed bunsClassic Cheese Hamburger',
+    image: require('~/resources/images/product-1.png'),
+    price: '100.000',
   },
 ];
