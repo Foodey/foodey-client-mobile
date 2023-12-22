@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 export const AppContext = createContext({});
 
@@ -11,12 +12,21 @@ export const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isAppFirstLaunch, setIsAppFirstLaunch] = useState(null);
 
-  const logout = () => {
+  const logout = async () => {
     // setIsLoading(true);
-    AsyncStorage.removeItem('userInfo');
-    AsyncStorage.removeItem('accessToken');
+    try {
+      axios.post(`${BASE_URL}/v1/auth/logout`, null, {
+        headers: { Authorization: 'Bearer ' + userInfo.refreshToken },
+      });
+      AsyncStorage.removeItem('userInfo');
+      AsyncStorage.removeItem('accessToken');
+      setUserInfo({});
+      setAccessToken('1');
+    } catch (err) {
+      console.log('Error when logging out: ' + err);
+    }
+
     // setIsLoading(false);
-    setAccessToken('1');
   };
 
   return (
