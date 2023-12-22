@@ -1,5 +1,6 @@
 /* ===== COLOR NAME ===== */
 const dark_60 = '#B3BFCB';
+const dark_60_trans30 = '#B3BFCB4D';
 const dark_80 = '#6A798A';
 const dark_90 = '#46505D';
 const dark_100 = '#292D32';
@@ -79,4 +80,9 @@ export const COLOR = {
 
   not_disabled_resendCode_text: pink_100,
   disabled_resendCode_text: pink_60,
+
+  isFavorite_background_color: pink_60,
+  isFavorite_icon_color: pink_100,
+
+  resInfo_background_color: dark_60_trans30,
 };

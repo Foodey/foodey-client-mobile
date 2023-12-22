@@ -4,19 +4,23 @@ import { restaurants } from '~/constants/TempData';
 import { COLOR } from '~/constants/Colors';
 import { Location } from '~/resources/icons';
 
-function RestaurantTitle({ style }) {
+function RestaurantTitle({ style, logoLink, name, address }) {
   return (
     <View style={[styles.container, style]}>
-      <Image source={restaurants[0].logoLink} style={{ width: 64, height: 64, marginEnd: 18 }} />
+      <Image source={logoLink} style={{ width: 64, height: 64, marginEnd: 18 }} />
       <View>
-        <Text style={styles.title_text}>{restaurants[0].name}</Text>
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.title_text}>
+          {name}
+        </Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Location
             width={19}
             height={19}
             style={{ color: COLOR.text_primary_color, marginEnd: 5 }}
           />
-          <Text style={styles.address_text}>{restaurants[0].address.split(',')[0]}</Text>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.address_text}>
+            {address}
+          </Text>
         </View>
       </View>
     </View>
