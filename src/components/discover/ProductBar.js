@@ -3,7 +3,7 @@ import { COLOR } from '~/constants/Colors';
 import { Star } from '~/resources/icons';
 import ArrowRight from '~/resources/icons/arrow-right.svg';
 
-function DishBar({ style, image, name, price, afterDiscountPrice, onPressFunction }) {
+function ProductBar({ style, image, name, price, afterDiscountPrice, onPressFunction }) {
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
       <View style={styles.content_container}>
@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DishBar;
+export default ProductBar;

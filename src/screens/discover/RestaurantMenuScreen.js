@@ -14,7 +14,7 @@ import React, { useState, useContext, useRef } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { BackButton } from '~/components';
 import { Search, Detail, ShoppingBag } from '~/resources/icons';
-import { RestaurantTitle, FavoriteButton, DishBar } from '~/components/discover';
+import { RestaurantTitle, FavoriteButton, ProductBar } from '~/components/discover';
 import { products, restaurants } from '~/constants/TempData';
 
 const RestaurantMenuScreen = ({ navigation }) => {
@@ -111,7 +111,7 @@ const RestaurantMenuScreen = ({ navigation }) => {
         // scrollEventThrottle={1}
         data={products}
         renderItem={({ item }) => (
-          <DishBar
+          <ProductBar
             // style={{ margin: 25 }}
             image={item.image}
             name={item.name}

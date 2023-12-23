@@ -15,13 +15,16 @@ import { COLOR } from '~/constants/Colors';
 import { BackButton } from '~/components';
 import { HappyBag, Detail, ShoppingBag } from '~/resources/icons';
 import { ProductQuantityAdjuster, FavoriteButton, DishBar } from '~/components/discover';
-import { products, restaurants } from '~/constants/TempData';
+import { CartScreen } from '~/screens/discover';
+import { products } from '~/constants/TempData';
 
 const ProductDetailOrderScreen = ({ navigation }) => {
   //Navigation:
 
   //Use states
   const [isFavorite, setIsFavorite] = useState(false);
+
+  const [cartVisible, setCartVisible] = useState(false);
 
   const [productQuantity, setProductQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(products[0].price);
@@ -51,6 +54,11 @@ const ProductDetailOrderScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
+      <CartScreen
+        isVisible={cartVisible}
+        onBackdropPress={() => setCartVisible(false)}
+        onClosePress={() => setCartVisible(false)}
+      />
       <View style={{ flexDirection: 'row' }}>
         <BackButton style={[styles.header, { marginBottom: 0 }]} />
         <Pressable style={{ marginHorizontal: 21, marginLeft: 'auto' }}>
@@ -76,6 +84,7 @@ const ProductDetailOrderScreen = ({ navigation }) => {
           {totalPrice}.000 VND
         </Text>
         <ProductQuantityAdjuster
+          buttonRadius={35}
           quantity={productQuantity}
           style={{ flex: 1 }}
           onSubtractPress={onSubtractPress}
@@ -87,7 +96,7 @@ const ProductDetailOrderScreen = ({ navigation }) => {
           isFavorite={isFavorite}
           onPressFunction={() => setIsFavorite(!isFavorite)}
         />
-        <Pressable style={styles.addToCart_button}>
+        <Pressable style={styles.addToCart_button} onPress={() => setCartVisible(true)}>
           <HappyBag width={21} height={21} style={{ color: COLOR.background_color }} />
           <Text style={styles.addToCart_text}>Add to Cart</Text>
         </Pressable>

@@ -347,3 +347,46 @@ export const products = [
     price: '100.000',
   },
 ];
+
+export const orderedProducts = [
+  {
+    id: '1',
+    image: require('~/resources/images/milk-tea.png'),
+    name: 'Iced Toffee Nut Crunch Latte',
+    addOnInfo: '100% Sugar, 100% Ice, Size Venti',
+    quantity: '1',
+    totalUnitPrice: '99.000',
+  },
+  {
+    id: '2',
+    image: require('~/resources/images/milk-tea.png'),
+    name: 'Iced Toffee Nut Crunch Latte',
+    addOnInfo: '100% Sugar, 100% Ice, Size Venti',
+    quantity: '2',
+    totalUnitPrice: '79.000',
+  },
+  {
+    id: '3',
+    image: require('~/resources/images/milk-tea.png'),
+    name: 'Iced Toffee Nut Crunch Latte',
+    addOnInfo: '100% Sugar, 100% Ice, Size Venti',
+    quantity: '1',
+    totalUnitPrice: '89.000',
+  },
+  {
+    id: '4',
+    image: require('~/resources/images/milk-tea.png'),
+    name: 'Iced Toffee Nut Crunch Latte',
+    addOnInfo: '100% Sugar, 100% Ice, Size Venti',
+    quantity: '3',
+    totalUnitPrice: '99.000',
+  },
+  {
+    id: '5',
+    image: require('~/resources/images/milk-tea.png'),
+    name: 'Iced Toffee Nut Crunch Latte',
+    addOnInfo: '100% Sugar, 100% Ice, Size Venti',
+    quantity: '1',
+    totalUnitPrice: '99.000',
+  },
+];
