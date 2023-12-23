@@ -9,7 +9,7 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { LocationDisplay, CircleCategory, TruncateRestaurantCard } from '~/components/home';
 import { FullArrowRight, Search } from '~/resources/icons';
@@ -27,7 +27,12 @@ const HomeScreen = ({ navigation }) => {
     setRestaurantsList,
     offersList,
     setOffersList,
+    fetchCategories,
   } = useContext(HomeContext);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   const { userInfo, setUserInfo } = useContext(AppContext);
 
@@ -100,21 +105,24 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.categories_container}>
             <View style={styles.categories_row_container}>
               <CircleCategory
-                imageLink={categoriesList[0].imageLink}
+                imageStyle={{ width: 50, height: 50 }}
+                imageLink={categoriesList[0].image}
                 title={categoriesList[0].name}
                 onPressFunction={() =>
                   navigation.navigate('CategoryDetail_Screen', { category: categoriesList[0].name })
                 }
               />
               <CircleCategory
-                imageLink={categoriesList[1].imageLink}
+                imageStyle={{ width: 50, height: 50 }}
+                imageLink={categoriesList[1].image}
                 title={categoriesList[1].name}
                 onPressFunction={() =>
                   navigation.navigate('CategoryDetail_Screen', { category: categoriesList[1].name })
                 }
               />
               <CircleCategory
-                imageLink={categoriesList[2].imageLink}
+                imageStyle={{ width: 50, height: 50 }}
+                imageLink={categoriesList[2].image}
                 title={categoriesList[2].name}
                 onPressFunction={() =>
                   navigation.navigate('CategoryDetail_Screen', { category: categoriesList[2].name })
@@ -123,14 +131,16 @@ const HomeScreen = ({ navigation }) => {
             </View>
             <View style={styles.categories_row_container}>
               <CircleCategory
-                imageLink={categoriesList[3].imageLink}
+                imageStyle={{ width: 50, height: 50 }}
+                imageLink={categoriesList[3].image}
                 title={categoriesList[3].name}
                 onPressFunction={() =>
                   navigation.navigate('CategoryDetail_Screen', { category: categoriesList[3].name })
                 }
               />
               <CircleCategory
-                imageLink={categoriesList[4].imageLink}
+                imageStyle={{ width: 50, height: 50 }}
+                imageLink={categoriesList[4].image}
                 title={categoriesList[4].name}
                 onPressFunction={() =>
                   navigation.navigate('CategoryDetail_Screen', { category: categoriesList[4].name })

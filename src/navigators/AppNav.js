@@ -90,16 +90,16 @@ function AppNav() {
     }
   };
 
-  // return (
-  //   isAppFirstLaunch !== null && (
-  //     <NavigationContainer>
-  //       <MainStack.Navigator screenOptions={{ headerShown: false }}>
-  //         {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
-  //         {handleRender()}
-  //       </MainStack.Navigator>
-  //     </NavigationContainer>
-  //   )
-  // );
+  return (
+    isAppFirstLaunch !== null && (
+      <NavigationContainer>
+        <MainStack.Navigator screenOptions={{ headerShown: false }}>
+          {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
+          {handleRender()}
+        </MainStack.Navigator>
+      </NavigationContainer>
+    )
+  );
 
   // return (
   //   <NavigationContainer>
@@ -109,7 +109,7 @@ function AppNav() {
   //   </NavigationContainer>
   // );
 
-  return <ProductDetailOrderScreen />;
+  // return <ProductDetailOrderScreen />;
 }
 
 export default AppNav;
