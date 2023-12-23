@@ -23,3 +23,4 @@ export { default as ShoppingBag } from './shopping-bag.svg';
 export { default as Heart } from './heart.svg';
 export { default as Category } from './category.svg';
 export { default as EstimateTime } from './estimate-time.svg';
+export { default as HappyBag } from './happy-bag.svg';

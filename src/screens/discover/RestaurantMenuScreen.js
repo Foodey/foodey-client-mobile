@@ -67,7 +67,7 @@ const RestaurantMenuScreen = ({ navigation }) => {
       </View>
       <Animated.View>
         <Animated.Image
-          source={require('~/resources/images/kfc-wallpaper.png')}
+          source={require('~/resources/images/kfc-wallpaper.png')} //updating this
           style={[
             {
               width: '100%',
