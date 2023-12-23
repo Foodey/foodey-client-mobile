@@ -26,3 +26,7 @@ export { default as EstimateTime } from './estimate-time.svg';
 export { default as HappyBag } from './happy-bag.svg';
 export { default as Add } from './add.svg';
 export { default as Subtract } from './subtract.svg';
+export { default as FillLocation } from './fill-location.svg';
+export { default as Buy } from './buy.svg';
+export { default as Discount } from './discount.svg';
+export { default as Note } from './note.svg';
