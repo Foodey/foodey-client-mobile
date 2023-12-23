@@ -16,12 +16,15 @@ import { BackButton } from '~/components';
 import { Search, Detail, ShoppingBag } from '~/resources/icons';
 import { RestaurantTitle, FavoriteButton, ProductBar } from '~/components/discover';
 import { products, restaurants } from '~/constants/TempData';
+import { CartScreen } from '~/screens/discover';
 
 const RestaurantMenuScreen = ({ navigation }) => {
   //Navigation:
 
   //Use states
   const [isFavorite, setIsFavorite] = useState(false);
+
+  const [cartVisible, setCartVisible] = useState(false);
 
   //Animations:
   // const scrollY = useRef(new Animated.Value(0)).current;
@@ -50,9 +53,18 @@ const RestaurantMenuScreen = ({ navigation }) => {
   //   extrapolate: 'clamp',
   // });
 
+  const onCartPress = () => {
+    setCartVisible(true);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={COLOR.background_color} />
+      <StatusBar backgroundColor={cartVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color} />
+      <CartScreen
+        isVisible={cartVisible}
+        onBackdropPress={() => setCartVisible(false)}
+        onClosePress={() => setCartVisible(false)}
+      />
       <View style={{ flexDirection: 'row' }}>
         <BackButton style={[styles.header, { marginBottom: 0 }]} />
         <Pressable style={{ marginLeft: 'auto' }}>
@@ -61,7 +73,7 @@ const RestaurantMenuScreen = ({ navigation }) => {
         <Pressable style={{ marginStart: 21 }}>
           <Search width={25} height={25} style={{ color: COLOR.text_primary_color }} />
         </Pressable>
-        <Pressable style={{ marginHorizontal: 21 }}>
+        <Pressable style={{ marginHorizontal: 21 }} onPress={onCartPress}>
           <ShoppingBag width={25} height={25} />
         </Pressable>
       </View>

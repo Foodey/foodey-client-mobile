@@ -6,6 +6,8 @@ import { Filter } from '~/resources/icons';
 import Style from './HomeStyle';
 import { restaurants } from '~/constants/TempData';
 import { HomeContext } from '~/contexts/HomeContext';
+import { products } from '~/constants/TempData';
+import { ProductBar } from '~/components/discover';
 
 const CategoryDetailScreen = ({ navigation, route }) => {
   const { setCategorySearchValue } = useContext(HomeContext);
@@ -33,7 +35,7 @@ const CategoryDetailScreen = ({ navigation, route }) => {
           <Text style={styles.filter_button_text}>Filter</Text>
         </Pressable> */}
       </View>
-      <FlatList
+      {/* <FlatList
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           marginTop: 15,
@@ -48,6 +50,20 @@ const CategoryDetailScreen = ({ navigation, route }) => {
             distance={1.2} // this distance should be calculated depends on the current location of user
             estimateTime={32} // this estimateTime should be calculated depends on the current location of user
             avgReview={item.avgReview}
+          />
+        )}
+      /> */}
+      <FlatList
+        contentContainerStyle={{ paddingBottom: 110 }}
+        showsVerticalScrollIndicator={false}
+        data={products}
+        renderItem={({ item }) => (
+          <ProductBar
+            // style={{ margin: 25 }}
+            image={item.image}
+            name={item.name}
+            price={item.price}
+            afterDiscountPrice=""
           />
         )}
       />

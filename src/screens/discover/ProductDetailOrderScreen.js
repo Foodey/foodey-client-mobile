@@ -53,7 +53,7 @@ const ProductDetailOrderScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={COLOR.background_color} />
+      <StatusBar backgroundColor={cartVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color} />
       <CartScreen
         isVisible={cartVisible}
         onBackdropPress={() => setCartVisible(false)}

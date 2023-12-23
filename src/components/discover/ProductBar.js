@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginStart: 5,
     marginEnd: 10,
-    color: COLOR.text_primary_color,
+    color: COLOR.text_blue_color,
   },
 
   discount_price_text: {
