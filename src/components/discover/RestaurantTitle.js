@@ -4,10 +4,13 @@ import { restaurants } from '~/constants/TempData';
 import { COLOR } from '~/constants/Colors';
 import { Location } from '~/resources/icons';
 
-function RestaurantTitle({ style, logoLink, name, address }) {
+function RestaurantTitle({ style, logo, name, address }) {
   return (
     <View style={[styles.container, style]}>
-      <Image source={logoLink} style={{ width: 60, height: 60, marginEnd: 18 }} />
+      <Image
+        source={{ uri: logo || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
+        style={{ width: 64, height: 64, marginEnd: 18, borderRadius: 100 }}
+      />
       <View>
         <Text ellipsizeMode="tail" numberOfLines={1} style={styles.title_text}>
           {name}
@@ -35,7 +38,7 @@ const styles = StyleSheet.create({
 
   title_text: {
     fontFamily: 'Manrope-Medium',
-    fontSize: 33,
+    fontSize: 30,
     color: COLOR.text_primary_color,
   },
 

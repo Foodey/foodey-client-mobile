@@ -3,19 +3,14 @@ import { COLOR } from '~/constants/Colors';
 import { Star } from '~/resources/icons';
 import ArrowRight from '~/resources/icons/arrow-right.svg';
 
-function RestaurantBar({
-  style,
-  logoLink,
-  name,
-  distance,
-  estimateTime,
-  avgReview,
-  onPressFunction,
-}) {
+function RestaurantBar({ style, image, name, distance, estimateTime, rating, onPressFunction }) {
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
       <View style={styles.content_container}>
-        <Image source={logoLink} style={styles.logo} />
+        <Image
+          source={{ uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
+          style={styles.logo}
+        />
         <View style={styles.res_info_container}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.name_text}>
             {name}
@@ -23,7 +18,7 @@ function RestaurantBar({
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Star width={17} height={17} style={{ color: COLOR.star_background_color }} />
             <Text style={styles.distance_text}>
-              {avgReview} | {distance} km | {estimateTime} mins
+              {rating} {'  '} | {distance} km | {'  '} {estimateTime} mins
             </Text>
           </View>
         </View>

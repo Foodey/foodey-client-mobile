@@ -7,7 +7,7 @@ function ProductBar({ style, image, name, price, afterDiscountPrice, onPressFunc
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
       <View style={styles.content_container}>
-        <Image source={image} style={styles.image} />
+        <Image source={{ uri: image }} style={styles.image} />
         <View style={styles.res_info_container}>
           <Text numberOfLines={2} ellipsizeMode="tail" style={styles.name_text}>
             {name}
@@ -52,8 +52,9 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 120,
-    height: 36,
+    width: 60,
+    height: 60,
+    borderRadius: 100,
     marginEnd: 15,
   },
 

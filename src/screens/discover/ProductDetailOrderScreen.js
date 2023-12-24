@@ -15,31 +15,66 @@ import { COLOR } from '~/constants/Colors';
 import { BackButton } from '~/components';
 import { HappyBag, Detail, ShoppingBag } from '~/resources/icons';
 import { ProductQuantityAdjuster, FavoriteButton, DishBar } from '~/components/discover';
+import { SuccessNotifyModal } from '~/components/messageBoxes';
 import { CartScreen } from '~/screens/discover';
 import { products } from '~/constants/TempData';
+import { HomeContext } from '~/contexts/HomeContext';
+import { AppContext } from '~/contexts/AppContext';
 
-const ProductDetailOrderScreen = ({ navigation }) => {
+const ProductDetailOrderScreen = ({ navigation, route }) => {
+  const { addProductToCart } = useContext(HomeContext);
+
+  const { requestNewAccessToken } = useContext(AppContext);
+
+  const { productResID, productID, productName, productImage, productPrice } = route.params;
+
   //Navigation:
+  const onGoBack = () => {
+    navigation.goBack();
+  };
+
+  const addToCartPress = () => {
+    let check = addProductToCart(productResID, productID, productQuantity);
+    console.log(check);
+    // if(check)
+    // {
+    //   setSuccessAddingToCartVisible(true);
+    // }
+    // else
+    // {
+    //   let isRequestNewAccessTokenSuccess = requestNewAccessToken();
+    //   if(isRequestNewAccessTokenSuccess)
+    //   {
+    //     addProductToCart(productResID, productID, productQuantity);
+    //     console.log('Successfully adding product into cart after request new access token');
+    //     setSuccessAddingToCartVisible(true);
+    //   }
+    //   else
+    //     console.log('Unexpected error while adding product a cart');
+    // }
+  };
 
   //Use states
   const [isFavorite, setIsFavorite] = useState(false);
+  const [successAddingToCartVisible, setSuccessAddingToCartVisible] = useState(false);
 
   const [cartVisible, setCartVisible] = useState(false);
 
   const [productQuantity, setProductQuantity] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(products[0].price);
+  const [totalPrice, setTotalPrice] = useState(productPrice);
 
   useEffect(() => {
-    const productPrice = parseFloat(products[0].price);
-    let newTotalPrice = productPrice * productQuantity;
+    const price = parseFloat(productPrice);
+    let newTotalPrice = price * productQuantity;
 
-    if (newTotalPrice >= 1000) {
-      newTotalPrice =
-        newTotalPrice.toString().slice(0, 1) + '.' + newTotalPrice.toString().slice(1);
-      setTotalPrice(newTotalPrice.toString());
-    } else {
-      setTotalPrice(newTotalPrice.toString());
-    }
+    // if (newTotalPrice >= 1000) {
+    //   newTotalPrice =
+    //     newTotalPrice.toString().slice(0, 1) + '.' + newTotalPrice.toString().slice(1);
+    //   setTotalPrice(newTotalPrice.toString());
+    // } else {
+    //   setTotalPrice(newTotalPrice.toString());
+    // }
+    setTotalPrice(newTotalPrice.toString());
   }, [productQuantity]);
 
   //Functions:
@@ -54,20 +89,28 @@ const ProductDetailOrderScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={cartVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color} />
+      <SuccessNotifyModal
+        visible={successAddingToCartVisible}
+        title="Product added to cart successfully"
+        onOKPressHandler={() => setSuccessAddingToCartVisible(false)}
+      />
       <CartScreen
         isVisible={cartVisible}
         onBackdropPress={() => setCartVisible(false)}
         onClosePress={() => setCartVisible(false)}
       />
       <View style={{ flexDirection: 'row' }}>
-        <BackButton style={[styles.header, { marginBottom: 0 }]} />
-        <Pressable style={{ marginHorizontal: 21, marginLeft: 'auto' }}>
+        <BackButton style={[styles.header, { marginBottom: 0 }]} onPressFunction={onGoBack} />
+        <Pressable
+          style={{ marginHorizontal: 21, marginLeft: 'auto' }}
+          onPress={() => setCartVisible(true)}
+        >
           <ShoppingBag width={25} height={25} />
         </Pressable>
       </View>
       <View style={{ marginHorizontal: 21, marginVertical: 20 }}>
         <Image
-          source={products[0].image}
+          source={{ uri: productImage || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
           style={[
             {
               width: '100%',
@@ -76,12 +119,12 @@ const ProductDetailOrderScreen = ({ navigation }) => {
           ]}
         />
         <Text ellipsizeMode="tail" numberOfLines={2} style={[styles.product_name_text]}>
-          {products[0].name}
+          {productName}
         </Text>
       </View>
       <View style={{ flexDirection: 'row', marginHorizontal: 21, marginVertical: 10 }}>
         <Text ellipsizeMode="tail" numberOfLines={1} style={[styles.total_price, { flex: 2 }]}>
-          {totalPrice}.000 VND
+          {totalPrice} VND
         </Text>
         <ProductQuantityAdjuster
           buttonRadius={35}
@@ -96,7 +139,7 @@ const ProductDetailOrderScreen = ({ navigation }) => {
           isFavorite={isFavorite}
           onPressFunction={() => setIsFavorite(!isFavorite)}
         />
-        <Pressable style={styles.addToCart_button} onPress={() => setCartVisible(true)}>
+        <Pressable style={styles.addToCart_button} onPress={addToCartPress}>
           <HappyBag width={21} height={21} style={{ color: COLOR.background_color }} />
           <Text style={styles.addToCart_text}>Add to Cart</Text>
         </Pressable>

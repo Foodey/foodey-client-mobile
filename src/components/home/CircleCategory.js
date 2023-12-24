@@ -7,7 +7,6 @@ function CircleCategory({ style, title, imageLink, imageStyle, onPressFunction }
       <View style={{ flex: 2.25, alignItems: 'center', justifyContent: 'center' }}>
         <Image
           style={[imageStyle, { borderRadius: 100 }]}
-          onPress={onPressFunction}
           source={{ uri: imageLink || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
         />
       </View>

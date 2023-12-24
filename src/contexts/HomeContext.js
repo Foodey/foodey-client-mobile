@@ -7,17 +7,18 @@ import { AppContext } from './AppContext';
 export const HomeContext = createContext({});
 
 export const HomeProvider = ({ children }) => {
-  const { BASE_URL } = useContext(AppContext);
+  const { BASE_URL, userInfo, requestNewAccessToken } = useContext(AppContext);
 
   const [searchValue, setSearchValue] = useState('');
   const [categorySearchValue, setCategorySearchValue] = useState('');
   const [searchResultSelected, setSearchResultSelected] = useState('');
 
   const [categoriesList, setCategoriesList] = useState(categories);
-  const [restaurantsList, setRestaurantsList] = useState(restaurants);
   const [offersList, setOffersList] = useState(offers);
+  const [restaurantsByCategoryList, setRestaurantsByCategoryList] = useState({});
+  const [restaurantMenuList, setRestaurantMenuList] = useState({});
 
-  const fetchCategories = async () => {
+  const getAllCategories = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/v1/product-categories`, {
         params: { page: 1, limit: 12 },
@@ -29,6 +30,56 @@ export const HomeProvider = ({ children }) => {
     } catch (err) {
       console.log('Fetch category: ' + err);
     }
+  };
+
+  const getRestaurantsByCategory = async (categoryID) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/v1/branches/categories/${categoryID}`);
+
+      if (response.status === 200) {
+        setRestaurantsByCategoryList(response.data);
+      }
+    } catch (err) {
+      console.log('Fetch category: ' + err);
+    }
+  };
+
+  const getMenuByRestaurantID = async (restaurantID) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/v1/branches/${restaurantID}/menus/0/products`);
+
+      if (response.status === 200) {
+        setRestaurantMenuList(response.data);
+      }
+    } catch (err) {
+      console.log('Fetch category: ' + err);
+    }
+  };
+
+  const addProductToCart = (restaurantID, productID, quantity) => {
+    let isSuccess;
+    axios
+      .post(
+        `${BASE_URL}/v1/shopcart/branches/${restaurantID}/products/${productID}?quantity=${quantity}`,
+        null,
+        {
+          headers: { Authorization: 'Bearer ' + userInfo.accessToken },
+        },
+      )
+      .then((response) => {
+        console.log('Successfully adding ' + quantity + ' units to cart');
+        isSuccess = true;
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          console.log('Error status: 401');
+          isSuccess = false;
+        } else {
+          console.log('Unexpected error when calling adding to cart');
+          isSuccess = false;
+        }
+      });
+    return isSuccess;
   };
 
   return (
@@ -47,12 +98,18 @@ export const HomeProvider = ({ children }) => {
         //Lists
         categoriesList,
         setCategoriesList,
-        restaurantsList,
-        setRestaurantsList,
+        restaurantsByCategoryList,
+        setRestaurantsByCategoryList,
         offersList,
         setOffersList,
+        restaurantMenuList,
+        setRestaurantMenuList,
 
-        fetchCategories,
+        //API calls
+        getAllCategories,
+        getRestaurantsByCategory,
+        getMenuByRestaurantID,
+        addProductToCart,
       }}
     >
       {children}

@@ -29,6 +29,30 @@ export const AppProvider = ({ children }) => {
     // setIsLoading(false);
   };
 
+  const requestNewAccessToken = () => {
+    let isSuccess;
+    axios
+      .post(`${BASE_URL}/v1/auth/refresh-token`, null, {
+        headers: { Authorization: 'Bearer ' + userInfo.refreshToken },
+      })
+      .then((response) => {
+        let tempUserInfo = response.data;
+        setUserInfo(tempUserInfo);
+        setAccessToken(tempUserInfo.accessToken);
+
+        AsyncStorage.setItem('userInfo', JSON.stringify(tempUserInfo));
+        AsyncStorage.setItem('accessToken', tempUserInfo.accessToken);
+
+        console.log('Setting new accessToken successful');
+        isSuccess = true;
+      })
+      .catch((err) => {
+        console.log('Error status: ' + err.response.status);
+        isSuccess = false;
+      });
+    return isSuccess;
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -47,6 +71,9 @@ export const AppProvider = ({ children }) => {
         // isLoggedIn,
         isAppFirstLaunch,
         setIsAppFirstLaunch,
+
+        //API calls
+        requestNewAccessToken,
       }}
     >
       {children}

@@ -10,16 +10,31 @@ import {
   Image,
   Animated,
 } from 'react-native';
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useLayoutEffect } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { BackButton } from '~/components';
 import { Search, Detail, ShoppingBag } from '~/resources/icons';
 import { RestaurantTitle, FavoriteButton, ProductBar } from '~/components/discover';
 import { products, restaurants } from '~/constants/TempData';
 import { CartScreen } from '~/screens/discover';
+import { HomeContext } from '~/contexts/HomeContext';
 
-const RestaurantMenuScreen = ({ navigation }) => {
+const RestaurantMenuScreen = ({ navigation, route }) => {
+  const { restaurantID, restaurantName, restaurantLogo, restaurantWallpaper, restaurantAddress } =
+    route.params;
+
+  const { getMenuByRestaurantID, restaurantMenuList, setRestaurantMenuList } =
+    useContext(HomeContext);
+
+  useLayoutEffect(() => {
+    getMenuByRestaurantID(restaurantID);
+  }, []);
+
   //Navigation:
+  const onBackPress = () => {
+    setRestaurantMenuList({});
+    navigation.goBack();
+  };
 
   //Use states
   const [isFavorite, setIsFavorite] = useState(false);
@@ -66,7 +81,7 @@ const RestaurantMenuScreen = ({ navigation }) => {
         onClosePress={() => setCartVisible(false)}
       />
       <View style={{ flexDirection: 'row' }}>
-        <BackButton style={[styles.header, { marginBottom: 0 }]} />
+        <BackButton style={[styles.header, { marginBottom: 0 }]} onPressFunction={onBackPress} />
         <Pressable style={{ marginLeft: 'auto' }}>
           <Detail width={25} height={25} />
         </Pressable>
@@ -77,9 +92,11 @@ const RestaurantMenuScreen = ({ navigation }) => {
           <ShoppingBag width={25} height={25} />
         </Pressable>
       </View>
-      <Animated.View>
-        <Animated.Image
-          source={require('~/resources/images/kfc-wallpaper.png')} //updating this
+      <View>
+        <Image
+          source={{
+            uri: restaurantWallpaper || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
+          }}
           style={[
             {
               width: '100%',
@@ -91,12 +108,13 @@ const RestaurantMenuScreen = ({ navigation }) => {
         />
         <View style={[styles.res_title_container]}>
           <RestaurantTitle
-            style={{ flex: 3 }}
-            logoLink={restaurants[1].logoLink}
-            name={restaurants[1].name}
-            address={restaurants[1].address.split(',')[1]}
+            style={{ width: '60%' }}
+            name={restaurantName}
+            address={restaurantAddress}
+            logo={restaurantLogo}
           />
           <FavoriteButton
+            style={{ marginLeft: 'auto' }}
             isFavorite={isFavorite}
             onPressFunction={() => setIsFavorite(!isFavorite)}
           />
@@ -110,7 +128,7 @@ const RestaurantMenuScreen = ({ navigation }) => {
         >
           <RestaurantInfo avgRating={4.5} estimateTime={30} category="Burgers" />
         </Animated.View> */}
-      </Animated.View>
+      </View>
       <View style={styles.separator}>
         <Text style={styles.separator_text}>MENU</Text>
       </View>
@@ -121,14 +139,23 @@ const RestaurantMenuScreen = ({ navigation }) => {
         //   useNativeDriver: true,
         // })}
         // scrollEventThrottle={1}
-        data={products}
+        data={restaurantMenuList}
         renderItem={({ item }) => (
           <ProductBar
             // style={{ margin: 25 }}
+            onPressFunction={() => {
+              navigation.navigate('ProductDetailOrder_Screen', {
+                productResID: restaurantID,
+                productID: item.id,
+                productName: item.name,
+                productImage: item.image,
+                productPrice: item.price,
+              });
+            }}
             image={item.image}
             name={item.name}
             price={item.price}
-            afterDiscountPrice="50.000"
+            afterDiscountPrice=""
           />
         )}
       />
@@ -150,13 +177,12 @@ const styles = StyleSheet.create({
   },
 
   res_title_container: {
-    position: 'relative',
     flexDirection: 'row',
-    width: 'auto',
     height: 100,
     alignItems: 'center',
     marginTop: 10,
     marginHorizontal: 21,
+    // backgroundColor: '#0f0',
   },
 
   scrollView_container: {},

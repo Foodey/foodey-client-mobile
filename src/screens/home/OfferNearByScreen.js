@@ -5,6 +5,7 @@ import { SearchBar, BackButton } from '~/components';
 import { TruncateRestaurantCard } from '~/components/home';
 import Style from './HomeStyle';
 import { HomeContext } from '~/contexts/HomeContext';
+import { offers } from '~/constants/TempData';
 
 const OfferNearByScreen = ({ navigation }) => {
   const onBackHandler = () => {
@@ -29,12 +30,13 @@ const OfferNearByScreen = ({ navigation }) => {
           alignItems: 'center',
           paddingBottom: 110,
         }}
-        data={offersList}
+        data={offers}
         renderItem={({ item }) => (
           <TruncateRestaurantCard
+            isLocalImage={true}
             style={{ marginHorizontal: 25, marginBottom: 25 }}
-            wallpaperLink={item.voucherImageLink}
-            logoLink={item.logoLink}
+            wallpaper={item.voucherImageLink}
+            logo={item.logoLink}
             name={item.owner}
             distance={1.2} // this distance should be calculated depends on the current location of user
           />

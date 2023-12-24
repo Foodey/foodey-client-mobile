@@ -95,16 +95,16 @@ function AppNav() {
     }
   };
 
-  // return (
-  //   isAppFirstLaunch !== null && (
-  //     <NavigationContainer>
-  //       <MainStack.Navigator screenOptions={{ headerShown: false }}>
-  //         {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
-  //         {handleRender()}
-  //       </MainStack.Navigator>
-  //     </NavigationContainer>
-  //   )
-  // );
+  return (
+    isAppFirstLaunch !== null && (
+      <NavigationContainer>
+        <MainStack.Navigator screenOptions={{ headerShown: false }}>
+          {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
+          {handleRender()}
+        </MainStack.Navigator>
+      </NavigationContainer>
+    )
+  );
 
   // return (
   //   <NavigationContainer>
@@ -114,7 +114,7 @@ function AppNav() {
   //   </NavigationContainer>
   // );
 
-  return <ConfirmOrderScreen />;
+  // return <ConfirmOrderScreen />;
 }
 
 export default AppNav;
