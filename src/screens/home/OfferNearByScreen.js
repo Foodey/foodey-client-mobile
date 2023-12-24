@@ -12,8 +12,6 @@ const OfferNearByScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const { offersList, setOffersList } = useContext(HomeContext);
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />

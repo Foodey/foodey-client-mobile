@@ -5,13 +5,12 @@ import { SearchBar, BackButton } from '~/components';
 import { FullyRestaurantCard } from '~/components/home';
 import Style from './HomeStyle';
 import { HomeContext } from '~/contexts/HomeContext';
+import { restaurants } from '~/constants/TempData';
 
 const NewTrendingScreen = ({ navigation }) => {
   const onBackHandler = () => {
     navigation.goBack();
   };
-
-  const { restaurantsList, setRestaurantsList } = useContext(HomeContext);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -28,16 +27,16 @@ const NewTrendingScreen = ({ navigation }) => {
           alignItems: 'center',
           paddingBottom: 120,
         }}
-        data={restaurantsList}
+        data={restaurants}
         renderItem={({ item }) => (
           <FullyRestaurantCard
             // style={{ margin: 25 }}
-            wallpaperLink={item.wallpaperLink}
-            logoLink={item.logoLink}
+            wallpaper={item.wallpaper}
+            logo={item.logo}
             name={item.name}
             distance={1.2} // this distance should be calculated depends on the current location of user
             estimateTime={32} // this estimateTime should be calculated depends on the current location of user
-            avgReview={item.avgReview}
+            rating={item.rating}
           />
         )}
       />
