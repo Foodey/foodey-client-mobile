@@ -10,7 +10,7 @@ import {
   Image,
   Animated,
 } from 'react-native';
-import React, { useState, useContext, useLayoutEffect } from 'react';
+import React, { useState, useContext, useLayoutEffect, useEffect } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { BackButton } from '~/components';
 import { Search, Detail, ShoppingBag } from '~/resources/icons';
@@ -23,8 +23,19 @@ const RestaurantMenuScreen = ({ navigation, route }) => {
   const { restaurantID, restaurantName, restaurantLogo, restaurantWallpaper, restaurantAddress } =
     route.params;
 
-  const { getMenuByRestaurantID, restaurantMenuList, setRestaurantMenuList } =
-    useContext(HomeContext);
+  const {
+    getMenuByRestaurantID,
+    restaurantMenuList,
+    setRestaurantMenuList,
+    cartInfo,
+    setCartInfo,
+    getCartInfoByResID,
+    deleteAllCartInfoByResID,
+  } = useContext(HomeContext);
+
+  useLayoutEffect(() => {
+    getCartInfoByResID(restaurantID);
+  }, []);
 
   useLayoutEffect(() => {
     getMenuByRestaurantID(restaurantID);
@@ -34,6 +45,11 @@ const RestaurantMenuScreen = ({ navigation, route }) => {
   const onBackPress = () => {
     setRestaurantMenuList({});
     navigation.goBack();
+  };
+
+  const onCartCheckoutPress = () => {
+    setCartVisible(false);
+    navigation.navigate('ConfirmOrder_Screen', { restaurantName: restaurantName });
   };
 
   //Use states
@@ -79,6 +95,10 @@ const RestaurantMenuScreen = ({ navigation, route }) => {
         isVisible={cartVisible}
         onBackdropPress={() => setCartVisible(false)}
         onClosePress={() => setCartVisible(false)}
+        cartData={cartInfo.items}
+        subtotalPrice={cartInfo.totalPrice}
+        onDeletePress={() => deleteAllCartInfoByResID(restaurantID)}
+        onCheckoutPress={onCartCheckoutPress}
       />
       <View style={{ flexDirection: 'row' }}>
         <BackButton style={[styles.header, { marginBottom: 0 }]} onPressFunction={onBackPress} />

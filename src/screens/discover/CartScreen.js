@@ -6,7 +6,16 @@ import CloseCircle from '~/resources/icons/close-circle.svg';
 import { orderedProducts } from '~/constants/TempData';
 import { CartProductBar } from '~/components/discover';
 
-function CartScreen({ style, isVisible, onBackdropPress, onClosePress }) {
+function CartScreen({
+  style,
+  isVisible,
+  cartData,
+  subtotalPrice,
+  onBackdropPress,
+  onClosePress,
+  onDeletePress,
+  onCheckoutPress,
+}) {
   const backdropPress = () => {
     onBackdropPress();
   };
@@ -28,7 +37,7 @@ function CartScreen({ style, isVisible, onBackdropPress, onClosePress }) {
           <CloseCircle width={43} height={43} style={styles.close_button} onPress={closeCart} />
           <View style={styles.header_container}>
             <Text style={styles.header_text}>Cart</Text>
-            <Pressable style={{ marginLeft: 'auto' }}>
+            <Pressable style={{ marginLeft: 'auto' }} onPress={onDeletePress}>
               <Text style={styles.clear_all_text}>CLEAR ALL</Text>
             </Pressable>
           </View>
@@ -36,13 +45,15 @@ function CartScreen({ style, isVisible, onBackdropPress, onClosePress }) {
             <FlatList
               style={[styles.scrollView_container]}
               showsVerticalScrollIndicator={false}
-              data={orderedProducts}
+              data={cartData}
               renderItem={({ item }) => (
                 <CartProductBar
-                  image={item.image}
+                  image={{
+                    uri: item.image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
+                  }}
                   name={item.name}
-                  addOnInfo={item.addOnInfo}
-                  totalUnitPrice={item.totalUnitPrice}
+                  addOnInfo={item.description}
+                  totalUnitPrice={item.productPrice}
                   quantity={item.quantity}
                 />
               )}
@@ -59,9 +70,10 @@ function CartScreen({ style, isVisible, onBackdropPress, onClosePress }) {
               >
                 Sub-total
               </Text>
-              <Text style={styles.subtotal_text}>100.000 VND</Text>
+              <Text style={styles.subtotal_text}>{subtotalPrice} VND</Text>
             </View>
             <SubmitButton
+              onPressFunction={onCheckoutPress}
               style={styles.checkout_button}
               buttonColor={COLOR.button_primary_color}
               hoverColor={COLOR.button_press_primary_color}

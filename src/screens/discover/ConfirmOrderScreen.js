@@ -12,21 +12,47 @@ import {
 import React, { useState, useContext, useEffect } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { BackButton } from '~/components';
-import { ProductQuantityAdjuster, FavoriteButton, DishBar } from '~/components/discover';
 import { FillLocation, Buy, Discount, Note } from '~/resources/icons';
 import ArrowRight from '~/resources/icons/arrow-right.svg';
 import { orderedProducts } from '~/constants/TempData';
 import { SubmitButton } from '~/components';
+import { HomeContext } from '~/contexts/HomeContext';
+import { SuccessNotifyModal } from '../../components/messageBoxes';
 
-const ConfirmOrderScreen = ({ navigation }) => {
+const ConfirmOrderScreen = ({ navigation, route }) => {
   //Navigation:
 
+  const onBackPress = () => {
+    navigation.goBack();
+  };
+
+  const { cartInfo, setCartInfo } = useContext(HomeContext);
+  const { restaurantName } = route.params;
+
   //Use states
+  const [shippingFee, setShippingFee] = useState(25000);
+  const [discountFee, setDiscountFee] = useState(0);
+  const [successPlaceOrder, setSuccessPlaceOrder] = useState(false);
+
+  //Functions:
+
+  const onOKPressHandler = () => {
+    setSuccessPlaceOrder(false);
+  };
+
+  const onPlaceOrderPress = () => {
+    setSuccessPlaceOrder(true);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <BackButton style={[styles.header, { marginBottom: 10 }]} />
+      <SuccessNotifyModal
+        visible={successPlaceOrder}
+        title="Your order is successfully placed!"
+        onOKPressHandler={onOKPressHandler}
+      />
+      <BackButton style={[styles.header, { marginBottom: 10 }]} onPressFunction={onBackPress} />
       <ScrollView
         contentContainerStyle={{ paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
@@ -68,23 +94,26 @@ const ConfirmOrderScreen = ({ navigation }) => {
           <View style={{ flexDirection: 'row' }}>
             <Buy width={25} height={25} />
             <Text ellipsizeMode="tail" numberOfLines={2} style={styles.restaurant_name_text}>
-              Starbucks Coffee - Vinhomes Grand Park
+              {restaurantName}
             </Text>
           </View>
-          {orderedProducts.map(({ image, name, addOnInfo, quantity, totalUnitPrice }, index) => (
+          {cartInfo.items.map(({ image, name, description, quantity, totalPrice }, index) => (
             <View key={index} style={styles.ordered_product_row}>
-              <View style={{ flex: 1.5 }}>
-                <Image source={image} style={{ width: 50, height: 50 }} />
+              <View style={{ flex: 2 }}>
+                <Image
+                  source={{ uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
+                  style={{ width: 46, height: 46, borderRadius: 10 }}
+                />
               </View>
-              <View style={{ flex: 1 }}>
+              <View style={{ flex: 1.2 }}>
                 <Text style={[styles.product_name_text, { fontSize: 17 }]}>{quantity}x</Text>
               </View>
               <View style={{ flex: 6 }}>
                 <Text style={styles.product_name_text}>{name}</Text>
-                <Text style={styles.product_addOn_text}>{addOnInfo}</Text>
+                <Text style={styles.product_addOn_text}>{description}</Text>
               </View>
               <View style={{ flex: 3.5, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={styles.product_totalPrice_text}>{totalUnitPrice} VND</Text>
+                <Text style={styles.product_totalPrice_text}>{totalPrice} VND</Text>
               </View>
             </View>
           ))}
@@ -104,7 +133,7 @@ const ConfirmOrderScreen = ({ navigation }) => {
         </Pressable>
         <Pressable style={[styles.voucher_container, { borderColor: COLOR.text_primary_color }]}>
           <Note width={25} height={25} />
-          <Text style={[styles.voucher_text, { marginStart: 5 }]}>Voucher</Text>
+          <Text style={[styles.voucher_text, { marginStart: 5 }]}>None</Text>
           <Text
             style={[styles.voucher_text, { marginLeft: 'auto', color: COLOR.text_secondary_color }]}
           >
@@ -115,15 +144,17 @@ const ConfirmOrderScreen = ({ navigation }) => {
         <View style={styles.price_container}>
           <View style={{ flexDirection: 'row' }}>
             <Text style={[styles.price_text]}>Sub-total (3 items)</Text>
-            <Text style={[styles.price_text, { marginLeft: 'auto' }]}>267.000 VND</Text>
+            <Text style={[styles.price_text, { marginLeft: 'auto' }]}>
+              {cartInfo.totalPrice} VND
+            </Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={[styles.price_text]}>Shipping fee (4.7 km)</Text>
-            <Text style={[styles.price_text, { marginLeft: 'auto' }]}>25.000 VND</Text>
+            <Text style={[styles.price_text, { marginLeft: 'auto' }]}>{shippingFee} VND</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={[styles.price_text]}>Promotion code</Text>
-            <Text style={[styles.price_text, { marginLeft: 'auto' }]}>-20.000 VND</Text>
+            <Text style={[styles.price_text, { marginLeft: 'auto' }]}>- {discountFee} VND</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={[styles.price_text]}>Payment method</Text>
@@ -137,11 +168,12 @@ const ConfirmOrderScreen = ({ navigation }) => {
                 { marginLeft: 'auto', color: COLOR.indicator_current_color },
               ]}
             >
-              272.000 VND
+              {cartInfo.totalPrice + shippingFee - discountFee} VND
             </Text>
           </View>
         </View>
         <SubmitButton
+          onPressFunction={onPlaceOrderPress}
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}
           style={{ height: 60, marginTop: 20 }}
@@ -155,6 +187,7 @@ const ConfirmOrderScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 21,
+    backgroundColor: COLOR.background_color,
   },
 
   header_text: {

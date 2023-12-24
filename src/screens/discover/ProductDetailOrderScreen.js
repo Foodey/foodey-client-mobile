@@ -22,7 +22,8 @@ import { HomeContext } from '~/contexts/HomeContext';
 import { AppContext } from '~/contexts/AppContext';
 
 const ProductDetailOrderScreen = ({ navigation, route }) => {
-  const { addProductToCart } = useContext(HomeContext);
+  const { addProductToCart, getCartInfoByResID, deleteAllCartInfoByResID, cartInfo, setCartInfo } =
+    useContext(HomeContext);
 
   const { requestNewAccessToken } = useContext(AppContext);
 
@@ -31,27 +32,6 @@ const ProductDetailOrderScreen = ({ navigation, route }) => {
   //Navigation:
   const onGoBack = () => {
     navigation.goBack();
-  };
-
-  const addToCartPress = () => {
-    let check = addProductToCart(productResID, productID, productQuantity);
-    console.log(check);
-    // if(check)
-    // {
-    //   setSuccessAddingToCartVisible(true);
-    // }
-    // else
-    // {
-    //   let isRequestNewAccessTokenSuccess = requestNewAccessToken();
-    //   if(isRequestNewAccessTokenSuccess)
-    //   {
-    //     addProductToCart(productResID, productID, productQuantity);
-    //     console.log('Successfully adding product into cart after request new access token');
-    //     setSuccessAddingToCartVisible(true);
-    //   }
-    //   else
-    //     console.log('Unexpected error while adding product a cart');
-    // }
   };
 
   //Use states
@@ -78,6 +58,34 @@ const ProductDetailOrderScreen = ({ navigation, route }) => {
   }, [productQuantity]);
 
   //Functions:
+
+  const onOKPressHandler = () => {
+    getCartInfoByResID(productResID);
+    setSuccessAddingToCartVisible(false);
+    navigation.goBack();
+  };
+
+  const addToCartPress = () => {
+    let check = addProductToCart(productResID, productID, productQuantity);
+    setSuccessAddingToCartVisible(true);
+    // if(check)
+    // {
+    //   setSuccessAddingToCartVisible(true);
+    // }
+    // else
+    // {
+    //   let isRequestNewAccessTokenSuccess = requestNewAccessToken();
+    //   if(isRequestNewAccessTokenSuccess)
+    //   {
+    //     addProductToCart(productResID, productID, productQuantity);
+    //     console.log('Successfully adding product into cart after request new access token');
+    //     setSuccessAddingToCartVisible(true);
+    //   }
+    //   else
+    //     console.log('Unexpected error while adding product a cart');
+    // }
+  };
+
   const onSubtractPress = () => {
     if (productQuantity !== 1) setProductQuantity(productQuantity - 1);
   };
@@ -86,18 +94,27 @@ const ProductDetailOrderScreen = ({ navigation, route }) => {
     setProductQuantity(productQuantity + 1);
   };
 
+  const onCartCheckoutPress = () => {
+    setCartVisible(false);
+    navigation.navigate('ConfirmOrder_Screen', {});
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={cartVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color} />
       <SuccessNotifyModal
         visible={successAddingToCartVisible}
         title="Product added to cart successfully"
-        onOKPressHandler={() => setSuccessAddingToCartVisible(false)}
+        onOKPressHandler={onOKPressHandler}
       />
       <CartScreen
         isVisible={cartVisible}
         onBackdropPress={() => setCartVisible(false)}
         onClosePress={() => setCartVisible(false)}
+        cartData={cartInfo.items}
+        subtotalPrice={cartInfo.totalPrice}
+        onDeletePress={() => deleteAllCartInfoByResID(restaurantID)}
+        onCheckoutPress={onCartCheckoutPress}
       />
       <View style={{ flexDirection: 'row' }}>
         <BackButton style={[styles.header, { marginBottom: 0 }]} onPressFunction={onGoBack} />

@@ -17,6 +17,7 @@ export const HomeProvider = ({ children }) => {
   const [offersList, setOffersList] = useState(offers);
   const [restaurantsByCategoryList, setRestaurantsByCategoryList] = useState({});
   const [restaurantMenuList, setRestaurantMenuList] = useState({});
+  const [cartInfo, setCartInfo] = useState({});
 
   const getAllCategories = async () => {
     try {
@@ -82,6 +83,33 @@ export const HomeProvider = ({ children }) => {
     return isSuccess;
   };
 
+  const getCartInfoByResID = (restaurantID) => {
+    axios
+      .get(`${BASE_URL}/v1/shopcart/branches/${restaurantID}`, {
+        headers: { Authorization: 'Bearer ' + userInfo.accessToken },
+      })
+      .then((response) => {
+        setCartInfo(response.data);
+        console.log(response.data.totalPrice);
+      })
+      .catch((err) => {
+        console.log('Error status code: ' + err.response.status);
+      });
+  };
+
+  const deleteAllCartInfoByResID = (restaurantID) => {
+    axios
+      .delete(`${BASE_URL}/v1/shopcart/branches/${restaurantID}`, {
+        headers: { Authorization: 'Bearer ' + userInfo.accessToken },
+      })
+      .then(() => {
+        setCartInfo({});
+      })
+      .catch((err) => {
+        console.log('Error status code: ' + err.response.status);
+      });
+  };
+
   return (
     <HomeContext.Provider
       value={{
@@ -104,12 +132,16 @@ export const HomeProvider = ({ children }) => {
         setOffersList,
         restaurantMenuList,
         setRestaurantMenuList,
+        cartInfo,
+        setCartInfo,
 
         //API calls
         getAllCategories,
         getRestaurantsByCategory,
         getMenuByRestaurantID,
         addProductToCart,
+        getCartInfoByResID,
+        deleteAllCartInfoByResID,
       }}
     >
       {children}
