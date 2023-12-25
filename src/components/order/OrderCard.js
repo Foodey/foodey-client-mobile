@@ -17,7 +17,7 @@ function OrderCard({
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
       <View style={{ flexDirection: 'row' }}>
         <Text style={styles.id_text}>Order # {id}</Text>
-        <Text style={styles.date_text}>{date}</Text>
+        {/* <Text style={styles.date_text}>{date}</Text> */}
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={styles.resName_text}>{resName}</Text>
@@ -40,39 +40,52 @@ function OrderCard({
             </View>;
         })} */}
         <View style={{ flex: 3, flexDirection: 'row' }}>
-          <View style={styles.product_container}>
+          {/* <View style={styles.product_container}>
             <Image
               style={styles.product_image}
               source={{
-                uri: items[0].productImage || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
+                uri: items[0].image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
               }}
             />
             <Text ellipsizeMode="tail" numberOfLines={2} style={styles.productName_text}>
-              {items[0].productName}
+              {items[0].name}
             </Text>
           </View>
           <View style={[styles.product_container, { marginHorizontal: 10 }]}>
             <Image
               style={styles.product_image}
               source={{
-                uri: items[1].productImage || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
+                uri: items[1].image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
               }}
             />
             <Text ellipsizeMode="tail" numberOfLines={2} style={styles.productName_text}>
-              {items[1].productName}
+              {items[1].name}
             </Text>
           </View>
           <View style={styles.product_container}>
             <Image
               style={styles.product_image}
               source={{
-                uri: items[2].productImage || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
+                uri: items[2].image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
               }}
             />
             <Text ellipsizeMode="tail" numberOfLines={2} style={styles.productName_text}>
-              {items[2].productName}
+              {items[2].name}
             </Text>
-          </View>
+          </View> */}
+          {items.slice(0, 3).map(({ image, name }, index) => (
+            <View key={index} style={styles.product_container}>
+              <Image
+                style={styles.product_image}
+                source={{
+                  uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
+                }}
+              />
+              <Text ellipsizeMode="tail" numberOfLines={2} style={styles.productName_text}>
+                {name}
+              </Text>
+            </View>
+          ))}
         </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Text style={styles.totalPrice_text}>{totalPrice}</Text>
@@ -149,6 +162,7 @@ const styles = StyleSheet.create({
   product_image: {
     width: 75,
     height: 75,
+    borderRadius: 20,
   },
 
   productName_text: {

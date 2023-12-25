@@ -12,6 +12,8 @@ export const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isAppFirstLaunch, setIsAppFirstLaunch] = useState(null);
 
+  const [pendingOrderList, setPendingOrderList] = useState({});
+
   const logout = async () => {
     // setIsLoading(true);
     try {
@@ -53,6 +55,20 @@ export const AppProvider = ({ children }) => {
     return isSuccess;
   };
 
+  const getPendingOrder = () => {
+    axios
+      .get(`${BASE_URL}/v1/orders?status=PENDING`, {
+        headers: { Authorization: 'Bearer ' + userInfo.accessToken },
+      })
+      .then((response) => {
+        setPendingOrderList(response.data);
+        console.log('Success getting pending order');
+      })
+      .catch((err) => {
+        console.log('Error status code: ' + err.response.status);
+      });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -72,8 +88,12 @@ export const AppProvider = ({ children }) => {
         isAppFirstLaunch,
         setIsAppFirstLaunch,
 
+        pendingOrderList,
+        setPendingOrderList,
+
         //API calls
         requestNewAccessToken,
+        getPendingOrder,
       }}
     >
       {children}

@@ -90,7 +90,6 @@ export const HomeProvider = ({ children }) => {
       })
       .then((response) => {
         setCartInfo(response.data);
-        console.log(response.data.totalPrice);
       })
       .catch((err) => {
         console.log('Error status code: ' + err.response.status);

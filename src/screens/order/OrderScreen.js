@@ -1,14 +1,21 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useLayoutEffect, useContext } from 'react';
 import { View, Text, SafeAreaView, StatusBar, StyleSheet, Pressable, FlatList } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import { FavoriteMealBar, FavoriteRestaurantBar } from '~/components/favorite';
 import { restaurants, products, pendingOrders, doneOrders } from '~/constants/TempData';
 import { OrderCard } from '~/components/order';
+import { AppContext } from '~/contexts/AppContext';
 
 const OrderScreen = ({ navigation }) => {
+  const { pendingOrderList, setPendingOrderList, getPendingOrder } = useContext(AppContext);
+
   const onOrderCartPress = () => {
     navigation.navigate('ConfirmOrder_Screen', { isViewOnly: true });
   };
+
+  useLayoutEffect(() => {
+    getPendingOrder();
+  }, []);
 
   const [isOnGoingSelected, setIsOnGoingSelected] = useState(true);
 
@@ -81,16 +88,16 @@ const OrderScreen = ({ navigation }) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 250 }}
-            data={pendingOrders}
+            data={pendingOrderList}
             renderItem={({ item }) => (
               <OrderCard
-                onPressFunction={onOrderCartPress}
+                // onPressFunction={onOrderCartPress}
                 completedOrder={false}
                 id={item.id}
-                date={item.date}
-                resName={item.resName}
+                // date={item.date}
+                resName={item.branch.name}
                 items={item.items}
-                totalPrice={item.totalPrice}
+                totalPrice={item.payment.price}
               />
             )}
           />
@@ -106,7 +113,7 @@ const OrderScreen = ({ navigation }) => {
                 // onPressFunction={onOrderCartPress}
                 completedOrder={true}
                 id={item.id}
-                date={item.date}
+                // date={item.date}
                 resName={item.resName}
                 items={item.items}
                 totalPrice={item.totalPrice}
