@@ -27,7 +27,7 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
   };
 
   const { cartInfo, setCartInfo } = useContext(HomeContext);
-  const { restaurantName } = route.params;
+  const { restaurantName, isViewOnly } = route.params;
 
   //Use states
   const [shippingFee, setShippingFee] = useState(25000);
@@ -143,13 +143,13 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
         </Pressable>
         <View style={styles.price_container}>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={[styles.price_text]}>Sub-total (3 items)</Text>
+            <Text style={[styles.price_text]}>Sub-total ({cartInfo.items.length} items)</Text>
             <Text style={[styles.price_text, { marginLeft: 'auto' }]}>
               {cartInfo.totalPrice} VND
             </Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={[styles.price_text]}>Shipping fee (4.7 km)</Text>
+            <Text style={[styles.price_text]}>Shipping fee</Text>
             <Text style={[styles.price_text, { marginLeft: 'auto' }]}>{shippingFee} VND</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
@@ -172,13 +172,15 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
             </Text>
           </View>
         </View>
-        <SubmitButton
-          onPressFunction={onPlaceOrderPress}
-          buttonColor={COLOR.button_primary_color}
-          hoverColor={COLOR.button_press_primary_color}
-          style={{ height: 60, marginTop: 20 }}
-          title="Place Order"
-        />
+        {!isViewOnly && (
+          <SubmitButton
+            onPressFunction={onPlaceOrderPress}
+            buttonColor={COLOR.button_primary_color}
+            hoverColor={COLOR.button_press_primary_color}
+            style={{ height: 60, marginTop: 20 }}
+            title="Place Order"
+          />
+        )}
       </ScrollView>
     </SafeAreaView>
   );

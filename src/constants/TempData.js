@@ -410,3 +410,161 @@ export const orderedProducts = [
     totalUnitPrice: '99.000',
   },
 ];
+
+export const doneOrders = [
+  {
+    id: '12740192asd190704hd9102u9e1',
+    resName: 'Gong Cha - Vinhomes Grand Park',
+    date: '15/11/2023',
+    items: [
+      {
+        productID: '1',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '2',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '3',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '4',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '5',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+    ],
+    totalPrice: '5780012đ',
+  },
+  {
+    id: '12740192asd190704hd9102u9e2',
+    resName: 'Gong Cha - Vinhomes Grand Park',
+    date: '15/11/2023',
+    items: [
+      {
+        productID: '1',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '2',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '3',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '4',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '5',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+    ],
+    totalPrice: '5780012đ',
+  },
+  {
+    id: '12740192asd190704hd9102u9e3',
+    resName: 'Gong Cha - Vinhomes Grand Park',
+    date: '15/11/2023',
+    items: [
+      {
+        productID: '1',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '2',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '3',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '4',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '5',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+    ],
+    totalPrice: '5780012đ',
+  },
+];
+
+export const pendingOrders = [
+  {
+    id: '12740192asd190704hd9102u9e4',
+    resName: 'Gong Cha - Vinhomes Grand Park',
+    date: '15/11/2023',
+    items: [
+      {
+        productID: '1',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '2',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '3',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '4',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+      {
+        productID: '5',
+        productImage:
+          'https://gongcha.com.vn/wp-content/uploads/2022/06/Tra-sua-dolce-tran-chau-HK.png',
+        productName: 'Iced Toffee Nut Crunch Latte',
+      },
+    ],
+    totalPrice: '5780012đ',
+  },
+];

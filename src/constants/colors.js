@@ -85,4 +85,8 @@ export const COLOR = {
   isFavorite_icon_color: pink_100,
 
   resInfo_background_color: dark_60_trans30,
+
+  orderStatus_completed_text: green_100,
+  orderStatus_onGoing_text: blue_120,
+  orderStatus_Canceled_text: red_100,
 };
