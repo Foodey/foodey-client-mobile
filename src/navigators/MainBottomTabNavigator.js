@@ -20,6 +20,7 @@ import { OrderScreen } from '~/screens/order';
 import { ProfileScreen } from '~/screens/profile';
 
 import HomeStackNavigator from './HomeStackNavigator';
+import OrderStackNavigator from './OrderStackNavigator';
 
 import { CustomTabLabel } from '~/components';
 
@@ -49,7 +50,7 @@ const MainBottomTabNavigator = () => {
           tabBarLabel: ({ focused }) => <CustomTabLabel focused={focused} label="Home" />,
         }}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Discovery"
         component={DiscoverScreen}
         options={{
@@ -61,7 +62,7 @@ const MainBottomTabNavigator = () => {
             ),
           tabBarLabel: ({ focused }) => <CustomTabLabel focused={focused} label="Discover" />,
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="Favorite"
         component={FavoriteScreen}
@@ -78,7 +79,7 @@ const MainBottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name="Order"
-        component={OrderScreen}
+        component={OrderStackNavigator}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? <OrderFocused height={30} width={30} /> : <Order height={30} width={30} />,

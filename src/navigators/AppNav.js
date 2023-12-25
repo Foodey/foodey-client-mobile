@@ -8,7 +8,12 @@ import IntroStackNavigator from '~/navigators/IntroStackNavigator';
 import AuthStackNavigator from '~/navigators/AuthStackNavigator';
 import MainBottomTabNavigator from '~/navigators/MainBottomTabNavigator';
 
-import { RestaurantMenuScreen } from '~/screens/discover';
+import {
+  RestaurantMenuScreen,
+  ProductDetailOrderScreen,
+  CartScreen,
+  ConfirmOrderScreen,
+} from '~/screens/discover';
 import SplashScreen from '~/screens/onBoarding/SplashScreen';
 
 import { AppProvider, AppContext } from '~/contexts/AppContext';
@@ -109,7 +114,7 @@ function AppNav() {
   //   </NavigationContainer>
   // );
 
-  // return <RestaurantMenuScreen />;
+  // return <ConfirmOrderScreen />;
 }
 
 export default AppNav;

@@ -31,7 +31,10 @@ const CategoriesScreen = ({ navigation }) => {
     if (categorySearchValue === '') Keyboard.dismiss();
     else {
       setCategorySearchValue(categorySearchValue);
-      navigation.navigate('CategoryDetail_Screen', { category: categorySearchValue });
+      navigation.navigate('CategoryDetail_Screen', {
+        categoryID: categoriesList[0].id,
+        category: categoriesList[0].name,
+      });
     }
   };
 
@@ -54,18 +57,22 @@ const CategoriesScreen = ({ navigation }) => {
         contentContainerStyle={{
           marginHorizontal: 21,
           alignItems: 'center',
-          height: '100%',
           marginTop: 30,
+          paddingBottom: 220,
         }}
         numColumns={3}
         data={categoriesList}
         renderItem={({ item }) => (
           <CircleCategory
             style={{ margin: 10 }}
-            imageLink={item.imageLink}
+            imageStyle={{ width: 50, height: 50 }}
+            imageLink={item.image}
             title={item.name}
             onPressFunction={() => {
-              navigation.navigate('CategoryDetail_Screen', { category: item.name });
+              navigation.navigate('CategoryDetail_Screen', {
+                categoryID: item.id,
+                category: item.name,
+              });
             }}
           />
         )}

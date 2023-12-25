@@ -1,23 +1,33 @@
 import { View, Text, SafeAreaView, StatusBar, StyleSheet, Pressable, FlatList } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useLayoutEffect } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { SearchBar, BackButton, RestaurantBar } from '~/components';
 import { Filter } from '~/resources/icons';
 import Style from './HomeStyle';
 import { restaurants } from '~/constants/TempData';
 import { HomeContext } from '~/contexts/HomeContext';
+import { products } from '~/constants/TempData';
+import { ProductBar } from '~/components/discover';
 
 const CategoryDetailScreen = ({ navigation, route }) => {
-  const { setCategorySearchValue } = useContext(HomeContext);
+  const {
+    setCategorySearchValue,
+    getRestaurantsByCategory,
+    restaurantsByCategoryList,
+    setRestaurantsByCategoryList,
+  } = useContext(HomeContext);
 
-  const { category } = route.params;
+  const { categoryID, category } = route.params;
+
+  useLayoutEffect(() => {
+    getRestaurantsByCategory(categoryID);
+  }, []);
 
   const onBackHandler = () => {
     setCategorySearchValue('');
+    setRestaurantsByCategoryList({});
     navigation.goBack();
   };
-
-  const [restaurantsList, setRestaurantsList] = useState(restaurants);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -39,15 +49,24 @@ const CategoryDetailScreen = ({ navigation, route }) => {
           marginTop: 15,
           paddingBottom: 125,
         }}
-        data={restaurantsList}
-        renderItem={({ item }) => (
+        data={restaurantsByCategoryList}
+        renderItem={({ item, index }) => (
           <RestaurantBar
             // style={{ margin: 25 }}
-            logoLink={item.logoLink}
+            onPressFunction={() => {
+              navigation.navigate('RestaurantMenu_Screen', {
+                restaurantID: restaurantsByCategoryList[index].id, //try replace the restaurantsByCategoryList with passing the item as the param of the callback function
+                restaurantName: restaurantsByCategoryList[index].name,
+                restaurantLogo: restaurantsByCategoryList[index].logo,
+                restaurantWallpaper: restaurantsByCategoryList[index].wallpaper,
+                restaurantAddress: restaurantsByCategoryList[index].address,
+              });
+            }}
+            image={item.logo}
             name={item.name}
             distance={1.2} // this distance should be calculated depends on the current location of user
             estimateTime={32} // this estimateTime should be calculated depends on the current location of user
-            avgReview={item.avgReview}
+            rating={item.rating}
           />
         )}
       />

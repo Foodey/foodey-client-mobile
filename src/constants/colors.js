@@ -1,5 +1,6 @@
 /* ===== COLOR NAME ===== */
 const dark_60 = '#B3BFCB';
+const dark_60_trans30 = '#B3BFCB4D';
 const dark_80 = '#6A798A';
 const dark_90 = '#46505D';
 const dark_100 = '#292D32';
@@ -62,6 +63,8 @@ export const COLOR = {
   button_press_primary_color: blue_80,
   button_secondary_color: pink_100,
   button_press_secondary_color: pink_80,
+  button_orange_color: yellow_100,
+  button_press_orange_color: yellow_80,
 
   switcher_background_color: pink_60_trans,
 
@@ -79,4 +82,13 @@ export const COLOR = {
 
   not_disabled_resendCode_text: pink_100,
   disabled_resendCode_text: pink_60,
+
+  isFavorite_background_color: pink_60,
+  isFavorite_icon_color: pink_100,
+
+  resInfo_background_color: dark_60_trans30,
+
+  orderStatus_completed_text: green_100,
+  orderStatus_onGoing_text: blue_120,
+  orderStatus_Canceled_text: red_100,
 };

@@ -5,18 +5,33 @@ import { Location, Search } from '~/resources/icons';
 function TruncateRestaurantCard({
   style,
   imageStyle,
-  wallpaperLink,
-  logoLink,
+  wallpaper,
+  logo,
   name,
   distance,
+  isLocalImage, //temp props, delete later
   onPressFunction,
 }) {
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
-      <Image source={wallpaperLink} style={[styles.wallpaper, imageStyle]}></Image>
+      <Image
+        source={
+          isLocalImage
+            ? wallpaper
+            : { uri: wallpaper || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }
+        }
+        style={[styles.wallpaper, imageStyle]}
+      ></Image>
       <View style={styles.content_container}>
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Image source={logoLink} style={styles.logo} />
+          <Image
+            source={
+              isLocalImage
+                ? logo
+                : { uri: logo || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }
+            }
+            style={styles.logo}
+          />
         </View>
         <View style={styles.res_info_container}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.name_text}>

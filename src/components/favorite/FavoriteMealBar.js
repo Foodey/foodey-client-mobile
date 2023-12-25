@@ -1,28 +1,32 @@
 import { View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { COLOR } from '~/constants/Colors';
-import { Star } from '~/resources/icons';
-import ArrowRight from '~/resources/icons/arrow-right.svg';
+import { Star, Heart } from '~/resources/icons';
 
-function RestaurantBar({ style, image, name, distance, estimateTime, rating, onPressFunction }) {
+function FavoriteMealBar({ style, name, image, restaurantLogo, restaurantName, onPressFunction }) {
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
       <View style={styles.content_container}>
         <Image
-          source={{ uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
-          style={styles.logo}
+          //   source={{ uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
+          source={image}
+          style={styles.image}
         />
         <View style={styles.res_info_container}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.name_text}>
             {name}
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Star width={17} height={17} style={{ color: COLOR.star_background_color }} />
-            <Text style={styles.distance_text}>
-              {rating} {'  '} | {distance} km | {'  '} {estimateTime} mins
+            <Image
+              //   source={{ uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
+              source={restaurantLogo}
+              style={styles.logo}
+            />
+            <Text ellipsizeMode="tail" numberOfLines={1} style={styles.resName_text}>
+              {restaurantName}
             </Text>
           </View>
         </View>
-        <ArrowRight width={24} height={24} style={{ color: COLOR.text_primary_color }} />
+        <Heart width={32} height={32} style={{ color: COLOR.isFavorite_icon_color }} />
       </View>
     </Pressable>
   );
@@ -43,10 +47,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  logo: {
-    width: 36,
-    height: 36,
+  name_text: {
+    fontFamily: 'Manrope-Medium',
+    color: COLOR.text_primary_color,
+    fontSize: 18.5,
+  },
+
+  image: {
+    width: 40,
+    height: 40,
     marginEnd: 15,
+  },
+
+  logo: {
+    width: 22,
+    height: 22,
   },
 
   res_info_container: {
@@ -54,17 +69,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  name_text: {
+  resName_text: {
     fontFamily: 'Manrope-Medium',
-    color: COLOR.text_primary_color,
-    fontSize: 18,
-  },
-
-  distance_text: {
-    fontFamily: 'Manrope-Medium',
-    fontSize: 14,
+    color: COLOR.text_secondary_color,
+    fontSize: 15,
     marginStart: 5,
   },
 });
 
-export default RestaurantBar;
+export default FavoriteMealBar;

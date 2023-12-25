@@ -153,8 +153,8 @@ export default function SignInUpScreen({ navigation }) {
         AsyncStorage.setItem('userInfo', JSON.stringify(tempUserInfo));
         AsyncStorage.setItem('accessToken', tempUserInfo.accessToken);
 
-        console.log(tempUserInfo);
-        console.log('Access token ' + tempUserInfo.accessToken);
+        // console.log(tempUserInfo);
+        // console.log('Access token ' + tempUserInfo.accessToken);
 
         handleLoginErrors('', 'phoneNumber');
         handleLoginErrors('', 'password');

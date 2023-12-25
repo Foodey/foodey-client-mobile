@@ -3,26 +3,34 @@ import { COLOR } from '~/constants/Colors';
 import { Star } from '~/resources/icons';
 import ArrowRight from '~/resources/icons/arrow-right.svg';
 
-function RestaurantBar({ style, image, name, distance, estimateTime, rating, onPressFunction }) {
+function ProductBar({ style, image, name, price, afterDiscountPrice, onPressFunction }) {
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
       <View style={styles.content_container}>
-        <Image
-          source={{ uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
-          style={styles.logo}
-        />
+        <Image source={{ uri: image }} style={styles.image} />
         <View style={styles.res_info_container}>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.name_text}>
+          <Text numberOfLines={2} ellipsizeMode="tail" style={styles.name_text}>
             {name}
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Star width={17} height={17} style={{ color: COLOR.star_background_color }} />
-            <Text style={styles.distance_text}>
-              {rating} {'  '} | {distance} km | {'  '} {estimateTime} mins
+            <Text
+              style={[
+                styles.price_text,
+                { textDecorationLine: afterDiscountPrice !== '' ? 'line-through' : 'none' },
+              ]}
+            >
+              {price}đ
             </Text>
+            {afterDiscountPrice !== '' && (
+              <Text style={styles.discount_price_text}>{afterDiscountPrice}đ</Text>
+            )}
           </View>
         </View>
-        <ArrowRight width={24} height={24} style={{ color: COLOR.text_primary_color }} />
+        <ArrowRight
+          width={24}
+          height={24}
+          style={{ color: COLOR.text_primary_color, marginStart: 21 }}
+        />
       </View>
     </Pressable>
   );
@@ -31,7 +39,7 @@ function RestaurantBar({ style, image, name, distance, estimateTime, rating, onP
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 80,
+    height: 100,
     borderBottomWidth: 1,
     borderBottomColor: COLOR.indicator_color,
     justifyContent: 'center',
@@ -43,9 +51,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  logo: {
-    width: 36,
-    height: 36,
+  image: {
+    width: 60,
+    height: 60,
+    borderRadius: 100,
     marginEnd: 15,
   },
 
@@ -60,11 +69,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
-  distance_text: {
+  price_text: {
     fontFamily: 'Manrope-Medium',
-    fontSize: 14,
+    fontSize: 16,
     marginStart: 5,
+    marginEnd: 10,
+    color: COLOR.text_blue_color,
+  },
+
+  discount_price_text: {
+    fontFamily: 'Manrope-Bold',
+    fontSize: 16,
+    marginStart: 5,
+    color: COLOR.button_primary_color,
   },
 });
 
-export default RestaurantBar;
+export default ProductBar;

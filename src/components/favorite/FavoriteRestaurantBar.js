@@ -1,25 +1,24 @@
 import { View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { COLOR } from '~/constants/Colors';
-import { Star } from '~/resources/icons';
+import { Star, Heart } from '~/resources/icons';
 
-function FullyRestaurantCard({
+function FavoriteRestaurantBar({
   style,
-  imageStyle,
-  wallpaper,
   logo,
   name,
   distance,
   estimateTime,
-  avgReview,
+  rating,
   onPressFunction,
 }) {
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
-      <Image source={wallpaper} style={[styles.wallpaper, imageStyle]}></Image>
       <View style={styles.content_container}>
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Image source={logo} style={styles.logo} />
-        </View>
+        <Image
+          //   source={{ uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
+          source={logo}
+          style={styles.logo}
+        />
         <View style={styles.res_info_container}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.name_text}>
             {name}
@@ -27,10 +26,11 @@ function FullyRestaurantCard({
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Star width={17} height={17} style={{ color: COLOR.star_background_color }} />
             <Text style={styles.distance_text}>
-              {avgReview} | {distance} km | {estimateTime} mins
+              {rating} {'  '} | {distance} km | {'  '} {estimateTime} mins
             </Text>
           </View>
         </View>
+        <Heart width={32} height={32} style={{ color: COLOR.isFavorite_icon_color }} />
       </View>
     </Pressable>
   );
@@ -38,24 +38,22 @@ function FullyRestaurantCard({
 
 const styles = StyleSheet.create({
   container: {
-    width: 348,
-    height: 250,
-  },
-
-  wallpaper: {
     width: '100%',
-    height: 180,
-    borderRadius: 10,
+    height: 80,
+    borderBottomWidth: 1,
+    borderBottomColor: COLOR.indicator_color,
+    justifyContent: 'center',
   },
 
   content_container: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginHorizontal: 21,
+    alignItems: 'center',
   },
 
   logo: {
-    width: 36,
-    height: 36,
+    width: 40,
+    height: 40,
     marginEnd: 15,
   },
 
@@ -72,9 +70,18 @@ const styles = StyleSheet.create({
 
   distance_text: {
     fontFamily: 'Manrope-Medium',
-    fontSize: 13,
+    fontSize: 14,
     marginStart: 5,
+  },
+
+  favorite_button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+    backgroundColor: COLOR.input_background_color,
   },
 });
 
-export default FullyRestaurantCard;
+export default FavoriteRestaurantBar;

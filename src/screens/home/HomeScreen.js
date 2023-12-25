@@ -9,7 +9,7 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useLayoutEffect } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { LocationDisplay, CircleCategory, TruncateRestaurantCard } from '~/components/home';
 import { FullArrowRight, Search } from '~/resources/icons';
@@ -18,6 +18,7 @@ import ArrowRight from '~/resources/icons/arrow-right';
 import { SearchScreen } from '~/screens/home';
 import { HomeContext } from '~/contexts/HomeContext';
 import { AppContext } from '~/contexts/AppContext';
+import { restaurants, offers } from '~/constants/TempData';
 
 const HomeScreen = ({ navigation }) => {
   const {
@@ -27,7 +28,12 @@ const HomeScreen = ({ navigation }) => {
     setRestaurantsList,
     offersList,
     setOffersList,
+    getAllCategories,
   } = useContext(HomeContext);
+
+  useLayoutEffect(() => {
+    getAllCategories();
+  }, []);
 
   const { userInfo, setUserInfo } = useContext(AppContext);
 
@@ -100,40 +106,60 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.categories_container}>
             <View style={styles.categories_row_container}>
               <CircleCategory
-                imageLink={categoriesList[0].imageLink}
+                imageStyle={{ width: 50, height: 50 }}
+                imageLink={categoriesList[0].image}
                 title={categoriesList[0].name}
                 onPressFunction={() =>
-                  navigation.navigate('CategoryDetail_Screen', { category: categoriesList[0].name })
+                  navigation.navigate('CategoryDetail_Screen', {
+                    categoryID: categoriesList[0].id,
+                    category: categoriesList[0].name,
+                  })
                 }
               />
               <CircleCategory
-                imageLink={categoriesList[1].imageLink}
+                imageStyle={{ width: 50, height: 50 }}
+                imageLink={categoriesList[1].image}
                 title={categoriesList[1].name}
                 onPressFunction={() =>
-                  navigation.navigate('CategoryDetail_Screen', { category: categoriesList[1].name })
+                  navigation.navigate('CategoryDetail_Screen', {
+                    categoryID: categoriesList[1].id,
+                    category: categoriesList[1].name,
+                  })
                 }
               />
               <CircleCategory
-                imageLink={categoriesList[2].imageLink}
+                imageStyle={{ width: 50, height: 50 }}
+                imageLink={categoriesList[2].image}
                 title={categoriesList[2].name}
                 onPressFunction={() =>
-                  navigation.navigate('CategoryDetail_Screen', { category: categoriesList[2].name })
+                  navigation.navigate('CategoryDetail_Screen', {
+                    categoryID: categoriesList[2].id,
+                    category: categoriesList[2].name,
+                  })
                 }
               />
             </View>
             <View style={styles.categories_row_container}>
               <CircleCategory
-                imageLink={categoriesList[3].imageLink}
+                imageStyle={{ width: 50, height: 50 }}
+                imageLink={categoriesList[3].image}
                 title={categoriesList[3].name}
                 onPressFunction={() =>
-                  navigation.navigate('CategoryDetail_Screen', { category: categoriesList[3].name })
+                  navigation.navigate('CategoryDetail_Screen', {
+                    categoryID: categoriesList[3].id,
+                    category: categoriesList[3].name,
+                  })
                 }
               />
               <CircleCategory
-                imageLink={categoriesList[4].imageLink}
+                imageStyle={{ width: 50, height: 50 }}
+                imageLink={categoriesList[4].image}
                 title={categoriesList[4].name}
                 onPressFunction={() =>
-                  navigation.navigate('CategoryDetail_Screen', { category: categoriesList[4].name })
+                  navigation.navigate('CategoryDetail_Screen', {
+                    categoryID: categoriesList[4].id,
+                    category: categoriesList[4].name,
+                  })
                 }
               />
               <Pressable
@@ -195,16 +221,18 @@ const HomeScreen = ({ navigation }) => {
               />
             </Pressable>
           </View>
+          {/* Offers Nearby list */}
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ marginTop: 15 }}
-            data={offersList}
+            data={offers}
             renderItem={({ item }) => (
               <TruncateRestaurantCard
+                isLocalImage={true}
                 style={{ marginStart: 21 }}
-                wallpaperLink={item.voucherImageLink}
-                logoLink={item.logoLink}
+                wallpaper={item.voucherImageLink}
+                logo={item.logoLink}
                 name={item.owner}
                 distance={1.2} // this distance should be calculated depends on the current location of user
               />
@@ -250,17 +278,19 @@ const HomeScreen = ({ navigation }) => {
               />
             </Pressable>
           </View>
+          {/* New & Trending list */}
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ marginTop: 15 }}
-            data={restaurantsList}
+            data={restaurants}
             renderItem={({ item }) => (
               <TruncateRestaurantCard
                 style={{ marginStart: 21, width: 202, height: 163 }}
+                isLocalImage={true}
                 imageStyle={{ height: 113 }}
-                wallpaperLink={item.wallpaperLink}
-                logoLink={item.logoLink}
+                wallpaper={item.wallpaper}
+                logo={item.logo}
                 name={item.name}
                 distance={1.2} // this distance should be calculated depends on the current location of user
               />

@@ -5,10 +5,15 @@ function CircleCategory({ style, title, imageLink, imageStyle, onPressFunction }
   return (
     <Pressable style={[styles.circle, style]} onPress={onPressFunction}>
       <View style={{ flex: 2.25, alignItems: 'center', justifyContent: 'center' }}>
-        <Image style={[imageStyle]} onPress={onPressFunction} source={imageLink} />
+        <Image
+          style={[imageStyle, { borderRadius: 100 }]}
+          source={{ uri: imageLink || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
+        />
       </View>
       <View style={{ flex: 1.25 }}>
-        <Text style={styles.title_text}>{title}</Text>
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.title_text}>
+          {title}
+        </Text>
       </View>
     </Pressable>
   );
