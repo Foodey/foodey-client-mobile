@@ -26,9 +26,9 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  const { cartInfo, setCartInfo } = useContext(HomeContext);
-  const { restaurantName, isViewOnly } = route.params;
-
+  const { cartInfo, setCartInfo, placeOrder, deleteAllCartInfoByResID } = useContext(HomeContext);
+  // const { restaurantName, isViewOnly } = route.params;
+  const { restaurantID, restaurantName } = route.params;
   //Use states
   const [shippingFee, setShippingFee] = useState(25000);
   const [discountFee, setDiscountFee] = useState(0);
@@ -38,9 +38,15 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
 
   const onOKPressHandler = () => {
     setSuccessPlaceOrder(false);
+    // deleteAllCartInfoByResID(restaurantID);
+    navigation.popToTop();
   };
 
   const onPlaceOrderPress = () => {
+    console.log(restaurantID);
+    console.log(cartInfo.items);
+    console.log(cartInfo.totalPrice);
+    placeOrder(restaurantID, cartInfo.items, cartInfo.totalPrice);
     setSuccessPlaceOrder(true);
   };
 
@@ -172,7 +178,7 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
             </Text>
           </View>
         </View>
-        {!isViewOnly && (
+        {/* {!isViewOnly && (
           <SubmitButton
             onPressFunction={onPlaceOrderPress}
             buttonColor={COLOR.button_primary_color}
@@ -180,7 +186,14 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
             style={{ height: 60, marginTop: 20 }}
             title="Place Order"
           />
-        )}
+        )} */}
+        <SubmitButton
+          onPressFunction={onPlaceOrderPress}
+          buttonColor={COLOR.button_primary_color}
+          hoverColor={COLOR.button_press_primary_color}
+          style={{ height: 60, marginTop: 20 }}
+          title="Place Order"
+        />
       </ScrollView>
     </SafeAreaView>
   );

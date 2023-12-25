@@ -49,7 +49,10 @@ const RestaurantMenuScreen = ({ navigation, route }) => {
 
   const onCartCheckoutPress = () => {
     setCartVisible(false);
-    navigation.navigate('ConfirmOrder_Screen', { restaurantName: restaurantName });
+    navigation.navigate('ConfirmOrder_Screen', {
+      restaurantID: restaurantID,
+      restaurantName: restaurantName,
+    });
   };
 
   //Use states
@@ -165,7 +168,8 @@ const RestaurantMenuScreen = ({ navigation, route }) => {
             // style={{ margin: 25 }}
             onPressFunction={() => {
               navigation.navigate('ProductDetailOrder_Screen', {
-                productResID: restaurantID,
+                restaurantID: restaurantID,
+                restaurantName: restaurantName,
                 productID: item.id,
                 productName: item.name,
                 productImage: item.image,

@@ -30,3 +30,5 @@ export { default as FillLocation } from './fill-location.svg';
 export { default as Buy } from './buy.svg';
 export { default as Discount } from './discount.svg';
 export { default as Note } from './note.svg';
+export { default as Wallet } from './wallet.svg';
+export { default as Setting } from './setting.svg';

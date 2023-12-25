@@ -27,7 +27,8 @@ const ProductDetailOrderScreen = ({ navigation, route }) => {
 
   const { requestNewAccessToken } = useContext(AppContext);
 
-  const { productResID, productID, productName, productImage, productPrice } = route.params;
+  const { restaurantID, restaurantName, productID, productName, productImage, productPrice } =
+    route.params;
 
   //Navigation:
   const onGoBack = () => {
@@ -60,13 +61,13 @@ const ProductDetailOrderScreen = ({ navigation, route }) => {
   //Functions:
 
   const onOKPressHandler = () => {
-    getCartInfoByResID(productResID);
+    getCartInfoByResID(restaurantID);
     setSuccessAddingToCartVisible(false);
     navigation.goBack();
   };
 
   const addToCartPress = () => {
-    let check = addProductToCart(productResID, productID, productQuantity);
+    let check = addProductToCart(restaurantID, productID, productQuantity);
     setSuccessAddingToCartVisible(true);
     // if(check)
     // {
@@ -77,7 +78,7 @@ const ProductDetailOrderScreen = ({ navigation, route }) => {
     //   let isRequestNewAccessTokenSuccess = requestNewAccessToken();
     //   if(isRequestNewAccessTokenSuccess)
     //   {
-    //     addProductToCart(productResID, productID, productQuantity);
+    //     addProductToCart(restaurantID, productID, productQuantity);
     //     console.log('Successfully adding product into cart after request new access token');
     //     setSuccessAddingToCartVisible(true);
     //   }
@@ -96,7 +97,10 @@ const ProductDetailOrderScreen = ({ navigation, route }) => {
 
   const onCartCheckoutPress = () => {
     setCartVisible(false);
-    navigation.navigate('ConfirmOrder_Screen', {});
+    navigation.navigate('ConfirmOrder_Screen', {
+      restaurantID: restaurantID,
+      restaurantName: restaurantName,
+    });
   };
 
   return (

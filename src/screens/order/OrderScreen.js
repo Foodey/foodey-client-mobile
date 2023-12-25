@@ -103,7 +103,7 @@ const OrderScreen = ({ navigation }) => {
             data={doneOrders}
             renderItem={({ item }) => (
               <OrderCard
-                onPressFunction={onOrderCartPress}
+                // onPressFunction={onOrderCartPress}
                 completedOrder={true}
                 id={item.id}
                 date={item.date}

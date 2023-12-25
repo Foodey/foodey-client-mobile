@@ -110,6 +110,38 @@ export const HomeProvider = ({ children }) => {
       });
   };
 
+  const placeOrder = (restaurantID, items, totalPrice) => {
+    let isSuccess;
+
+    axios
+      .post(
+        `${BASE_URL}/v1/orders`,
+        {
+          branchId: restaurantID,
+          shippingAddress: '69 Tân Lập, Dĩ An, Bình Dương',
+          items: items,
+          payment: {
+            method: 'CASH',
+            status: 'UNPAID',
+            price: totalPrice,
+          },
+        },
+        {
+          headers: { Authorization: 'Bearer ' + userInfo.accessToken },
+        },
+      )
+      .then((response) => {
+        isSuccess = true;
+        console.log('Order place successfully');
+      })
+      .catch((err) => {
+        isSuccess = false;
+        console.log('Error when placing order: ' + err.response.status);
+      });
+
+    return isSuccess;
+  };
+
   return (
     <HomeContext.Provider
       value={{
@@ -142,6 +174,7 @@ export const HomeProvider = ({ children }) => {
         addProductToCart,
         getCartInfoByResID,
         deleteAllCartInfoByResID,
+        placeOrder,
       }}
     >
       {children}
