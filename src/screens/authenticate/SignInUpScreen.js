@@ -18,6 +18,9 @@ import { AppContext } from '../../contexts/AppContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
+import MyAsyncStorage from '~/utils/MyAsyncStorage';
+import StorageKey from '~/constants/StorageKeys';
+
 export default function SignInUpScreen({ navigation }) {
   const {
     loginInputs,
@@ -150,8 +153,8 @@ export default function SignInUpScreen({ navigation }) {
         setUserInfo(tempUserInfo);
         setAccessToken(tempUserInfo.accessToken);
 
-        AsyncStorage.setItem('userInfo', JSON.stringify(tempUserInfo));
-        AsyncStorage.setItem('accessToken', tempUserInfo.accessToken);
+        MyAsyncStorage.setItem(StorageKey.USER_INFO, JSON.stringify(tempUserInfo));
+        MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, tempUserInfo.accessToken);
 
         // console.log(tempUserInfo);
         // console.log('Access token ' + tempUserInfo.accessToken);

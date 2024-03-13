@@ -2,6 +2,9 @@ import { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
+import MyAsyncStorage from '~/utils/MyAsyncStorage';
+import StorageKey from '~/constants/StorageKeys';
+
 export const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
@@ -20,8 +23,8 @@ export const AppProvider = ({ children }) => {
       axios.post(`${BASE_URL}/v1/auth/logout`, null, {
         headers: { Authorization: 'Bearer ' + userInfo.refreshToken },
       });
-      AsyncStorage.removeItem('userInfo');
-      AsyncStorage.removeItem('accessToken');
+      MyAsyncStorage.removeItem(StorageKey.USER_INFO);
+      MyAsyncStorage.removeItem(StorageKey.ACCESS_TOKEN);
       setUserInfo({});
       setAccessToken('1');
     } catch (err) {
