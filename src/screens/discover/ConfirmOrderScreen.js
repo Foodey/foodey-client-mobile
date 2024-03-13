@@ -38,14 +38,11 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
 
   const onOKPressHandler = () => {
     setSuccessPlaceOrder(false);
-    // deleteAllCartInfoByResID(restaurantID);
+    deleteAllCartInfoByResID(restaurantID);
     navigation.popToTop();
   };
 
   const onPlaceOrderPress = () => {
-    console.log(restaurantID);
-    console.log(cartInfo.items);
-    console.log(cartInfo.totalPrice);
     placeOrder(restaurantID, cartInfo.items, cartInfo.totalPrice);
     setSuccessPlaceOrder(true);
   };
@@ -103,7 +100,7 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
               {restaurantName}
             </Text>
           </View>
-          {cartInfo.items.map(({ image, name, description, quantity, totalPrice }, index) => (
+          {cartInfo?.items?.map(({ image, name, description, quantity, totalPrice }, index) => (
             <View key={index} style={styles.ordered_product_row}>
               <View style={{ flex: 2 }}>
                 <Image
@@ -149,7 +146,7 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
         </Pressable>
         <View style={styles.price_container}>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={[styles.price_text]}>Sub-total ({cartInfo.items.length} items)</Text>
+            <Text style={[styles.price_text]}>Sub-total ({cartInfo?.items?.length} items)</Text>
             <Text style={[styles.price_text, { marginLeft: 'auto' }]}>
               {cartInfo.totalPrice} VND
             </Text>

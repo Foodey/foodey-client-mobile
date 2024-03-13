@@ -57,7 +57,7 @@ export const AppProvider = ({ children }) => {
 
   const getPendingOrder = () => {
     axios
-      .get(`${BASE_URL}/v1/orders?status=PENDING`, {
+      .get(`${BASE_URL}/v1/orders?page=3&status=PENDING`, {
         headers: { Authorization: 'Bearer ' + userInfo.accessToken },
       })
       .then((response) => {
