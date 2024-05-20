@@ -1,10 +1,12 @@
 import PublicRequest from './PublicRequest';
 import MyAsyncStorage from '~/utils/MyAsyncStorage';
 import AuthEndpoint from '~/constants/API_Endpoints';
-import StorageKeys from '~/constants/StorageKeys';
+import StorageKey from '~/constants/StorageKey';
 
 const RefreshAccessTokenFn = async () => {
-  const refreshToken = MyAsyncStorage.getItem(StorageKeys.REFRESH_TOKEN);
+  console.log('Refresh token function getting called');
+
+  const refreshToken = MyAsyncStorage.getItem(StorageKey.REFRESH_TOKEN);
 
   if (!refreshToken) {
     return null;
@@ -22,19 +24,13 @@ const RefreshAccessTokenFn = async () => {
     const newAccessToken = response.data.accessToken;
     const newRefreshToken = response.data.refreshToken;
 
-    MyAsyncStorage.setItem(StorageKeys.REFRESH_TOKEN, newRefreshToken);
-    MyAsyncStorage.setItem(StorageKeys.ACCESS_TOKEN, newAccessToken);
+    MyAsyncStorage.setItem(StorageKey.REFRESH_TOKEN, newRefreshToken);
+    MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, newAccessToken);
 
+    console.log('System has auto requested a new access token !!!');
     return newAccessToken;
   } catch (error) {
-    // if (rememberMe) {
-    //   localStorage.removeItem(StorageKeys.REFRESH_TOKEN);
-    //   localStorage.removeItem(StorageKeys.ACCESS_TOKEN);
-    // } else {
-    //   sessionStorage.removeItem(StorageKeys.REFRESH_TOKEN);
-    //   sessionStorage.removeItem(StorageKeys.ACCESS_TOKEN);
-    // }
-    console.log('Error when refreshing accessToken: ', error);
+    console.log('Error refreshing accessToken: ', error);
     return null;
   }
 };

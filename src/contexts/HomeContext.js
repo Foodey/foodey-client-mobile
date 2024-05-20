@@ -29,7 +29,7 @@ export const HomeProvider = ({ children }) => {
         setCategoriesList(response.data);
       }
     } catch (err) {
-      console.log('Fetch category: ' + err);
+      console.log('Fetch all category error: ' + err);
     }
   };
 
@@ -41,7 +41,7 @@ export const HomeProvider = ({ children }) => {
         setRestaurantsByCategoryList(response.data);
       }
     } catch (err) {
-      console.log('Fetch category: ' + err);
+      console.log('Fetch restaurant by category error: ' + err);
     }
   };
 
@@ -53,7 +53,7 @@ export const HomeProvider = ({ children }) => {
         setRestaurantMenuList(response.data);
       }
     } catch (err) {
-      console.log('Fetch category: ' + err);
+      console.log('Fetch menu error: ' + err);
     }
   };
 

@@ -9,7 +9,7 @@ import AuthStackNavigator from '~/navigators/AuthStackNavigator';
 import MainBottomTabNavigator from '~/navigators/MainBottomTabNavigator';
 
 import MyAsyncStorage from '~/utils/MyAsyncStorage';
-import StorageKey from '~/constants/StorageKeys';
+import StorageKey from '~/constants/StorageKey';
 
 import {
   RestaurantMenuScreen,

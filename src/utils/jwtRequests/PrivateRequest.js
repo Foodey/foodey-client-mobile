@@ -1,15 +1,18 @@
 import axios from 'axios';
 import RefreshAccessTokenFn from './RefreshAccessToken';
 import AppProperty from '~/constants/AppProperties';
-import HTTPStatus from '~/constants/HTTPStatusCode';
+import HTTPStatus from '~/constants/HTTPStatusCodes';
 import MyAsyncStorage from '~/utils/MyAsyncStorage';
-import StorageKeys from '~/constants/StorageKeys';
+import StorageKey from '~/constants/StorageKey';
 
-axios.defaults.baseURL = AppProperty.FOODEY_API_URL;
+const PrivateRequest = axios.create();
 
-axios.interceptors.request.use(
+PrivateRequest.defaults.baseURL = AppProperty.FOODEY_API_URL;
+
+PrivateRequest.interceptors.request.use(
   async (config) => {
-    const accessToken = MyAsyncStorage.getItem(StorageKeys.ACCESS_TOKEN);
+    console.log('Private request being sent');
+    const accessToken = MyAsyncStorage.getItem(StorageKey.ACCESS_TOKEN);
 
     if (accessToken) {
       config.headers = {
@@ -22,11 +25,13 @@ axios.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-axios.interceptors.response.use(
+PrivateRequest.interceptors.response.use(
   (response) => {
     return response;
   },
   async (error) => {
+    console.log('A response from private request');
+
     const config = error?.config;
     if (error?.response?.status === HTTPStatus.UNAUTHORIZED && !config?.sent) {
       config.sent = true;
@@ -37,7 +42,7 @@ axios.interceptors.response.use(
           ...config.headers,
           Authorization: `Bearer ${newAccessToken}`,
         };
-        return axios(config);
+        return PrivateRequest(config);
       }
       //logout without sending the refresh token back to server
       // toast.warn('Session expired. Please login again.');
@@ -48,6 +53,6 @@ axios.interceptors.response.use(
   },
 );
 
-const privateRequest = axios;
+// const PrivateRequest = axios;
 
-export default privateRequest;
+export default PrivateRequest;

@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 import MyAsyncStorage from '~/utils/MyAsyncStorage';
-import StorageKey from '~/constants/StorageKeys';
+import StorageKey from '~/constants/StorageKey';
 
 export const AppContext = createContext({});
 
@@ -23,8 +23,11 @@ export const AppProvider = ({ children }) => {
       axios.post(`${BASE_URL}/v1/auth/logout`, null, {
         headers: { Authorization: 'Bearer ' + userInfo.refreshToken },
       });
+
       MyAsyncStorage.removeItem(StorageKey.USER_INFO);
       MyAsyncStorage.removeItem(StorageKey.ACCESS_TOKEN);
+      MyAsyncStorage.removeItem(StorageKey.REFRESH_TOKEN);
+
       setUserInfo({});
       setAccessToken('1');
     } catch (err) {
@@ -34,29 +37,29 @@ export const AppProvider = ({ children }) => {
     // setIsLoading(false);
   };
 
-  const requestNewAccessToken = () => {
-    let isSuccess;
-    axios
-      .post(`${BASE_URL}/v1/auth/refresh-token`, null, {
-        headers: { Authorization: 'Bearer ' + userInfo.refreshToken },
-      })
-      .then((response) => {
-        let tempUserInfo = response.data;
-        setUserInfo(tempUserInfo);
-        setAccessToken(tempUserInfo.accessToken);
+  // const requestNewAccessToken = () => {
+  //   let isSuccess;
+  //   axios
+  //     .post(`${BASE_URL}/v1/auth/refresh-token`, null, {
+  //       headers: { Authorization: 'Bearer ' + userInfo.refreshToken },
+  //     })
+  //     .then((response) => {
+  //       let tempUserInfo = response.data;
+  //       setUserInfo(tempUserInfo);
+  //       setAccessToken(tempUserInfo.accessToken);
 
-        AsyncStorage.setItem('userInfo', JSON.stringify(tempUserInfo));
-        AsyncStorage.setItem('accessToken', tempUserInfo.accessToken);
+  //       AsyncStorage.setItem('userInfo', JSON.stringify(tempUserInfo));
+  //       AsyncStorage.setItem('accessToken', tempUserInfo.accessToken);
 
-        console.log('Setting new accessToken successful');
-        isSuccess = true;
-      })
-      .catch((err) => {
-        console.log('Error status: ' + err.response.status);
-        isSuccess = false;
-      });
-    return isSuccess;
-  };
+  //       console.log('Setting new accessToken successful');
+  //       isSuccess = true;
+  //     })
+  //     .catch((err) => {
+  //       console.log('Error status: ' + err.response.status);
+  //       isSuccess = false;
+  //     });
+  //   return isSuccess;
+  // };
 
   const getPendingOrder = () => {
     axios
@@ -95,7 +98,7 @@ export const AppProvider = ({ children }) => {
         setPendingOrderList,
 
         //API calls
-        requestNewAccessToken,
+        // requestNewAccessToken,
         getPendingOrder,
       }}
     >

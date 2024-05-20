@@ -15,11 +15,13 @@ import { COLOR } from '~/constants/Colors';
 import { AuthContext } from '~/contexts/AuthContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { AppContext } from '../../contexts/AppContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 import MyAsyncStorage from '~/utils/MyAsyncStorage';
-import StorageKey from '~/constants/StorageKeys';
+import StorageKey from '~/constants/StorageKey';
+import HTTPStatus from '~/constants/HTTPStatusCodes';
+import { loginAPI } from '~/apiServices/AuthService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignInUpScreen({ navigation }) {
   const {
@@ -51,6 +53,9 @@ export default function SignInUpScreen({ navigation }) {
 
   useEffect(() => {
     setIsLogin(true);
+
+    // const tempUserInfo = MyAsyncStorage.getItem(StorageKey.USER_INFO);
+    // console.log(tempUserInfo);
   }, []);
 
   //Navigation:
@@ -141,40 +146,73 @@ export default function SignInUpScreen({ navigation }) {
     // if(valid) navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
   };
 
-  const login = (username, password) => {
+  const login = async (phoneNumber, password) => {
     setIsLoading(true);
-    axios
-      .post(`${BASE_URL}/v1/auth/login`, {
-        username,
-        password,
-      })
-      .then((res) => {
-        let tempUserInfo = res.data;
+    try {
+      const response = await loginAPI({ username: phoneNumber, password: password });
+
+      if (response.status === HTTPStatus.OK) {
+        const tempUserInfo = response?.data;
+
         setUserInfo(tempUserInfo);
         setAccessToken(tempUserInfo.accessToken);
 
         MyAsyncStorage.setItem(StorageKey.USER_INFO, JSON.stringify(tempUserInfo));
         MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, tempUserInfo.accessToken);
-
-        // console.log(tempUserInfo);
-        // console.log('Access token ' + tempUserInfo.accessToken);
+        MyAsyncStorage.setItem(StorageKey.REFRESH_TOKEN, tempUserInfo.refreshToken);
 
         handleLoginErrors('', 'phoneNumber');
         handleLoginErrors('', 'password');
 
         if (isAppFirstLaunch) setIsAppFirstLaunch(false);
         setIsLoading(false);
-      })
-      .catch((err) => {
-        if (err.response.status === 404) {
-          handleLoginErrors('   ', 'phoneNumber');
-          handleLoginErrors('* Wrong phone number or password, please re-check', 'password');
-        } else {
-          console.log(err.response.status);
-        }
-        setIsLoading(false);
-      });
+      } else if (response.status === HTTPStatus.NOT_FOUND) {
+        handleLoginErrors('   ', 'phoneNumber');
+        handleLoginErrors('* Wrong phone number or password, please re-check', 'password');
+      } else {
+        handleLoginErrors('   ', 'phoneNumber');
+        handleLoginErrors('* Unexpected server error, please try again', 'password');
+      }
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
   };
+
+  // const login = async (username, password) => {
+  //   setIsLoading(true);
+  //   axios
+  //     .post(`${BASE_URL}/v1/auth/login`, {
+  //       username,
+  //       password,
+  //     })
+  //     .then((res) => {
+  //       let tempUserInfo = res.data;
+  //       console.log(tempUserInfo);
+  //       setUserInfo(tempUserInfo);
+  //       setAccessToken(tempUserInfo.accessToken);
+
+  //       MyAsyncStorage.setItem(StorageKey.USER_INFO, JSON.stringify(tempUserInfo));
+  //       MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, tempUserInfo.accessToken);
+  //       // console.log('Access token ' + tempUserInfo.accessToken);
+
+  //       handleLoginErrors('', 'phoneNumber');
+  //       handleLoginErrors('', 'password');
+
+  //       if (isAppFirstLaunch) setIsAppFirstLaunch(false);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       if (err.response.status === 404) {
+  //         handleLoginErrors('   ', 'phoneNumber');
+  //         handleLoginErrors('* Wrong phone number or password, please re-check', 'password');
+  //       } else {
+  //         console.log(err.response.status);
+  //       }
+  //       setIsLoading(false);
+  //     });
+  // };
 
   const signUp = (username, password, name) => {
     setIsLoading(true);
