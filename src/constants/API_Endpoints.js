@@ -1,4 +1,4 @@
-const AuthEndpoint = {
+export const AuthEndpoint = {
   REFRESH_TOKEN: '/v1/auth/refresh-token',
   CUSTOMER_REGISTER: '/v1/auth/register/customers',
   LOGIN: '/v1/auth/login',
@@ -7,4 +7,6 @@ const AuthEndpoint = {
   VERIFY_OTP_CODE: '/v1/auth/sms/otp/verification',
 };
 
-export default AuthEndpoint;
+export const HomeEndpoint = {
+  GET_CATEGORIES: '/v1/product-categories',
+};

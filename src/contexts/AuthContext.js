@@ -122,7 +122,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const verifyOTPCode = async () => {
-    console.log(OTPCode);
     try {
       const response = await axios.post(
         `${BASE_URL}/v1/auth/sms/otp/verification/${signUpInputs.phoneNumber}/${OTPCode}`,

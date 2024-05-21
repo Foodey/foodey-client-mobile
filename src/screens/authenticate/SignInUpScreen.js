@@ -15,12 +15,12 @@ import { COLOR } from '~/constants/Colors';
 import { AuthContext } from '~/contexts/AuthContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { AppContext } from '../../contexts/AppContext';
-import axios from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 
 import MyAsyncStorage from '~/utils/MyAsyncStorage';
 import StorageKey from '~/constants/StorageKey';
 import HTTPStatus from '~/constants/HTTPStatusCodes';
-import { loginAPI } from '~/apiServices/AuthService';
+import { loginAPI, signUpAPI } from '~/apiServices/AuthService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignInUpScreen({ navigation }) {
@@ -72,7 +72,8 @@ export default function SignInUpScreen({ navigation }) {
       '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$';
 
     if (loginInputs.phoneNumber === '') {
-      handleLoginErrors('* Please input phone number', 'phoneNumber');
+      ph;
+      handleLoginErrors('* Please input phone number', 'oneNumber');
       valid = false;
     } else if (!loginInputs.phoneNumber.match(phoneRegex)) {
       handleLoginErrors('* Invalid phone number format', 'phoneNumber');
@@ -180,66 +181,57 @@ export default function SignInUpScreen({ navigation }) {
     }
   };
 
-  // const login = async (username, password) => {
+  const signUp = async (phoneNumber, password, name) => {
+    setIsLoading(true);
+
+    try {
+      const response = await signUpAPI({ username: phoneNumber, password: password, name: name });
+
+      if (response.status === HTTPStatus.OK) {
+        handleSignUpErrors('', 'confirmPassword');
+        setIsLoading(false);
+        navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
+      } else if (response.status === HTTPStatus.FORBIDDEN) {
+        handleSignUpErrors(
+          '* Phone number already been used, please use another one',
+          'phoneNumber',
+        );
+      } else {
+        handleSignUpErrors('* Unexpected server error, please try again later', 'phoneNumber');
+      }
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
+  };
+
+  // const signUp = (username, password, name) => {
   //   setIsLoading(true);
+  //   console.log('Calling API');
   //   axios
-  //     .post(`${BASE_URL}/v1/auth/login`, {
+  //     .post(`${BASE_URL}/v1/auth/register/customers`, {
   //       username,
   //       password,
+  //       name,
   //     })
   //     .then((res) => {
-  //       let tempUserInfo = res.data;
-  //       console.log(tempUserInfo);
-  //       setUserInfo(tempUserInfo);
-  //       setAccessToken(tempUserInfo.accessToken);
-
-  //       MyAsyncStorage.setItem(StorageKey.USER_INFO, JSON.stringify(tempUserInfo));
-  //       MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, tempUserInfo.accessToken);
-  //       // console.log('Access token ' + tempUserInfo.accessToken);
-
-  //       handleLoginErrors('', 'phoneNumber');
-  //       handleLoginErrors('', 'password');
-
-  //       if (isAppFirstLaunch) setIsAppFirstLaunch(false);
+  //       console.log('Success');
+  //       handleSignUpErrors('', 'confirmPassword');
+  //       navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
   //       setIsLoading(false);
   //     })
   //     .catch((err) => {
-  //       if (err.response.status === 404) {
-  //         handleLoginErrors('   ', 'phoneNumber');
-  //         handleLoginErrors('* Wrong phone number or password, please re-check', 'password');
+  //       if (err.response.status === 403) {
+  //         handleSignUpErrors('* Username already exists', 'phoneNumber');
   //       } else {
   //         console.log(err.response.status);
   //       }
   //       setIsLoading(false);
   //     });
+
+  //   setIsLoading(false);
   // };
-
-  const signUp = (username, password, name) => {
-    setIsLoading(true);
-    console.log('Calling API');
-    axios
-      .post(`${BASE_URL}/v1/auth/register/customers`, {
-        username,
-        password,
-        name,
-      })
-      .then((res) => {
-        console.log('Success');
-        handleSignUpErrors('', 'confirmPassword');
-        navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        if (err.response.status === 403) {
-          handleSignUpErrors('* Username already exists', 'phoneNumber');
-        } else {
-          console.log(err.response.status);
-        }
-        setIsLoading(false);
-      });
-
-    setIsLoading(false);
-  };
 
   //  General:
 

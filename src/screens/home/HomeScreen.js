@@ -23,6 +23,9 @@ import MyAsyncStorage from '~/utils/MyAsyncStorage';
 import StorageKey from '../../constants/StorageKey';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { getCategories } from '~/apiServices/HomeService';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
+
 const HomeScreen = ({ navigation }) => {
   const {
     categoriesList,
@@ -35,7 +38,18 @@ const HomeScreen = ({ navigation }) => {
   } = useContext(HomeContext);
 
   useLayoutEffect(() => {
-    getAllCategories();
+    const getCategoriesFunction = async () => {
+      try {
+        const response = await getCategories();
+        if (response.status === HTTPStatus.OK) {
+          setCategoriesList(response.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getCategoriesFunction();
   }, []);
 
   const { userInfo, setUserInfo } = useContext(AppContext);
