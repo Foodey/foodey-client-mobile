@@ -8,7 +8,7 @@ import IntroStackNavigator from '~/navigators/IntroStackNavigator';
 import AuthStackNavigator from '~/navigators/AuthStackNavigator';
 import MainBottomTabNavigator from '~/navigators/MainBottomTabNavigator';
 
-import { MyVouchersScreen } from '~/screens/profile';
+import { MyVouchersScreen, VoucherDetailsScreen } from '~/screens/profile';
 
 import {
   RestaurantMenuScreen,
@@ -98,15 +98,15 @@ function AppNav() {
   };
 
   return (
-    // isAppFirstLaunch !== null && (
-    //   <NavigationContainer>
-    //     <MainStack.Navigator screenOptions={{ headerShown: false }}>
-    //       {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
-    //       {handleRender()}
-    //     </MainStack.Navigator>
-    //   </NavigationContainer>
-    // )
-    <MyVouchersScreen></MyVouchersScreen>
+    isAppFirstLaunch !== null && (
+      <NavigationContainer>
+        <MainStack.Navigator screenOptions={{ headerShown: false }}>
+          {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
+          {handleRender()}
+        </MainStack.Navigator>
+      </NavigationContainer>
+    )
+    // <VoucherDetailsScreen></VoucherDetailsScreen>
   );
 
   // return (

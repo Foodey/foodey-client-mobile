@@ -11,6 +11,7 @@ function VoucherCard({
   minimumToApply,
   expireTime,
   onPressFunction,
+  isIconVisible,
 }) {
   return (
     <Pressable style={styles.container} onPress={onPressFunction}>
@@ -37,7 +38,9 @@ function VoucherCard({
         <Text style={styles.expiration_text}>Expired in: {expireTime} hours</Text>
       </View>
       <View style={styles.action_container}>
-        <ArrowRight width={25} height={25} style={{ color: COLOR.text_primary_color }} />
+        {isIconVisible && (
+          <ArrowRight width={25} height={25} style={{ color: COLOR.text_primary_color }} />
+        )}
       </View>
     </Pressable>
   );

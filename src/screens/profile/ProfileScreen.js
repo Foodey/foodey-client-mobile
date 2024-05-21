@@ -7,8 +7,12 @@ import { Discount, Wallet, FillLocation, Note, Setting } from '~/resources/icons
 import ArrowRight from '~/resources/icons/arrow-right.svg';
 import { LocationDisplay } from '../../components/home';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
   const { logout, userInfo } = useContext(AppContext);
+
+  const onMyVouchersPress = () => {
+    navigation.navigate('MyVouchers_Screen');
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -29,7 +33,7 @@ const ProfileScreen = () => {
             Personal Information
           </Text>
         </Pressable>
-        <Pressable style={styles.section_container}>
+        <Pressable style={styles.section_container} onPress={onMyVouchersPress}>
           <Discount
             width={26}
             height={26}
@@ -42,7 +46,7 @@ const ProfileScreen = () => {
             style={{ color: COLOR.text_secondary_color, marginLeft: 'auto', marginEnd: 5 }}
           />
         </Pressable>
-        <Pressable style={styles.section_container}>
+        {/* <Pressable style={styles.section_container}>
           <Wallet
             width={26}
             height={26}
@@ -54,7 +58,7 @@ const ProfileScreen = () => {
             height={24}
             style={{ color: COLOR.text_secondary_color, marginLeft: 'auto', marginEnd: 5 }}
           />
-        </Pressable>
+        </Pressable> */}
         <Pressable style={styles.section_container}>
           <FillLocation
             width={26}

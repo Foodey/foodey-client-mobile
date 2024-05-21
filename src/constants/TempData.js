@@ -576,7 +576,7 @@ export const myVouchers = [
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
     maximum: '200',
-    expireTime: '5',
+    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
     minimumToApply: '150',
   },
 
@@ -586,7 +586,7 @@ export const myVouchers = [
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200',
-    expireTime: '5',
+    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
     minimumToApply: '150',
   },
 
@@ -596,7 +596,7 @@ export const myVouchers = [
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
     maximum: '200',
-    expireTime: '5',
+    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
     minimumToApply: '150',
   },
 
@@ -606,7 +606,7 @@ export const myVouchers = [
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
     maximum: '200',
-    expireTime: '5',
+    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
     minimumToApply: '150',
   },
 
@@ -616,7 +616,7 @@ export const myVouchers = [
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200',
-    expireTime: '5',
+    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
     minimumToApply: '150',
   },
 
@@ -626,7 +626,7 @@ export const myVouchers = [
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200',
-    expireTime: '5',
+    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
     minimumToApply: '150',
   },
 
@@ -636,7 +636,7 @@ export const myVouchers = [
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200',
-    expireTime: '5',
+    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
     minimumToApply: '150',
   },
 
@@ -646,7 +646,7 @@ export const myVouchers = [
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200',
-    expireTime: '5',
+    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
     minimumToApply: '150',
   },
 
@@ -656,7 +656,7 @@ export const myVouchers = [
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200',
-    expireTime: '5',
+    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
     minimumToApply: '150',
   },
 
@@ -666,7 +666,7 @@ export const myVouchers = [
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
     maximum: '200',
-    expireTime: '5',
+    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
     minimumToApply: '150',
   },
 
@@ -676,7 +676,7 @@ export const myVouchers = [
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
     maximum: '200',
-    expireTime: '5',
+    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
     minimumToApply: '150',
   },
 
@@ -686,7 +686,7 @@ export const myVouchers = [
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200',
-    expireTime: '5',
+    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
     minimumToApply: '150',
   },
 ];
