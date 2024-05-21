@@ -568,3 +568,125 @@ export const pendingOrders = [
     totalPrice: '5780012đ',
   },
 ];
+
+export const myVouchers = [
+  {
+    id: 1,
+    name: 'Voucher 1',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '',
+    maximum: '200',
+    expireTime: '5',
+    minimumToApply: '150',
+  },
+
+  {
+    id: 2,
+    name: 'Voucher 2',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200',
+    expireTime: '5',
+    minimumToApply: '150',
+  },
+
+  {
+    id: 3,
+    name: 'Voucher 3',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '',
+    maximum: '200',
+    expireTime: '5',
+    minimumToApply: '150',
+  },
+
+  {
+    id: 4,
+    name: 'Voucher 4',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '',
+    maximum: '200',
+    expireTime: '5',
+    minimumToApply: '150',
+  },
+
+  {
+    id: 5,
+    name: 'Voucher 5',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200',
+    expireTime: '5',
+    minimumToApply: '150',
+  },
+
+  {
+    id: 6,
+    name: 'Voucher 6',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200',
+    expireTime: '5',
+    minimumToApply: '150',
+  },
+
+  {
+    id: 7,
+    name: 'Voucher 7',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200',
+    expireTime: '5',
+    minimumToApply: '150',
+  },
+
+  {
+    id: 8,
+    name: 'Voucher 8',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200',
+    expireTime: '5',
+    minimumToApply: '150',
+  },
+
+  {
+    id: 9,
+    name: 'Voucher 9',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200',
+    expireTime: '5',
+    minimumToApply: '150',
+  },
+
+  {
+    id: 10,
+    name: 'Voucher 10',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '',
+    maximum: '200',
+    expireTime: '5',
+    minimumToApply: '150',
+  },
+
+  {
+    id: 11,
+    name: 'Voucher 11',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '',
+    maximum: '200',
+    expireTime: '5',
+    minimumToApply: '150',
+  },
+
+  {
+    id: 12,
+    name: 'Voucher 12',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200',
+    expireTime: '5',
+    minimumToApply: '150',
+  },
+];
