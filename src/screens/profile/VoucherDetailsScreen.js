@@ -4,11 +4,31 @@ import { COLOR } from '~/constants/Colors';
 import React, { useContext } from 'react';
 
 const VoucherDetailsScreen = ({ navigation, route }) => {
-  const { id, name, maximum, percentages, expireDate, minimumToApply } = route.params;
+  const { id, name, maximum, percentages, minimumToApply, startDate, expiredDate } = route.params;
 
   const onBackPressFunction = () => {
     navigation.goBack();
   };
+
+  function convertToNormalDateFormat(value) {
+    try {
+      // Parse the ISOString date time into a Date object
+      const date = new Date(value);
+
+      // Extract and format date components according to your custom format
+      const year = date.getUTCFullYear();
+      const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Add leading zero if needed
+      const day = String(date.getUTCDate()).padStart(2, '0');
+      const hours = String(date.getUTCHours()).padStart(2, '0');
+      const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+
+      const result = `${day}/${month}/${year} ${hours}:${minutes}`;
+      return result;
+    } catch (error) {
+      console.error('Error parsing ISOString date:', error);
+      return null; // Return None on parsing errors
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -22,7 +42,7 @@ const VoucherDetailsScreen = ({ navigation, route }) => {
           name={name}
           maximum={maximum}
           percentages={percentages}
-          expireTime="2"
+          expiredDate={expiredDate}
           minimumToApply={minimumToApply}
         />
       </View>
@@ -30,7 +50,9 @@ const VoucherDetailsScreen = ({ navigation, route }) => {
         <View style={styles.detail_container}>
           <View style={{ flex: 1, justifyContent: 'center' }}>
             <Text style={styles.title_text}>Expiration Date</Text>
-            <Text style={styles.info_text}>{expireDate}</Text>
+            <Text style={styles.info_text}>
+              {convertToNormalDateFormat(startDate)} - {convertToNormalDateFormat(expiredDate)}
+            </Text>
           </View>
           <View style={{ flex: 1, justifyContent: 'center' }}>
             <Text style={styles.title_text}>Offer</Text>

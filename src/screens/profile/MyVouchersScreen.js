@@ -18,6 +18,24 @@ const MyVouchersScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
+  function convertToVND(value) {
+    value = parseInt(value);
+
+    if (value < 0) return null;
+
+    const thousands = Math.floor(value / 1000);
+    const remainder = value % 1000;
+
+    if (remainder === 0) {
+      return `${thousands}`;
+    }
+
+    const formattedRemainder = remainder.toString().slice(0, -2); // Remove trailing zero
+
+    const result = `${thousands},${formattedRemainder}`;
+    return result;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
@@ -33,19 +51,20 @@ const MyVouchersScreen = ({ navigation }) => {
           <VoucherCard
             // imageURL={item.imageURL}
             name={item.name}
-            maximum={item.maximum}
+            maximum={convertToVND(item.maximum)}
             percentages={item.percentages}
-            expireTime="2"
-            minimumToApply={item.minimumToApply}
+            expiredDate={item.expiredDate}
+            minimumToApply={convertToVND(item.minimumToApply)}
             isIconVisible={true}
             onPressFunction={() => {
               navigation.navigate('VoucherDetails_Screen', {
                 id: item.id,
                 name: item.name,
-                maximum: item.maximum,
+                maximum: convertToVND(item.maximum),
                 percentages: item.percentages,
-                expireDate: item.expireDate,
-                minimumToApply: item.minimumToApply,
+                minimumToApply: convertToVND(item.minimumToApply),
+                startDate: item.startDate,
+                expiredDate: item.expiredDate,
               });
             }}
           />

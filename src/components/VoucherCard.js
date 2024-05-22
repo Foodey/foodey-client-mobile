@@ -9,10 +9,71 @@ function VoucherCard({
   percentages,
   maximum,
   minimumToApply,
-  expireTime,
+  expiredDate,
   onPressFunction,
   isIconVisible,
 }) {
+  function calculateTimeTillExpired(value) {
+    try {
+      const currentDateTime = new Date();
+      const currentYear = currentDateTime.getFullYear();
+      const currentMonth = currentDateTime.getMonth() + 1; // Add leading zero if needed
+      const currentDay = currentDateTime.getDate();
+      const currentHours = currentDateTime.getHours();
+      const currentMinutes = currentDateTime.getMinutes();
+
+      const expiredDateTime = new Date(value);
+      const expiredYear = expiredDateTime.getUTCFullYear();
+      const expiredMonth = expiredDateTime.getUTCMonth() + 1; // Add leading zero if needed
+      const expiredDay = expiredDateTime.getUTCDate();
+      const expiredHours = expiredDateTime.getUTCHours();
+      const expiredMinutes = expiredDateTime.getUTCMinutes();
+
+      if (currentYear !== expiredYear) {
+        const result = expiredYear - currentYear;
+        if (result >= 0 && result === 1) {
+          return `${expiredYear - currentYear} year`;
+        }
+        return `${expiredYear - currentYear} years`;
+      } else {
+        if (currentMonth !== expiredMonth) {
+          const result = expiredMonth - currentMonth;
+          if (result >= 0 && result === 1) {
+            return `${expiredMonth - currentMonth} month`;
+          }
+          return `${expiredMonth - currentMonth} months`;
+        } else {
+          if (currentDay !== expiredDay) {
+            const result = expiredDay - currentDay;
+            if (result >= 0 && result === 1) {
+              return `${expiredDay - currentDay} day`;
+            }
+            return `${expiredDay - currentDay} days`;
+          } else {
+            if (currentHours !== expiredHours) {
+              const result = expiredHours - currentHours;
+              if (result >= 0 && result === 1) {
+                return `${expiredHours - currentHours} hour`;
+              }
+              return `${expiredHours - currentHours} hours`;
+            } else {
+              if (currentMinutes !== expiredMinutes) {
+                const result = expiredMinutes - currentMinutes;
+                if (result >= 0 && result === 1) {
+                  return `${expiredMinutes - currentMinutes} minute`;
+                }
+                return `${expiredMinutes - currentMinutes} minutes`;
+              }
+            }
+          }
+        }
+      }
+    } catch (err) {
+      console.log('Error when calculating time until voucher expired: ' + err);
+      return null;
+    }
+  }
+
   return (
     <Pressable style={styles.container} onPress={onPressFunction}>
       <View style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: 10 }}>
@@ -35,7 +96,9 @@ function VoucherCard({
           </Text>
         )}
         <Text style={styles.minimum_text}>Minimum order of {minimumToApply}k</Text>
-        <Text style={styles.expiration_text}>Expired in: {expireTime} hours</Text>
+        <Text style={styles.expiration_text}>
+          Expired in: {calculateTimeTillExpired(expiredDate)}
+        </Text>
       </View>
       <View style={styles.action_container}>
         {isIconVisible && (

@@ -575,9 +575,10 @@ export const myVouchers = [
     name: 'Voucher 1',
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
-    maximum: '200',
-    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
-    minimumToApply: '150',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-22T17:01:00.000Z',
   },
 
   {
@@ -585,9 +586,10 @@ export const myVouchers = [
     name: 'Voucher 2',
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
-    maximum: '200',
-    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
-    minimumToApply: '150',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-22T23:59:59.999Z',
   },
 
   {
@@ -595,9 +597,10 @@ export const myVouchers = [
     name: 'Voucher 3',
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
-    maximum: '200',
-    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
-    minimumToApply: '150',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-22T23:59:59.999Z',
   },
 
   {
@@ -605,9 +608,10 @@ export const myVouchers = [
     name: 'Voucher 4',
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
-    maximum: '200',
-    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
-    minimumToApply: '150',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-22T23:59:59.999Z',
   },
 
   {
@@ -615,9 +619,10 @@ export const myVouchers = [
     name: 'Voucher 5',
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
-    maximum: '200',
-    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
-    minimumToApply: '150',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-22T23:59:59.999Z',
   },
 
   {
@@ -625,9 +630,10 @@ export const myVouchers = [
     name: 'Voucher 6',
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
-    maximum: '200',
-    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
-    minimumToApply: '150',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-22T23:59:59.999Z',
   },
 
   {
@@ -635,9 +641,10 @@ export const myVouchers = [
     name: 'Voucher 7',
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
-    maximum: '200',
-    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
-    minimumToApply: '150',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-22T23:59:59.999Z',
   },
 
   {
@@ -645,9 +652,10 @@ export const myVouchers = [
     name: 'Voucher 8',
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
-    maximum: '200',
-    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
-    minimumToApply: '150',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-22T23:59:59.999Z',
   },
 
   {
@@ -655,9 +663,10 @@ export const myVouchers = [
     name: 'Voucher 9',
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
-    maximum: '200',
-    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
-    minimumToApply: '150',
+    maximum: '200000',
+    minimumToApply: '2500',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-22T23:59:59.999Z',
   },
 
   {
@@ -665,9 +674,10 @@ export const myVouchers = [
     name: 'Voucher 10',
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
-    maximum: '200',
-    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
-    minimumToApply: '150',
+    maximum: '200000',
+    minimumToApply: '1500200',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-22T23:59:59.999Z',
   },
 
   {
@@ -675,9 +685,10 @@ export const myVouchers = [
     name: 'Voucher 11',
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
-    maximum: '200',
-    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
-    minimumToApply: '150',
+    maximum: '200000',
+    minimumToApply: '13500',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-22T23:59:59.999Z',
   },
 
   {
@@ -685,8 +696,9 @@ export const myVouchers = [
     name: 'Voucher 12',
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
-    maximum: '200',
-    expireDate: '22/05/2024 00:00 - 22/05/2024 23:59',
-    minimumToApply: '150',
+    maximum: '200000',
+    minimumToApply: '150400',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-22T23:59:59.999Z',
   },
 ];
