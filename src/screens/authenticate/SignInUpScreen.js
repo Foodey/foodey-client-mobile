@@ -19,7 +19,7 @@ import axios, { HttpStatusCode } from 'axios';
 
 import MyAsyncStorage from '~/utils/MyAsyncStorage';
 import StorageKey from '~/constants/StorageKey';
-import HTTPStatus from '~/constants/HTTPStatusCodes';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
 import { loginAPI, signUpAPI } from '~/apiServices/AuthService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -72,7 +72,6 @@ export default function SignInUpScreen({ navigation }) {
       '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$';
 
     if (loginInputs.phoneNumber === '') {
-      ph;
       handleLoginErrors('* Please input phone number', 'oneNumber');
       valid = false;
     } else if (!loginInputs.phoneNumber.match(phoneRegex)) {
@@ -141,8 +140,6 @@ export default function SignInUpScreen({ navigation }) {
       valid = false;
     }
 
-    console.log('Before calling API');
-
     if (valid) signUp(signUpInputs.phoneNumber, signUpInputs.password, signUpInputs.fullName);
     // if(valid) navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
   };
@@ -150,24 +147,24 @@ export default function SignInUpScreen({ navigation }) {
   const login = async (phoneNumber, password) => {
     setIsLoading(true);
     try {
-      const response = await loginAPI({ username: phoneNumber, password: password });
+      const response = await loginAPI({ phoneNumber: phoneNumber, password: password });
 
       if (response.status === HTTPStatus.OK) {
         const tempUserInfo = response?.data;
 
         setUserInfo(tempUserInfo);
-        setAccessToken(tempUserInfo.accessToken);
+        setAccessToken(tempUserInfo.jwt.accessToken);
 
         MyAsyncStorage.setItem(StorageKey.USER_INFO, JSON.stringify(tempUserInfo));
-        MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, tempUserInfo.accessToken);
-        MyAsyncStorage.setItem(StorageKey.REFRESH_TOKEN, tempUserInfo.refreshToken);
+        MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, tempUserInfo.jwt.accessToken);
+        MyAsyncStorage.setItem(StorageKey.REFRESH_TOKEN, tempUserInfo.jwt.refreshToken);
 
         handleLoginErrors('', 'phoneNumber');
         handleLoginErrors('', 'password');
 
         if (isAppFirstLaunch) setIsAppFirstLaunch(false);
         setIsLoading(false);
-      } else if (response.status === HTTPStatus.NOT_FOUND) {
+      } else if (response.status === HTTPStatus.EXPECTATION_FAILED) {
         handleLoginErrors('   ', 'phoneNumber');
         handleLoginErrors('* Wrong phone number or password, please re-check', 'password');
       } else {
@@ -185,19 +182,26 @@ export default function SignInUpScreen({ navigation }) {
     setIsLoading(true);
 
     try {
-      const response = await signUpAPI({ username: phoneNumber, password: password, name: name });
+      const response = await signUpAPI({
+        phoneNumber: phoneNumber,
+        password: password,
+        name: name,
+      });
 
-      if (response.status === HTTPStatus.OK) {
+      if (response.status === HTTPStatus.NO_CONTENT) {
         handleSignUpErrors('', 'confirmPassword');
         setIsLoading(false);
         navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
-      } else if (response.status === HTTPStatus.FORBIDDEN) {
+      } else if (response.status === HTTPStatus.CONFLICT) {
         handleSignUpErrors(
           '* Phone number already been used, please use another one',
           'phoneNumber',
         );
       } else {
         handleSignUpErrors('* Unexpected server error, please try again later', 'phoneNumber');
+        handleSignUpErrors(' ', 'fullName');
+        handleSignUpErrors(' ', 'password');
+        handleSignUpErrors(' ', 'confirmPassword');
       }
       setIsLoading(false);
     } catch (err) {
