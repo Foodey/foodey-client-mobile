@@ -21,6 +21,7 @@ import { SuccessNotifyModal } from '../../components/messageBoxes';
 import { formatVND } from '../../utils/ValueConverter';
 import { placeOrderAPI, deleteAllCartProductAPI } from '../../apiServices/HomeService';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
+import { AppContext } from '../../contexts/AppContext';
 
 const ConfirmOrderScreen = ({ navigation, route }) => {
   //Navigation:
@@ -29,6 +30,7 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
+  const { getPendingOrder } = useContext(AppContext);
   const { cartInfo, setCartInfo } = useContext(HomeContext);
   // const { restaurantName, isViewOnly } = route.params;
   const { restaurantID, restaurantName } = route.params;
@@ -45,6 +47,7 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
       const response = await deleteAllCartProductAPI(restaurantID);
       if (response.status === HTTPStatus.NO_CONTENT) {
         setCartInfo({});
+        getPendingOrder();
         navigation.popToTop(); // should navigate to the screen where user can track the order status
       } else {
         console.log('Unexpected error when clearing cart after order placing successfully');

@@ -14,3 +14,7 @@ export const HomeEndpoint = {
   GENERAL_SHOP_CART_ENDPOINT: '/v1/shopcarts',
   PLACE_ORDER: 'v1/orders',
 };
+
+export const OrdersEndpoint = {
+  GET_USER_ORDER: '/v1/orders/me',
+};

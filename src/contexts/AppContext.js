@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import MyAsyncStorage from '~/utils/MyAsyncStorage';
 import StorageKey from '~/constants/StorageKey';
+import { getPendingOrderAPI, getDeliveredOrderAPI } from '../apiServices/OrdersService';
+import HTTPStatus from '../constants/HTTPStatusCodes';
 
 export const AppContext = createContext({});
 
@@ -16,6 +18,7 @@ export const AppProvider = ({ children }) => {
   const [isAppFirstLaunch, setIsAppFirstLaunch] = useState(null);
 
   const [pendingOrderList, setPendingOrderList] = useState({});
+  const [deliveredOrderList, setDeliveredOrderList] = useState({});
 
   const logout = async () => {
     // setIsLoading(true);
@@ -37,42 +40,32 @@ export const AppProvider = ({ children }) => {
     // setIsLoading(false);
   };
 
-  // const requestNewAccessToken = () => {
-  //   let isSuccess;
-  //   axios
-  //     .post(`${BASE_URL}/v1/auth/refresh-token`, null, {
-  //       headers: { Authorization: 'Bearer ' + userInfo.refreshToken },
-  //     })
-  //     .then((response) => {
-  //       let tempUserInfo = response.data;
-  //       setUserInfo(tempUserInfo);
-  //       setAccessToken(tempUserInfo.accessToken);
+  const getPendingOrder = async () => {
+    try {
+      const response = await getPendingOrderAPI();
+      if (response.status === HTTPStatus.OK) {
+        setPendingOrderList(response.data.content);
+        // console.log('Successfully');
+      } else {
+        console.log('Unexpected error when fetching user pending order');
+      }
+    } catch (err) {
+      console.log('Unexpected error when fetching user pending order ' + err);
+    }
+  };
 
-  //       AsyncStorage.setItem('userInfo', JSON.stringify(tempUserInfo));
-  //       AsyncStorage.setItem('accessToken', tempUserInfo.accessToken);
-
-  //       console.log('Setting new accessToken successful');
-  //       isSuccess = true;
-  //     })
-  //     .catch((err) => {
-  //       console.log('Error status: ' + err.response.status);
-  //       isSuccess = false;
-  //     });
-  //   return isSuccess;
-  // };
-
-  const getPendingOrder = () => {
-    axios
-      .get(`${BASE_URL}/v1/orders?page=3&status=PENDING`, {
-        headers: { Authorization: 'Bearer ' + userInfo.accessToken },
-      })
-      .then((response) => {
-        setPendingOrderList(response.data);
-        console.log('Success getting pending order');
-      })
-      .catch((err) => {
-        console.log('Error status code: ' + err.response.status);
-      });
+  const getDeliveredOrder = async () => {
+    try {
+      const response = await getDeliveredOrderAPI();
+      if (response.status === HTTPStatus.OK) {
+        setDeliveredOrderList(response.data.content);
+        // console.log('Successfully');
+      } else {
+        console.log('Unexpected error when fetching user delivered order');
+      }
+    } catch (err) {
+      console.log('Unexpected error when fetching user delivered order ' + err);
+    }
   };
 
   return (
@@ -96,10 +89,12 @@ export const AppProvider = ({ children }) => {
 
         pendingOrderList,
         setPendingOrderList,
+        deliveredOrderList,
+        setDeliveredOrderList,
 
         //API calls
-        // requestNewAccessToken,
         getPendingOrder,
+        getDeliveredOrder,
       }}
     >
       {children}
