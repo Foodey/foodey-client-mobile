@@ -41,7 +41,6 @@ export default function SignInUpScreen({ navigation }) {
   const {
     isLoading,
     setIsLoading,
-    BASE_URL,
     isAppFirstLaunch,
     setIsAppFirstLaunch,
     setUserInfo,
@@ -53,9 +52,6 @@ export default function SignInUpScreen({ navigation }) {
 
   useEffect(() => {
     setIsLogin(true);
-
-    // const tempUserInfo = MyAsyncStorage.getItem(StorageKey.USER_INFO);
-    // console.log(tempUserInfo);
   }, []);
 
   //Navigation:
@@ -69,7 +65,8 @@ export default function SignInUpScreen({ navigation }) {
     let valid = true;
     const phoneRegex = '^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])\\d{7}$';
     const passwordRegex =
-      '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$';
+      // '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$';
+      '^(?=.*[a-z])(?=.*[A-Z])[A-Za-z\\d@$!%*?&]{8,}$';
 
     if (loginInputs.phoneNumber === '') {
       handleLoginErrors('* Please input phone number', 'oneNumber');
@@ -99,7 +96,8 @@ export default function SignInUpScreen({ navigation }) {
     let valid = true;
     const phoneRegex = '^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])\\d{7}$';
     const passwordRegex =
-      '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$';
+      // '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$';
+      '^(?=.*[a-z])(?=.*[A-Z])[A-Za-z\\d@$!%*?&]{8,}$';
 
     if (signUpInputs.fullName === '') {
       handleSignUpErrors('* Please input your full name', 'fullName');
@@ -209,34 +207,6 @@ export default function SignInUpScreen({ navigation }) {
       setIsLoading(false);
     }
   };
-
-  // const signUp = (username, password, name) => {
-  //   setIsLoading(true);
-  //   console.log('Calling API');
-  //   axios
-  //     .post(`${BASE_URL}/v1/auth/register/customers`, {
-  //       username,
-  //       password,
-  //       name,
-  //     })
-  //     .then((res) => {
-  //       console.log('Success');
-  //       handleSignUpErrors('', 'confirmPassword');
-  //       navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       if (err.response.status === 403) {
-  //         handleSignUpErrors('* Username already exists', 'phoneNumber');
-  //       } else {
-  //         console.log(err.response.status);
-  //       }
-  //       setIsLoading(false);
-  //     });
-
-  //   setIsLoading(false);
-  // };
-
   //  General:
 
   const looseFocus = () => {

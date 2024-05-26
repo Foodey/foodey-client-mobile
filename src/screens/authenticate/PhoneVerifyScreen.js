@@ -22,9 +22,6 @@ export default function PhoneVerifyScreen({ navigation, route }) {
   const { isForgotPassVerify } = route.params;
 
   const {
-    systemOTPCode,
-    setSystemOTPCode,
-
     signUpInputs,
     signUpErrorMessages,
     handleSignUpInputsChanged,
@@ -39,8 +36,6 @@ export default function PhoneVerifyScreen({ navigation, route }) {
     setOTPCode,
     otpErrorMessage,
     setOTPErrorMessage,
-    sendingOTPCode,
-    verifyOTPCode,
   } = useContext(AuthContext);
 
   //NAVIGATORS:
@@ -57,21 +52,8 @@ export default function PhoneVerifyScreen({ navigation, route }) {
   const [verifiedNotifyVisible, setVerifiedNotifyVisible] = useState(false);
 
   const [isAllowGetNewCode, setIsAllowGetNewCode] = useState(true);
-  // const [sendOTPFlag, setSendOTPFlag] = useState(false);
 
   useEffect(() => {
-    // sendingOTPCode()
-    //   .then((success) => {
-    //     if (success) {
-    //       console.log('Already sent code');
-    //     } else {
-    //       console.log('Failed sending code');
-    //       setCodeSentFailedVisible(true);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log('Unexpected error while sending code: ', err);
-    //   });
     sendOTPCode();
   }, []);
 
@@ -99,22 +81,6 @@ export default function PhoneVerifyScreen({ navigation, route }) {
       console.log(err);
     }
   };
-
-  // function onResendCodeHandler() {
-  //   sendingOTPCode()
-  //     .then((success) => {
-  //       if (success) {
-  //         console.log('Already re-sent code');
-  //         setIsAllowGetNewCode(false);
-  //       } else {
-  //         console.log('Failed re-sending code');
-  //         setCodeSentFailedVisible(true);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log('Unexpected error while re-sending code: ', err);
-  //     });
-  // }
 
   function closeVerifiedNotifyMsgBox() {
     setVerifiedNotifyVisible(false);
@@ -157,27 +123,11 @@ export default function PhoneVerifyScreen({ navigation, route }) {
 
   //Testing OTP code: (PASSED)
   const VerifyCode = async () => {
-    // verifyOTPCode()
-    //   .then((success) => {
-    //     if (success) {
-    //       console.log('Correct');
-    //       setOTPCode('');
-    //       setSystemOTPCode('');
-    //       setVerifiedNotifyVisible(true);
-    //     } else {
-    //       console.log('Incorrect');
-    //       setOTPErrorMessage('* OTP Code does not match');
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log('Unexpected error while verify code: ', err);
-    //   });
     console.log('OTP that user type in: ' + OTPCode);
     try {
       const response = await verifyOTPCodeAPI(signUpInputs.phoneNumber, OTPCode);
       if (response.status >= 200 && response.status < 300) {
         setOTPCode('');
-        setSystemOTPCode('');
         setVerifiedNotifyVisible(true);
       } else if (response.status === HTTPStatus.NOT_ACCEPTABLE) {
         setOTPErrorMessage('* OTP Code does not match');

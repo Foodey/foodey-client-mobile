@@ -1,12 +1,13 @@
 import PublicRequest from './PublicRequest';
 import MyAsyncStorage from '~/utils/MyAsyncStorage';
-import AuthEndpoint from '~/constants/API_Endpoints';
-import StorageKey from '~/constants/StorageKey';
+import { AuthEndpoint } from '../../constants/API_Endpoints';
+import StorageKey from '../../constants/StorageKey';
 
 const RefreshAccessTokenFn = async () => {
-  console.log('Refresh token function getting called');
+  // console.log('Refresh token function getting called');
 
-  const refreshToken = MyAsyncStorage.getItem(StorageKey.REFRESH_TOKEN);
+  const refreshToken = await MyAsyncStorage.getItem(StorageKey.REFRESH_TOKEN);
+  // console.log(refreshToken);
 
   if (!refreshToken) {
     return null;
@@ -23,11 +24,11 @@ const RefreshAccessTokenFn = async () => {
 
     const newAccessToken = response.data.accessToken;
     const newRefreshToken = response.data.refreshToken;
+    // console.log('System has auto requested a new access token !!!');
 
     MyAsyncStorage.setItem(StorageKey.REFRESH_TOKEN, newRefreshToken);
     MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, newAccessToken);
 
-    console.log('System has auto requested a new access token !!!');
     return newAccessToken;
   } catch (error) {
     console.log('Error refreshing accessToken: ', error);

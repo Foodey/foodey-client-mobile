@@ -11,8 +11,8 @@ PrivateRequest.defaults.baseURL = AppProperty.FOODEY_API_URL;
 
 PrivateRequest.interceptors.request.use(
   async (config) => {
-    console.log('Private request being sent');
-    const accessToken = MyAsyncStorage.getItem(StorageKey.ACCESS_TOKEN);
+    // console.log('Private request being sent');
+    const accessToken = await MyAsyncStorage.getItem(StorageKey.ACCESS_TOKEN);
 
     if (accessToken) {
       config.headers = {
@@ -30,9 +30,10 @@ PrivateRequest.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.log('A response from private request');
+    // console.log('An error response from private request');
 
     const config = error?.config;
+    // console.log(error?.response?.status);
     if (error?.response?.status === HTTPStatus.UNAUTHORIZED && !config?.sent) {
       config.sent = true;
       const newAccessToken = await RefreshAccessTokenFn();

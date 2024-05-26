@@ -1,7 +1,6 @@
 import { View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { COLOR } from '~/constants/Colors';
-import { ProductQuantityAdjuster } from '~/components/discover';
-import ArrowRight from '~/resources/icons/arrow-right.svg';
+import { Add, Subtract } from '~/resources/icons';
 
 function CartProductBar({
   style,
@@ -26,13 +25,44 @@ function CartProductBar({
           </Text>
           <Text style={styles.totalUnitPrice_text}>{totalUnitPrice}đ</Text>
         </View>
-        <ProductQuantityAdjuster
+        {/* <ProductQuantityAdjuster
           style={{ marginTop: 'auto' }}
           buttonRadius={23}
           quantity={quantity}
-          onSubtractPress={onSubtractPress}
-          onAddingPress={onAddingPress}
-        />
+          // onSubtractPress={onDecreaseProductByOnePress(restaurantID, productID)}
+          // onAddingPress={onAddingPress}
+        /> */}
+        <View style={[styles.adjusterContainer]}>
+          <Pressable
+            style={[
+              styles.action_button,
+              {
+                backgroundColor: COLOR.button_secondary_color,
+                width: 23,
+                height: 23,
+              },
+            ]}
+            onPress={onSubtractPress}
+          >
+            <Subtract width={23} heigh={23} style={{ color: COLOR.background_color }} />
+          </Pressable>
+          <View style={{ alignItems: 'center', width: 32, heigh: 32 }}>
+            <Text style={[styles.quantity_text]}>{quantity}</Text>
+          </View>
+          <Pressable
+            style={[
+              styles.action_button,
+              {
+                backgroundColor: COLOR.button_primary_color,
+                width: 23,
+                height: 23,
+              },
+            ]}
+            onPress={onAddingPress}
+          >
+            <Add width={23} heigh={23} style={{ color: COLOR.background_color }} />
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -77,6 +107,30 @@ const styles = StyleSheet.create({
     marginStart: 5,
     marginEnd: 10,
     color: COLOR.indicator_current_color,
+  },
+
+  //Adjuster:
+  adjusterContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  action_button: {
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  quantity_text: {
+    fontFamily: 'Manrope-Medium',
+    fontSize: 20,
+    color: COLOR.text_primary_color,
+  },
+
+  icon: {
+    color: COLOR.background_color,
+    fontSize: 20,
   },
 });
 

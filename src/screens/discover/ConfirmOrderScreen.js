@@ -14,10 +14,13 @@ import { COLOR } from '~/constants/Colors';
 import { BackButton } from '~/components';
 import { FillLocation, Buy, Discount, Note } from '~/resources/icons';
 import ArrowRight from '~/resources/icons/arrow-right.svg';
-import { orderedProducts } from '~/constants/TempData';
+// import { orderedProducts } from '~/constants/TempData';
 import { SubmitButton } from '~/components';
 import { HomeContext } from '~/contexts/HomeContext';
 import { SuccessNotifyModal } from '../../components/messageBoxes';
+import { formatVND } from '../../utils/ValueConverter';
+import { placeOrderAPI, deleteAllCartProductAPI } from '../../apiServices/HomeService';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
 
 const ConfirmOrderScreen = ({ navigation, route }) => {
   //Navigation:
@@ -26,7 +29,7 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  const { cartInfo, setCartInfo, placeOrder, deleteAllCartInfoByResID } = useContext(HomeContext);
+  const { cartInfo, setCartInfo } = useContext(HomeContext);
   // const { restaurantName, isViewOnly } = route.params;
   const { restaurantID, restaurantName } = route.params;
   //Use states
@@ -36,15 +39,32 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
 
   //Functions:
 
-  const onOKPressHandler = () => {
+  const onOKPressHandler = async (restaurantID) => {
     setSuccessPlaceOrder(false);
-    deleteAllCartInfoByResID(restaurantID);
-    navigation.popToTop();
+    try {
+      const response = await deleteAllCartProductAPI(restaurantID);
+      if (response.status === HTTPStatus.NO_CONTENT) {
+        setCartInfo({});
+        navigation.popToTop(); // should navigate to the screen where user can track the order status
+      } else {
+        console.log('Unexpected error when clearing cart after order placing successfully');
+      }
+    } catch (err) {
+      console.log('Unexpected error when clearing cart after order placing successfully ' + err);
+    }
   };
 
-  const onPlaceOrderPress = () => {
-    placeOrder(restaurantID, cartInfo.items, cartInfo.totalPrice);
-    setSuccessPlaceOrder(true);
+  const onPlaceOrderPress = async (restaurantID, voucherCode, paymentMethod, address) => {
+    try {
+      const response = await placeOrderAPI(restaurantID, voucherCode, paymentMethod, address);
+      if (response.status === HTTPStatus.CREATED) {
+        setSuccessPlaceOrder(true);
+      } else {
+        console.log('Unexpected error when placing order');
+      }
+    } catch (err) {
+      console.log('Unexpected error when placing order ' + err);
+    }
   };
 
   return (
@@ -53,7 +73,7 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
       <SuccessNotifyModal
         visible={successPlaceOrder}
         title="Your order is successfully placed!"
-        onOKPressHandler={onOKPressHandler}
+        onOKPressHandler={() => onOKPressHandler(restaurantID)}
       />
       <BackButton style={[styles.header, { marginBottom: 10 }]} onPressFunction={onBackPress} />
       <ScrollView
@@ -115,8 +135,10 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
                 <Text style={styles.product_name_text}>{name}</Text>
                 <Text style={styles.product_addOn_text}>{description}</Text>
               </View>
-              <View style={{ flex: 3.5, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={styles.product_totalPrice_text}>{totalPrice} VND</Text>
+              <View style={{ flex: 4.25, alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={styles.product_totalPrice_text}>
+                  {totalPrice === undefined ? '0.000' : formatVND(totalPrice)} VND
+                </Text>
               </View>
             </View>
           ))}
@@ -136,7 +158,7 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
         </Pressable>
         <Pressable style={[styles.voucher_container, { borderColor: COLOR.text_primary_color }]}>
           <Note width={25} height={25} />
-          <Text style={[styles.voucher_text, { marginStart: 5 }]}>None</Text>
+          <Text style={[styles.voucher_text, { marginStart: 5 }]}>Note</Text>
           <Text
             style={[styles.voucher_text, { marginLeft: 'auto', color: COLOR.text_secondary_color }]}
           >
@@ -148,16 +170,20 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
           <View style={{ flexDirection: 'row' }}>
             <Text style={[styles.price_text]}>Sub-total ({cartInfo?.items?.length} items)</Text>
             <Text style={[styles.price_text, { marginLeft: 'auto' }]}>
-              {cartInfo.totalPrice} VND
+              {cartInfo.totalPrice === undefined ? '0.000' : formatVND(cartInfo.totalPrice)} VND
             </Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={[styles.price_text]}>Shipping fee</Text>
-            <Text style={[styles.price_text, { marginLeft: 'auto' }]}>{shippingFee} VND</Text>
+            <Text style={[styles.price_text, { marginLeft: 'auto' }]}>
+              {formatVND(shippingFee)} VND
+            </Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={[styles.price_text]}>Promotion code</Text>
-            <Text style={[styles.price_text, { marginLeft: 'auto' }]}>- {discountFee} VND</Text>
+            <Text style={[styles.price_text, { marginLeft: 'auto' }]}>
+              - {formatVND(discountFee)} VND
+            </Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={[styles.price_text]}>Payment method</Text>
@@ -171,7 +197,10 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
                 { marginLeft: 'auto', color: COLOR.indicator_current_color },
               ]}
             >
-              {cartInfo.totalPrice + shippingFee - discountFee} VND
+              {cartInfo.totalPrice === undefined
+                ? '0.000'
+                : formatVND(cartInfo.totalPrice + shippingFee - discountFee)}{' '}
+              VND
             </Text>
           </View>
         </View>
@@ -185,7 +214,9 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
           />
         )} */}
         <SubmitButton
-          onPressFunction={onPlaceOrderPress}
+          onPressFunction={() =>
+            onPlaceOrderPress(restaurantID, '', 'CASH', '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương')
+          } //voucherCode, paymentMethod and address hardcoded value should be replaced later
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}
           style={{ height: 60, marginTop: 20 }}

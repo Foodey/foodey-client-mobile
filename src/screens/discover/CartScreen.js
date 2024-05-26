@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Modal, Pressable, StyleSheet, FlatList } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import { SubmitButton } from '~/components';
 import CloseCircle from '~/resources/icons/close-circle.svg';
 import { orderedProducts } from '~/constants/TempData';
 import { CartProductBar } from '~/components/discover';
+import { formatVND } from '../../utils/ValueConverter';
+import {
+  addProductToCartAPI,
+  deleteProductFromCartAPI,
+  getCartInfoOfResAPI,
+} from '../../apiServices/HomeService';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
+import { HomeContext } from '../../contexts/HomeContext';
 
 function CartScreen({
   style,
   isVisible,
+  restaurantID,
   cartData,
   subtotalPrice,
   onBackdropPress,
@@ -16,12 +25,73 @@ function CartScreen({
   onDeletePress,
   onCheckoutPress,
 }) {
+  // console.log(cartData);
+  const { setCartInfo } = useContext(HomeContext);
+
   const backdropPress = () => {
     onBackdropPress();
   };
 
   const closeCart = () => {
     onClosePress();
+  };
+
+  const onDecreaseProductByOnePress = async (restaurantID, productID) => {
+    try {
+      const response = await deleteProductFromCartAPI(restaurantID, productID, 1);
+      if (response.status === HTTPStatus.NO_CONTENT) {
+        // console.log('Success delete')
+        try {
+          const response = await getCartInfoOfResAPI(restaurantID);
+          if (response.status === HTTPStatus.OK) {
+            setCartInfo(response.data);
+            // console.log('Success reload cart')
+          } else {
+            console.log(
+              'Unexpected error when re-getting cart information after decrease product quantity',
+            );
+          }
+        } catch (err) {
+          console.log(
+            'Unexpected error when re-getting cart information after decrease product quantity' +
+              err,
+          );
+        }
+      } else {
+        console.log('Unexpected error when decrease the quantity of product by 1');
+      }
+    } catch (err) {
+      console.log('Unexpected error when decrease the quantity of product by 1' + err);
+    }
+  };
+
+  const onIncreaseProductByOnePress = async (restaurantID, productID) => {
+    try {
+      const response = await addProductToCartAPI(restaurantID, productID, 1);
+      if (response.status === HTTPStatus.NO_CONTENT) {
+        // console.log('Success adding');
+        try {
+          const response = await getCartInfoOfResAPI(restaurantID);
+          if (response.status === HTTPStatus.OK) {
+            setCartInfo(response.data);
+            // console.log('Success reload cart');
+          } else {
+            console.log(
+              'Unexpected error when re-getting cart information after decrease product quantity',
+            );
+          }
+        } catch (err) {
+          console.log(
+            'Unexpected error when re-getting cart information after decrease product quantity' +
+              err,
+          );
+        }
+      } else {
+        console.log('Unexpected error when decrease the quantity of product by 1');
+      }
+    } catch (err) {
+      console.log('Unexpected error when decrease the quantity of product by 1' + err);
+    }
   };
 
   return (
@@ -53,8 +123,14 @@ function CartScreen({
                   }}
                   name={item.name}
                   addOnInfo={item.description}
-                  totalUnitPrice={item.productPrice}
+                  totalUnitPrice={
+                    item.productPrice === undefined
+                      ? '0.000'
+                      : formatVND(item.productPrice * item.quantity)
+                  }
                   quantity={item.quantity}
+                  onSubtractPress={() => onDecreaseProductByOnePress(restaurantID, item.productId)}
+                  onAddingPress={() => onIncreaseProductByOnePress(restaurantID, item.productId)}
                 />
               )}
             />
@@ -70,7 +146,9 @@ function CartScreen({
               >
                 Sub-total
               </Text>
-              <Text style={styles.subtotal_text}>{subtotalPrice} VND</Text>
+              <Text style={styles.subtotal_text}>
+                {subtotalPrice === undefined ? '0.000' : formatVND(subtotalPrice)} VND
+              </Text>
             </View>
             <SubmitButton
               onPressFunction={onCheckoutPress}

@@ -18,27 +18,64 @@ import { RestaurantTitle, FavoriteButton, ProductBar } from '~/components/discov
 import { products, restaurants } from '~/constants/TempData';
 import { CartScreen } from '~/screens/discover';
 import { HomeContext } from '~/contexts/HomeContext';
+import {
+  getMenuByRestaurantAPI,
+  getCartInfoOfResAPI,
+  deleteAllCartProductAPI,
+} from '../../apiServices/HomeService';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
+import { formatVND } from '../../utils/ValueConverter';
 
 const RestaurantMenuScreen = ({ navigation, route }) => {
   const { restaurantID, restaurantName, restaurantLogo, restaurantWallpaper, restaurantAddress } =
     route.params;
 
-  const {
-    getMenuByRestaurantID,
-    restaurantMenuList,
-    setRestaurantMenuList,
-    cartInfo,
-    setCartInfo,
-    getCartInfoByResID,
-    deleteAllCartInfoByResID,
-  } = useContext(HomeContext);
+  const { restaurantMenuList, setRestaurantMenuList, cartInfo, setCartInfo } =
+    useContext(HomeContext);
 
   useLayoutEffect(() => {
-    getCartInfoByResID(restaurantID);
+    const getCartInfo = async (restaurantID) => {
+      try {
+        const response = await getCartInfoOfResAPI(restaurantID);
+        if (response.status === HTTPStatus.OK) {
+          setCartInfo(response.data);
+        } else {
+          console.log('Unexpected error when fetching menu by restaurant');
+        }
+      } catch (err) {
+        console.log('Unexpected error when fetching menu by restaurant' + err);
+      }
+    };
+    getCartInfo(restaurantID);
   }, []);
 
+  const onCartClearAllPress = async (restaurantID) => {
+    try {
+      const response = await deleteAllCartProductAPI(restaurantID);
+      if (response.status === HTTPStatus.NO_CONTENT) {
+        setCartInfo({});
+      } else {
+        console.log('Unexpected error when clearing the shop cart');
+      }
+    } catch (err) {
+      console.log('Unexpected error when clearing the shop cart' + err);
+    }
+  };
+
   useLayoutEffect(() => {
-    getMenuByRestaurantID(restaurantID);
+    const getMenuByRes = async (restaurantID) => {
+      try {
+        const response = await getMenuByRestaurantAPI(restaurantID);
+        if (response.status === HTTPStatus.OK) {
+          setRestaurantMenuList(response.data[0]);
+        } else {
+          console.log('Unexpected error when fetching menu by restaurant');
+        }
+      } catch (err) {
+        console.log('Unexpected error when fetching menu by restaurant' + err);
+      }
+    };
+    getMenuByRes(restaurantID);
   }, []);
 
   //Navigation:
@@ -95,12 +132,13 @@ const RestaurantMenuScreen = ({ navigation, route }) => {
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={cartVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color} />
       <CartScreen
+        restaurantID={restaurantID}
         isVisible={cartVisible}
         onBackdropPress={() => setCartVisible(false)}
         onClosePress={() => setCartVisible(false)}
         cartData={cartInfo.items}
         subtotalPrice={cartInfo.totalPrice}
-        onDeletePress={() => deleteAllCartInfoByResID(restaurantID)}
+        onDeletePress={() => onCartClearAllPress(restaurantID)}
         onCheckoutPress={onCartCheckoutPress}
       />
       <View style={{ flexDirection: 'row' }}>
@@ -162,7 +200,7 @@ const RestaurantMenuScreen = ({ navigation, route }) => {
         //   useNativeDriver: true,
         // })}
         // scrollEventThrottle={1}
-        data={restaurantMenuList}
+        data={restaurantMenuList.products}
         renderItem={({ item }) => (
           <ProductBar
             // style={{ margin: 25 }}
@@ -178,7 +216,7 @@ const RestaurantMenuScreen = ({ navigation, route }) => {
             }}
             image={item.image}
             name={item.name}
-            price={item.price}
+            price={item.price === undefined ? '0.000' : formatVND(item.price)}
             afterDiscountPrice=""
           />
         )}
