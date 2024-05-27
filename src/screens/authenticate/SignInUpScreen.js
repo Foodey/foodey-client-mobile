@@ -15,8 +15,13 @@ import { COLOR } from '~/constants/Colors';
 import { AuthContext } from '~/contexts/AuthContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { AppContext } from '../../contexts/AppContext';
+import axios, { HttpStatusCode } from 'axios';
+
+import MyAsyncStorage from '~/utils/MyAsyncStorage';
+import StorageKey from '~/constants/StorageKey';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
+import { loginAPI, signUpAPI } from '~/apiServices/AuthService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 
 export default function SignInUpScreen({ navigation }) {
   const {
@@ -36,7 +41,6 @@ export default function SignInUpScreen({ navigation }) {
   const {
     isLoading,
     setIsLoading,
-    BASE_URL,
     isAppFirstLaunch,
     setIsAppFirstLaunch,
     setUserInfo,
@@ -61,10 +65,11 @@ export default function SignInUpScreen({ navigation }) {
     let valid = true;
     const phoneRegex = '^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])\\d{7}$';
     const passwordRegex =
-      '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$';
+      // '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$';
+      '^(?=.*[a-z])(?=.*[A-Z])[A-Za-z\\d@$!%*?&]{8,}$';
 
     if (loginInputs.phoneNumber === '') {
-      handleLoginErrors('* Please input phone number', 'phoneNumber');
+      handleLoginErrors('* Please input phone number', 'oneNumber');
       valid = false;
     } else if (!loginInputs.phoneNumber.match(phoneRegex)) {
       handleLoginErrors('* Invalid phone number format', 'phoneNumber');
@@ -91,7 +96,8 @@ export default function SignInUpScreen({ navigation }) {
     let valid = true;
     const phoneRegex = '^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])\\d{7}$';
     const passwordRegex =
-      '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$';
+      // '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$';
+      '^(?=.*[a-z])(?=.*[A-Z])[A-Za-z\\d@$!%*?&]{8,}$';
 
     if (signUpInputs.fullName === '') {
       handleSignUpErrors('* Please input your full name', 'fullName');
@@ -132,74 +138,75 @@ export default function SignInUpScreen({ navigation }) {
       valid = false;
     }
 
-    console.log('Before calling API');
-
     if (valid) signUp(signUpInputs.phoneNumber, signUpInputs.password, signUpInputs.fullName);
     // if(valid) navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
   };
 
-  const login = (username, password) => {
+  const login = async (phoneNumber, password) => {
     setIsLoading(true);
-    axios
-      .post(`${BASE_URL}/v1/auth/login`, {
-        username,
-        password,
-      })
-      .then((res) => {
-        let tempUserInfo = res.data;
+    try {
+      const response = await loginAPI({ phoneNumber: phoneNumber, password: password });
+
+      if (response.status === HTTPStatus.OK) {
+        const tempUserInfo = response?.data;
+
         setUserInfo(tempUserInfo);
-        setAccessToken(tempUserInfo.accessToken);
+        setAccessToken(tempUserInfo.jwt.accessToken);
 
-        AsyncStorage.setItem('userInfo', JSON.stringify(tempUserInfo));
-        AsyncStorage.setItem('accessToken', tempUserInfo.accessToken);
-
-        // console.log(tempUserInfo);
-        // console.log('Access token ' + tempUserInfo.accessToken);
+        MyAsyncStorage.setItem(StorageKey.USER_INFO, JSON.stringify(tempUserInfo));
+        MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, tempUserInfo.jwt.accessToken);
+        MyAsyncStorage.setItem(StorageKey.REFRESH_TOKEN, tempUserInfo.jwt.refreshToken);
 
         handleLoginErrors('', 'phoneNumber');
         handleLoginErrors('', 'password');
 
         if (isAppFirstLaunch) setIsAppFirstLaunch(false);
         setIsLoading(false);
-      })
-      .catch((err) => {
-        if (err.response.status === 404) {
-          handleLoginErrors('   ', 'phoneNumber');
-          handleLoginErrors('* Wrong phone number or password, please re-check', 'password');
-        } else {
-          console.log(err.response.status);
-        }
-        setIsLoading(false);
-      });
+      } else if (response.status === HTTPStatus.EXPECTATION_FAILED) {
+        handleLoginErrors('   ', 'phoneNumber');
+        handleLoginErrors('* Wrong phone number or password, please re-check', 'password');
+      } else {
+        handleLoginErrors('   ', 'phoneNumber');
+        handleLoginErrors('* Unexpected server error, please try again', 'password');
+      }
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
   };
 
-  const signUp = (username, password, name) => {
+  const signUp = async (phoneNumber, password, name) => {
     setIsLoading(true);
-    console.log('Calling API');
-    axios
-      .post(`${BASE_URL}/v1/auth/register/customers`, {
-        username,
-        password,
-        name,
-      })
-      .then((res) => {
-        console.log('Success');
-        handleSignUpErrors('', 'confirmPassword');
-        navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        if (err.response.status === 403) {
-          handleSignUpErrors('* Username already exists', 'phoneNumber');
-        } else {
-          console.log(err.response.status);
-        }
-        setIsLoading(false);
+
+    try {
+      const response = await signUpAPI({
+        phoneNumber: phoneNumber,
+        password: password,
+        name: name,
       });
 
-    setIsLoading(false);
+      if (response.status === HTTPStatus.NO_CONTENT) {
+        handleSignUpErrors('', 'confirmPassword');
+        setIsLoading(false);
+        navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
+      } else if (response.status === HTTPStatus.CONFLICT) {
+        handleSignUpErrors(
+          '* Phone number already been used, please use another one',
+          'phoneNumber',
+        );
+      } else {
+        handleSignUpErrors('* Unexpected server error, please try again later', 'phoneNumber');
+        handleSignUpErrors(' ', 'fullName');
+        handleSignUpErrors(' ', 'password');
+        handleSignUpErrors(' ', 'confirmPassword');
+      }
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
   };
-
   //  General:
 
   const looseFocus = () => {

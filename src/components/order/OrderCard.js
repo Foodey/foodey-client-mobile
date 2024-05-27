@@ -2,10 +2,12 @@ import React from 'react';
 import { View, Text, Pressable, StyleSheet, Image } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import ArrowRight from '~/resources/icons/arrow-right.svg';
+import { formatVND, formatDateTime } from '../../utils/ValueConverter';
 
 function OrderCard({
   style,
   id,
+  createdAt,
   resName,
   date,
   items,
@@ -16,7 +18,9 @@ function OrderCard({
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
       <View style={{ flexDirection: 'row' }}>
-        <Text style={styles.id_text}>Order # {id}</Text>
+        <Text style={styles.orderTime_text}>
+          Order Time - {createdAt === undefined ? 'undefined' : formatDateTime(createdAt)}
+        </Text>
         {/* <Text style={styles.date_text}>{date}</Text> */}
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -81,14 +85,16 @@ function OrderCard({
                   uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
                 }}
               />
-              <Text ellipsizeMode="tail" numberOfLines={2} style={styles.productName_text}>
+              <Text ellipsizeMode="tail" numberOfLines={1} style={styles.productName_text}>
                 {name}
               </Text>
             </View>
           ))}
         </View>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text style={styles.totalPrice_text}>{totalPrice}</Text>
+        <View style={{ flex: 1.1, justifyContent: 'center' }}>
+          <Text style={styles.totalPrice_text}>
+            {totalPrice === undefined ? '0.000' : formatVND(totalPrice)}đ
+          </Text>
           <Text style={styles.numOfItem_text}>
             {items.length} items {'>'}
           </Text>
@@ -107,14 +113,20 @@ function OrderCard({
         >
           {completedOrder ? 'Completed' : 'Ongoing'}
         </Text>
-        <Pressable style={[styles.button, { marginLeft: 'auto' }]}>
-          <Text style={[styles.button_text, { color: COLOR.indicator_current_color }]}>Review</Text>
-        </Pressable>
-        <Pressable style={[styles.button, { backgroundColor: COLOR.indicator_current_color }]}>
-          <Text style={[styles.button_text, { color: COLOR.background_color, borderWidth: 0 }]}>
-            Re-order
-          </Text>
-        </Pressable>
+        {completedOrder && (
+          <View style={{ flexDirection: 'row', marginStart: 'auto' }}>
+            <Pressable style={[styles.button, { marginLeft: 'auto' }]}>
+              <Text style={[styles.button_text, { color: COLOR.indicator_current_color }]}>
+                Review
+              </Text>
+            </Pressable>
+            <Pressable style={[styles.button, { backgroundColor: COLOR.indicator_current_color }]}>
+              <Text style={[styles.button_text, { color: COLOR.background_color, borderWidth: 0 }]}>
+                Re-order
+              </Text>
+            </Pressable>
+          </View>
+        )}
       </View>
     </Pressable>
   );
@@ -129,7 +141,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
 
-  id_text: {
+  orderTime_text: {
     fontFamily: 'Manrope-Regular',
     fontSize: 14,
     color: COLOR.indicator_current_color,
@@ -162,13 +174,14 @@ const styles = StyleSheet.create({
   product_image: {
     width: 75,
     height: 75,
-    borderRadius: 20,
+    borderRadius: 5,
   },
 
   productName_text: {
     fontFamily: 'Manrope-Medium',
     fontSize: 12,
     color: COLOR.text_primary_color,
+    width: 75,
   },
 
   totalPrice_text: {

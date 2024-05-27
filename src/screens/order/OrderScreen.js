@@ -1,13 +1,16 @@
-import React, { useState, useLayoutEffect, useContext } from 'react';
+import React, { useState, useLayoutEffect, useContext, useEffect } from 'react';
 import { View, Text, SafeAreaView, StatusBar, StyleSheet, Pressable, FlatList } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import { FavoriteMealBar, FavoriteRestaurantBar } from '~/components/favorite';
 import { restaurants, products, pendingOrders, doneOrders } from '~/constants/TempData';
 import { OrderCard } from '~/components/order';
 import { AppContext } from '~/contexts/AppContext';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
+import { getDeliveredOrderAPI } from '../../apiServices/OrdersService';
 
 const OrderScreen = ({ navigation }) => {
-  const { pendingOrderList, setPendingOrderList, getPendingOrder } = useContext(AppContext);
+  const { pendingOrderList, getPendingOrder, deliveredOrderList, getDeliveredOrder } =
+    useContext(AppContext);
 
   const onOrderCartPress = () => {
     navigation.navigate('ConfirmOrder_Screen', { isViewOnly: true });
@@ -15,6 +18,10 @@ const OrderScreen = ({ navigation }) => {
 
   useLayoutEffect(() => {
     getPendingOrder();
+  }, []);
+
+  useLayoutEffect(() => {
+    getDeliveredOrder();
   }, []);
 
   const [isOnGoingSelected, setIsOnGoingSelected] = useState(true);
@@ -94,8 +101,9 @@ const OrderScreen = ({ navigation }) => {
                 // onPressFunction={onOrderCartPress}
                 completedOrder={false}
                 id={item.id}
+                createdAt={item.createdAt}
                 // date={item.date}
-                resName={item.branch.name}
+                resName={item.shop.name}
                 items={item.items}
                 totalPrice={item.payment.price}
               />
@@ -107,16 +115,17 @@ const OrderScreen = ({ navigation }) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 250 }}
-            data={doneOrders}
+            data={deliveredOrderList}
             renderItem={({ item }) => (
               <OrderCard
                 // onPressFunction={onOrderCartPress}
                 completedOrder={true}
                 id={item.id}
+                createdAt={item.createdAt}
                 // date={item.date}
-                resName={item.resName}
+                resName={item.shop.name}
                 items={item.items}
-                totalPrice={item.totalPrice}
+                totalPrice={item.payment.price}
               />
             )}
           />
@@ -129,6 +138,7 @@ const OrderScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLOR.background_color,
+    flex: 1,
   },
 
   header_text: {

@@ -19,20 +19,30 @@ import { SearchScreen } from '~/screens/home';
 import { HomeContext } from '~/contexts/HomeContext';
 import { AppContext } from '~/contexts/AppContext';
 import { restaurants, offers } from '~/constants/TempData';
+import MyAsyncStorage from '~/utils/MyAsyncStorage';
+import StorageKey from '../../constants/StorageKey';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getCategoriesAPI } from '../../apiServices/HomeService';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
 
 const HomeScreen = ({ navigation }) => {
-  const {
-    categoriesList,
-    setCategoriesList,
-    restaurantsList,
-    setRestaurantsList,
-    offersList,
-    setOffersList,
-    getAllCategories,
-  } = useContext(HomeContext);
+  const { categoriesList, setCategoriesList } = useContext(HomeContext);
 
   useLayoutEffect(() => {
-    getAllCategories();
+    const getCategoriesFunction = async () => {
+      try {
+        const response = await getCategoriesAPI();
+        if (response.status === HTTPStatus.OK) {
+          setCategoriesList(response.data.content);
+        } else {
+          console.log('Unexpected error when fetching categories');
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getCategoriesFunction();
   }, []);
 
   const { userInfo, setUserInfo } = useContext(AppContext);
@@ -107,8 +117,8 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.categories_row_container}>
               <CircleCategory
                 imageStyle={{ width: 50, height: 50 }}
-                imageLink={categoriesList[0].image}
-                title={categoriesList[0].name}
+                imageLink={categoriesList[0]?.image}
+                title={categoriesList[0]?.name}
                 onPressFunction={() =>
                   navigation.navigate('CategoryDetail_Screen', {
                     categoryID: categoriesList[0].id,
@@ -118,8 +128,8 @@ const HomeScreen = ({ navigation }) => {
               />
               <CircleCategory
                 imageStyle={{ width: 50, height: 50 }}
-                imageLink={categoriesList[1].image}
-                title={categoriesList[1].name}
+                imageLink={categoriesList[1]?.image}
+                title={categoriesList[1]?.name}
                 onPressFunction={() =>
                   navigation.navigate('CategoryDetail_Screen', {
                     categoryID: categoriesList[1].id,
@@ -129,8 +139,8 @@ const HomeScreen = ({ navigation }) => {
               />
               <CircleCategory
                 imageStyle={{ width: 50, height: 50 }}
-                imageLink={categoriesList[2].image}
-                title={categoriesList[2].name}
+                imageLink={categoriesList[2]?.image}
+                title={categoriesList[2]?.name}
                 onPressFunction={() =>
                   navigation.navigate('CategoryDetail_Screen', {
                     categoryID: categoriesList[2].id,
@@ -142,8 +152,8 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.categories_row_container}>
               <CircleCategory
                 imageStyle={{ width: 50, height: 50 }}
-                imageLink={categoriesList[3].image}
-                title={categoriesList[3].name}
+                imageLink={categoriesList[3]?.image}
+                title={categoriesList[3]?.name}
                 onPressFunction={() =>
                   navigation.navigate('CategoryDetail_Screen', {
                     categoryID: categoriesList[3].id,
@@ -153,8 +163,8 @@ const HomeScreen = ({ navigation }) => {
               />
               <CircleCategory
                 imageStyle={{ width: 50, height: 50 }}
-                imageLink={categoriesList[4].image}
-                title={categoriesList[4].name}
+                imageLink={categoriesList[4]?.image}
+                title={categoriesList[4]?.name}
                 onPressFunction={() =>
                   navigation.navigate('CategoryDetail_Screen', {
                     categoryID: categoriesList[4].id,

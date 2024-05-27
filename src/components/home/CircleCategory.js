@@ -12,7 +12,7 @@ function CircleCategory({ style, title, imageLink, imageStyle, onPressFunction }
       </View>
       <View style={{ flex: 1.25 }}>
         <Text ellipsizeMode="tail" numberOfLines={1} style={styles.title_text}>
-          {title}
+          {title === undefined ? 'Category' : title}
         </Text>
       </View>
     </Pressable>

@@ -1,0 +1,24 @@
+export const AuthEndpoint = {
+  REFRESH_TOKEN: '/v1/auth/refresh-token',
+  CUSTOMER_REGISTER: '/v1/auth/register',
+  LOGIN: '/v1/auth/login',
+  LOGOUT: '/v1/auth/logout',
+  SEND_OTP_CODE: '/v1/auth/otp',
+  VERIFY_OTP_CODE: '/v1/auth/otp', //more when implement
+};
+
+export const HomeEndpoint = {
+  GENERAL_SHOP_ENDPOINT: '/v1/shops',
+  GET_CATEGORIES: '/v1/product-categories',
+  GET_RES_BY_CATEGORY_ID: 'v1/shops/categories',
+  GENERAL_SHOP_CART_ENDPOINT: '/v1/shopcarts',
+  PLACE_ORDER: 'v1/orders',
+};
+
+export const OrdersEndpoint = {
+  GET_USER_ORDER: '/v1/orders/me',
+};
+
+export const ProfileEndpoint = {
+  LOG_OUT: '/v1/auth/logout',
+};

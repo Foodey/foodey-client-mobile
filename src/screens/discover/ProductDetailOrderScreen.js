@@ -20,12 +20,15 @@ import { CartScreen } from '~/screens/discover';
 import { products } from '~/constants/TempData';
 import { HomeContext } from '~/contexts/HomeContext';
 import { AppContext } from '~/contexts/AppContext';
-
+import {
+  getCartInfoOfResAPI,
+  addProductToCartAPI,
+  deleteAllCartProductAPI,
+} from '../../apiServices/HomeService';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
+import { formatVND } from '../../utils/ValueConverter';
 const ProductDetailOrderScreen = ({ navigation, route }) => {
-  const { addProductToCart, getCartInfoByResID, deleteAllCartInfoByResID, cartInfo, setCartInfo } =
-    useContext(HomeContext);
-
-  const { requestNewAccessToken } = useContext(AppContext);
+  const { cartInfo, setCartInfo } = useContext(HomeContext);
 
   const { restaurantID, restaurantName, productID, productName, productImage, productPrice } =
     route.params;
@@ -47,44 +50,49 @@ const ProductDetailOrderScreen = ({ navigation, route }) => {
   useEffect(() => {
     const price = parseFloat(productPrice);
     let newTotalPrice = price * productQuantity;
-
-    // if (newTotalPrice >= 1000) {
-    //   newTotalPrice =
-    //     newTotalPrice.toString().slice(0, 1) + '.' + newTotalPrice.toString().slice(1);
-    //   setTotalPrice(newTotalPrice.toString());
-    // } else {
-    //   setTotalPrice(newTotalPrice.toString());
-    // }
     setTotalPrice(newTotalPrice.toString());
   }, [productQuantity]);
 
   //Functions:
-
-  const onOKPressHandler = () => {
-    getCartInfoByResID(restaurantID);
-    setSuccessAddingToCartVisible(false);
-    navigation.goBack();
+  const onCartClearAllPress = async (restaurantID) => {
+    try {
+      const response = await deleteAllCartProductAPI(restaurantID);
+      if (response.status === HTTPStatus.NO_CONTENT) {
+        setCartInfo({});
+      } else {
+        console.log('Unexpected error when clearing the shop cart');
+      }
+    } catch (err) {
+      console.log('Unexpected error when clearing the shop cart' + err);
+    }
   };
 
-  const addToCartPress = () => {
-    let check = addProductToCart(restaurantID, productID, productQuantity);
-    setSuccessAddingToCartVisible(true);
-    // if(check)
-    // {
-    //   setSuccessAddingToCartVisible(true);
-    // }
-    // else
-    // {
-    //   let isRequestNewAccessTokenSuccess = requestNewAccessToken();
-    //   if(isRequestNewAccessTokenSuccess)
-    //   {
-    //     addProductToCart(restaurantID, productID, productQuantity);
-    //     console.log('Successfully adding product into cart after request new access token');
-    //     setSuccessAddingToCartVisible(true);
-    //   }
-    //   else
-    //     console.log('Unexpected error while adding product a cart');
-    // }
+  const onOKPressHandler = async () => {
+    try {
+      const response = await getCartInfoOfResAPI(restaurantID);
+      if (response.status === HTTPStatus.OK) {
+        setCartInfo(response.data);
+        setSuccessAddingToCartVisible(false);
+        navigation.goBack();
+      } else {
+        console.log('Unexpected error when fetching menu by restaurant');
+      }
+    } catch (err) {
+      console.log('Unexpected error when fetching menu by restaurant' + err);
+    }
+  };
+
+  const addToCartPress = async (restaurantID, productID, productQuantity) => {
+    try {
+      const response = await addProductToCartAPI(restaurantID, productID, productQuantity);
+      if (response.status === HTTPStatus.NO_CONTENT) {
+        setSuccessAddingToCartVisible(true);
+      } else {
+        console.log('Unexpected error while adding product into cart');
+      }
+    } catch (err) {
+      console.log('Unexpected error while adding product into cart' + err);
+    }
   };
 
   const onSubtractPress = () => {
@@ -112,12 +120,13 @@ const ProductDetailOrderScreen = ({ navigation, route }) => {
         onOKPressHandler={onOKPressHandler}
       />
       <CartScreen
+        restaurantID={restaurantID}
         isVisible={cartVisible}
         onBackdropPress={() => setCartVisible(false)}
         onClosePress={() => setCartVisible(false)}
         cartData={cartInfo.items}
         subtotalPrice={cartInfo.totalPrice}
-        onDeletePress={() => deleteAllCartInfoByResID(restaurantID)}
+        onDeletePress={() => onCartClearAllPress(restaurantID)}
         onCheckoutPress={onCartCheckoutPress}
       />
       <View style={{ flexDirection: 'row' }}>
@@ -145,7 +154,7 @@ const ProductDetailOrderScreen = ({ navigation, route }) => {
       </View>
       <View style={{ flexDirection: 'row', marginHorizontal: 21, marginVertical: 10 }}>
         <Text ellipsizeMode="tail" numberOfLines={1} style={[styles.total_price, { flex: 2 }]}>
-          {totalPrice} VND
+          {totalPrice === undefined ? '0.000' : formatVND(totalPrice)} VND
         </Text>
         <ProductQuantityAdjuster
           buttonRadius={35}
@@ -160,7 +169,10 @@ const ProductDetailOrderScreen = ({ navigation, route }) => {
           isFavorite={isFavorite}
           onPressFunction={() => setIsFavorite(!isFavorite)}
         />
-        <Pressable style={styles.addToCart_button} onPress={addToCartPress}>
+        <Pressable
+          style={styles.addToCart_button}
+          onPress={() => addToCartPress(restaurantID, productID, productQuantity)}
+        >
           <HappyBag width={21} height={21} style={{ color: COLOR.background_color }} />
           <Text style={styles.addToCart_text}>Add to Cart</Text>
         </Pressable>

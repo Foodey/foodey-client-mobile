@@ -91,4 +91,6 @@ export const COLOR = {
   orderStatus_completed_text: green_100,
   orderStatus_onGoing_text: blue_120,
   orderStatus_Canceled_text: red_100,
+
+  msgBox_title_text: pink_120,
 };

@@ -6,15 +6,10 @@ import { AppContext } from './AppContext';
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const { BASE_URL, userInfo, setUserInfo, accessToken, setAccessToken, setIsLoading } =
-    useContext(AppContext);
+  // const { BASE_URL, userInfo, setUserInfo, accessToken, setAccessToken, setIsLoading } =
+  //   useContext(AppContext);
 
   //USE STATES
-  const [systemOTPCode, setSystemOTPCode] = useState('123456');
-  // const generateOTP = () => {
-  //   Doing something for OTP;
-  //   setSystemOTPCode(something);
-  // }
 
   //  Login:
   const [loginInputs, setLoginInputs] = useState({
@@ -106,47 +101,9 @@ export const AuthProvider = ({ children }) => {
     setSignUpErrorMessages({ fullName: '', phoneNumber: '', password: '', confirmPassword: '' });
   };
 
-  const sendingOTPCode = async () => {
-    try {
-      const response = await axios.post(`${BASE_URL}/v1/auth/sms/otp/${signUpInputs.phoneNumber}`);
-
-      if (response.status >= 200 && response.status < 300) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (error) {
-      console.log('API call failed: ', error);
-      return false;
-    }
-  };
-
-  const verifyOTPCode = async () => {
-    console.log(OTPCode);
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/v1/auth/sms/otp/verification/${signUpInputs.phoneNumber}/${OTPCode}`,
-      );
-
-      if (response.status >= 200 && response.status < 300) {
-        console.log('Success status: ' + response.status);
-        return true;
-      } else {
-        console.log('Error status: ' + response.status);
-        return false;
-      }
-    } catch {
-      console.log('API call failed: ', error);
-      return false;
-    }
-  };
-
   return (
     <AuthContext.Provider
       value={{
-        systemOTPCode,
-        setSystemOTPCode,
-
         //Login
         loginInputs,
         setLoginInputs,
@@ -172,8 +129,8 @@ export const AuthProvider = ({ children }) => {
         setOTPCode,
         otpErrorMessage,
         setOTPErrorMessage,
-        sendingOTPCode,
-        verifyOTPCode,
+        // sendingOTPCode,
+        // verifyOTPCode,
 
         //ForgotPass
         forgotPassInputs,

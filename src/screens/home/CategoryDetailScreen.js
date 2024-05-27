@@ -8,11 +8,13 @@ import { restaurants } from '~/constants/TempData';
 import { HomeContext } from '~/contexts/HomeContext';
 import { products } from '~/constants/TempData';
 import { ProductBar } from '~/components/discover';
+import { getRestaurantByCategoryAPI } from '../../apiServices/HomeService';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
 
 const CategoryDetailScreen = ({ navigation, route }) => {
   const {
     setCategorySearchValue,
-    getRestaurantsByCategory,
+    // getRestaurantsByCategory,
     restaurantsByCategoryList,
     setRestaurantsByCategoryList,
   } = useContext(HomeContext);
@@ -20,7 +22,19 @@ const CategoryDetailScreen = ({ navigation, route }) => {
   const { categoryID, category } = route.params;
 
   useLayoutEffect(() => {
-    getRestaurantsByCategory(categoryID);
+    const getResByCategory = async (categoryID) => {
+      try {
+        const response = await getRestaurantByCategoryAPI(categoryID);
+        if (response.status === HTTPStatus.OK) {
+          setRestaurantsByCategoryList(response.data.content);
+        } else {
+          console.log('Unexpected error when fetching restaurants by category');
+        }
+      } catch (err) {
+        console.log('Unexpected error when fetching restaurants by category' + err);
+      }
+    };
+    getResByCategory(categoryID);
   }, []);
 
   const onBackHandler = () => {
@@ -77,6 +91,7 @@ const CategoryDetailScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLOR.background_color,
+    flex: 1,
   },
 
   filter_button: {

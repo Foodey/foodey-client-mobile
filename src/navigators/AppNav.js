@@ -8,6 +8,9 @@ import IntroStackNavigator from '~/navigators/IntroStackNavigator';
 import AuthStackNavigator from '~/navigators/AuthStackNavigator';
 import MainBottomTabNavigator from '~/navigators/MainBottomTabNavigator';
 
+import MyAsyncStorage from '~/utils/MyAsyncStorage';
+import StorageKey from '~/constants/StorageKey';
+
 import {
   RestaurantMenuScreen,
   ProductDetailOrderScreen,
@@ -27,8 +30,8 @@ function AppNav() {
   //Check if the user has already logged in
   const isLoggedIn = async () => {
     try {
-      let userInfo = await AsyncStorage.getItem('userInfo');
-      let accessToken = await AsyncStorage.getItem('accessToken');
+      let userInfo = await MyAsyncStorage.getItem(StorageKey.USER_INFO);
+      let accessToken = await MyAsyncStorage.getItem(StorageKey.ACCESS_TOKEN);
       userInfo = JSON.parse(userInfo);
 
       if (userInfo) {
@@ -42,30 +45,17 @@ function AppNav() {
     }
   };
 
-  const fetchData = async () => {
-    const appData = await AsyncStorage.getItem('isAppFirstLaunch');
-    if (appData == null) {
-      setIsAppFirstLaunch(true);
-      AsyncStorage.setItem('isAppFirstLaunch', 'false');
-    } else {
-      setIsAppFirstLaunch(false);
-    }
-  };
-
-  useEffect(() => {
-    isLoggedIn();
-    fetchData();
-  }, []);
-
   //Check if the app is first launched
   useEffect(() => {
     async function fetchData() {
-      const appData = await AsyncStorage.getItem('isAppFirstLaunch');
+      const appData = await MyAsyncStorage.getItem(StorageKey.IS_FIRST_LAUNCH);
       if (appData == null) {
         setIsAppFirstLaunch(true);
-        AsyncStorage.setItem('isAppFirstLaunch', 'false');
+        MyAsyncStorage.setItem(StorageKey.IS_FIRST_LAUNCH, 'false');
+        setAccessToken('1');
       } else {
         setIsAppFirstLaunch(false);
+        isLoggedIn();
       }
     }
     fetchData();
