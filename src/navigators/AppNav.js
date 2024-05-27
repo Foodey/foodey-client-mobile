@@ -11,7 +11,7 @@ import MainBottomTabNavigator from '~/navigators/MainBottomTabNavigator';
 import {
   MyVouchersScreen,
   VoucherDetailsScreen,
-  AddEditAddressScreen,
+  EditAddressScreen,
   AddressScreen,
 } from '~/screens/profile';
 
@@ -108,15 +108,15 @@ function AppNav() {
   //   )
   // );
 
-  // return (
-  //   <NavigationContainer>
-  //     <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
-  //       <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
-  //     </MainStack.Navigator>
-  //   </NavigationContainer>
-  // );
+  return (
+    <NavigationContainer>
+      <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
+        <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
+      </MainStack.Navigator>
+    </NavigationContainer>
+  );
 
-  return <AddressScreen />;
+  // return <VoucherDetailsScreen />;
 }
 
 export default AppNav;

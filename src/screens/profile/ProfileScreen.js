@@ -14,6 +14,14 @@ const ProfileScreen = ({ navigation }) => {
     navigation.navigate('MyVouchers_Screen');
   };
 
+  const onAddressPress = () => {
+    navigation.navigate('Address_Screen');
+  };
+
+  const onPolicyPress = () => {
+    navigation.navigate('Policy_Screen');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
@@ -59,7 +67,7 @@ const ProfileScreen = ({ navigation }) => {
             style={{ color: COLOR.text_secondary_color, marginLeft: 'auto', marginEnd: 5 }}
           />
         </Pressable> */}
-        <Pressable style={styles.section_container}>
+        <Pressable style={styles.section_container} onPress={onAddressPress}>
           <FillLocation
             width={26}
             height={26}
@@ -81,7 +89,7 @@ const ProfileScreen = ({ navigation }) => {
             App Settings
           </Text>
         </Pressable>
-        <Pressable style={styles.section_container}>
+        <Pressable style={styles.section_container} onPress={onPolicyPress}>
           <Note
             width={26}
             height={26}

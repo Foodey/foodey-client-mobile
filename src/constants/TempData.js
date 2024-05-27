@@ -702,3 +702,53 @@ export const myVouchers = [
     expiredDate: '2024-05-30T23:59:59.999Z',
   },
 ];
+
+export const deliveryInformation = [
+  {
+    id: 1,
+    type: 'Home',
+    name: 'Le Doan Tan Tri',
+    phoneNumber: '0949336597',
+    address: '123 ABC Street, Ward 2, District 7, Ho Chi Minh City, Vietnam',
+  },
+
+  {
+    id: 2,
+    type: 'Apartment',
+    name: 'Nguyen Phu Thinh',
+    phoneNumber: '0865474654',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
+  },
+
+  {
+    id: 3,
+    type: 'Home',
+    name: 'Le Doan Tan Tri',
+    phoneNumber: '0949336597',
+    address: '123 ABC Street, Ward 2, District 7, Ho Chi Minh City, Vietnam',
+  },
+
+  {
+    id: 4,
+    type: 'Home',
+    name: 'Le Doan Tan Tri',
+    phoneNumber: '0949336597',
+    address: '123 ABC Street, Ward 2, District 7, Ho Chi Minh City, Vietnam',
+  },
+
+  {
+    id: 5,
+    type: 'Home',
+    name: 'Le Doan Tan Tri',
+    phoneNumber: '0949336597',
+    address: '123 ABC Street, Ward 2, District 7, Ho Chi Minh City, Vietnam',
+  },
+
+  {
+    id: 6,
+    type: 'Home',
+    name: 'Le Doan Tan Tri',
+    phoneNumber: '0949336597',
+    address: '123 ABC Street, Ward 2, District 7, Ho Chi Minh City, Vietnam',
+  },
+];

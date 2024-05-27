@@ -1,6 +1,13 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { ProfileScreen, MyVouchersScreen, VoucherDetailsScreen } from '~/screens/profile';
+import {
+  ProfileScreen,
+  MyVouchersScreen,
+  VoucherDetailsScreen,
+  AddressScreen,
+  AddEditAddressScreen,
+  PolicyScreen,
+} from '~/screens/profile';
 
 const ProfileStack = createStackNavigator();
 
@@ -16,9 +23,12 @@ export default function ProfileStackNavigator() {
       <ProfileStack.Screen
         name="MyVouchers_Screen"
         component={MyVouchersScreen}
-        setOptions={{ tabBarVisible: false }}
+        // setOptions={{ tabBarVisible: false }}
       />
       <ProfileStack.Screen name="VoucherDetails_Screen" component={VoucherDetailsScreen} />
+      <ProfileStack.Screen name="Address_Screen" component={AddressScreen} />
+      <ProfileStack.Screen name="AddEditAddress_Screen" component={AddEditAddressScreen} />
+      <ProfileStack.Screen name="Policy_Screen" component={PolicyScreen} />
     </ProfileStack.Navigator>
   );
 }

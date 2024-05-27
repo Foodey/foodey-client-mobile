@@ -5,6 +5,7 @@ import React, { useContext } from 'react';
 
 const VoucherDetailsScreen = ({ navigation, route }) => {
   const { id, name, maximum, percentages, minimumToApply, startDate, expiredDate } = route.params;
+  console.log(id, name, maximum, percentages, minimumToApply, startDate, expiredDate);
 
   const onBackPressFunction = () => {
     navigation.goBack();
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
   },
 
   header_container: {
-    height: '20%',
+    height: '18%',
     marginHorizontal: 21,
   },
 

@@ -58,13 +58,13 @@ const MyVouchersScreen = ({ navigation }) => {
             isIconVisible={true}
             onPressFunction={() => {
               navigation.navigate('VoucherDetails_Screen', {
-                id: item.id,
-                name: item.name,
-                maximum: convertToVND(item.maximum),
-                percentages: item.percentages,
-                minimumToApply: convertToVND(item.minimumToApply),
-                startDate: item.startDate,
-                expiredDate: item.expiredDate,
+                id: item?.id,
+                name: item?.name,
+                maximum: convertToVND(item?.maximum),
+                percentages: item?.percentages,
+                minimumToApply: convertToVND(item?.minimumToApply),
+                startDate: item?.startDate,
+                expiredDate: item?.expiredDate,
               });
             }}
           />
@@ -81,12 +81,11 @@ const styles = StyleSheet.create({
   },
 
   header_container: {
-    height: '20%',
+    height: '18%',
     marginHorizontal: 21,
   },
 
   content_container: {
-    height: '80%',
     // backgroundColor: '#0f0',
     paddingHorizontal: 21,
   },

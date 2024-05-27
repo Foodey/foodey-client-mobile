@@ -4,9 +4,9 @@ import { COLOR } from '../constants/Colors';
 import { FillLocation } from '../resources/icons';
 import ArrowRight from '~/resources/icons/arrow-right.svg';
 
-function AddressCard({ title, name, phoneNumber, address }) {
+function AddressCard({ style, title, name, phoneNumber, address, onPressFunction }) {
   return (
-    <Pressable style={styles.deliveryAddress_container}>
+    <Pressable style={[styles.deliveryAddress_container, style]} onPress={onPressFunction}>
       <View style={{ flex: 1 }}>
         <FillLocation width={25} height={25} />
       </View>
