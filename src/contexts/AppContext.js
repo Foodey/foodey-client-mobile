@@ -6,11 +6,13 @@ import MyAsyncStorage from '~/utils/MyAsyncStorage';
 import StorageKey from '~/constants/StorageKey';
 import { getPendingOrderAPI, getDeliveredOrderAPI } from '../apiServices/OrdersService';
 import HTTPStatus from '../constants/HTTPStatusCodes';
+import { ProfileEndpoint } from '../constants/API_Endpoints';
 
 export const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
-  BASE_URL = 'http://10.0.2.2:8080/api';
+  // BASE_URL = 'http://10.0.2.2:8080/api';
+  BASE_URL = 'https://d100-116-110-43-242.ngrok-free.app/api';
 
   const [userInfo, setUserInfo] = useState({});
   const [accessToken, setAccessToken] = useState('');
@@ -23,8 +25,10 @@ export const AppProvider = ({ children }) => {
   const logout = async () => {
     // setIsLoading(true);
     try {
-      axios.post(`${BASE_URL}/v1/auth/logout`, null, {
-        headers: { Authorization: 'Bearer ' + userInfo.refreshToken },
+      const refreshToken = await MyAsyncStorage.getItem(StorageKey.REFRESH_TOKEN);
+
+      axios.post(`${BASE_URL}${ProfileEndpoint.LOG_OUT}`, null, {
+        headers: { Authorization: 'Bearer ' + refreshToken },
       });
 
       MyAsyncStorage.removeItem(StorageKey.USER_INFO);
@@ -36,6 +40,8 @@ export const AppProvider = ({ children }) => {
     } catch (err) {
       console.log('Error when logging out: ' + err);
     }
+    // const response = await fetch('https://d100-116-110-43-242.ngrok-free.app/api');
+    // console.log(await response.json());
 
     // setIsLoading(false);
   };

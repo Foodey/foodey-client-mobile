@@ -1,18 +1,33 @@
 import { View, Text, Pressable, SafeAreaView, StyleSheet, StatusBar, Image } from 'react-native';
 import { SubmitButton } from '~/components';
 import { COLOR } from '~/constants/Colors';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AppContext } from '~/contexts/AppContext';
 import { Discount, Wallet, FillLocation, Note, Setting } from '~/resources/icons';
 import ArrowRight from '~/resources/icons/arrow-right.svg';
 import { LocationDisplay } from '../../components/home';
+import { ConfirmActionModal } from '../../components/messageBoxes';
 
 const ProfileScreen = () => {
   const { logout, userInfo } = useContext(AppContext);
+  const [isConfirmLogoutVisible, setConfirmLogoutVisible] = useState(false);
+
+  const onLogoutOKPress = () => {
+    logout();
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
+      <ConfirmActionModal
+        visible={isConfirmLogoutVisible}
+        title="Log out"
+        content="Do you want to log out Foodey?"
+        onEditPhoneNumCancelPress={() => {
+          setConfirmLogoutVisible(false);
+        }}
+        onEditPhoneNumOKPress={onLogoutOKPress}
+      />
       <Text style={styles.header_text}>Profile</Text>
       <View style={{ flex: 1.25, justifyContent: 'center' }}>
         <View style={styles.header_container}>
@@ -110,7 +125,7 @@ const ProfileScreen = () => {
           buttonColor={COLOR.button_orange_color}
           title="Log-out"
           style={{ flex: 1, marginVertical: 20 }}
-          onPressFunction={logout}
+          onPressFunction={() => setConfirmLogoutVisible(true)}
         />
       </View>
     </SafeAreaView>

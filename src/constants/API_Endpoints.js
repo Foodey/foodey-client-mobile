@@ -18,3 +18,7 @@ export const HomeEndpoint = {
 export const OrdersEndpoint = {
   GET_USER_ORDER: '/v1/orders/me',
 };
+
+export const ProfileEndpoint = {
+  LOG_OUT: '/v1/auth/logout',
+};
