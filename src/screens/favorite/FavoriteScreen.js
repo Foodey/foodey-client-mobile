@@ -4,11 +4,8 @@ import { COLOR } from '~/constants/Colors';
 import { FavoriteMealBar, FavoriteRestaurantBar } from '~/components/favorite';
 import { restaurants, products } from '~/constants/TempData';
 import { AppContext } from '../../contexts/AppContext';
-import { useNavigationRef } from '../../contexts/BottomTabNavigatorContext';
 
 const FavoriteScreen = ({ navigation }) => {
-  const navigationRef = useNavigationRef();
-
   const { favoriteRestaurants, favoriteMeals } = useContext(AppContext);
   // console.log(favoriteMeals);
 
