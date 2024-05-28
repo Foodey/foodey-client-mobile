@@ -9,7 +9,7 @@ import AuthStackNavigator from '~/navigators/AuthStackNavigator';
 import MainBottomTabNavigator from '~/navigators/MainBottomTabNavigator';
 
 import MyAsyncStorage from '~/utils/MyAsyncStorage';
-import StorageKey from '~/constants/StorageKey';
+import StorageKey from '../constants/StorageKey';
 
 import {
   MyVouchersScreen,
@@ -26,19 +26,32 @@ import { ConfirmOrderScreen } from '../screens/discover';
 const MainStack = createStackNavigator();
 
 function AppNav() {
-  const { accessToken, setAccessToken, setUserInfo, isAppFirstLaunch, setIsAppFirstLaunch } =
-    useContext(AppContext);
+  const {
+    accessToken,
+    setAccessToken,
+    setUserInfo,
+    isAppFirstLaunch,
+    setIsAppFirstLaunch,
+    setFavoriteRestaurants,
+    setFavoriteMeals,
+  } = useContext(AppContext);
 
-  //Check if the user has already logged in
+  //Check if the user has already logged in and initial data
   const isLoggedIn = async () => {
     try {
       let userInfo = await MyAsyncStorage.getItem(StorageKey.USER_INFO);
       let accessToken = await MyAsyncStorage.getItem(StorageKey.ACCESS_TOKEN);
+      let favoriteRestaurants = await MyAsyncStorage.getItem(StorageKey.FAVORITE_RESTAURANTS);
+      let favoriteMeals = await MyAsyncStorage.getItem(StorageKey.FAVORITE_MEALS);
       userInfo = JSON.parse(userInfo);
+      favoriteRestaurants = JSON.parse(favoriteRestaurants);
+      favoriteMeals = JSON.parse(favoriteMeals);
 
       if (userInfo) {
         setAccessToken(accessToken);
         setUserInfo(userInfo);
+        setFavoriteRestaurants(favoriteRestaurants);
+        setFavoriteMeals(favoriteMeals);
       } else {
         setAccessToken('1');
       }
@@ -87,23 +100,15 @@ function AppNav() {
     }
   };
 
-  // return (
-  //   isAppFirstLaunch !== null && (
-  //     <NavigationContainer>
-  //       <MainStack.Navigator screenOptions={{ headerShown: false }}>
-  //         {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
-  //         {handleRender()}
-  //       </MainStack.Navigator>
-  //     </NavigationContainer>
-  //   )
-  // );
-
   return (
-    <NavigationContainer>
-      <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
-        <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
-      </MainStack.Navigator>
-    </NavigationContainer>
+    isAppFirstLaunch !== null && (
+      <NavigationContainer>
+        <MainStack.Navigator screenOptions={{ headerShown: false }}>
+          {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
+          {handleRender()}
+        </MainStack.Navigator>
+      </NavigationContainer>
+    )
   );
 
   // return <VoucherDetailsScreen />;

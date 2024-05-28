@@ -15,8 +15,9 @@ export const HomeEndpoint = {
   PLACE_ORDER: 'v1/orders',
 };
 
-export const OrdersEndpoint = {
+export const UserEndpoint = {
   GET_USER_ORDER: '/v1/orders/me',
+  GENERAL_USER_FAVORITE: '/v1/users/favorite',
 };
 
 export const ProfileEndpoint = {
