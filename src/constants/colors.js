@@ -54,6 +54,7 @@ export const COLOR = {
   text_press_color: dark_60,
   text_light_color: light_100,
   text_blue_color: blue_120,
+  text_pink_color: pink_120,
 
   indicator_color: light_60,
   indicator_current_color: peach_100,

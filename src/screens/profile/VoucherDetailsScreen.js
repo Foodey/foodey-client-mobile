@@ -2,10 +2,10 @@ import { View, Text, Pressable, SafeAreaView, StyleSheet, StatusBar } from 'reac
 import { BackButton, VoucherCard, SubmitButton } from '~/components';
 import { COLOR } from '~/constants/Colors';
 import React, { useContext } from 'react';
+import { ProfileScreenHeader } from '../../components/profile';
 
 const VoucherDetailsScreen = ({ navigation, route }) => {
   const { id, name, maximum, percentages, minimumToApply, startDate, expiredDate } = route.params;
-  console.log(id, name, maximum, percentages, minimumToApply, startDate, expiredDate);
 
   const onBackPressFunction = () => {
     navigation.goBack();
@@ -34,10 +34,7 @@ const VoucherDetailsScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <View style={styles.header_container}>
-        <BackButton style={styles.back_button} onPressFunction={onBackPressFunction} />
-        <Text style={styles.header_text}>Active Vouchers</Text>
-      </View>
+      <ProfileScreenHeader title="Voucher Detail" onBackPressFunction={onBackPressFunction} />
       <View style={{ marginHorizontal: 21 }}>
         <VoucherCard
           name={name}
@@ -93,11 +90,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.background_color,
   },
 
-  header_container: {
-    height: '18%',
-    marginHorizontal: 21,
-  },
-
   content_container: {
     flex: 1,
     marginHorizontal: 21,
@@ -110,19 +102,6 @@ const styles = StyleSheet.create({
   footer_container: {
     flex: 0.75,
     paddingBottom: 20,
-  },
-
-  header_text: {
-    fontFamily: 'Manrope-Medium',
-    fontSize: 36,
-    color: COLOR.text_primary_color,
-    flex: 2.5,
-    marginTop: 20,
-  },
-
-  back_button: {
-    flex: 1,
-    alignItems: 'center',
   },
 
   title_text: {

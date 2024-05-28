@@ -3,6 +3,7 @@ import React from 'react';
 import { COLOR } from '../../constants/Colors';
 import { AddressCard, BackButton, SubmitButton } from '../../components';
 import { deliveryInformation } from '../../constants/TempData';
+import { ProfileScreenHeader } from '../../components/profile';
 
 const AddressScreen = ({ navigation }) => {
   const onBackPressFunction = () => {
@@ -22,10 +23,7 @@ const AddressScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <View style={styles.header_container}>
-        <BackButton style={styles.back_button} onPressFunction={onBackPressFunction} />
-        <Text style={styles.header_text}>Delivery Address</Text>
-      </View>
+      <ProfileScreenHeader title="Delivery Address" onBackPressFunction={onBackPressFunction} />
       <FlatList
         showsVerticalScrollIndicator={false}
         data={deliveryInformation}
@@ -64,25 +62,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLOR.background_color,
-  },
-
-  header_container: {
-    height: '18%',
-    marginHorizontal: 21,
-    // backgroundColor: "#ff0"
-  },
-
-  header_text: {
-    fontFamily: 'Manrope-Medium',
-    fontSize: 36,
-    color: COLOR.text_primary_color,
-    flex: 2.5,
-    marginTop: 20,
-  },
-
-  back_button: {
-    flex: 1,
-    alignItems: 'center',
   },
 });
 

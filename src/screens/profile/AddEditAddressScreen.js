@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
 import React, { useState } from 'react';
 import { COLOR } from '../../constants/Colors';
 import { BackButton, SubmitButton } from '../../components';
-import { ProfileTextInput } from '../../components/profile';
+import { ProfileTextInput, ProfileScreenHeader } from '../../components/profile';
 
 const AddEditAddressScreen = ({ navigation, route }) => {
   const { id, name, phoneNumber, type, address, isNewAddress } = route.params;
@@ -36,12 +36,10 @@ const AddEditAddressScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <View style={styles.header_container}>
-        <BackButton style={styles.back_button} onPressFunction={onBackPressFunction} />
-        <Text style={styles.header_text}>
-          {isNewAddress === true ? 'New Address' : 'Edit Address'}
-        </Text>
-      </View>
+      <ProfileScreenHeader
+        title={isNewAddress ? 'New Address' : 'Edit Address'}
+        onBackPressFunction={onBackPressFunction}
+      />
       <View style={styles.content_container}>
         <ProfileTextInput
           style={{ marginHorizontal: 21, marginTop: 21 }}
@@ -103,25 +101,6 @@ const styles = StyleSheet.create({
 
   content_container: {
     flex: 1,
-  },
-
-  header_container: {
-    height: '18%',
-    marginHorizontal: 21,
-    // backgroundColor: "#ff0"
-  },
-
-  header_text: {
-    fontFamily: 'Manrope-Medium',
-    fontSize: 36,
-    color: COLOR.text_primary_color,
-    flex: 2.5,
-    marginTop: 20,
-  },
-
-  back_button: {
-    flex: 1,
-    alignItems: 'center',
   },
 });
 

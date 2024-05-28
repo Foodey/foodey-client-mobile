@@ -7,6 +7,10 @@ import {
   AddressScreen,
   AddEditAddressScreen,
   PolicyScreen,
+  SettingScreen,
+  ContactInfoScreen,
+  PassChangeScreen,
+  AccountDeletionScreen,
 } from '~/screens/profile';
 
 const ProfileStack = createStackNavigator();
@@ -29,6 +33,10 @@ export default function ProfileStackNavigator() {
       <ProfileStack.Screen name="Address_Screen" component={AddressScreen} />
       <ProfileStack.Screen name="AddEditAddress_Screen" component={AddEditAddressScreen} />
       <ProfileStack.Screen name="Policy_Screen" component={PolicyScreen} />
+      <ProfileStack.Screen name="Setting_Screen" component={SettingScreen} />
+      <ProfileStack.Screen name="ContactInfo_Screen" component={ContactInfoScreen} />
+      <ProfileStack.Screen name="PassChange_Screen" component={PassChangeScreen} />
+      <ProfileStack.Screen name="AccountDeletion_Screen" component={AccountDeletionScreen} />
     </ProfileStack.Navigator>
   );
 }

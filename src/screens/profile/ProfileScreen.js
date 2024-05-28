@@ -22,6 +22,10 @@ const ProfileScreen = ({ navigation }) => {
     navigation.navigate('Policy_Screen');
   };
 
+  const onSettingPress = () => {
+    navigation.navigate('Setting_Screen');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
@@ -81,7 +85,7 @@ const ProfileScreen = ({ navigation }) => {
           />
         </Pressable>
       </View>
-      <View style={{ flex: 2 }}>
+      <View style={{ flex: 2.5 }}>
         <Pressable style={styles.section_container}>
           <Text
             style={[styles.section_text, { fontSize: 23, color: COLOR.button_secondary_color }]}
@@ -102,7 +106,7 @@ const ProfileScreen = ({ navigation }) => {
             style={{ color: COLOR.text_secondary_color, marginLeft: 'auto', marginEnd: 5 }}
           />
         </Pressable>
-        <Pressable style={styles.section_container}>
+        <Pressable style={styles.section_container} onPress={onSettingPress}>
           <Setting
             width={26}
             height={26}

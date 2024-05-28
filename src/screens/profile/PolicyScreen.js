@@ -2,6 +2,7 @@ import { View, Text, ScrollView, StyleSheet, SafeAreaView, StatusBar } from 'rea
 import { BackButton } from '../../components';
 import { COLOR } from '../../constants/Colors';
 import React from 'react';
+import { ProfileScreenHeader } from '../../components/profile';
 
 // ** THIS SCREEN IS ONLY HARDCODED FOR NOW, NEED TO REFACTOR IT LATER
 const PolicyScreen = ({ navigation }) => {
@@ -12,10 +13,7 @@ const PolicyScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <View style={styles.header_container}>
-        <BackButton style={styles.back_button} onPressFunction={onBackPressFunction} />
-        <Text style={styles.header_text}>User Policy</Text>
-      </View>
+      <ProfileScreenHeader title="User Policy" onBackPressFunction={onBackPressFunction} />
       <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll_container}>
         <Text style={styles.updateTime_text}>Last Updated: 12/12/2023</Text>
         <Text style={[styles.normal_text, { marginTop: 30 }]}>
@@ -138,23 +136,6 @@ const styles = StyleSheet.create({
 
   scroll_container: {
     paddingHorizontal: 21,
-  },
-
-  header_container: {
-    height: '18%',
-    marginHorizontal: 21,
-  },
-  header_text: {
-    fontFamily: 'Manrope-Medium',
-    fontSize: 36,
-    color: COLOR.text_primary_color,
-    flex: 2.5,
-    marginTop: 20,
-  },
-
-  back_button: {
-    flex: 1,
-    alignItems: 'center',
   },
 
   updateTime_text: {

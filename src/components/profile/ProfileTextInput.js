@@ -1,30 +1,71 @@
 import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
 import { COLOR } from '../../constants/Colors';
+import { ArrowRight } from '../../resources/icons';
 
-function ProfileTextInput({ style, errorMessage, placeholder, value, onChangeText, editable }) {
+function ProfileTextInput({
+  style,
+  errorMessage,
+  placeholder,
+  value,
+  editable,
+  onPressFunction,
+  onChangeText,
+}) {
   return (
-    <View style={[styles.container, style]}>
-      <View
-        style={[
-          styles.input_container,
-          {
-            borderColor: errorMessage ? COLOR.text_errorMessage_color : COLOR.text_primary_color,
-          },
-        ]}
-      >
-        <TextInput
-          placeholder={placeholder}
-          selectedStart={0}
-          value={value}
-          style={styles.text_input}
-          placeholderTextColor={COLOR.text_press_color}
-          onChangeText={onChangeText}
-          editable={editable}
-        />
-        <View style={{ flex: 0.75 }}></View>
-      </View>
-      <Text style={styles.errorMessage_text}>{errorMessage}</Text>
-    </View>
+    <>
+      {editable ? (
+        <View style={[styles.container, style]}>
+          <View
+            style={[
+              styles.input_container,
+              {
+                borderColor: errorMessage
+                  ? COLOR.text_errorMessage_color
+                  : COLOR.text_primary_color,
+              },
+            ]}
+          >
+            <TextInput
+              placeholder={placeholder}
+              selectedStart={0}
+              value={value}
+              style={styles.text_input}
+              placeholderTextColor={COLOR.text_press_color}
+              onChangeText={onChangeText}
+              editable={editable}
+            />
+            <View style={{ flex: 0.75 }}></View>
+          </View>
+          <Text style={styles.errorMessage_text}>{errorMessage}</Text>
+        </View>
+      ) : (
+        <Pressable style={[styles.container, style]} onPress={onPressFunction}>
+          <View
+            style={[
+              styles.input_container,
+              {
+                borderColor: COLOR.text_primary_color,
+              },
+            ]}
+          >
+            <TextInput
+              placeholder={placeholder}
+              selectedStart={0}
+              value={value}
+              style={styles.text_input}
+              placeholderTextColor={COLOR.text_press_color}
+              onChangeText={onChangeText}
+              editable={editable}
+            />
+            <View
+              style={{ flex: 0.75, justifyContent: 'center', alignItems: 'center', marginEnd: 10 }}
+            >
+              <ArrowRight style={{ color: COLOR.text_secondary_color }} />
+            </View>
+          </View>
+        </Pressable>
+      )}
+    </>
   );
 }
 
