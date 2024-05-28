@@ -12,14 +12,16 @@ import MyAsyncStorage from '~/utils/MyAsyncStorage';
 import StorageKey from '~/constants/StorageKey';
 
 import {
-  RestaurantMenuScreen,
-  ProductDetailOrderScreen,
-  CartScreen,
-  ConfirmOrderScreen,
-} from '~/screens/discover';
+  MyVouchersScreen,
+  VoucherDetailsScreen,
+  EditAddressScreen,
+  AddressScreen,
+} from '~/screens/profile';
+
 import SplashScreen from '~/screens/onBoarding/SplashScreen';
 
 import { AppProvider, AppContext } from '~/contexts/AppContext';
+import { ConfirmOrderScreen } from '../screens/discover';
 
 const MainStack = createStackNavigator();
 
@@ -85,26 +87,26 @@ function AppNav() {
     }
   };
 
-  return (
-    isAppFirstLaunch !== null && (
-      <NavigationContainer>
-        <MainStack.Navigator screenOptions={{ headerShown: false }}>
-          {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
-          {handleRender()}
-        </MainStack.Navigator>
-      </NavigationContainer>
-    )
-  );
-
   // return (
-  //   <NavigationContainer>
-  //     <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
-  //       <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
-  //     </MainStack.Navigator>
-  //   </NavigationContainer>
+  //   isAppFirstLaunch !== null && (
+  //     <NavigationContainer>
+  //       <MainStack.Navigator screenOptions={{ headerShown: false }}>
+  //         {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
+  //         {handleRender()}
+  //       </MainStack.Navigator>
+  //     </NavigationContainer>
+  //   )
   // );
 
-  // return <ConfirmOrderScreen />;
+  return (
+    <NavigationContainer>
+      <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
+        <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
+      </MainStack.Navigator>
+    </NavigationContainer>
+  );
+
+  // return <VoucherDetailsScreen />;
 }
 
 export default AppNav;

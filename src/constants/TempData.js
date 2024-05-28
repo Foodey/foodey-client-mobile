@@ -568,3 +568,187 @@ export const pendingOrders = [
     totalPrice: '5780012đ',
   },
 ];
+
+export const myVouchers = [
+  {
+    id: 1,
+    name: 'Voucher 1',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-30T17:01:00.000Z',
+  },
+
+  {
+    id: 2,
+    name: 'Voucher 2',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-30T23:59:59.999Z',
+  },
+
+  {
+    id: 3,
+    name: 'Voucher 3',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-30T23:59:59.999Z',
+  },
+
+  {
+    id: 4,
+    name: 'Voucher 4',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-30T23:59:59.999Z',
+  },
+
+  {
+    id: 5,
+    name: 'Voucher 5',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-30T23:59:59.999Z',
+  },
+
+  {
+    id: 6,
+    name: 'Voucher 6',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-30T23:59:59.999Z',
+  },
+
+  {
+    id: 7,
+    name: 'Voucher 7',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-30T23:59:59.999Z',
+  },
+
+  {
+    id: 8,
+    name: 'Voucher 8',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200000',
+    minimumToApply: '150000',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-30T23:59:59.999Z',
+  },
+
+  {
+    id: 9,
+    name: 'Voucher 9',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200000',
+    minimumToApply: '2500',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-30T23:59:59.999Z',
+  },
+
+  {
+    id: 10,
+    name: 'Voucher 10',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '',
+    maximum: '200000',
+    minimumToApply: '1500200',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-30T23:59:59.999Z',
+  },
+
+  {
+    id: 11,
+    name: 'Voucher 11',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '',
+    maximum: '200000',
+    minimumToApply: '13500',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-30T23:59:59.999Z',
+  },
+
+  {
+    id: 12,
+    name: 'Voucher 12',
+    imageURL: '../resources/images/Foodey-LOGO.png',
+    percentages: '12',
+    maximum: '200000',
+    minimumToApply: '150400',
+    startDate: '2024-05-22T00:00:00.000Z',
+    expiredDate: '2024-05-30T23:59:59.999Z',
+  },
+];
+
+export const deliveryInformation = [
+  {
+    id: 1,
+    type: 'Home',
+    name: 'Le Doan Tan Tri',
+    phoneNumber: '0949336597',
+    address: '123 ABC Street, Ward 2, District 7, Ho Chi Minh City, Vietnam',
+  },
+
+  {
+    id: 2,
+    type: 'Apartment',
+    name: 'Nguyen Phu Thinh',
+    phoneNumber: '0865474654',
+    address: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
+  },
+
+  {
+    id: 3,
+    type: 'Home',
+    name: 'Le Doan Tan Tri',
+    phoneNumber: '0949336597',
+    address: '123 ABC Street, Ward 2, District 7, Ho Chi Minh City, Vietnam',
+  },
+
+  {
+    id: 4,
+    type: 'Home',
+    name: 'Le Doan Tan Tri',
+    phoneNumber: '0949336597',
+    address: '123 ABC Street, Ward 2, District 7, Ho Chi Minh City, Vietnam',
+  },
+
+  {
+    id: 5,
+    type: 'Home',
+    name: 'Le Doan Tan Tri',
+    phoneNumber: '0949336597',
+    address: '123 ABC Street, Ward 2, District 7, Ho Chi Minh City, Vietnam',
+  },
+
+  {
+    id: 6,
+    type: 'Home',
+    name: 'Le Doan Tan Tri',
+    phoneNumber: '0949336597',
+    address: '123 ABC Street, Ward 2, District 7, Ho Chi Minh City, Vietnam',
+  },
+];

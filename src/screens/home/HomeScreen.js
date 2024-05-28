@@ -352,7 +352,6 @@ const styles = StyleSheet.create({
 
   offerNearby_container: {
     width: '100%',
-
     borderTopWidth: 1,
     borderTopColor: COLOR.indicator_color,
     marginTop: 15,

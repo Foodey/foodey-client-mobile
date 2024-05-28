@@ -32,3 +32,6 @@ export { default as Discount } from './discount.svg';
 export { default as Note } from './note.svg';
 export { default as Wallet } from './wallet.svg';
 export { default as Setting } from './setting.svg';
+
+export { default as Tick } from './tick.svg';
+export { default as ArrowRight } from './arrow-right.svg';

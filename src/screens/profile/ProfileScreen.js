@@ -8,12 +8,28 @@ import ArrowRight from '~/resources/icons/arrow-right.svg';
 import { LocationDisplay } from '../../components/home';
 import { ConfirmActionModal } from '../../components/messageBoxes';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
   const { logout, userInfo } = useContext(AppContext);
   const [isConfirmLogoutVisible, setConfirmLogoutVisible] = useState(false);
 
   const onLogoutOKPress = () => {
     logout();
+  };
+
+  const onMyVouchersPress = () => {
+    navigation.navigate('MyVouchers_Screen');
+  };
+
+  const onAddressPress = () => {
+    navigation.navigate('Address_Screen');
+  };
+
+  const onPolicyPress = () => {
+    navigation.navigate('Policy_Screen');
+  };
+
+  const onSettingPress = () => {
+    navigation.navigate('Setting_Screen');
   };
 
   return (
@@ -44,7 +60,7 @@ const ProfileScreen = () => {
             Personal Information
           </Text>
         </Pressable>
-        <Pressable style={styles.section_container}>
+        <Pressable style={styles.section_container} onPress={onMyVouchersPress}>
           <Discount
             width={26}
             height={26}
@@ -57,7 +73,7 @@ const ProfileScreen = () => {
             style={{ color: COLOR.text_secondary_color, marginLeft: 'auto', marginEnd: 5 }}
           />
         </Pressable>
-        <Pressable style={styles.section_container}>
+        {/* <Pressable style={styles.section_container}>
           <Wallet
             width={26}
             height={26}
@@ -69,8 +85,8 @@ const ProfileScreen = () => {
             height={24}
             style={{ color: COLOR.text_secondary_color, marginLeft: 'auto', marginEnd: 5 }}
           />
-        </Pressable>
-        <Pressable style={styles.section_container}>
+        </Pressable> */}
+        <Pressable style={styles.section_container} onPress={onAddressPress}>
           <FillLocation
             width={26}
             height={26}
@@ -84,7 +100,7 @@ const ProfileScreen = () => {
           />
         </Pressable>
       </View>
-      <View style={{ flex: 2 }}>
+      <View style={{ flex: 2.5 }}>
         <Pressable style={styles.section_container}>
           <Text
             style={[styles.section_text, { fontSize: 23, color: COLOR.button_secondary_color }]}
@@ -92,7 +108,7 @@ const ProfileScreen = () => {
             App Settings
           </Text>
         </Pressable>
-        <Pressable style={styles.section_container}>
+        <Pressable style={styles.section_container} onPress={onPolicyPress}>
           <Note
             width={26}
             height={26}
@@ -105,7 +121,7 @@ const ProfileScreen = () => {
             style={{ color: COLOR.text_secondary_color, marginLeft: 'auto', marginEnd: 5 }}
           />
         </Pressable>
-        <Pressable style={styles.section_container}>
+        <Pressable style={styles.section_container} onPress={onSettingPress}>
           <Setting
             width={26}
             height={26}

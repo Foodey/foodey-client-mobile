@@ -21,6 +21,7 @@ import { ProfileScreen } from '~/screens/profile';
 
 import HomeStackNavigator from './HomeStackNavigator';
 import OrderStackNavigator from './OrderStackNavigator';
+import ProfileStackNavigator from './ProfileStackNavigator';
 
 import { CustomTabLabel } from '~/components';
 
@@ -89,7 +90,7 @@ const MainBottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={ProfileStackNavigator}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (
