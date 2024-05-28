@@ -42,6 +42,7 @@ const AddEditAddressScreen = ({ navigation, route }) => {
       />
       <View style={styles.content_container}>
         <ProfileTextInput
+          editable={true}
           style={{ marginHorizontal: 21, marginTop: 21 }}
           value={inputs.fullName}
           placeholder="Full Name"
@@ -52,6 +53,7 @@ const AddEditAddressScreen = ({ navigation, route }) => {
           }}
         />
         <ProfileTextInput
+          editable={true}
           style={{ marginHorizontal: 21, marginTop: 3 }}
           value={inputs.phoneNumber}
           placeholder="Phone Number"
@@ -63,6 +65,7 @@ const AddEditAddressScreen = ({ navigation, route }) => {
         />
 
         <ProfileTextInput
+          editable={true}
           style={{ marginHorizontal: 21, marginTop: 31 }} //The address should be uneditable and when user click on it it will navigate to the screen for user to choose address based on map
           value={inputs.address}
           placeholder="Select Address"
@@ -73,6 +76,7 @@ const AddEditAddressScreen = ({ navigation, route }) => {
           }}
         />
         <ProfileTextInput
+          editable={true}
           style={{ marginHorizontal: 21, marginTop: 3 }}
           value={inputs.addressType}
           placeholder="Type of Address"

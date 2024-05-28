@@ -8,6 +8,7 @@ function ProfileTextInput({
   placeholder,
   value,
   editable,
+  isPassword,
   onPressFunction,
   onChangeText,
 }) {
@@ -27,7 +28,8 @@ function ProfileTextInput({
           >
             <TextInput
               placeholder={placeholder}
-              selectedStart={0}
+              // selectedStart={0}
+              secureTextEntry={isPassword}
               value={value}
               style={styles.text_input}
               placeholderTextColor={COLOR.text_press_color}

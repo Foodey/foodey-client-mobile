@@ -66,6 +66,8 @@ export const COLOR = {
   button_press_secondary_color: pink_80,
   button_orange_color: yellow_100,
   button_press_orange_color: yellow_80,
+  button_red_color: red_100,
+  button_press_red_color: red_80,
 
   switcher_background_color: pink_60_trans,
 
