@@ -88,6 +88,7 @@ export const COLOR = {
 
   isFavorite_background_color: pink_60,
   isFavorite_icon_color: pink_100,
+  isNotFavorite_icon_color: dark_60,
 
   resInfo_background_color: dark_60_trans30,
 

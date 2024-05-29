@@ -1,14 +1,22 @@
 import { View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import { Star, Heart } from '~/resources/icons';
+import { formatVND } from '../../utils/ValueConverter';
 
-function FavoriteMealBar({ style, name, image, restaurantLogo, restaurantName, onPressFunction }) {
+function FavoriteMealBar({
+  style,
+  name,
+  image,
+  price,
+  restaurantLogo,
+  restaurantName,
+  onPressFunction,
+}) {
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
       <View style={styles.content_container}>
         <Image
-          //   source={{ uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
-          source={image}
+          source={{ uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
           style={styles.image}
         />
         <View style={styles.res_info_container}>
@@ -16,13 +24,8 @@ function FavoriteMealBar({ style, name, image, restaurantLogo, restaurantName, o
             {name}
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Image
-              //   source={{ uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
-              source={restaurantLogo}
-              style={styles.logo}
-            />
             <Text ellipsizeMode="tail" numberOfLines={1} style={styles.resName_text}>
-              {restaurantName}
+              {price === undefined ? '0.000' : formatVND(price)} VND
             </Text>
           </View>
         </View>

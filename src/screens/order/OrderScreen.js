@@ -6,23 +6,14 @@ import { restaurants, products, pendingOrders, doneOrders } from '~/constants/Te
 import { OrderCard } from '~/components/order';
 import { AppContext } from '~/contexts/AppContext';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
-import { getDeliveredOrderAPI } from '../../apiServices/OrdersService';
+import { getDeliveredOrderAPI } from '../../apiServices/UserService';
 
 const OrderScreen = ({ navigation }) => {
-  const { pendingOrderList, getPendingOrder, deliveredOrderList, getDeliveredOrder } =
-    useContext(AppContext);
+  const { pendingOrderList, deliveredOrderList } = useContext(AppContext);
 
   const onOrderCartPress = () => {
     navigation.navigate('ConfirmOrder_Screen', { isViewOnly: true });
   };
-
-  useLayoutEffect(() => {
-    getPendingOrder();
-  }, []);
-
-  useLayoutEffect(() => {
-    getDeliveredOrder();
-  }, []);
 
   const [isOnGoingSelected, setIsOnGoingSelected] = useState(true);
 

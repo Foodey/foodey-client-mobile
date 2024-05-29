@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React from 'react';
+import React, { useRef } from 'react';
 import { COLOR } from '~/constants/Colors';
+
 import {
   Home,
   HomeFocused,

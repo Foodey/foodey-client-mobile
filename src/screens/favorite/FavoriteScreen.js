@@ -3,8 +3,12 @@ import { View, Text, SafeAreaView, StatusBar, StyleSheet, Pressable, FlatList } 
 import { COLOR } from '~/constants/Colors';
 import { FavoriteMealBar, FavoriteRestaurantBar } from '~/components/favorite';
 import { restaurants, products } from '~/constants/TempData';
+import { AppContext } from '../../contexts/AppContext';
 
 const FavoriteScreen = ({ navigation }) => {
+  const { favoriteRestaurants, favoriteMeals } = useContext(AppContext);
+  // console.log(favoriteMeals);
+
   const [isRestaurantSelected, setIsRestaurantSelected] = useState(true);
 
   const onRestaurantSelected = () => {
@@ -13,6 +17,21 @@ const FavoriteScreen = ({ navigation }) => {
 
   const onMealSelected = () => {
     if (isRestaurantSelected) setIsRestaurantSelected(false);
+  };
+
+  onFavoriteResPress = (item) => {
+    const isUserFavorite = favoriteRestaurants.some((restaurant) => restaurant.id === item.id);
+    navigation.navigate('Home', {
+      screen: 'RestaurantMenu_Screen',
+      params: {
+        restaurantID: item.id, //try replace the restaurantsByCategoryList with passing the item as the param of the callback function
+        restaurantName: item.name,
+        restaurantLogo: item.logo,
+        restaurantWallpaper: item.wallpaper,
+        restaurantAddress: item.address,
+        isUserFavorite: isUserFavorite,
+      },
+    });
   };
 
   return (
@@ -42,7 +61,7 @@ const FavoriteScreen = ({ navigation }) => {
                 },
               ]}
             >
-              Restaurants
+              Recent
             </Text>
           </Pressable>
           <Pressable
@@ -66,7 +85,7 @@ const FavoriteScreen = ({ navigation }) => {
                 },
               ]}
             >
-              Meals
+              Close to Me
             </Text>
           </Pressable>
         </View>
@@ -74,29 +93,32 @@ const FavoriteScreen = ({ navigation }) => {
       {isRestaurantSelected ? (
         <FlatList
           contentContainerStyle={{ paddingBottom: 110 }}
-          data={restaurants}
+          data={favoriteRestaurants}
           renderItem={({ item }) => (
             <FavoriteRestaurantBar
               name={item.name}
-              // image={{ uri: item.image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
               logo={item.logo}
-              distance={1.5}
-              estimateTime={15}
+              address={item.address}
+              // distance={1.5}
+              // estimateTime={15}
               rating={item.rating}
+              onPressFunction={() => onFavoriteResPress(item)}
             />
           )}
         />
       ) : (
         <FlatList
           contentContainerStyle={{ paddingBottom: 110 }}
-          data={products}
+          data={favoriteRestaurants}
           renderItem={({ item }) => (
-            <FavoriteMealBar
+            <FavoriteRestaurantBar
               name={item.name}
-              // image={{ uri: item.image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
-              image={item.image}
-              restaurantLogo={item.restaurantLogo}
-              restaurantName={item.restaurantName}
+              logo={item.logo}
+              address={item.address}
+              // distance={1.5}
+              // estimateTime={15}
+              rating={item.rating}
+              onPressFunction={() => onFavoriteResPress(item)}
             />
           )}
         />
@@ -108,6 +130,7 @@ const FavoriteScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLOR.background_color,
+    flex: 1,
   },
 
   header_text: {
