@@ -87,23 +87,16 @@ function AppNav() {
     }
   };
 
-  // return (
-  //   isAppFirstLaunch !== null && (
-  //     <NavigationContainer>
-  //       <MainStack.Navigator screenOptions={{ headerShown: false }}>
-  //         {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
-  //         {handleRender()}
-  //       </MainStack.Navigator>
-  //     </NavigationContainer>
-  //   )
-  // );
-
+  //Official App Navigator
   return (
-    <NavigationContainer>
-      <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
-        <MainStack.Screen name="Main" component={MainBottomTabNavigator} />
-      </MainStack.Navigator>
-    </NavigationContainer>
+    isAppFirstLaunch !== null && (
+      <NavigationContainer>
+        <MainStack.Navigator screenOptions={{ headerShown: false }}>
+          {isAppFirstLaunch && <MainStack.Screen name="Intro" component={IntroStackNavigator} />}
+          {handleRender()}
+        </MainStack.Navigator>
+      </NavigationContainer>
+    )
   );
 
   // return <VoucherDetailsScreen />;
