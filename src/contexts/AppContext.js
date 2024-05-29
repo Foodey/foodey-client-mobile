@@ -7,8 +7,10 @@ import StorageKey from '../constants/StorageKey';
 import {
   getPendingOrderAPI,
   getDeliveredOrderAPI,
-  getFavoriteMealsAPI,
+  // getFavoriteMealsAPI,
   getFavoriteRestaurantsAPI,
+  addFavoriteRestaurantsAPI,
+  removeFavoriteRestaurantsAPI,
 } from '../apiServices/UserService';
 import HTTPStatus from '../constants/HTTPStatusCodes';
 import { ProfileEndpoint } from '../constants/API_Endpoints';
@@ -42,12 +44,12 @@ export const AppProvider = ({ children }) => {
       await MyAsyncStorage.removeItem(StorageKey.ACCESS_TOKEN);
       await MyAsyncStorage.removeItem(StorageKey.REFRESH_TOKEN);
       await MyAsyncStorage.removeItem(StorageKey.FAVORITE_RESTAURANTS);
-      await MyAsyncStorage.removeItem(StorageKey.FAVORITE_MEALS);
+      // await MyAsyncStorage.removeItem(StorageKey.FAVORITE_MEALS);
 
       setUserInfo({});
       setAccessToken('1');
       setFavoriteRestaurants({});
-      setFavoriteMeals({});
+      // setFavoriteMeals({});
     } catch (err) {
       console.log('Error when logging out: ' + err);
     }
@@ -101,21 +103,51 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const getFavoriteMeals = async () => {
+  const addFavoriteRestaurants = async (restaurantID) => {
     try {
-      const response = await getFavoriteMealsAPI();
-      if (response.status === HTTPStatus.OK) {
-        const tempData = response.data.content;
+      const response = await addFavoriteRestaurantsAPI(restaurantID);
 
-        MyAsyncStorage.setItem(StorageKey.FAVORITE_MEALS, JSON.stringify(tempData));
-        setFavoriteMeals(tempData);
+      if (response.status === HTTPStatus.NO_CONTENT) {
+        console.log('Success adding favorite restaurant');
+        await getFavoriteRestaurants();
       } else {
-        console.log('Unexpected error when fetching user favorite meals');
+        console.log('Unexpected error when adding favorites restaurant');
       }
     } catch (err) {
-      console.log('Unexpected error when fetching user favorite meals ' + err);
+      console.log('Unexpected error when adding favorites restaurant ' + err);
     }
   };
+
+  const removeFavoriteRestaurants = async (restaurantID) => {
+    try {
+      const response = await removeFavoriteRestaurantsAPI(restaurantID);
+
+      if (response.status === HTTPStatus.NO_CONTENT) {
+        console.log('Success removing favorite restaurant');
+        await getFavoriteRestaurants();
+      } else {
+        console.log('Unexpected error when removing favorites restaurant');
+      }
+    } catch (err) {
+      console.log('Unexpected error when removing favorites restaurant ' + err);
+    }
+  };
+
+  // const getFavoriteMeals = async () => {
+  //   try {
+  //     const response = await getFavoriteMealsAPI();
+  //     if (response.status === HTTPStatus.OK) {
+  //       const tempData = response.data.content;
+
+  //       MyAsyncStorage.setItem(StorageKey.FAVORITE_MEALS, JSON.stringify(tempData));
+  //       setFavoriteMeals(tempData);
+  //     } else {
+  //       console.log('Unexpected error when fetching user favorite meals');
+  //     }
+  //   } catch (err) {
+  //     console.log('Unexpected error when fetching user favorite meals ' + err);
+  //   }
+  // };
 
   return (
     <AppContext.Provider
@@ -149,7 +181,9 @@ export const AppProvider = ({ children }) => {
         getPendingOrder,
         getDeliveredOrder,
         getFavoriteRestaurants,
-        getFavoriteMeals,
+        // getFavoriteMeals,
+        addFavoriteRestaurants,
+        removeFavoriteRestaurants,
       }}
     >
       {children}

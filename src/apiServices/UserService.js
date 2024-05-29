@@ -44,19 +44,6 @@ export const addFavoriteRestaurantsAPI = async (restaurantID) => {
     const response = await request.private.post(
       `${UserEndpoint.GENERAL_USER_FAVORITE}/shops/${restaurantID}`,
     );
-
-    return response;
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const addFavoriteMealsAPI = async (mealID) => {
-  try {
-    const response = await request.private.post(
-      `${UserEndpoint.GENERAL_USER_FAVORITE}/meals/${mealID}`,
-    );
-
     return response;
   } catch (err) {
     console.log(err);
@@ -66,7 +53,7 @@ export const addFavoriteMealsAPI = async (mealID) => {
 export const removeFavoriteRestaurantsAPI = async (restaurantID) => {
   try {
     const response = await request.private.delete(
-      `${UserEndpoint.GENERAL_USER_FAVORITE}/meals/${restaurantID}`,
+      `${UserEndpoint.GENERAL_USER_FAVORITE}/shops/${restaurantID}`,
     );
 
     return response;
@@ -75,14 +62,26 @@ export const removeFavoriteRestaurantsAPI = async (restaurantID) => {
   }
 };
 
-export const removeFavoriteMealsAPI = async (mealID) => {
-  try {
-    const response = await request.private.delete(
-      `${UserEndpoint.GENERAL_USER_FAVORITE}/meals/${mealID}`,
-    );
+// export const addFavoriteMealsAPI = async (mealID) => {
+//   try {
+//     const response = await request.private.post(
+//       `${UserEndpoint.GENERAL_USER_FAVORITE}/meals/${mealID}`,
+//     );
 
-    return response;
-  } catch (err) {
-    console.log(err);
-  }
-};
+//     return response;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+// export const removeFavoriteMealsAPI = async (mealID) => {
+//   try {
+//     const response = await request.private.delete(
+//       `${UserEndpoint.GENERAL_USER_FAVORITE}/meals/${mealID}`,
+//     );
+
+//     return response;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };

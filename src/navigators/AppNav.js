@@ -32,26 +32,36 @@ function AppNav() {
     setUserInfo,
     isAppFirstLaunch,
     setIsAppFirstLaunch,
-    setFavoriteRestaurants,
-    setFavoriteMeals,
+    // setFavoriteRestaurants,
+    // setFavoriteMeals,
+    getPendingOrder,
+    getDeliveredOrder,
+    getFavoriteRestaurants,
   } = useContext(AppContext);
 
-  //Check if the user has already logged in and initial data
+  const fetchUserData = async () => {
+    await getPendingOrder();
+    await getDeliveredOrder();
+    await getFavoriteRestaurants();
+  };
+
+  //Check if the user has already logged in and getting data stored locally
   const isLoggedIn = async () => {
     try {
       let userInfo = await MyAsyncStorage.getItem(StorageKey.USER_INFO);
       let accessToken = await MyAsyncStorage.getItem(StorageKey.ACCESS_TOKEN);
-      let favoriteRestaurants = await MyAsyncStorage.getItem(StorageKey.FAVORITE_RESTAURANTS);
-      let favoriteMeals = await MyAsyncStorage.getItem(StorageKey.FAVORITE_MEALS);
+      // let favoriteRestaurants = await MyAsyncStorage.getItem(StorageKey.FAVORITE_RESTAURANTS);
+      // let favoriteMeals = await MyAsyncStorage.getItem(StorageKey.FAVORITE_MEALS);
       userInfo = JSON.parse(userInfo);
-      favoriteRestaurants = JSON.parse(favoriteRestaurants);
-      favoriteMeals = JSON.parse(favoriteMeals);
+      // favoriteRestaurants = JSON.parse(favoriteRestaurants);
+      // favoriteMeals = JSON.parse(favoriteMeals);
 
-      if (userInfo) {
+      if (userInfo && accessToken) {
         setAccessToken(accessToken);
         setUserInfo(userInfo);
-        setFavoriteRestaurants(favoriteRestaurants);
-        setFavoriteMeals(favoriteMeals);
+        // setFavoriteRestaurants(favoriteRestaurants);
+        // setFavoriteMeals(favoriteMeals);
+        await fetchUserData();
       } else {
         setAccessToken('1');
       }
@@ -70,7 +80,7 @@ function AppNav() {
         setAccessToken('1');
       } else {
         setIsAppFirstLaunch(false);
-        isLoggedIn();
+        await isLoggedIn();
       }
     }
     fetchData();

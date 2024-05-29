@@ -9,20 +9,11 @@ import HTTPStatus from '../../constants/HTTPStatusCodes';
 import { getDeliveredOrderAPI } from '../../apiServices/UserService';
 
 const OrderScreen = ({ navigation }) => {
-  const { pendingOrderList, getPendingOrder, deliveredOrderList, getDeliveredOrder } =
-    useContext(AppContext);
+  const { pendingOrderList, deliveredOrderList } = useContext(AppContext);
 
   const onOrderCartPress = () => {
     navigation.navigate('ConfirmOrder_Screen', { isViewOnly: true });
   };
-
-  useLayoutEffect(() => {
-    getPendingOrder();
-  }, []);
-
-  useLayoutEffect(() => {
-    getDeliveredOrder();
-  }, []);
 
   const [isOnGoingSelected, setIsOnGoingSelected] = useState(true);
 

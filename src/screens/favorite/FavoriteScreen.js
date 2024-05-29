@@ -19,6 +19,21 @@ const FavoriteScreen = ({ navigation }) => {
     if (isRestaurantSelected) setIsRestaurantSelected(false);
   };
 
+  onFavoriteResPress = (item) => {
+    const isUserFavorite = favoriteRestaurants.some((restaurant) => restaurant.id === item.id);
+    navigation.navigate('Home', {
+      screen: 'RestaurantMenu_Screen',
+      params: {
+        restaurantID: item.id, //try replace the restaurantsByCategoryList with passing the item as the param of the callback function
+        restaurantName: item.name,
+        restaurantLogo: item.logo,
+        restaurantWallpaper: item.wallpaper,
+        restaurantAddress: item.address,
+        isUserFavorite: isUserFavorite,
+      },
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
@@ -87,18 +102,7 @@ const FavoriteScreen = ({ navigation }) => {
               // distance={1.5}
               // estimateTime={15}
               rating={item.rating}
-              onPressFunction={() => {
-                navigation.navigate('Home', {
-                  screen: 'RestaurantMenu_Screen',
-                  params: {
-                    restaurantID: item.id, //try replace the restaurantsByCategoryList with passing the item as the param of the callback function
-                    restaurantName: item.name,
-                    restaurantLogo: item.logo,
-                    restaurantWallpaper: item.wallpaper,
-                    restaurantAddress: item.address,
-                  },
-                });
-              }}
+              onPressFunction={() => onFavoriteResPress(item)}
             />
           )}
         />
@@ -114,18 +118,7 @@ const FavoriteScreen = ({ navigation }) => {
               // distance={1.5}
               // estimateTime={15}
               rating={item.rating}
-              onPressFunction={() => {
-                navigation.navigate('Home', {
-                  screen: 'RestaurantMenu_Screen',
-                  params: {
-                    restaurantID: item.id, //try replace the restaurantsByCategoryList with passing the item as the param of the callback function
-                    restaurantName: item.name,
-                    restaurantLogo: item.logo,
-                    restaurantWallpaper: item.wallpaper,
-                    restaurantAddress: item.address,
-                  },
-                });
-              }}
+              onPressFunction={() => onFavoriteResPress(item)}
             />
           )}
         />
