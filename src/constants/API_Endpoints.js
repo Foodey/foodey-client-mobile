@@ -12,11 +12,12 @@ export const HomeEndpoint = {
   GET_CATEGORIES: '/v1/product-categories',
   GET_RES_BY_CATEGORY_ID: 'v1/shops/categories',
   GENERAL_SHOP_CART_ENDPOINT: '/v1/shopcarts',
-  PLACE_ORDER: 'v1/orders',
+  PLACE_ORDER: '/v1/orders',
 };
 
-export const OrdersEndpoint = {
+export const UserEndpoint = {
   GET_USER_ORDER: '/v1/orders/me',
+  GENERAL_USER_FAVORITE: '/v1/users/favorite',
 };
 
 export const ProfileEndpoint = {

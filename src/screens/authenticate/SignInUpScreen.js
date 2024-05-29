@@ -18,7 +18,7 @@ import { AppContext } from '../../contexts/AppContext';
 import axios, { HttpStatusCode } from 'axios';
 
 import MyAsyncStorage from '~/utils/MyAsyncStorage';
-import StorageKey from '~/constants/StorageKey';
+import StorageKey from '../../constants/StorageKey';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
 import { loginAPI, signUpAPI } from '~/apiServices/AuthService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -45,6 +45,8 @@ export default function SignInUpScreen({ navigation }) {
     setIsAppFirstLaunch,
     setUserInfo,
     setAccessToken,
+    getFavoriteRestaurants,
+    getFavoriteMeals,
   } = useContext(AppContext);
 
   //USE STATES
@@ -150,12 +152,13 @@ export default function SignInUpScreen({ navigation }) {
       if (response.status === HTTPStatus.OK) {
         const tempUserInfo = response?.data;
 
-        setUserInfo(tempUserInfo);
-        setAccessToken(tempUserInfo.jwt.accessToken);
-
         MyAsyncStorage.setItem(StorageKey.USER_INFO, JSON.stringify(tempUserInfo));
         MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, tempUserInfo.jwt.accessToken);
         MyAsyncStorage.setItem(StorageKey.REFRESH_TOKEN, tempUserInfo.jwt.refreshToken);
+        await getFavoriteRestaurants();
+        await getFavoriteMeals();
+        setUserInfo(tempUserInfo);
+        setAccessToken(tempUserInfo.jwt.accessToken);
 
         handleLoginErrors('', 'phoneNumber');
         handleLoginErrors('', 'password');

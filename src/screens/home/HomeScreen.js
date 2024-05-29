@@ -21,7 +21,6 @@ import { AppContext } from '~/contexts/AppContext';
 import { restaurants, offers } from '~/constants/TempData';
 import MyAsyncStorage from '~/utils/MyAsyncStorage';
 import StorageKey from '../../constants/StorageKey';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getCategoriesAPI } from '../../apiServices/HomeService';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
 

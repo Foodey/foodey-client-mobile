@@ -25,13 +25,22 @@ import {
 } from '../../apiServices/HomeService';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
 import { formatVND } from '../../utils/ValueConverter';
+import { AppContext } from '../../contexts/AppContext';
 
 const RestaurantMenuScreen = ({ navigation, route }) => {
-  const { restaurantID, restaurantName, restaurantLogo, restaurantWallpaper, restaurantAddress } =
-    route.params;
+  const {
+    restaurantID,
+    restaurantName,
+    restaurantLogo,
+    restaurantWallpaper,
+    restaurantAddress,
+    isUserFavorite,
+  } = route.params;
 
   const { restaurantMenuList, setRestaurantMenuList, cartInfo, setCartInfo } =
     useContext(HomeContext);
+
+  const { addFavoriteRestaurants, removeFavoriteRestaurants } = useContext(AppContext);
 
   useLayoutEffect(() => {
     const getCartInfo = async (restaurantID) => {
@@ -92,8 +101,18 @@ const RestaurantMenuScreen = ({ navigation, route }) => {
     });
   };
 
+  const onFavoritePress = async () => {
+    if (isFavorite) {
+      setIsFavorite(!isFavorite);
+      await removeFavoriteRestaurants(restaurantID);
+    } else {
+      setIsFavorite(!isFavorite);
+      await addFavoriteRestaurants(restaurantID);
+    }
+  };
+
   //Use states
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(isUserFavorite);
 
   const [cartVisible, setCartVisible] = useState(false);
 
@@ -177,7 +196,7 @@ const RestaurantMenuScreen = ({ navigation, route }) => {
           <FavoriteButton
             style={{ marginLeft: 'auto' }}
             isFavorite={isFavorite}
-            onPressFunction={() => setIsFavorite(!isFavorite)}
+            onPressFunction={() => onFavoritePress()}
           />
         </View>
         {/* <Animated.View

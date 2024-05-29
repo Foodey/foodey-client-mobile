@@ -13,6 +13,7 @@ const ProfileScreen = ({ navigation }) => {
   const [isConfirmLogoutVisible, setConfirmLogoutVisible] = useState(false);
 
   const onLogoutOKPress = () => {
+    setConfirmLogoutVisible(false);
     logout();
   };
 

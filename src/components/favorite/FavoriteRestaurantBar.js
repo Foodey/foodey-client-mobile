@@ -6,6 +6,7 @@ function FavoriteRestaurantBar({
   style,
   logo,
   name,
+  address,
   distance,
   estimateTime,
   rating,
@@ -15,8 +16,8 @@ function FavoriteRestaurantBar({
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
       <View style={styles.content_container}>
         <Image
-          //   source={{ uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
-          source={logo}
+          source={{ uri: logo || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
+          // source={logo}
           style={styles.logo}
         />
         <View style={styles.res_info_container}>
@@ -25,8 +26,9 @@ function FavoriteRestaurantBar({
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Star width={17} height={17} style={{ color: COLOR.star_background_color }} />
-            <Text style={styles.distance_text}>
-              {rating} {'  '} | {distance} km | {'  '} {estimateTime} mins
+            <Text style={styles.distance_text} numberOfLines={1} ellipsizeMode="tail">
+              {/* {rating} {'  '} | {distance} km | {'  '} {estimateTime} mins */}
+              {rating} {'  '} | {'  '} {address}
             </Text>
           </View>
         </View>
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
   distance_text: {
     fontFamily: 'Manrope-Medium',
     fontSize: 14,
-    marginStart: 5,
+    marginHorizontal: 5,
   },
 
   favorite_button: {
