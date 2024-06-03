@@ -5,14 +5,28 @@ import { FavoriteMealBar, FavoriteRestaurantBar } from '~/components/favorite';
 import { restaurants, products, pendingOrders, doneOrders } from '~/constants/TempData';
 import { OrderCard } from '~/components/order';
 import { AppContext } from '~/contexts/AppContext';
-import HTTPStatus from '../../constants/HTTPStatusCodes';
-import { getDeliveredOrderAPI } from '../../apiServices/UserService';
 
 const OrderScreen = ({ navigation }) => {
-  const { pendingOrderList, deliveredOrderList } = useContext(AppContext);
+  const { pendingOrderList, deliveredOrderList, favoriteRestaurants } = useContext(AppContext);
 
-  const onOrderCartPress = () => {
-    navigation.navigate('ConfirmOrder_Screen', { isViewOnly: true });
+  const onOrderCardPress = (item) => {
+    navigation.navigate('ViewOnlyConfirmOrder_Screen', { orderInfos: item });
+  };
+
+  const onViewResPress = (item) => {
+    const isUserFavorite = favoriteRestaurants.some((restaurant) => restaurant.id === item.id);
+    navigation.navigate('Home', {
+      screen: 'RestaurantMenu_Screen',
+      params: {
+        brandID: item.brandId,
+        restaurantID: item.id,
+        restaurantName: item.name,
+        restaurantLogo: item.logo,
+        restaurantWallpaper: item.wallpaper,
+        restaurantAddress: item.address,
+        isUserFavorite: isUserFavorite,
+      },
+    });
   };
 
   const [isOnGoingSelected, setIsOnGoingSelected] = useState(true);
@@ -109,14 +123,17 @@ const OrderScreen = ({ navigation }) => {
             data={deliveredOrderList}
             renderItem={({ item }) => (
               <OrderCard
-                // onPressFunction={onOrderCartPress}
-                completedOrder={true}
                 id={item?.id}
                 createdAt={item?.createdAt}
+                completedOrder={true}
                 // date={item.date}
                 resName={item?.shop?.name}
                 items={item?.items}
                 totalPrice={item?.payment?.price}
+                onPressFunction={() => onOrderCardPress(item)}
+                onViewResPress={() => {
+                  onViewResPress(item?.shop);
+                }}
               />
             )}
           />
