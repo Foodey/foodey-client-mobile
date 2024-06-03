@@ -10,6 +10,7 @@ import { products } from '~/constants/TempData';
 import { ProductBar } from '~/components/discover';
 import { getRestaurantByCategoryAPI } from '../../apiServices/HomeService';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
+import { AppContext } from '../../contexts/AppContext';
 
 const CategoryDetailScreen = ({ navigation, route }) => {
   const {
@@ -18,6 +19,8 @@ const CategoryDetailScreen = ({ navigation, route }) => {
     restaurantsByCategoryList,
     setRestaurantsByCategoryList,
   } = useContext(HomeContext);
+
+  const { favoriteRestaurants } = useContext(AppContext);
 
   const { categoryID, category } = route.params;
 
@@ -43,6 +46,19 @@ const CategoryDetailScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
+  const onResPressFunction = (item) => {
+    const isUserFavorite = favoriteRestaurants.some((restaurant) => restaurant.id === item.id);
+    navigation.navigate('RestaurantMenu_Screen', {
+      brandID: item.brandId,
+      restaurantID: item.id, //try replace the restaurantsByCategoryList with passing the item as the param of the callback function
+      restaurantName: item.name,
+      restaurantLogo: item.logo,
+      restaurantWallpaper: item.wallpaper,
+      restaurantAddress: item.address,
+      isUserFavorite: isUserFavorite,
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
@@ -64,19 +80,10 @@ const CategoryDetailScreen = ({ navigation, route }) => {
           paddingBottom: 125,
         }}
         data={restaurantsByCategoryList}
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <RestaurantBar
             // style={{ margin: 25 }}
-            onPressFunction={() => {
-              navigation.navigate('RestaurantMenu_Screen', {
-                brandID: restaurantsByCategoryList[index].brandId,
-                restaurantID: restaurantsByCategoryList[index].id, //try replace the restaurantsByCategoryList with passing the item as the param of the callback function
-                restaurantName: restaurantsByCategoryList[index].name,
-                restaurantLogo: restaurantsByCategoryList[index].logo,
-                restaurantWallpaper: restaurantsByCategoryList[index].wallpaper,
-                restaurantAddress: restaurantsByCategoryList[index].address,
-              });
-            }}
+            onPressFunction={() => onResPressFunction(item)}
             image={item.logo}
             name={item.name}
             distance={1.2} // this distance should be calculated depends on the current location of user

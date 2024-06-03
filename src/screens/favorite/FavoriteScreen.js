@@ -25,7 +25,7 @@ const FavoriteScreen = ({ navigation }) => {
       screen: 'RestaurantMenu_Screen',
       params: {
         brandID: item.brandId,
-        restaurantID: item.id, //try replace the restaurantsByCategoryList with passing the item as the param of the callback function
+        restaurantID: item.id,
         restaurantName: item.name,
         restaurantLogo: item.logo,
         restaurantWallpaper: item.wallpaper,
