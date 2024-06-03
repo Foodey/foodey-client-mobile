@@ -108,7 +108,7 @@ export const AppProvider = ({ children }) => {
       const response = await addFavoriteRestaurantsAPI(restaurantID);
 
       if (response.status === HTTPStatus.NO_CONTENT) {
-        console.log('Success adding favorite restaurant');
+        // console.log('Success adding favorite restaurant');
         await getFavoriteRestaurants();
       } else {
         console.log('Unexpected error when adding favorites restaurant');
@@ -123,7 +123,7 @@ export const AppProvider = ({ children }) => {
       const response = await removeFavoriteRestaurantsAPI(restaurantID);
 
       if (response.status === HTTPStatus.NO_CONTENT) {
-        console.log('Success removing favorite restaurant');
+        // console.log('Success removing favorite restaurant');
         await getFavoriteRestaurants();
       } else {
         console.log('Unexpected error when removing favorites restaurant');

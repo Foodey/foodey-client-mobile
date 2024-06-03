@@ -69,6 +69,7 @@ const CategoryDetailScreen = ({ navigation, route }) => {
             // style={{ margin: 25 }}
             onPressFunction={() => {
               navigation.navigate('RestaurantMenu_Screen', {
+                brandID: restaurantsByCategoryList[index].brandId,
                 restaurantID: restaurantsByCategoryList[index].id, //try replace the restaurantsByCategoryList with passing the item as the param of the callback function
                 restaurantName: restaurantsByCategoryList[index].name,
                 restaurantLogo: restaurantsByCategoryList[index].logo,

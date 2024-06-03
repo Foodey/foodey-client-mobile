@@ -24,6 +24,7 @@ const FavoriteScreen = ({ navigation }) => {
     navigation.navigate('Home', {
       screen: 'RestaurantMenu_Screen',
       params: {
+        brandID: item.brandId,
         restaurantID: item.id, //try replace the restaurantsByCategoryList with passing the item as the param of the callback function
         restaurantName: item.name,
         restaurantLogo: item.logo,
@@ -96,12 +97,12 @@ const FavoriteScreen = ({ navigation }) => {
           data={favoriteRestaurants}
           renderItem={({ item }) => (
             <FavoriteRestaurantBar
-              name={item.name}
-              logo={item.logo}
-              address={item.address}
+              name={item?.name}
+              logo={item?.logo}
+              address={item?.address}
               // distance={1.5}
               // estimateTime={15}
-              rating={item.rating}
+              rating={item?.rating}
               onPressFunction={() => onFavoriteResPress(item)}
             />
           )}
@@ -112,12 +113,12 @@ const FavoriteScreen = ({ navigation }) => {
           data={favoriteRestaurants}
           renderItem={({ item }) => (
             <FavoriteRestaurantBar
-              name={item.name}
-              logo={item.logo}
-              address={item.address}
+              name={item?.name}
+              logo={item?.logo}
+              address={item?.address}
               // distance={1.5}
               // estimateTime={15}
-              rating={item.rating}
+              rating={item?.rating}
               onPressFunction={() => onFavoriteResPress(item)}
             />
           )}

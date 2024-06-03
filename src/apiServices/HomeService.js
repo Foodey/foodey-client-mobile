@@ -24,10 +24,10 @@ export const getRestaurantByCategoryAPI = async (categoryID) => {
   }
 };
 
-export const getMenuByRestaurantAPI = async (restaurantID) => {
+export const getMenuByRestaurantAPI = async (brandID, restaurantID) => {
   try {
     const response = await request.public.get(
-      `${HomeEndpoint.GENERAL_SHOP_ENDPOINT}/${restaurantID}/menus/details`,
+      `${HomeEndpoint.GET_MENU_BY_SHOP_ID}/${brandID}/shops/${restaurantID}/menu/full`,
     );
     return response;
   } catch (err) {

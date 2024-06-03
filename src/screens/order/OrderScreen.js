@@ -91,12 +91,12 @@ const OrderScreen = ({ navigation }) => {
               <OrderCard
                 // onPressFunction={onOrderCartPress}
                 completedOrder={false}
-                id={item.id}
-                createdAt={item.createdAt}
+                id={item?.id}
+                createdAt={item?.createdAt}
                 // date={item.date}
-                resName={item.shop.name}
-                items={item.items}
-                totalPrice={item.payment.price}
+                resName={item?.shop?.name}
+                items={item?.items}
+                totalPrice={item?.payment?.price}
               />
             )}
           />
@@ -111,12 +111,12 @@ const OrderScreen = ({ navigation }) => {
               <OrderCard
                 // onPressFunction={onOrderCartPress}
                 completedOrder={true}
-                id={item.id}
-                createdAt={item.createdAt}
+                id={item?.id}
+                createdAt={item?.createdAt}
                 // date={item.date}
-                resName={item.shop.name}
-                items={item.items}
-                totalPrice={item.payment.price}
+                resName={item?.shop?.name}
+                items={item?.items}
+                totalPrice={item?.payment?.price}
               />
             )}
           />

@@ -11,6 +11,7 @@ export const HomeEndpoint = {
   GENERAL_SHOP_ENDPOINT: '/v1/shops',
   GET_CATEGORIES: '/v1/product-categories',
   GET_RES_BY_CATEGORY_ID: 'v1/shops/categories',
+  GET_MENU_BY_SHOP_ID: 'v1/shop-brands',
   GENERAL_SHOP_CART_ENDPOINT: '/v1/shopcarts',
   PLACE_ORDER: '/v1/orders',
 };

@@ -46,7 +46,7 @@ export default function SignInUpScreen({ navigation }) {
     setUserInfo,
     setAccessToken,
     getFavoriteRestaurants,
-    getFavoriteMeals,
+    // getFavoriteMeals,
   } = useContext(AppContext);
 
   //USE STATES
@@ -156,7 +156,7 @@ export default function SignInUpScreen({ navigation }) {
         MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, tempUserInfo.jwt.accessToken);
         MyAsyncStorage.setItem(StorageKey.REFRESH_TOKEN, tempUserInfo.jwt.refreshToken);
         await getFavoriteRestaurants();
-        await getFavoriteMeals();
+        // await getFavoriteMeals();
         setUserInfo(tempUserInfo);
         setAccessToken(tempUserInfo.jwt.accessToken);
 
