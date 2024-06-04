@@ -93,6 +93,45 @@ export default function SignInUpScreen({ navigation }) {
     if (valid) login(loginInputs.phoneNumber, loginInputs.password);
   };
 
+  const login = async (phoneNumber, password) => {
+    setIsLoading(true);
+    try {
+      const response = await loginAPI({ phoneNumber: phoneNumber, password: password });
+
+      if (response.status === HTTPStatus.OK) {
+        const tempUserInfo = response?.data;
+
+        MyAsyncStorage.setItem(StorageKey.USER_INFO, JSON.stringify(tempUserInfo));
+        MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, tempUserInfo.jwt.accessToken);
+        MyAsyncStorage.setItem(StorageKey.REFRESH_TOKEN, tempUserInfo.jwt.refreshToken);
+        await getFavoriteRestaurants();
+        // await getFavoriteMeals();
+        setUserInfo(tempUserInfo);
+        setAccessToken(tempUserInfo.jwt.accessToken);
+
+        handleLoginErrors('', 'phoneNumber');
+        handleLoginErrors('', 'password');
+
+        if (isAppFirstLaunch) setIsAppFirstLaunch(false);
+        setIsLoading(false);
+      } else if (response.status === HTTPStatus.EXPECTATION_FAILED) {
+        handleLoginErrors('   ', 'phoneNumber');
+        handleLoginErrors('* Wrong phone number or password, please re-check', 'password');
+      } else {
+        handleLoginErrors('   ', 'phoneNumber');
+        handleLoginErrors('* Unexpected server error, please try again', 'password');
+      }
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
+  };
+
+  const onLoginWithPasskey = () => {
+    //Verify Passkey:
+  };
+
   //  SignUp:
   const onNextPressHandler = () => {
     let valid = true;
@@ -144,39 +183,8 @@ export default function SignInUpScreen({ navigation }) {
     // if(valid) navigation.navigate('PhoneVerify_Screen', { isForgotPassVerify: false });
   };
 
-  const login = async (phoneNumber, password) => {
-    setIsLoading(true);
-    try {
-      const response = await loginAPI({ phoneNumber: phoneNumber, password: password });
-
-      if (response.status === HTTPStatus.OK) {
-        const tempUserInfo = response?.data;
-
-        MyAsyncStorage.setItem(StorageKey.USER_INFO, JSON.stringify(tempUserInfo));
-        MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, tempUserInfo.jwt.accessToken);
-        MyAsyncStorage.setItem(StorageKey.REFRESH_TOKEN, tempUserInfo.jwt.refreshToken);
-        await getFavoriteRestaurants();
-        // await getFavoriteMeals();
-        setUserInfo(tempUserInfo);
-        setAccessToken(tempUserInfo.jwt.accessToken);
-
-        handleLoginErrors('', 'phoneNumber');
-        handleLoginErrors('', 'password');
-
-        if (isAppFirstLaunch) setIsAppFirstLaunch(false);
-        setIsLoading(false);
-      } else if (response.status === HTTPStatus.EXPECTATION_FAILED) {
-        handleLoginErrors('   ', 'phoneNumber');
-        handleLoginErrors('* Wrong phone number or password, please re-check', 'password');
-      } else {
-        handleLoginErrors('   ', 'phoneNumber');
-        handleLoginErrors('* Unexpected server error, please try again', 'password');
-      }
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-      setIsLoading(false);
-    }
+  const onSignUpWithPassKey = () => {
+    navigation.navigate('SignUpPasskey_Screen');
   };
 
   const signUp = async (phoneNumber, password, name) => {
@@ -250,19 +258,28 @@ export default function SignInUpScreen({ navigation }) {
         </TouchableWithoutFeedback> */}
         {isLogin ? <Login onForgotPassPress={onForgotPassPress} /> : <SignUp />}
       </View>
-      <View style={styles.third_party_container}>
+      {/* <View style={styles.third_party_container}>
         <TouchableWithoutFeedback onPress={looseFocus}>
           <ThirdPartyAuth title={isLogin ? 'Login' : 'Sign Up'} />
         </TouchableWithoutFeedback>
-      </View>
+      </View> */}
       <View style={styles.footer_container}>
         <SubmitButton
           showIcon={true}
-          style={{ flex: 1, marginHorizontal: 21, marginBottom: 42 }}
+          style={{ margin: 21, height: '20%' }}
           title={isLogin ? 'Login' : 'Next'}
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}
           onPressFunction={isLogin ? onLoginPressHandler : onNextPressHandler}
+          // onPressFunction={test}
+        />
+        <SubmitButton
+          showIcon={false}
+          style={{ marginHorizontal: 21, marginBottom: 21, height: '20%' }}
+          title={isLogin ? 'Or Login With Passkey' : 'Or Sign Up With Passkey'}
+          buttonColor={COLOR.button_primary_color}
+          hoverColor={COLOR.button_press_primary_color}
+          onPressFunction={isLogin ? onLoginWithPasskey : onSignUpWithPassKey}
           // onPressFunction={test}
         />
       </View>
@@ -287,15 +304,15 @@ const styles = StyleSheet.create({
   },
 
   auth_section_container: {
-    flex: 3,
+    flex: 3.25,
     marginHorizontal: 21,
   },
 
-  third_party_container: {
-    flex: 2,
-  },
+  // third_party_container: {
+  //   flex: 2,
+  // },
 
   footer_container: {
-    flex: 1,
+    flex: 2.5,
   },
 });

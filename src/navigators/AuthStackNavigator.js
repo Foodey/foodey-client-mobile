@@ -5,6 +5,7 @@ import {
   PhoneVerifyScreen,
   ForgotPassScreen,
   ResetPassScreen,
+  SignUpPasskeyScreen,
 } from '~/screens/authenticate';
 
 import { AuthProvider } from '~/contexts/AuthContext';
@@ -23,6 +24,7 @@ export default function IntroStackNavigator() {
         <AuthStack.Screen name="PhoneVerify_Screen" component={PhoneVerifyScreen} />
         <AuthStack.Screen name="ForgotPass_Screen" component={ForgotPassScreen} />
         <AuthStack.Screen name="ResetPass_Screen" component={ResetPassScreen} />
+        <AuthStack.Screen name="SignUpPasskey_Screen" component={SignUpPasskeyScreen} />
       </AuthStack.Navigator>
     </AuthProvider>
   );
