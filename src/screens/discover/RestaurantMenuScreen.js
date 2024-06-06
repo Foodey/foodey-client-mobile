@@ -29,6 +29,7 @@ import { AppContext } from '../../contexts/AppContext';
 
 const RestaurantMenuScreen = ({ navigation, route }) => {
   const {
+    brandID,
     restaurantID,
     restaurantName,
     restaurantLogo,
@@ -58,6 +59,22 @@ const RestaurantMenuScreen = ({ navigation, route }) => {
     getCartInfo(restaurantID);
   }, []);
 
+  useLayoutEffect(() => {
+    const getMenuByRes = async (brandID, restaurantID) => {
+      try {
+        const response = await getMenuByRestaurantAPI(brandID, restaurantID);
+        if (response.status === HTTPStatus.OK) {
+          setRestaurantMenuList(response.data);
+        } else {
+          console.log('Unexpected error when fetching menu by restaurant');
+        }
+      } catch (err) {
+        console.log('Unexpected error when fetching menu by restaurant' + err);
+      }
+    };
+    getMenuByRes(brandID, restaurantID);
+  }, []);
+
   const onCartClearAllPress = async (restaurantID) => {
     try {
       const response = await deleteAllCartProductAPI(restaurantID);
@@ -70,22 +87,6 @@ const RestaurantMenuScreen = ({ navigation, route }) => {
       console.log('Unexpected error when clearing the shop cart' + err);
     }
   };
-
-  useLayoutEffect(() => {
-    const getMenuByRes = async (restaurantID) => {
-      try {
-        const response = await getMenuByRestaurantAPI(restaurantID);
-        if (response.status === HTTPStatus.OK) {
-          setRestaurantMenuList(response.data[0]);
-        } else {
-          console.log('Unexpected error when fetching menu by restaurant');
-        }
-      } catch (err) {
-        console.log('Unexpected error when fetching menu by restaurant' + err);
-      }
-    };
-    getMenuByRes(restaurantID);
-  }, []);
 
   //Navigation:
   const onBackPress = () => {

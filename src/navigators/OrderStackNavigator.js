@@ -1,12 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import {
-  RestaurantMenuScreen,
-  ProductDetailOrderScreen,
-  ConfirmOrderScreen,
-} from '~/screens/discover';
-
-import { OrderScreen } from '~/screens/order';
+import { ViewOnlyConfirmOrderScreen, OrderScreen } from '../screens/order';
 
 const OrderStack = createStackNavigator();
 
@@ -19,7 +13,10 @@ export default function OrderStackNavigator() {
       initialRouteName="Order_Screen"
     >
       <OrderStack.Screen name="Order_Screen" component={OrderScreen} />
-      <OrderStack.Screen name="ConfirmOrder_Screen" component={ConfirmOrderScreen} />
+      <OrderStack.Screen
+        name="ViewOnlyConfirmOrder_Screen"
+        component={ViewOnlyConfirmOrderScreen}
+      />
     </OrderStack.Navigator>
   );
 }

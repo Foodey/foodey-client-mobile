@@ -10,6 +10,8 @@ export const HomeProvider = ({ children }) => {
   const [searchValue, setSearchValue] = useState('');
   const [categorySearchValue, setCategorySearchValue] = useState('');
   const [searchResultSelected, setSearchResultSelected] = useState('');
+  const [searchSuggestion, setSearchSuggestion] = useState({});
+  // const [searchResult, setSearchResult] = useState({});
 
   const [categoriesList, setCategoriesList] = useState(categories);
   const [offersList, setOffersList] = useState(offers);
@@ -23,6 +25,10 @@ export const HomeProvider = ({ children }) => {
         //Search
         searchValue,
         setSearchValue,
+        searchSuggestion,
+        setSearchSuggestion,
+        // searchResult,
+        // setSearchResult,
 
         categorySearchValue,
         setCategorySearchValue,

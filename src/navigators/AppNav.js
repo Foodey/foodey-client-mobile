@@ -30,6 +30,7 @@ function AppNav() {
     accessToken,
     setAccessToken,
     setUserInfo,
+    setSearchHistory,
     isAppFirstLaunch,
     setIsAppFirstLaunch,
     // setFavoriteRestaurants,
@@ -43,6 +44,16 @@ function AppNav() {
     await getPendingOrder();
     await getDeliveredOrder();
     await getFavoriteRestaurants();
+    await getLocalSearchHistory();
+  };
+
+  const getLocalSearchHistory = async () => {
+    const tempData = await MyAsyncStorage.getItem(StorageKey.SEARCH_HISTORY);
+    if (tempData) {
+      setSearchHistory(JSON.parse(tempData));
+    } else {
+      setSearchHistory([]);
+    }
   };
 
   //Check if the user has already logged in and getting data stored locally
@@ -110,6 +121,7 @@ function AppNav() {
     }
   };
 
+  //Official App Navigator
   return (
     isAppFirstLaunch !== null && (
       <NavigationContainer>

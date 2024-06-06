@@ -19,8 +19,6 @@ import { SearchScreen } from '~/screens/home';
 import { HomeContext } from '~/contexts/HomeContext';
 import { AppContext } from '~/contexts/AppContext';
 import { restaurants, offers } from '~/constants/TempData';
-import MyAsyncStorage from '~/utils/MyAsyncStorage';
-import StorageKey from '../../constants/StorageKey';
 import { getCategoriesAPI } from '../../apiServices/HomeService';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
 
@@ -44,7 +42,7 @@ const HomeScreen = ({ navigation }) => {
     getCategoriesFunction();
   }, []);
 
-  const { userInfo, setUserInfo } = useContext(AppContext);
+  const { userInfo } = useContext(AppContext);
 
   //Navigation:
   const seeAllCategoriesHandler = () => {

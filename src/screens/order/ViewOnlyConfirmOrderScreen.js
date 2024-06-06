@@ -9,95 +9,72 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-import React, { useState, useContext, useEffect } from 'react';
-import { COLOR } from '../../constants/Colors';
+import React, { useState, useContext } from 'react';
+import { COLOR } from '~/constants/Colors';
+import { BackButton } from '~/components';
 import { FillLocation, Buy, Discount, Note } from '~/resources/icons';
 import ArrowRight from '~/resources/icons/arrow-right.svg';
-// import { orderedProducts } from '~/constants/TempData';
-import { SubmitButton, BackButton, AddressCard } from '../../components';
-import { HomeContext } from '~/contexts/HomeContext';
-import { SuccessNotifyModal } from '../../components/messageBoxes';
+import { SubmitButton, AddressCard } from '../../components';
 import { formatVND } from '../../utils/ValueConverter';
-import { placeOrderAPI, deleteAllCartProductAPI } from '../../apiServices/HomeService';
-import HTTPStatus from '../../constants/HTTPStatusCodes';
 import { AppContext } from '../../contexts/AppContext';
 
-const ConfirmOrderScreen = ({ navigation, route }) => {
+const ViewOnlyConfirmOrderScreen = ({ navigation, route }) => {
   //Navigation:
+
+  const { orderInfos } = route.params;
+  const { favoriteRestaurants } = useContext(AppContext);
 
   const onBackPress = () => {
     navigation.goBack();
   };
 
-  const { getPendingOrder } = useContext(AppContext);
-  const { cartInfo, setCartInfo } = useContext(HomeContext);
-  // const { restaurantName, isViewOnly } = route.params;
-  const { restaurantID, restaurantName } = route.params;
+  const onViewResPress = () => {
+    const isUserFavorite = favoriteRestaurants.some(
+      (restaurant) => restaurant.id === orderInfos?.shop?.id,
+    );
+    navigation.navigate('Home', {
+      screen: 'RestaurantMenu_Screen',
+      params: {
+        brandID: orderInfos?.shop?.brandId,
+        restaurantID: orderInfos?.shop?.id,
+        restaurantName: orderInfos?.shop?.name,
+        restaurantLogo: orderInfos?.shop?.logo,
+        restaurantWallpaper: orderInfos?.shop?.wallpaper,
+        restaurantAddress: orderInfos?.shop?.address,
+        isUserFavorite: isUserFavorite,
+      },
+    });
+  };
+
   //Use states
   const [shippingFee, setShippingFee] = useState(25000);
   const [discountFee, setDiscountFee] = useState(0);
-  const [successPlaceOrder, setSuccessPlaceOrder] = useState(false);
 
   //Functions:
-
-  const onOKPressHandler = async (restaurantID) => {
-    setSuccessPlaceOrder(false);
-    try {
-      const response = await deleteAllCartProductAPI(restaurantID);
-      if (response.status === HTTPStatus.NO_CONTENT) {
-        setCartInfo({});
-        getPendingOrder();
-        navigation.popToTop(); // should navigate to the screen where user can track the order status
-      } else {
-        console.log('Unexpected error when clearing cart after order placing successfully');
-      }
-    } catch (err) {
-      console.log('Unexpected error when clearing cart after order placing successfully ' + err);
-    }
-  };
-
-  const onPlaceOrderPress = async (restaurantID, voucherCode, paymentMethod, address) => {
-    try {
-      const response = await placeOrderAPI(restaurantID, voucherCode, paymentMethod, address);
-      if (response.status === HTTPStatus.CREATED) {
-        setSuccessPlaceOrder(true);
-      } else {
-        console.log('Unexpected error when placing order');
-      }
-    } catch (err) {
-      console.log('Unexpected error when placing order ' + err);
-    }
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <SuccessNotifyModal
-        visible={successPlaceOrder}
-        title="Your order is successfully placed!"
-        onOKPressHandler={() => onOKPressHandler(restaurantID)}
-      />
       <BackButton style={[styles.header, { marginBottom: 10 }]} onPressFunction={onBackPress} />
       <ScrollView
         contentContainerStyle={{ paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.header_text}>Confirm Order</Text>
+        <Text style={styles.header_text}>Order Details</Text>
         <AddressCard
           title="Delivery Address"
           name="Nguyen Phu Thinh"
           phoneNumber="0865474654"
-          address="69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương"
-          disabled={false}
+          address={orderInfos?.shippingAddress}
+          disabled={true}
         />
         <View style={styles.ordered_product_container}>
           <View style={{ flexDirection: 'row' }}>
             <Buy width={25} height={25} />
             <Text ellipsizeMode="tail" numberOfLines={2} style={styles.restaurant_name_text}>
-              {restaurantName}
+              {orderInfos?.shop?.name}
             </Text>
           </View>
-          {cartInfo?.items?.map(({ image, name, description, quantity, totalPrice }, index) => (
+          {orderInfos?.items?.map(({ image, name, description, quantity, totalPrice }, index) => (
             <View key={index} style={styles.ordered_product_row}>
               <View style={{ flex: 2 }}>
                 <Image
@@ -126,28 +103,32 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
           <Text
             style={[
               styles.voucher_text,
-              { marginLeft: 'auto', color: COLOR.button_secondary_color },
+              { marginLeft: 'auto', color: COLOR.button_secondary_color, marginEnd: 10 },
             ]}
           >
             Voucher added
           </Text>
-          <ArrowRight width={25} height={25} style={{ color: COLOR.text_press_color }} />
         </Pressable>
         <Pressable style={[styles.voucher_container, { borderColor: COLOR.text_primary_color }]}>
           <Note width={25} height={25} color={COLOR.text_tertiary_color} />
           <Text style={[styles.voucher_text, { marginStart: 5 }]}>Note</Text>
           <Text
-            style={[styles.voucher_text, { marginLeft: 'auto', color: COLOR.text_secondary_color }]}
+            style={[
+              styles.voucher_text,
+              { marginLeft: 'auto', color: COLOR.text_secondary_color, marginEnd: 10 },
+            ]}
           >
             None
           </Text>
-          <ArrowRight width={25} height={25} style={{ color: COLOR.text_press_color }} />
         </Pressable>
         <View style={styles.price_container}>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={[styles.price_text]}>Sub-total ({cartInfo?.items?.length} items)</Text>
+            <Text style={[styles.price_text]}>Sub-total ({orderInfos?.items?.length} items)</Text>
             <Text style={[styles.price_text, { marginLeft: 'auto' }]}>
-              {cartInfo.totalPrice === undefined ? '0.000' : formatVND(cartInfo.totalPrice)} VND
+              {orderInfos?.payment?.price === undefined
+                ? '0.000'
+                : formatVND(orderInfos?.payment?.price)}{' '}
+              VND
             </Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
@@ -174,9 +155,9 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
                 { marginLeft: 'auto', color: COLOR.indicator_current_color },
               ]}
             >
-              {cartInfo.totalPrice === undefined
+              {orderInfos?.payment?.price === undefined
                 ? '0.000'
-                : formatVND(cartInfo.totalPrice + shippingFee - discountFee)}{' '}
+                : formatVND(orderInfos?.payment?.price + shippingFee - discountFee)}{' '}
               VND
             </Text>
           </View>
@@ -191,13 +172,11 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
             />
           )} */}
         <SubmitButton
-          onPressFunction={() =>
-            onPlaceOrderPress(restaurantID, '', 'CASH', '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương')
-          } //voucherCode, paymentMethod and address hardcoded value should be replaced later
+          onPressFunction={onViewResPress}
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}
           style={{ height: 60, marginTop: 20 }}
-          title="Place Order"
+          title="View Restaurant"
         />
       </ScrollView>
     </SafeAreaView>
@@ -307,4 +286,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ConfirmOrderScreen;
+export default ViewOnlyConfirmOrderScreen;

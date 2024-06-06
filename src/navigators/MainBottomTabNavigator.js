@@ -15,14 +15,10 @@ import {
   ProfileFocused,
 } from '~/resources/icons';
 
-import { DiscoverScreen } from '~/screens/discover';
-import { FavoriteScreen } from '~/screens/favorite';
-import { OrderScreen } from '~/screens/order';
-import { ProfileScreen } from '~/screens/profile';
-
 import HomeStackNavigator from './HomeStackNavigator';
 import OrderStackNavigator from './OrderStackNavigator';
 import ProfileStackNavigator from './ProfileStackNavigator';
+import FavoriteStackNavigator from './FavoriteStackNavigator';
 
 import { CustomTabLabel } from '~/components';
 
@@ -67,7 +63,7 @@ const MainBottomTabNavigator = () => {
       /> */}
       <BottomTab.Screen
         name="Favorite"
-        component={FavoriteScreen}
+        component={FavoriteStackNavigator}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (

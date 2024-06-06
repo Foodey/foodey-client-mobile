@@ -5,19 +5,54 @@ import { SearchBar, BackButton, RestaurantBar } from '~/components';
 import Style from './HomeStyle';
 import { SearchScreen } from '~/screens/home';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { restaurants } from '~/constants/TempData';
-import { useContext } from 'react';
+import { useContext, useLayoutEffect } from 'react';
 import { HomeContext } from '~/contexts/HomeContext';
+import { searchResByNameAPI } from '../../apiServices/HomeService';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
+import { AppContext } from '../../contexts/AppContext';
+import StorageKey from '../../constants/StorageKey';
+import MyAsyncStorage from '../../utils/MyAsyncStorage';
 
 const SearchResultScreen = ({ navigation }) => {
-  const { searchValue, setSearchValue, searchResultSelected, setSearchResultSelected } =
-    useContext(HomeContext);
+  const { setSearchValue, searchResultSelected, setSearchResultSelected } = useContext(HomeContext);
+
+  const { favoriteRestaurants, searchHistory } = useContext(AppContext);
 
   const onBackHandler = () => {
     setSearchValue('');
     setSearchResultSelected('');
     navigation.goBack();
   };
+
+  const onResPressFunction = (item) => {
+    const isUserFavorite = favoriteRestaurants.some((restaurant) => restaurant.id === item.id);
+    navigation.navigate('RestaurantMenu_Screen', {
+      brandID: item.brandId,
+      restaurantID: item.id, //try replace the restaurantsByCategoryList with passing the item as the param of the callback function
+      restaurantName: item.name,
+      restaurantLogo: item.logo,
+      restaurantWallpaper: item.wallpaper,
+      restaurantAddress: item.address,
+      isUserFavorite: isUserFavorite,
+    });
+  };
+
+  useLayoutEffect(() => {
+    const fetchSearchResult = async (selectedValue) => {
+      try {
+        const response = await searchResByNameAPI(selectedValue);
+        if (response.status === HTTPStatus.OK) {
+          setSearchResult(response.data?.content);
+        } else {
+          console.log('Error when fetching search result');
+        }
+      } catch (err) {
+        console.log('Error when fetching search result ' + err);
+      }
+    };
+
+    fetchSearchResult(searchResultSelected);
+  }, [searchResultSelected]);
 
   const [searchVisible, setSearchVisible] = useState(false);
 
@@ -38,9 +73,17 @@ const SearchResultScreen = ({ navigation }) => {
     },
   ]);
 
-  const [restaurantsList, setRestaurantsList] = useState(restaurants);
+  const [searchResult, setSearchResult] = useState({});
 
-  const seeSearchResultHandler = () => {
+  const onSelectedItem = async () => {
+    // console.log(searchHistory);
+    // await MyAsyncStorage.setItem(StorageKey.SEARCH_HISTORY, JSON.stringify(searchHistory));
+    setSearchVisible(false);
+  };
+
+  const onSubmitEditing = async () => {
+    // console.log(searchHistory);
+    // await MyAsyncStorage.setItem(StorageKey.SEARCH_HISTORY, JSON.stringify(searchHistory));
     setSearchVisible(false);
   };
 
@@ -50,8 +93,8 @@ const SearchResultScreen = ({ navigation }) => {
       <SearchScreen
         visible={searchVisible}
         onClosePress={() => setSearchVisible(false)}
-        onSelectedItem={seeSearchResultHandler}
-        onSubmitEditing={() => setSearchVisible(false)}
+        onSelectedItem={onSelectedItem}
+        onSubmitEditing={onSubmitEditing}
       />
       <BackButton
         style={[Style.header, { marginBottom: 15, marginTop: 5 }]}
@@ -113,15 +156,16 @@ const SearchResultScreen = ({ navigation }) => {
           marginTop: 15,
           paddingBottom: 260,
         }}
-        data={restaurantsList}
+        data={searchResult}
         renderItem={({ item }) => (
           <RestaurantBar
             // style={{ margin: 25 }}
-            logoLink={item.logoLink}
+            onPressFunction={() => onResPressFunction(item)}
+            image={item.logo}
             name={item.name}
             distance={1.2} // this distance should be calculated depends on the current location of user
             estimateTime={32} // this estimateTime should be calculated depends on the current location of user
-            avgReview={item.avgReview}
+            rating={item.rating}
           />
         )}
       />
@@ -132,6 +176,7 @@ const SearchResultScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLOR.background_color,
+    flex: 1,
   },
 
   filter_button: {

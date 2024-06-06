@@ -4,9 +4,13 @@ import { COLOR } from '../constants/Colors';
 import { FillLocation } from '../resources/icons';
 import ArrowRight from '~/resources/icons/arrow-right.svg';
 
-function AddressCard({ style, title, name, phoneNumber, address, onPressFunction }) {
+function AddressCard({ style, title, name, phoneNumber, address, disabled, onPressFunction }) {
   return (
-    <Pressable style={[styles.deliveryAddress_container, style]} onPress={onPressFunction}>
+    <Pressable
+      style={[styles.deliveryAddress_container, style]}
+      onPress={onPressFunction}
+      disabled={disabled}
+    >
       <View style={{ flex: 1 }}>
         <FillLocation width={25} height={25} />
       </View>
@@ -35,7 +39,9 @@ function AddressCard({ style, title, name, phoneNumber, address, onPressFunction
         </Text>
       </View>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ArrowRight width={25} height={25} style={{ color: COLOR.text_press_color }} />
+        {!disabled && (
+          <ArrowRight width={25} height={25} style={{ color: COLOR.text_press_color }} />
+        )}
       </View>
     </Pressable>
   );

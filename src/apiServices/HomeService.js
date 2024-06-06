@@ -24,10 +24,10 @@ export const getRestaurantByCategoryAPI = async (categoryID) => {
   }
 };
 
-export const getMenuByRestaurantAPI = async (restaurantID) => {
+export const getMenuByRestaurantAPI = async (brandID, restaurantID) => {
   try {
     const response = await request.public.get(
-      `${HomeEndpoint.GENERAL_SHOP_ENDPOINT}/${restaurantID}/menus/details`,
+      `${HomeEndpoint.GET_MENU_BY_SHOP_ID}/${brandID}/shops/${restaurantID}/menu/full`,
     );
     return response;
   } catch (err) {
@@ -87,6 +87,17 @@ export const placeOrderAPI = async (restaurantID, voucherCode, paymentMethod, ad
       paymentMethod: paymentMethod,
       address: address,
     });
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
+export const searchResByNameAPI = async (searchValue, page, size) => {
+  try {
+    const response = await request.public.get(
+      `${HomeEndpoint.SEARCH}?page=${page}&size=${size}&q=${searchValue}`,
+    );
     return response;
   } catch (err) {
     console.log(err.response);

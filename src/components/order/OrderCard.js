@@ -12,8 +12,10 @@ function OrderCard({
   date,
   items,
   totalPrice,
-  onPressFunction,
   completedOrder,
+  onPressFunction,
+  onRateOrderPress,
+  onViewResPress,
 }) {
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
@@ -115,14 +117,25 @@ function OrderCard({
         </Text>
         {completedOrder && (
           <View style={{ flexDirection: 'row', marginStart: 'auto' }}>
-            <Pressable style={[styles.button, { marginLeft: 'auto' }]}>
+            <Pressable
+              style={[
+                styles.button,
+                {
+                  marginLeft: 'auto',
+                  backgroundColor: COLOR.background_color,
+                  borderWidth: 1,
+                  borderColor: COLOR.indicator_current_color,
+                },
+              ]}
+              onPress={onRateOrderPress}
+            >
               <Text style={[styles.button_text, { color: COLOR.indicator_current_color }]}>
-                Review
+                Rate Order
               </Text>
             </Pressable>
-            <Pressable style={[styles.button, { backgroundColor: COLOR.indicator_current_color }]}>
-              <Text style={[styles.button_text, { color: COLOR.background_color, borderWidth: 0 }]}>
-                Re-order
+            <Pressable style={styles.button} onPress={onViewResPress}>
+              <Text style={[styles.button_text, { color: COLOR.background_color }]}>
+                View Restaurant
               </Text>
             </Pressable>
           </View>
@@ -210,14 +223,12 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: 85,
-    height: 35,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
     borderRadius: 8,
-    borderColor: COLOR.indicator_current_color,
+    backgroundColor: COLOR.indicator_current_color,
     marginHorizontal: 5,
+    padding: 5,
   },
 
   button_text: {

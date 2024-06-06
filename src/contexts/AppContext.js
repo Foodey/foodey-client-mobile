@@ -19,7 +19,7 @@ export const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
   BASE_URL = 'http://10.0.2.2:8080/api';
-  // BASE_URL = 'https://d100-116-110-43-242.ngrok-free.app/api';
+  // BASE_URL = 'https://705f-115-78-100-76.ngrok-free.app/api';
 
   const [userInfo, setUserInfo] = useState({});
   const [accessToken, setAccessToken] = useState('');
@@ -30,6 +30,7 @@ export const AppProvider = ({ children }) => {
   const [deliveredOrderList, setDeliveredOrderList] = useState({});
   const [favoriteRestaurants, setFavoriteRestaurants] = useState({});
   const [favoriteMeals, setFavoriteMeals] = useState({});
+  const [searchHistory, setSearchHistory] = useState([]);
 
   const logout = async () => {
     // setIsLoading(true);
@@ -45,17 +46,19 @@ export const AppProvider = ({ children }) => {
       await MyAsyncStorage.removeItem(StorageKey.REFRESH_TOKEN);
       await MyAsyncStorage.removeItem(StorageKey.FAVORITE_RESTAURANTS);
       // await MyAsyncStorage.removeItem(StorageKey.FAVORITE_MEALS);
+      await MyAsyncStorage.removeItem(StorageKey.SEARCH_HISTORY);
 
       setUserInfo({});
-      setAccessToken('1');
       setFavoriteRestaurants({});
       // setFavoriteMeals({});
+      setSearchHistory([]);
+      setPendingOrderList({});
+      setDeliveredOrderList({});
+
+      setAccessToken('1'); //logout here.
     } catch (err) {
       console.log('Error when logging out: ' + err);
     }
-    // const response = await fetch('https://d100-116-110-43-242.ngrok-free.app/api');
-    // console.log(await response.json());
-
     // setIsLoading(false);
   };
 
@@ -108,7 +111,7 @@ export const AppProvider = ({ children }) => {
       const response = await addFavoriteRestaurantsAPI(restaurantID);
 
       if (response.status === HTTPStatus.NO_CONTENT) {
-        console.log('Success adding favorite restaurant');
+        // console.log('Success adding favorite restaurant');
         await getFavoriteRestaurants();
       } else {
         console.log('Unexpected error when adding favorites restaurant');
@@ -123,7 +126,7 @@ export const AppProvider = ({ children }) => {
       const response = await removeFavoriteRestaurantsAPI(restaurantID);
 
       if (response.status === HTTPStatus.NO_CONTENT) {
-        console.log('Success removing favorite restaurant');
+        // console.log('Success removing favorite restaurant');
         await getFavoriteRestaurants();
       } else {
         console.log('Unexpected error when removing favorites restaurant');
@@ -156,14 +159,14 @@ export const AppProvider = ({ children }) => {
 
         userInfo,
         setUserInfo,
-
         accessToken,
         setAccessToken,
-
         isLoading,
         setIsLoading,
-
         logout,
+        searchHistory,
+        setSearchHistory,
+
         // isLoggedIn,
         isAppFirstLaunch,
         setIsAppFirstLaunch,
