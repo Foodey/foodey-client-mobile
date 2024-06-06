@@ -46,6 +46,8 @@ export default function SignInUpScreen({ navigation }) {
     setUserInfo,
     setAccessToken,
     getFavoriteRestaurants,
+    getPendingOrder,
+    getDeliveredOrder,
     // getFavoriteMeals,
   } = useContext(AppContext);
 
@@ -101,10 +103,14 @@ export default function SignInUpScreen({ navigation }) {
       if (response.status === HTTPStatus.OK) {
         const tempUserInfo = response?.data;
 
-        MyAsyncStorage.setItem(StorageKey.USER_INFO, JSON.stringify(tempUserInfo));
-        MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, tempUserInfo.jwt.accessToken);
-        MyAsyncStorage.setItem(StorageKey.REFRESH_TOKEN, tempUserInfo.jwt.refreshToken);
+        await MyAsyncStorage.setItem(StorageKey.USER_INFO, JSON.stringify(tempUserInfo));
+        await MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, tempUserInfo.jwt.accessToken);
+        await MyAsyncStorage.setItem(StorageKey.REFRESH_TOKEN, tempUserInfo.jwt.refreshToken);
+
         await getFavoriteRestaurants();
+        await getPendingOrder();
+        await getDeliveredOrder();
+
         // await getFavoriteMeals();
         setUserInfo(tempUserInfo);
         setAccessToken(tempUserInfo.jwt.accessToken);
@@ -270,7 +276,7 @@ export default function SignInUpScreen({ navigation }) {
           title={isLogin ? 'Login' : 'Next'}
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}
-          onPressFunction={isLogin ? onLoginPressHandler : onNextPressHandler}
+          onPressFunction={isLogin ? () => onLoginPressHandler() : () => onNextPressHandler()}
           // onPressFunction={test}
         />
         {/* <SubmitButton

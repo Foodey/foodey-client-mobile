@@ -7,8 +7,10 @@ import Style from './HomeStyle';
 import { HomeContext } from '~/contexts/HomeContext';
 import { searchResByNameAPI } from '../../apiServices/HomeService';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
-import { searchHistory } from '../../constants/TempData';
 import { useDebounce } from '../../utils/hooks';
+import { AppContext } from '../../contexts/AppContext';
+import MyAsyncStorage from '../../utils/MyAsyncStorage';
+import StorageKey from '../../constants/StorageKey';
 
 const SearchScreen = ({ visible, onClosePress, onSelectedItem, onSubmitEditing }) => {
   const {
@@ -18,6 +20,8 @@ const SearchScreen = ({ visible, onClosePress, onSelectedItem, onSubmitEditing }
     searchSuggestion,
     setSearchSuggestion,
   } = useContext(HomeContext);
+
+  const { searchHistory, setSearchHistory } = useContext(AppContext);
 
   // console.log('search screen')
   const debounceSearchValue = useDebounce(searchValue);
@@ -47,6 +51,11 @@ const SearchScreen = ({ visible, onClosePress, onSelectedItem, onSubmitEditing }
     onClosePress();
   };
 
+  const onClearAllPress = async () => {
+    await MyAsyncStorage.removeItem(StorageKey.SEARCH_HISTORY);
+    setSearchHistory([]);
+  };
+
   return (
     <Modal style={styles.container} visible={visible} transition="fade">
       <StatusBar backgroundColor={COLOR.background_color} />
@@ -60,8 +69,13 @@ const SearchScreen = ({ visible, onClosePress, onSelectedItem, onSubmitEditing }
         searchValue={searchValue}
         onChangeText={(text) => setSearchValue(text)}
         onDeletePress={() => setSearchValue('')}
-        onSubmitEditing={() => {
+        onSubmitEditing={async () => {
           setSearchResultSelected(searchValue);
+          setSearchHistory([...searchHistory, searchValue]);
+          let tempArray = searchHistory;
+          tempArray.push(searchValue);
+          console.log(tempArray);
+          await MyAsyncStorage.setItem(StorageKey.SEARCH_HISTORY, JSON.stringify(tempArray));
           onSubmitEditing();
         }}
       />
@@ -75,7 +89,7 @@ const SearchScreen = ({ visible, onClosePress, onSelectedItem, onSubmitEditing }
           >
             Recently Searched
           </Text>
-          <Pressable style={{ marginLeft: 'auto' }}>
+          <Pressable style={{ marginLeft: 'auto' }} onPress={() => onClearAllPress()}>
             <Text style={styles.clear_all_text}>CLEAR ALL</Text>
           </Pressable>
         </View>
@@ -85,8 +99,13 @@ const SearchScreen = ({ visible, onClosePress, onSelectedItem, onSubmitEditing }
         renderItem={({ item }) => (
           <Pressable
             style={styles.search_history_button}
-            onPress={() => {
+            onPress={async () => {
               setSearchResultSelected(item);
+              setSearchHistory([...searchHistory, item]);
+              let tempArray = searchHistory;
+              tempArray.push(item);
+              console.log(tempArray);
+              await MyAsyncStorage.setItem(StorageKey.SEARCH_HISTORY, JSON.stringify(tempArray));
               onSelectedItem();
             }}
           >

@@ -30,6 +30,7 @@ export const AppProvider = ({ children }) => {
   const [deliveredOrderList, setDeliveredOrderList] = useState({});
   const [favoriteRestaurants, setFavoriteRestaurants] = useState({});
   const [favoriteMeals, setFavoriteMeals] = useState({});
+  const [searchHistory, setSearchHistory] = useState([]);
 
   const logout = async () => {
     // setIsLoading(true);
@@ -45,17 +46,19 @@ export const AppProvider = ({ children }) => {
       await MyAsyncStorage.removeItem(StorageKey.REFRESH_TOKEN);
       await MyAsyncStorage.removeItem(StorageKey.FAVORITE_RESTAURANTS);
       // await MyAsyncStorage.removeItem(StorageKey.FAVORITE_MEALS);
+      await MyAsyncStorage.removeItem(StorageKey.SEARCH_HISTORY);
 
       setUserInfo({});
-      setAccessToken('1');
       setFavoriteRestaurants({});
       // setFavoriteMeals({});
+      setSearchHistory([]);
+      setPendingOrderList({});
+      setDeliveredOrderList({});
+
+      setAccessToken('1'); //logout here.
     } catch (err) {
       console.log('Error when logging out: ' + err);
     }
-    // const response = await fetch('https://d100-116-110-43-242.ngrok-free.app/api');
-    // console.log(await response.json());
-
     // setIsLoading(false);
   };
 
@@ -156,14 +159,14 @@ export const AppProvider = ({ children }) => {
 
         userInfo,
         setUserInfo,
-
         accessToken,
         setAccessToken,
-
         isLoading,
         setIsLoading,
-
         logout,
+        searchHistory,
+        setSearchHistory,
+
         // isLoggedIn,
         isAppFirstLaunch,
         setIsAppFirstLaunch,

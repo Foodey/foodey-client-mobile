@@ -5,17 +5,18 @@ import { SearchBar, BackButton, RestaurantBar } from '~/components';
 import Style from './HomeStyle';
 import { SearchScreen } from '~/screens/home';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { restaurants } from '~/constants/TempData';
 import { useContext, useLayoutEffect } from 'react';
 import { HomeContext } from '~/contexts/HomeContext';
 import { searchResByNameAPI } from '../../apiServices/HomeService';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
 import { AppContext } from '../../contexts/AppContext';
+import StorageKey from '../../constants/StorageKey';
+import MyAsyncStorage from '../../utils/MyAsyncStorage';
 
 const SearchResultScreen = ({ navigation }) => {
   const { setSearchValue, searchResultSelected, setSearchResultSelected } = useContext(HomeContext);
 
-  const { favoriteRestaurants } = useContext(AppContext);
+  const { favoriteRestaurants, searchHistory } = useContext(AppContext);
 
   const onBackHandler = () => {
     setSearchValue('');
@@ -51,7 +52,7 @@ const SearchResultScreen = ({ navigation }) => {
     };
 
     fetchSearchResult(searchResultSelected);
-  }, []);
+  }, [searchResultSelected]);
 
   const [searchVisible, setSearchVisible] = useState(false);
 
@@ -74,7 +75,15 @@ const SearchResultScreen = ({ navigation }) => {
 
   const [searchResult, setSearchResult] = useState({});
 
-  const seeSearchResultHandler = () => {
+  const onSelectedItem = async () => {
+    // console.log(searchHistory);
+    // await MyAsyncStorage.setItem(StorageKey.SEARCH_HISTORY, JSON.stringify(searchHistory));
+    setSearchVisible(false);
+  };
+
+  const onSubmitEditing = async () => {
+    // console.log(searchHistory);
+    // await MyAsyncStorage.setItem(StorageKey.SEARCH_HISTORY, JSON.stringify(searchHistory));
     setSearchVisible(false);
   };
 
@@ -84,8 +93,8 @@ const SearchResultScreen = ({ navigation }) => {
       <SearchScreen
         visible={searchVisible}
         onClosePress={() => setSearchVisible(false)}
-        onSelectedItem={seeSearchResultHandler}
-        onSubmitEditing={() => setSearchVisible(false)}
+        onSelectedItem={onSelectedItem}
+        onSubmitEditing={onSubmitEditing}
       />
       <BackButton
         style={[Style.header, { marginBottom: 15, marginTop: 5 }]}
@@ -167,6 +176,7 @@ const SearchResultScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLOR.background_color,
+    flex: 1,
   },
 
   filter_button: {

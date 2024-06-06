@@ -6,6 +6,7 @@ const StorageKey = {
 
   FAVORITE_RESTAURANTS: 'favoriteRestaurants',
   FAVORITE_MEALS: 'favoriteMeals',
+  SEARCH_HISTORY: 'searchHistory',
 };
 
 export default StorageKey;
