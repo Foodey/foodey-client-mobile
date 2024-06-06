@@ -4,12 +4,43 @@ import { COLOR } from '~/constants/Colors';
 import { BackButton } from '~/components';
 import SearchBar from '../../components/SearchBar';
 import Style from './HomeStyle';
-import { searchHistory } from '~/constants/TempData';
 import { HomeContext } from '~/contexts/HomeContext';
+import { searchResByNameAPI } from '../../apiServices/HomeService';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
+import { searchHistory } from '../../constants/TempData';
+import { useDebounce } from '../../utils/hooks';
 
 const SearchScreen = ({ visible, onClosePress, onSelectedItem, onSubmitEditing }) => {
-  const { searchValue, setSearchValue, searchResultSelected, setSearchResultSelected } =
-    useContext(HomeContext);
+  const {
+    searchValue,
+    setSearchValue,
+    setSearchResultSelected,
+    searchSuggestion,
+    setSearchSuggestion,
+  } = useContext(HomeContext);
+
+  // console.log('search screen')
+  const debounceSearchValue = useDebounce(searchValue);
+
+  useEffect(() => {
+    const searchResByName = async () => {
+      // console.log(debounceSearchValue);
+      try {
+        const response = await searchResByNameAPI(debounceSearchValue, 0, 10);
+        if (response.status === HTTPStatus.OK) {
+          const suggestionName = response.data?.content?.map((res) => res.name);
+          // console.log(suggestionName);
+          setSearchSuggestion(suggestionName);
+        } else {
+          console.log('Error when searching restaurant by name');
+        }
+      } catch (err) {
+        console.log('Error when searching restaurant by name ' + err);
+      }
+    };
+
+    searchResByName();
+  }, [debounceSearchValue]);
 
   const onBackPress = () => {
     setSearchValue('');
@@ -50,7 +81,7 @@ const SearchScreen = ({ visible, onClosePress, onSelectedItem, onSubmitEditing }
         </View>
       )}
       <FlatList
-        data={searchHistory}
+        data={searchValue === '' ? searchHistory : searchSuggestion}
         renderItem={({ item }) => (
           <Pressable
             style={styles.search_history_button}

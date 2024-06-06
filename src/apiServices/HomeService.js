@@ -92,3 +92,14 @@ export const placeOrderAPI = async (restaurantID, voucherCode, paymentMethod, ad
     console.log(err.response);
   }
 };
+
+export const searchResByNameAPI = async (searchValue, page, size) => {
+  try {
+    const response = await request.public.get(
+      `${HomeEndpoint.SEARCH}?page=${page}&size=${size}&q=${searchValue}`,
+    );
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};

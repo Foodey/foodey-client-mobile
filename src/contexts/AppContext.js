@@ -19,7 +19,7 @@ export const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
   BASE_URL = 'http://10.0.2.2:8080/api';
-  // BASE_URL = 'https://d100-116-110-43-242.ngrok-free.app/api';
+  // BASE_URL = 'https://705f-115-78-100-76.ngrok-free.app/api';
 
   const [userInfo, setUserInfo] = useState({});
   const [accessToken, setAccessToken] = useState('');

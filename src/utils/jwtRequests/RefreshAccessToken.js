@@ -4,10 +4,10 @@ import { AuthEndpoint } from '../../constants/API_Endpoints';
 import StorageKey from '../../constants/StorageKey';
 
 const RefreshAccessTokenFn = async () => {
-  // console.log('Refresh token function getting called');
+  console.log('Refresh token function getting called');
 
   const refreshToken = await MyAsyncStorage.getItem(StorageKey.REFRESH_TOKEN);
-  // console.log(refreshToken);
+  console.log(refreshToken);
 
   if (!refreshToken) {
     return null;
@@ -24,7 +24,7 @@ const RefreshAccessTokenFn = async () => {
 
     const newAccessToken = response.data.accessToken;
     const newRefreshToken = response.data.refreshToken;
-    // console.log('System has auto requested a new access token !!!');
+    console.log('System has auto requested a new access token !!!');
 
     MyAsyncStorage.setItem(StorageKey.REFRESH_TOKEN, newRefreshToken);
     MyAsyncStorage.setItem(StorageKey.ACCESS_TOKEN, newAccessToken);

@@ -114,7 +114,7 @@ export default function SignInUpScreen({ navigation }) {
 
         if (isAppFirstLaunch) setIsAppFirstLaunch(false);
         setIsLoading(false);
-      } else if (response.status === HTTPStatus.EXPECTATION_FAILED) {
+      } else if (response.status === HTTPStatus.NOT_FOUND) {
         handleLoginErrors('   ', 'phoneNumber');
         handleLoginErrors('* Wrong phone number or password, please re-check', 'password');
       } else {
@@ -273,7 +273,7 @@ export default function SignInUpScreen({ navigation }) {
           onPressFunction={isLogin ? onLoginPressHandler : onNextPressHandler}
           // onPressFunction={test}
         />
-        <SubmitButton
+        {/* <SubmitButton
           showIcon={false}
           style={{ marginHorizontal: 21, marginBottom: 21, height: '20%' }}
           title={isLogin ? 'Or Login With Passkey' : 'Or Sign Up With Passkey'}
@@ -281,7 +281,7 @@ export default function SignInUpScreen({ navigation }) {
           hoverColor={COLOR.button_press_primary_color}
           onPressFunction={isLogin ? onLoginWithPasskey : onSignUpWithPassKey}
           // onPressFunction={test}
-        />
+        /> */}
       </View>
     </KeyboardAvoidingView>
   );
