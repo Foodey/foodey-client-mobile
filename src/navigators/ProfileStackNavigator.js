@@ -1,4 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { useLayoutEffect } from 'react';
+import { COLOR } from '../constants/Colors';
 
 import {
   ProfileScreen,
@@ -15,7 +18,33 @@ import {
 
 const ProfileStack = createStackNavigator();
 
-export default function ProfileStackNavigator() {
+export default function ProfileStackNavigator({ navigation, route }) {
+  useLayoutEffect(() => {
+    const tabHiddenRoutes = [
+      'MyVouchers_Screen',
+      'VoucherDetails_Screen',
+      'Address_Screen',
+      'AddEditAddress_Screen',
+      'Policy_Screen',
+      'Setting_Screen',
+      'ContactInfo_Screen',
+      'PassChange_Screen',
+      'AccountDeletion_Screen',
+    ];
+    if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
+      navigation.setOptions({ tabBarStyle: { display: 'none' } });
+    } else {
+      navigation.setOptions({
+        tabBarStyle: {
+          backgroundColor: COLOR.input_background_color,
+          height: 88,
+          paddingLeft: 8,
+          paddingRight: 8,
+        },
+      });
+    }
+  }, [navigation, route]);
+
   return (
     <ProfileStack.Navigator
       screenOptions={{
@@ -24,11 +53,7 @@ export default function ProfileStackNavigator() {
       initialRouteName="Profile_Screen"
     >
       <ProfileStack.Screen name="Profile_Screen" component={ProfileScreen} />
-      <ProfileStack.Screen
-        name="MyVouchers_Screen"
-        component={MyVouchersScreen}
-        // setOptions={{ tabBarVisible: false }}
-      />
+      <ProfileStack.Screen name="MyVouchers_Screen" component={MyVouchersScreen} />
       <ProfileStack.Screen name="VoucherDetails_Screen" component={VoucherDetailsScreen} />
       <ProfileStack.Screen name="Address_Screen" component={AddressScreen} />
       <ProfileStack.Screen name="AddEditAddress_Screen" component={AddEditAddressScreen} />

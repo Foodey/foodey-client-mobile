@@ -3,6 +3,7 @@ import { BackButton, VoucherCard, SubmitButton } from '~/components';
 import { COLOR } from '~/constants/Colors';
 import React, { useContext } from 'react';
 import { ProfileScreenHeader } from '../../components/profile';
+import { formatDateTime } from '../../utils/ValueConverter'; //use this format date time later since the data getting from server already handle UTC hour
 
 const VoucherDetailsScreen = ({ navigation, route }) => {
   const { id, name, maximum, percentages, minimumToApply, startDate, expiredDate } = route.params;
@@ -11,7 +12,7 @@ const VoucherDetailsScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  function convertToNormalDateFormat(value) {
+  function formatDateTime(value) {
     try {
       // Parse the ISOString date time into a Date object
       const date = new Date(value);
@@ -49,7 +50,7 @@ const VoucherDetailsScreen = ({ navigation, route }) => {
           <View style={{ flex: 1, justifyContent: 'center' }}>
             <Text style={styles.title_text}>Expiration Date</Text>
             <Text style={styles.info_text}>
-              {convertToNormalDateFormat(startDate)} - {convertToNormalDateFormat(expiredDate)}
+              {formatDateTime(startDate)} - {formatDateTime(expiredDate)}
             </Text>
           </View>
           <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -101,7 +102,8 @@ const styles = StyleSheet.create({
 
   footer_container: {
     flex: 0.75,
-    paddingBottom: 20,
+    paddingBottom: 108,
+    // backgroundColor: '#f0f'
   },
 
   title_text: {
