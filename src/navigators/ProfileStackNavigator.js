@@ -14,7 +14,13 @@ import {
   ContactInfoScreen,
   PassChangeScreen,
   AccountDeletionScreen,
-} from '~/screens/profile';
+} from '../screens/profile';
+
+import {
+  SellerIntroScreen,
+  RegisteredShopInfoScreen,
+  SellerIdentificationScreen,
+} from '../screens/profile/seller';
 
 const ProfileStack = createStackNavigator();
 
@@ -30,6 +36,9 @@ export default function ProfileStackNavigator({ navigation, route }) {
       'ContactInfo_Screen',
       'PassChange_Screen',
       'AccountDeletion_Screen',
+      'SellerIntro_Screen',
+      'RegisteredShopInfo_Screen',
+      'SellerIdentification_Screen',
     ];
     if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
       navigation.setOptions({ tabBarStyle: { display: 'none' } });
@@ -62,6 +71,13 @@ export default function ProfileStackNavigator({ navigation, route }) {
       <ProfileStack.Screen name="ContactInfo_Screen" component={ContactInfoScreen} />
       <ProfileStack.Screen name="PassChange_Screen" component={PassChangeScreen} />
       <ProfileStack.Screen name="AccountDeletion_Screen" component={AccountDeletionScreen} />
+
+      <ProfileStack.Screen name="SellerIntro_Screen" component={SellerIntroScreen} />
+      <ProfileStack.Screen name="RegisteredShopInfo_Screen" component={RegisteredShopInfoScreen} />
+      <ProfileStack.Screen
+        name="SellerIdentification_Screen"
+        component={SellerIdentificationScreen}
+      />
     </ProfileStack.Navigator>
   );
 }

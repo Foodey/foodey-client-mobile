@@ -3,7 +3,7 @@ import { SubmitButton } from '~/components';
 import { COLOR } from '~/constants/Colors';
 import React, { useContext, useState } from 'react';
 import { AppContext } from '~/contexts/AppContext';
-import { Discount, Wallet, FillLocation, Note, Setting } from '~/resources/icons';
+import { Discount, Wallet, FillLocation, Note, Setting, Store } from '~/resources/icons';
 import ArrowRight from '~/resources/icons/arrow-right.svg';
 import { LocationDisplay } from '../../components/home';
 import { ConfirmActionModal } from '../../components/messageBoxes';
@@ -33,6 +33,10 @@ const ProfileScreen = ({ navigation }) => {
     navigation.navigate('Setting_Screen');
   };
 
+  const onMyStorePress = () => {
+    navigation.navigate('SellerIntro_Screen');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
@@ -55,7 +59,7 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.user_name_text}>{userInfo.name}</Text>
         </View>
       </View>
-      <View style={{ flex: 2.5 }}>
+      <View style={{ flex: 3 }}>
         <Pressable style={styles.section_container}>
           <Text style={[styles.section_text, { fontSize: 23, color: COLOR.text_blue_color }]}>
             Personal Information
@@ -100,8 +104,17 @@ const ProfileScreen = ({ navigation }) => {
             style={{ color: COLOR.text_secondary_color, marginLeft: 'auto', marginEnd: 5 }}
           />
         </Pressable>
+        <Pressable style={styles.section_container} onPress={onMyStorePress}>
+          <Store width={26} height={26} style={{ color: COLOR.text_blue_color, marginStart: 10 }} />
+          <Text style={styles.section_text}>My Stores</Text>
+          <ArrowRight
+            width={24}
+            height={24}
+            style={{ color: COLOR.text_secondary_color, marginLeft: 'auto', marginEnd: 5 }}
+          />
+        </Pressable>
       </View>
-      <View style={{ flex: 2.5 }}>
+      <View style={{ flex: 2 }}>
         <Pressable style={styles.section_container}>
           <Text
             style={[styles.section_text, { fontSize: 23, color: COLOR.button_secondary_color }]}
