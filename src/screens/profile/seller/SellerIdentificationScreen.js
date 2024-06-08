@@ -1,13 +1,26 @@
-import { View, Text, SafeAreaView, StyleSheet, StatusBar, TextInput } from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  StatusBar,
+  TextInput,
+  ScrollView,
+} from 'react-native';
 import React from 'react';
 import { COLOR } from '../../../constants/Colors';
-import { IntroHeader, PressableInputField, ShortInputField } from '../../../components/seller';
+import {
+  IntroHeader,
+  PressableInputField,
+  ShortInputField,
+  ImageInput,
+} from '../../../components/seller';
 import { SubmitButton } from '../../../components';
 import StepIndicator from 'react-native-step-indicator';
 
 const SellerIdentificationScreen = ({ navigation }) => {
   const onGoBackPress = () => {
-    console.log('Back press');
+    // console.log('Back press');
     navigation.pop();
   };
 
@@ -28,18 +41,41 @@ const SellerIdentificationScreen = ({ navigation }) => {
         />
       </View>
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 9, marginTop: 10 }}>
+        {/*content container */}
+        <ScrollView style={{ height: '75%', marginTop: 10 }}>
           <ShortInputField
             title="Citizen identification number"
             placeholder="Enter"
             isRequired={true}
           />
           <ShortInputField title="Full Name" placeholder="Enter" isRequired={true} />
-        </View>
+          <Text style={styles.instruction_text}>Citizen Identification Card Photos</Text>
+          <ImageInput
+            style={{}}
+            title="Photo of the front of your Citizen Identification card"
+            isRequired={true}
+            imageURI=""
+          />
+          <Text style={styles.instruction_text}>
+            Please provide close-up photo of the front of your Citizen Identification card. The
+            information in the front of the Citizen Identification card must be clearly shown.
+          </Text>
+          <ImageInput
+            style={{}}
+            title="Photo of the back of your Citizen Identification card"
+            isRequired={true}
+            imageURI=""
+          />
+          <Text style={styles.instruction_text}>
+            Please provide close-up photo of the back of your Citizen Identification card. The
+            information in the back of the Citizen Identification card must be clearly shown.
+          </Text>
+        </ScrollView>
+        {/*footer container */}
         <View
           style={{
             flex: 1,
-            marginVertical: 21,
+            marginBottom: 21,
             marginHorizontal: 10,
             flexDirection: 'row',
             paddingVertical: 10,
@@ -93,8 +129,16 @@ const styles = StyleSheet.create({
 
     labelSize: 14,
     labelFontFamily: 'Manrope-Medium',
-    currentStepLabelColor: COLOR.indicator_current_color,
+    currentStepLabelColor: COLOR.text_primary_color,
     labelColor: COLOR.text_primary_color,
+  },
+
+  instruction_text: {
+    fontFamily: 'Manrope-Medium',
+    fontSize: 14,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    textAlign: 'justify',
   },
 });
 

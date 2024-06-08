@@ -7,7 +7,7 @@ import StepIndicator from 'react-native-step-indicator';
 
 const RegisteredShopInfoScreen = ({ navigation }) => {
   const onGoBackPress = () => {
-    console.log('Back press');
+    // console.log('Back press');
     navigation.pop();
   };
 
@@ -28,6 +28,7 @@ const RegisteredShopInfoScreen = ({ navigation }) => {
         />
       </View>
       <View style={{ flex: 1 }}>
+        {/*content container */}
         <View style={{ flex: 9, marginTop: 10 }}>
           <ShortInputField title="Shop Name" placeholder="Enter Shop Name" isRequired={true} />
           <ShortInputField
@@ -37,6 +38,7 @@ const RegisteredShopInfoScreen = ({ navigation }) => {
           />
           <PressableInputField isRequired={true} title="Pickup Address" value="" />
         </View>
+        {/*footer container */}
         <View
           style={{
             flex: 1,
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
 
     labelSize: 14,
     labelFontFamily: 'Manrope-Medium',
-    currentStepLabelColor: COLOR.indicator_current_color,
+    currentStepLabelColor: COLOR.text_primary_color,
     labelColor: COLOR.text_primary_color,
   },
 });

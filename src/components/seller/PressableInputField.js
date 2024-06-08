@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.background_color,
     borderBottomWidth: 1,
     borderBottomColor: COLOR.text_press_color,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     paddingVertical: 20,
   },
 
