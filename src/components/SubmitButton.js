@@ -5,11 +5,12 @@ import ArrowRight from '~/resources/icons/arrow-right.svg';
 function SubmitButton(props) {
   return (
     <Pressable
+      disabled={props.disabled}
       onPress={props.onPressFunction}
       style={({ pressed }) => [
         styles.button,
         {
-          backgroundColor: pressed ? props.hoverColor : props.buttonColor,
+          backgroundColor: pressed || props.disabled ? props.hoverColor : props.buttonColor,
         },
         { ...props.style },
       ]}

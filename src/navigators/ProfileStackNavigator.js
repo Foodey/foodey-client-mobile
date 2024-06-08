@@ -71,7 +71,6 @@ export default function ProfileStackNavigator({ navigation, route }) {
       <ProfileStack.Screen name="ContactInfo_Screen" component={ContactInfoScreen} />
       <ProfileStack.Screen name="PassChange_Screen" component={PassChangeScreen} />
       <ProfileStack.Screen name="AccountDeletion_Screen" component={AccountDeletionScreen} />
-
       <ProfileStack.Screen name="SellerIntro_Screen" component={SellerIntroScreen} />
       <ProfileStack.Screen name="RegisteredShopInfo_Screen" component={RegisteredShopInfoScreen} />
       <ProfileStack.Screen

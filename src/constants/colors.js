@@ -38,6 +38,7 @@ const green_malachite = '#0BDA51';
 
 const red_80 = '#FAD6D6';
 const red_100 = '#E47070';
+const red_100_trans = '#E4707011';
 const red_120 = '#B13E3E';
 
 const yellow_80 = '#FEDAAF';
@@ -57,6 +58,7 @@ export const COLOR = {
   text_pink_color: pink_120,
 
   indicator_color: light_60,
+  indicator_current_light_color: peach_80,
   indicator_current_color: peach_100,
   indicator_trans_color: peach_trans,
 

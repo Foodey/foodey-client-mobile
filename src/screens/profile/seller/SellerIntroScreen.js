@@ -6,7 +6,8 @@ import { SubmitButton } from '../../../components';
 
 const SellerIntroScreen = ({ navigation }) => {
   const onGoBackPress = () => {
-    navigation.goBack();
+    console.log('Back press');
+    navigation.pop();
   };
 
   return (

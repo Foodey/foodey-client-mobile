@@ -3,10 +3,12 @@ import React from 'react';
 import { COLOR } from '../../../constants/Colors';
 import { IntroHeader, PressableInputField, ShortInputField } from '../../../components/seller';
 import { SubmitButton } from '../../../components';
+import StepIndicator from 'react-native-step-indicator';
 
 const RegisteredShopInfoScreen = ({ navigation }) => {
   const onGoBackPress = () => {
-    navigation.goBack();
+    console.log('Back press');
+    navigation.pop();
   };
 
   return (
@@ -15,19 +17,25 @@ const RegisteredShopInfoScreen = ({ navigation }) => {
       <IntroHeader
         style={{ backgroundColor: COLOR.background_color }}
         onLeftButtonPress={onGoBackPress}
-        title="Edit Shop Info"
-        isRightButtonVisible={true}
+        title="Shop Information"
       />
+      <View style={{ backgroundColor: COLOR.background_color }}>
+        <StepIndicator
+          stepCount={2}
+          labels={['Shop Information', 'Seller Identification']}
+          customStyles={styles.step_indicator}
+          currentPosition={0}
+        />
+      </View>
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 9 }}>
+        <View style={{ flex: 9, marginTop: 10 }}>
           <ShortInputField title="Shop Name" placeholder="Enter Shop Name" isRequired={true} />
-          <PressableInputField
+          <ShortInputField
+            title="Phone Number"
+            placeholder="Enter Phone Number"
             isRequired={true}
-            title="Pickup Address"
-            value=""
-            style={{ marginTop: 100 }}
           />
-          <PressableInputField isRequired={true} title="Phone Number" value="" />
+          <PressableInputField isRequired={true} title="Pickup Address" value="" />
         </View>
         <View
           style={{
@@ -39,10 +47,11 @@ const RegisteredShopInfoScreen = ({ navigation }) => {
           }}
         >
           <SubmitButton
+            disabled={true}
             style={{ flex: 1 }}
             title={'Back'}
             buttonColor={COLOR.button_red_color}
-            hoverColor={COLOR.button_red_color}
+            hoverColor={COLOR.button_press_red_color}
             // onPressFunction={() => navigation.navigate('RegisteredShopInfo_Screen')}
           />
           <SubmitButton
@@ -50,7 +59,7 @@ const RegisteredShopInfoScreen = ({ navigation }) => {
             title={'Next'}
             buttonColor={COLOR.button_primary_color}
             hoverColor={COLOR.button_press_primary_color}
-            // onPressFunction={() => navigation.navigate('RegisteredShopInfo_Screen')}
+            onPressFunction={() => navigation.navigate('SellerIdentification_Screen')}
           />
         </View>
       </View>
@@ -62,8 +71,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+
   footer_container: {
     flex: 1,
+  },
+
+  step_indicator: {
+    //separator
+    separatorFinishedColor: COLOR.indicator_current_color,
+    separatorUnFinishedColor: COLOR.text_press_color,
+    //Step
+    stepStrokeCurrentColor: COLOR.indicator_current_color,
+    stepStrokeWidth: 2,
+    stepStrokeFinishedColor: COLOR.indicator_current_color,
+    stepStrokeUnFinishedColor: COLOR.text_press_color,
+    stepIndicatorFinishedColor: COLOR.indicator_current_color,
+    stepIndicatorUnFinishedColor: COLOR.background_color,
+    stepIndicatorCurrentColor: COLOR.background_color,
+    //label
+    stepIndicatorLabelCurrentColor: COLOR.indicator_current_color,
+    stepIndicatorLabelFinishedColor: COLOR.background_color,
+    stepIndicatorLabelUnFinishedColor: COLOR.text_press_color,
+
+    labelSize: 14,
+    labelFontFamily: 'Manrope-Medium',
+    currentStepLabelColor: COLOR.indicator_current_color,
+    labelColor: COLOR.text_primary_color,
   },
 });
 

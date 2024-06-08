@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import BackButton from '../BackButton';
 import { COLOR } from '../../constants/Colors';
@@ -7,9 +7,9 @@ import FullArrowLeft from '~/resources/icons/full-arrow-left.svg';
 function IntroHeader({ style, title, onLeftButtonPress }) {
   return (
     <View style={[style, styles.container]}>
-      <Pressable style={styles.button_left} onPress={onLeftButtonPress}>
-        <FullArrowLeft />
-      </Pressable>
+      <TouchableOpacity style={styles.button_left} onPress={onLeftButtonPress}>
+        <FullArrowLeft width={24} height={24} />
+      </TouchableOpacity>
       <Text style={styles.title_text}>{title}</Text>
     </View>
   );
@@ -28,6 +28,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     marginStart: 11,
     start: 0,
+    // backgroundColor: "#ff0",
+    flexDirection: 'row',
+    width: 26,
+    height: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   button_right: {
