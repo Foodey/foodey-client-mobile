@@ -11,6 +11,11 @@ const RegisteredShopInfoScreen = ({ navigation }) => {
     navigation.pop();
   };
 
+  const onNextPress = () => {
+    //verify inputs logic
+    navigation.navigate('SellerIdentification_Screen');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
@@ -46,6 +51,7 @@ const RegisteredShopInfoScreen = ({ navigation }) => {
             marginHorizontal: 10,
             flexDirection: 'row',
             paddingVertical: 10,
+            backgroundColor: COLOR.background_color,
           }}
         >
           <SubmitButton
@@ -61,7 +67,7 @@ const RegisteredShopInfoScreen = ({ navigation }) => {
             title={'Next'}
             buttonColor={COLOR.button_primary_color}
             hoverColor={COLOR.button_press_primary_color}
-            onPressFunction={() => navigation.navigate('SellerIdentification_Screen')}
+            onPressFunction={onNextPress}
           />
         </View>
       </View>

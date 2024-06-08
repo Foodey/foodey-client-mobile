@@ -6,8 +6,9 @@ import {
   StatusBar,
   TextInput,
   ScrollView,
+  PermissionsAndroid,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { COLOR } from '../../../constants/Colors';
 import {
   IntroHeader,
@@ -17,6 +18,9 @@ import {
 } from '../../../components/seller';
 import { SubmitButton } from '../../../components';
 import StepIndicator from 'react-native-step-indicator';
+import Checkbox from 'expo-checkbox';
+import { PhotoSelectionModal } from '../../../components/messageBoxes';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 const SellerIdentificationScreen = ({ navigation }) => {
   const onGoBackPress = () => {
@@ -24,13 +28,102 @@ const SellerIdentificationScreen = ({ navigation }) => {
     navigation.pop();
   };
 
+  const onNextPress = () => {
+    //verify inputs logic
+    navigation.navigate('RequestSentNoti_Screen');
+  };
+
+  const [toggleCheckbox, setToggleCheckbox] = useState(false);
+
+  const [isFrontModalVisible, setIsFrontModalVisible] = useState(false);
+  const [isBackModalVisible, setIsBackModalVisible] = useState(false);
+
+  const [selectedFrontPhotoURI, setSelectedFrontPhotoURI] = useState('');
+  const [selectedBackPhotoURI, setSelectedBackPhotoURI] = useState('');
+
+  const onFrontPhotoOpenCamera = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
+        setSelectedFrontPhotoURI(result.assets[0].uri);
+        setIsFrontModalVisible(false);
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.log('Camera permission denied ' + err);
+    }
+  };
+
+  const onBackPhotoOpenCamera = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
+        setSelectedBackPhotoURI(result.assets[0].uri);
+        setIsBackModalVisible(false);
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.log('Camera permission denied ' + err);
+    }
+  };
+
+  const onFrontPhotoOpenLibrary = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        const result = await launchImageLibrary({ mediaType: 'photo' });
+        setSelectedFrontPhotoURI(result.assets[0].uri);
+        setIsFrontModalVisible(false);
+      } else {
+        console.log('Library permission denied');
+      }
+    } catch (err) {
+      console.log('Library permission denied ' + err);
+    }
+  };
+
+  const onBackPhotoOpenLibrary = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        const result = await launchImageLibrary({ mediaType: 'photo' });
+        setSelectedBackPhotoURI(result.assets[0].uri);
+        setIsBackModalVisible(false);
+      } else {
+        console.log('Library permission denied');
+      }
+    } catch (err) {
+      console.log('Library permission denied ' + err);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={COLOR.background_color} />
+      <StatusBar
+        backgroundColor={
+          isFrontModalVisible || isBackModalVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color
+        }
+      />
+      <PhotoSelectionModal
+        isVisible={isFrontModalVisible}
+        backdropPress={() => setIsFrontModalVisible(false)}
+        openCameraPress={() => onFrontPhotoOpenCamera()}
+        openLibraryPress={() => onFrontPhotoOpenLibrary()}
+      />
+      <PhotoSelectionModal
+        isVisible={isBackModalVisible}
+        backdropPress={() => setIsBackModalVisible(false)}
+        openCameraPress={() => onBackPhotoOpenCamera()}
+        openLibraryPress={() => onBackPhotoOpenLibrary()}
+      />
       <IntroHeader
         style={{ backgroundColor: COLOR.background_color }}
         onLeftButtonPress={onGoBackPress}
-        title="Shop Information"
+        title="Seller Identification"
       />
       <View style={{ backgroundColor: COLOR.background_color }}>
         <StepIndicator
@@ -42,7 +135,7 @@ const SellerIdentificationScreen = ({ navigation }) => {
       </View>
       <View style={{ flex: 1 }}>
         {/*content container */}
-        <ScrollView style={{ height: '75%', marginTop: 10 }}>
+        <ScrollView style={{ height: '75%', marginTop: 10 }} showsVerticalScrollIndicator={false}>
           <ShortInputField
             title="Citizen identification number"
             placeholder="Enter"
@@ -54,7 +147,9 @@ const SellerIdentificationScreen = ({ navigation }) => {
             style={{}}
             title="Photo of the front of your Citizen Identification card"
             isRequired={true}
-            imageURI=""
+            imageURI={selectedFrontPhotoURI}
+            onPhotoActionPress={() => setIsFrontModalVisible(true)}
+            onDeletePress={() => setSelectedFrontPhotoURI('')}
           />
           <Text style={styles.instruction_text}>
             Please provide close-up photo of the front of your Citizen Identification card. The
@@ -64,12 +159,33 @@ const SellerIdentificationScreen = ({ navigation }) => {
             style={{}}
             title="Photo of the back of your Citizen Identification card"
             isRequired={true}
-            imageURI=""
+            imageURI={selectedBackPhotoURI}
+            onPhotoActionPress={() => setIsBackModalVisible(true)}
+            onDeletePress={() => setSelectedBackPhotoURI('')}
           />
           <Text style={styles.instruction_text}>
             Please provide close-up photo of the back of your Citizen Identification card. The
             information in the back of the Citizen Identification card must be clearly shown.
           </Text>
+          <View
+            style={{
+              flexDirection: 'column',
+              backgroundColor: COLOR.background_color,
+              width: 'auto',
+              paddingVertical: 10,
+              paddingHorizontal: 15,
+            }}
+          >
+            <Checkbox
+              tintColors={{ true: COLOR.indicator_current_color, false: COLOR.background_color }} //This only support Android, for iOS, view this link: https://github.com/react-native-checkbox/react-native-checkbox
+              value={toggleCheckbox}
+              onValueChange={(newValue) => setToggleCheckbox(newValue)}
+            />
+            <Text style={styles.policy_text}>
+              I confirm all data provided is true and correct. I have read and agree to Foodey's
+              Privacy Policy.
+            </Text>
+          </View>
         </ScrollView>
         {/*footer container */}
         <View
@@ -79,6 +195,7 @@ const SellerIdentificationScreen = ({ navigation }) => {
             marginHorizontal: 10,
             flexDirection: 'row',
             paddingVertical: 10,
+            backgroundColor: COLOR.background_color,
           }}
         >
           <SubmitButton
@@ -93,7 +210,7 @@ const SellerIdentificationScreen = ({ navigation }) => {
             title={'Next'}
             buttonColor={COLOR.button_primary_color}
             hoverColor={COLOR.button_press_primary_color}
-            onPressFunction={() => navigation.navigate('SellerIdentification_Screen')}
+            onPressFunction={onNextPress}
           />
         </View>
       </View>
@@ -139,6 +256,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     textAlign: 'justify',
+    color: COLOR.text_secondary_color,
+  },
+
+  policy_text: {
+    fontFamily: 'Manrope-SemiBold',
+    fontSize: 16.5,
+    textAlign: 'justify',
+    color: COLOR.text_primary_color,
   },
 });
 

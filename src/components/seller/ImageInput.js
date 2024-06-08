@@ -9,8 +9,8 @@ function ImageInput({
   isRequired,
   exampleImageURI,
   imageURI,
-  launchCameraPress,
-  launchCameraLibraryPress,
+  onPhotoActionPress,
+  onDeletePress,
 }) {
   return (
     <View style={[styles.container, style]}>
@@ -18,15 +18,22 @@ function ImageInput({
         {title} {isRequired && <Text style={{ color: COLOR.text_errorMessage_color }}>*</Text>}
       </Text>
       <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 20 }}>
-        <Pressable style={styles.choose_image_button}>
-          <Add width={32} height={32} color={COLOR.text_press_color} />
-        </Pressable>
+        {!imageURI ? (
+          <Pressable style={styles.choose_image_button} onPress={onPhotoActionPress}>
+            <Add width={32} height={32} color={COLOR.text_press_color} />
+          </Pressable>
+        ) : (
+          <Image style={styles.IC_card_image} source={{ uri: imageURI }} />
+        )}
         <Image
           style={{ height: 60, width: 100, marginStart: 20, alignSelf: 'flex-end' }}
           source={require('../../resources/images/Foodey-LOGO.png')}
         />
         {imageURI && (
-          <Pressable style={{ marginStart: 'auto', justifyContent: 'flex-end' }}>
+          <Pressable
+            style={{ marginStart: 'auto', justifyContent: 'flex-end' }}
+            onPress={onDeletePress}
+          >
             <Text style={styles.delete_text}>Delete Image</Text>
           </Pressable>
         )}
@@ -46,6 +53,12 @@ const styles = StyleSheet.create({
     fontSize: 16.5,
     color: COLOR.text_primary_color,
     marginVertical: 10,
+  },
+
+  IC_card_image: {
+    width: 80,
+    height: 80,
+    borderRadius: 5,
   },
 
   choose_image_button: {

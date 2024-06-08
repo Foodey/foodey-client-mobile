@@ -4,16 +4,20 @@ import { COLOR } from '../../../constants/Colors';
 import { IntroHeader } from '../../../components/seller';
 import { SubmitButton } from '../../../components';
 
-const SellerIntroScreen = ({ navigation }) => {
+const RequestSentNotiScreen = ({ navigation }) => {
   const onGoBackPress = () => {
-    // console.log('Back press');
+    console.log('Back press');
     navigation.pop();
+  };
+
+  const onConfirmPress = () => {
+    navigation.popToTop();
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <IntroHeader onLeftButtonPress={onGoBackPress} title="Welcome to Foodey!" />
+      <IntroHeader onLeftButtonPress={onGoBackPress} title="Successfully Sent!" />
       <View style={{ flex: 1 }}>
         <View style={{ flex: 4, padding: 21 }}>
           <Image
@@ -23,15 +27,16 @@ const SellerIntroScreen = ({ navigation }) => {
         </View>
         <View style={{ flex: 5 }}>
           <Text style={styles.text}>
-            Please provide information to upgrade to Seller role in Foodey
+            Your request to become a Seller on Foodey has been sent successfully!. On the next few
+            days, please tracking your phone number for the result to become our Foodey's partner!
           </Text>
         </View>
         <SubmitButton
           style={{ flex: 1, margin: 21 }}
-          title={'Start Registered Shop'}
+          title={'Got it!'}
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}
-          onPressFunction={() => navigation.navigate('RegisteredShopInfo_Screen')}
+          onPressFunction={onConfirmPress}
         />
       </View>
     </SafeAreaView>
@@ -59,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SellerIntroScreen;
+export default RequestSentNotiScreen;

@@ -20,6 +20,7 @@ import {
   SellerIntroScreen,
   RegisteredShopInfoScreen,
   SellerIdentificationScreen,
+  RequestSentNotiScreen,
 } from '../screens/profile/seller';
 
 const ProfileStack = createStackNavigator();
@@ -39,6 +40,7 @@ export default function ProfileStackNavigator({ navigation, route }) {
       'SellerIntro_Screen',
       'RegisteredShopInfo_Screen',
       'SellerIdentification_Screen',
+      'RequestSentNoti_Screen',
     ];
     if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
       navigation.setOptions({ tabBarStyle: { display: 'none' } });
@@ -77,6 +79,7 @@ export default function ProfileStackNavigator({ navigation, route }) {
         name="SellerIdentification_Screen"
         component={SellerIdentificationScreen}
       />
+      <ProfileStack.Screen name="RequestSentNoti_Screen" component={RequestSentNotiScreen} />
     </ProfileStack.Navigator>
   );
 }
