@@ -34,7 +34,12 @@ const ProfileScreen = ({ navigation }) => {
   };
 
   const onMyStorePress = () => {
-    navigation.navigate('SellerIntro_Screen');
+    const isSeller = true; //Getting the user role later thru API
+    if (isSeller) {
+      navigation.navigate('SellerHome_Screen');
+    } else {
+      navigation.navigate('SellerIntro_Screen');
+    }
   };
 
   return (

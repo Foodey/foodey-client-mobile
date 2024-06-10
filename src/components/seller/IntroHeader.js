@@ -8,7 +8,7 @@ function IntroHeader({ style, title, onLeftButtonPress }) {
   return (
     <View style={[style, styles.container]}>
       <TouchableOpacity style={styles.button_left} onPress={onLeftButtonPress}>
-        <FullArrowLeft width={24} height={24} />
+        <FullArrowLeft width={24} height={24} style={{ color: COLOR.text_blue_color }} />
       </TouchableOpacity>
       <Text style={styles.title_text}>{title}</Text>
     </View>

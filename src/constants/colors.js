@@ -44,6 +44,7 @@ const red_120 = '#B13E3E';
 const yellow_80 = '#FEDAAF';
 const yellow_100 = '#F5A94F';
 const yellow_120 = '#CA7816';
+const yellow_star = '#FFCD3C';
 
 /* ===== PROJECT COLOR DEFINITION ===== */
 export const COLOR = {
@@ -99,4 +100,6 @@ export const COLOR = {
   orderStatus_Canceled_text: red_100,
 
   msgBox_title_text: pink_120,
+
+  star_icon_color: yellow_star,
 };

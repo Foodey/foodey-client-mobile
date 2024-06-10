@@ -36,3 +36,7 @@ export { default as Setting } from './setting.svg';
 export { default as Tick } from './tick.svg';
 export { default as ArrowRight } from './arrow-right.svg';
 export { default as Store } from './store.svg';
+export { default as Bell } from './bell.svg';
+export { default as FullArrowLeft } from './full-arrow-left.svg';
+export { default as OrderList } from './order-list.svg';
+export { default as EditMenu } from './edit-menu.svg';

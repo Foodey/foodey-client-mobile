@@ -21,6 +21,10 @@ import {
   RegisteredShopInfoScreen,
   SellerIdentificationScreen,
   RequestSentNotiScreen,
+  SellerHomeScreen,
+  SellerOrderScreen,
+  SellerRatingScreen,
+  SellerRestaurantMenuScreen,
 } from '../screens/profile/seller';
 
 const ProfileStack = createStackNavigator();
@@ -41,6 +45,10 @@ export default function ProfileStackNavigator({ navigation, route }) {
       'RegisteredShopInfo_Screen',
       'SellerIdentification_Screen',
       'RequestSentNoti_Screen',
+      'SellerHome_Screen',
+      'SellerOrder_Screen',
+      'SellerRating_Screen',
+      'SellerRestaurantMenu_Screen',
     ];
     if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
       navigation.setOptions({ tabBarStyle: { display: 'none' } });
@@ -73,6 +81,8 @@ export default function ProfileStackNavigator({ navigation, route }) {
       <ProfileStack.Screen name="ContactInfo_Screen" component={ContactInfoScreen} />
       <ProfileStack.Screen name="PassChange_Screen" component={PassChangeScreen} />
       <ProfileStack.Screen name="AccountDeletion_Screen" component={AccountDeletionScreen} />
+
+      {/*Seller Screens*/}
       <ProfileStack.Screen name="SellerIntro_Screen" component={SellerIntroScreen} />
       <ProfileStack.Screen name="RegisteredShopInfo_Screen" component={RegisteredShopInfoScreen} />
       <ProfileStack.Screen
@@ -80,6 +90,13 @@ export default function ProfileStackNavigator({ navigation, route }) {
         component={SellerIdentificationScreen}
       />
       <ProfileStack.Screen name="RequestSentNoti_Screen" component={RequestSentNotiScreen} />
+      <ProfileStack.Screen name="SellerHome_Screen" component={SellerHomeScreen} />
+      <ProfileStack.Screen name="SellerOrder_Screen" component={SellerOrderScreen} />
+      <ProfileStack.Screen name="SellerRating_Screen" component={SellerRatingScreen} />
+      <ProfileStack.Screen
+        name="SellerRestaurantMenu_Screen"
+        component={SellerRestaurantMenuScreen}
+      />
     </ProfileStack.Navigator>
   );
 }

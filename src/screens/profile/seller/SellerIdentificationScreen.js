@@ -228,18 +228,18 @@ const styles = StyleSheet.create({
 
   step_indicator: {
     //separator
-    separatorFinishedColor: COLOR.indicator_current_color,
+    separatorFinishedColor: COLOR.text_blue_color,
     separatorUnFinishedColor: COLOR.text_press_color,
     //Step
-    stepStrokeCurrentColor: COLOR.indicator_current_color,
+    stepStrokeCurrentColor: COLOR.text_blue_color,
     stepStrokeWidth: 2,
-    stepStrokeFinishedColor: COLOR.indicator_current_color,
+    stepStrokeFinishedColor: COLOR.text_blue_color,
     stepStrokeUnFinishedColor: COLOR.text_press_color,
-    stepIndicatorFinishedColor: COLOR.indicator_current_color,
+    stepIndicatorFinishedColor: COLOR.text_blue_color,
     stepIndicatorUnFinishedColor: COLOR.background_color,
     stepIndicatorCurrentColor: COLOR.background_color,
     //label
-    stepIndicatorLabelCurrentColor: COLOR.indicator_current_color,
+    stepIndicatorLabelCurrentColor: COLOR.text_blue_color,
     stepIndicatorLabelFinishedColor: COLOR.background_color,
     stepIndicatorLabelUnFinishedColor: COLOR.text_press_color,
 
