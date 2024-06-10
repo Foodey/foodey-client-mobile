@@ -203,13 +203,6 @@ const SellerIdentificationScreen = ({ navigation }) => {
         >
           <SubmitButton
             style={{ flex: 1 }}
-            title={'Back'}
-            buttonColor={COLOR.button_red_color}
-            hoverColor={COLOR.button_press_red_color}
-            onPressFunction={() => navigation.goBack()}
-          />
-          <SubmitButton
-            style={{ flex: 1, marginStart: 10 }}
             title={'Next'}
             buttonColor={COLOR.button_primary_color}
             hoverColor={COLOR.button_press_primary_color}

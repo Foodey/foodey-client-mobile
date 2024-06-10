@@ -22,6 +22,7 @@ import {
   SellerIdentificationScreen,
   RequestSentNotiScreen,
   SellerHomeScreen,
+  ShopNavigationScreen,
   SellerOrderScreen,
   SellerRatingScreen,
   SellerRestaurantMenuScreen,
@@ -46,6 +47,7 @@ export default function ProfileStackNavigator({ navigation, route }) {
       'SellerIdentification_Screen',
       'RequestSentNoti_Screen',
       'SellerHome_Screen',
+      'ShopNavigation_Screen',
       'SellerOrder_Screen',
       'SellerRating_Screen',
       'SellerRestaurantMenu_Screen',
@@ -91,6 +93,7 @@ export default function ProfileStackNavigator({ navigation, route }) {
       />
       <ProfileStack.Screen name="RequestSentNoti_Screen" component={RequestSentNotiScreen} />
       <ProfileStack.Screen name="SellerHome_Screen" component={SellerHomeScreen} />
+      <ProfileStack.Screen name="ShopNavigation_Screen" component={ShopNavigationScreen} />
       <ProfileStack.Screen name="SellerOrder_Screen" component={SellerOrderScreen} />
       <ProfileStack.Screen name="SellerRating_Screen" component={SellerRatingScreen} />
       <ProfileStack.Screen

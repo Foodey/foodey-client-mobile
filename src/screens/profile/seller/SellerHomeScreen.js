@@ -6,80 +6,75 @@ import {
   Image,
   StatusBar,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import React from 'react';
 import { COLOR } from '../../../constants/Colors';
-import { Bell, FullArrowLeft, OrderList, EditMenu, Star } from '../../../resources/icons';
+import { IntroHeader } from '../../../components/seller';
+import { restaurants } from '../../../constants/TempData';
+import { FullyRestaurantCard } from '../../../components/home';
 
 const SellerHomeScreen = ({ navigation }) => {
-  const onOrderListPress = () => {
-    navigation.navigate('SellerOrder_Screen');
+  const onResPress = (item) => {
+    navigation.navigate('ShopNavigation_Screen');
   };
 
-  const onViewRatingPress = () => {
-    navigation.navigate('SellerRating_Screen');
-  };
-
-  const onEditMenuPress = () => {
-    navigation.navigate('SellerRestaurantMenu_Screen');
+  const onBackPress = () => {
+    // console.log('OnBackPress');
+    navigation.goBack();
   };
 
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <View style={styles.header_container}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingVertical: 5,
-            paddingHorizontal: 10,
-          }}
-        >
-          <TouchableOpacity
-            style={{ alignItems: 'center', justifyContent: 'center' }}
-            onPress={() => navigation.goBack()}
-          >
-            <FullArrowLeft width={24} height={24} color={COLOR.text_blue_color} />
-          </TouchableOpacity>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.header_text}>
-            Cơm Ông Già - Chi Nhánh 1
-          </Text>
-          <Bell
-            width={24}
-            height={24}
-            color={COLOR.text_primary_color}
-            style={{ marginStart: 'auto' }}
-          />
-        </View>
-        <Image source={require('../../../resources/images/Foodey-LOGO.png')} style={styles.image} />
-      </View>
-      <View style={styles.navigation_bar_container}>
-        <Pressable onPress={onOrderListPress} style={styles.navigation_button}>
-          <OrderList width={50} height={50} color={COLOR.button_press_primary_color} />
-          <Text style={styles.navigation_text}>Order List</Text>
+      <IntroHeader title="Seller Home Screen" onLeftButtonPress={onBackPress} />
+      <View style={styles.static_container}>
+        <Pressable style={styles.create_button}>
+          <Text style={styles.create_button_text}>+ Create New Shop</Text>
         </Pressable>
         <Pressable
-          onPress={onViewRatingPress}
+          //   onPress={onRestaurantSelected} --Use Pressable here for future tab navigate when having more tab
           style={[
-            styles.navigation_button,
-            {
-              borderStartWidth: 1,
-              borderEndWidth: 1,
-              borderStartColor: COLOR.text_press_color,
-              borderEndColor: COLOR.text_press_color,
-            },
+            styles.switcher_option_container,
+            // {
+            //   borderBottomColor: isRestaurantSelected
+            //     ? COLOR.indicator_current_color
+            //     : COLOR.background_color,
+            // },
           ]}
         >
-          <Star width={50} height={50} color={COLOR.star_icon_color} />
-          <Text style={styles.navigation_text}>View Rating</Text>
-        </Pressable>
-        <Pressable onPress={onEditMenuPress} style={styles.navigation_button}>
-          <EditMenu width={50} height={50} color={COLOR.button_press_primary_color} />
-          <Text style={styles.navigation_text}>Edit Menu</Text>
+          <Text
+            style={[
+              styles.switcher_option_text,
+              //   {
+              //     color: isRestaurantSelected
+              //       ? COLOR.indicator_current_color
+              //       : COLOR.text_primary_color,
+              //   },
+            ]}
+          >
+            My Shop (0)
+          </Text>
         </Pressable>
       </View>
-      <View style={{ flex: 2 }}></View>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          alignItems: 'center',
+        }}
+        style={styles.dynamic_container}
+        data={restaurants}
+        renderItem={({ item }) => (
+          <FullyRestaurantCard
+            // style={{ margin: 25 }}
+            wallpaper={item.wallpaper}
+            logo={item.logo}
+            name={item.name}
+            avgReview={item.rating}
+            onPressFunction={() => onResPress(item)}
+          />
+        )}
+      />
     </View>
   );
 };
@@ -87,49 +82,46 @@ const SellerHomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-
-  header_container: {
-    flex: 1,
     backgroundColor: COLOR.background_color,
   },
 
-  navigation_bar_container: {
+  static_container: {},
+
+  dynamic_container: {
     flex: 1,
-    backgroundColor: COLOR.background_color,
-    flexDirection: 'row',
-    margin: 10,
+    marginTop: 15,
+  },
+
+  create_button: {
+    borderWidth: 2,
+    borderColor: COLOR.button_press_primary_color,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: 20,
+    margin: 21,
   },
 
-  header_text: {
-    fontFamily: 'Manrope-Bold',
-    color: COLOR.text_primary_color,
+  create_button_text: {
+    fontFamily: 'Manrope-Medium',
     fontSize: 18,
-    marginEnd: 30,
-    marginStart: 10,
+    color: COLOR.button_primary_color,
   },
 
-  image: {
-    flex: 1,
-    width: '80%',
-    height: '80%',
-    alignSelf: 'center',
-  },
-
-  navigation_button: {
-    flex: 1,
+  switcher_option_container: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: COLOR.button_secondary_color,
+    marginHorizontal: 21,
+    // backgroundColor: "#f0f"
   },
 
-  navigation_text: {
-    fontFamily: 'Manrope-Bold',
-    color: COLOR.text_primary_color,
-    fontSize: 16,
-    marginTop: 5,
+  switcher_option_text: {
+    fontFamily: 'Manrope-Medium',
+    fontSize: 17.5,
+    color: COLOR.button_secondary_color,
   },
 });
 

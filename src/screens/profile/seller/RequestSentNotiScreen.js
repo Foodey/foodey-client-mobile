@@ -6,7 +6,7 @@ import { SubmitButton } from '../../../components';
 
 const RequestSentNotiScreen = ({ navigation }) => {
   const onGoBackPress = () => {
-    console.log('Back press');
+    // console.log('Back press');
     navigation.pop();
   };
 
