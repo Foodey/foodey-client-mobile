@@ -47,10 +47,9 @@ const RegisteredShopInfoScreen = ({ navigation }) => {
         <View
           style={{
             flex: 1,
-            marginVertical: 21,
-            marginHorizontal: 10,
+            paddingVertical: 21,
+            paddingHorizontal: 10,
             flexDirection: 'row',
-            paddingVertical: 10,
             backgroundColor: COLOR.background_color,
           }}
         >

@@ -28,7 +28,8 @@ const RequestSentNotiScreen = ({ navigation }) => {
         <View style={{ flex: 5 }}>
           <Text style={styles.text}>
             Your request to become a Seller on Foodey has been sent successfully!. On the next few
-            days, please tracking your phone number for the result to become our Foodey's partner!
+            days, please tracking your phone number SMS for the result to become our Foodey's
+            partner!
           </Text>
         </View>
         <SubmitButton
