@@ -10,14 +10,8 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { COLOR } from '../../../constants/Colors';
-import {
-  IntroHeader,
-  PressableInputField,
-  ShortInputField,
-  ImageInput,
-} from '../../../components/seller';
+import { IntroHeader, ShortInputField, ImageInput } from '../../../components/seller';
 import { SubmitButton } from '../../../components';
-import StepIndicator from 'react-native-step-indicator';
 import Checkbox from 'expo-checkbox';
 import { PhotoSelectionModal } from '../../../components/messageBoxes';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -76,6 +70,7 @@ const SellerIdentificationScreen = ({ navigation }) => {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchImageLibrary({ mediaType: 'photo' });
+        // console.log(result.assets[0].uri);
         setSelectedFrontPhotoURI(result.assets[0].uri);
         setIsFrontModalVisible(false);
       } else {
@@ -91,6 +86,7 @@ const SellerIdentificationScreen = ({ navigation }) => {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchImageLibrary({ mediaType: 'photo' });
+        // console.log(result.assets[0].uri);
         setSelectedBackPhotoURI(result.assets[0].uri);
         setIsBackModalVisible(false);
       } else {
@@ -125,23 +121,31 @@ const SellerIdentificationScreen = ({ navigation }) => {
         onLeftButtonPress={onGoBackPress}
         title="Seller Identification"
       />
-      <View style={{ backgroundColor: COLOR.background_color }}>
-        <StepIndicator
-          stepCount={2}
-          labels={['Shop Information', 'Seller Identification']}
-          customStyles={styles.step_indicator}
-          currentPosition={1}
-        />
-      </View>
       <View style={{ flex: 1 }}>
         {/*content container */}
-        <ScrollView style={{ height: '75%', marginTop: 10 }} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{ height: '80%', marginTop: 10 }} showsVerticalScrollIndicator={false}>
+          <Text
+            style={[
+              styles.instruction_text,
+              {
+                fontSize: 16,
+                color: COLOR.indicator_current_color,
+                fontFamily: 'Manrope-Bold',
+                paddingTop: 0,
+              },
+            ]}
+          >
+            To become a Foodey's Seller, please provide us the Shop Owner's citizen identification
+            information for Admin to verify and approve your request. We guarantee that all
+            information provided will be kept confidential
+          </Text>
           <ShortInputField
             title="Citizen identification number"
             placeholder="Enter"
-            isRequired={true}
+            isRequired={false}
+            keyboardType="numeric"
           />
-          <ShortInputField title="Full Name" placeholder="Enter" isRequired={true} />
+          <ShortInputField title="Full Name" placeholder="Enter" isRequired={false} />
           <Text style={styles.instruction_text}>Citizen Identification Card Photos</Text>
           <ImageInput
             style={{}}
@@ -259,10 +263,10 @@ const styles = StyleSheet.create({
   },
 
   policy_text: {
-    fontFamily: 'Manrope-SemiBold',
+    fontFamily: 'Manrope-Bold',
     fontSize: 16.5,
     textAlign: 'justify',
-    color: COLOR.text_primary_color,
+    color: COLOR.indicator_current_color,
   },
 });
 

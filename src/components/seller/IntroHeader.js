@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
-    // backgroundColor: '#0f0',
+    backgroundColor: COLOR.background_color,
   },
 
   button_left: {

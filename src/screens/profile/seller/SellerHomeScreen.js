@@ -36,13 +36,11 @@ const SellerHomeScreen = ({ navigation }) => {
             paddingHorizontal: 10,
           }}
         >
-          <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <FullArrowLeft
-              width={24}
-              height={24}
-              color={COLOR.text_blue_color}
-              onPress={() => navigation.goBack()}
-            />
+          <TouchableOpacity
+            style={{ alignItems: 'center', justifyContent: 'center' }}
+            onPress={() => navigation.goBack()}
+          >
+            <FullArrowLeft width={24} height={24} color={COLOR.text_blue_color} />
           </TouchableOpacity>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.header_text}>
             Cơm Ông Già - Chi Nhánh 1
@@ -107,6 +105,7 @@ const styles = StyleSheet.create({
 
   header_text: {
     fontFamily: 'Manrope-Bold',
+    color: COLOR.text_primary_color,
     fontSize: 18,
     marginEnd: 30,
     marginStart: 10,
@@ -128,6 +127,7 @@ const styles = StyleSheet.create({
 
   navigation_text: {
     fontFamily: 'Manrope-Bold',
+    color: COLOR.text_primary_color,
     fontSize: 16,
     marginTop: 5,
   },

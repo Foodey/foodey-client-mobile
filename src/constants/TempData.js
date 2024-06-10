@@ -752,3 +752,168 @@ export const deliveryInformation = [
     address: '123 ABC Street, Ward 2, District 7, Ho Chi Minh City, Vietnam',
   },
 ];
+
+export const SellerOrder = [
+  {
+    _id: '1',
+    userId: '6660aec05a852b6a1e07785b',
+    shop: {
+      $ref: 'shops',
+      $id: {
+        $oid: '665c61e53b06c55205d8bded',
+      },
+    },
+    note: '',
+    voucherCode: '',
+    shippingAddress: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
+    status: 'PENDING',
+    items: [
+      {
+        productId: '665c62973b06c55205d8bdf2',
+        name: 'Cơm Tấm',
+        image:
+          'https://images.baodantoc.vn/uploads/2023/Th%C3%A1ng%205/Ng%C3%A0y_17/Thanh/quan-com-tam-o-ha-noi-.jpg',
+        description: 'Táo đẹp',
+        categoryId: '664e20aaac680825dd763e0f',
+        productPrice: 100000,
+        quantity: {
+          $numberLong: '1',
+        },
+        totalPrice: 100000,
+      },
+      {
+        productId: '665c62973b06c55205d8bdf3',
+        name: 'Cơm chiên',
+        image:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM_c6XTm15tF2sxCI1h22GKRFAEC3Qag764w&s',
+        description: 'Táo đẹp',
+        categoryId: '664e20aaac680825dd763e0f',
+        productPrice: 100000,
+        quantity: {
+          $numberLong: '2',
+        },
+        totalPrice: 200000,
+      },
+    ],
+    payment: {
+      method: 'CASH',
+      status: 'PENDING',
+      price: 300000,
+    },
+    createdAt: {
+      $date: '2024-06-10T11:05:37.059Z',
+    },
+    updatedAt: {
+      $date: '2024-06-10T11:05:37.059Z',
+    },
+    _class: 'com.foodey.server.order.Order',
+  },
+  {
+    _id: '2',
+    userId: '6660aec05a852b6a1e07785b',
+    shop: {
+      $ref: 'shops',
+      $id: {
+        $oid: '665c61e53b06c55205d8bded',
+      },
+    },
+    note: '',
+    voucherCode: '',
+    shippingAddress: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
+    status: 'PENDING',
+    items: [
+      {
+        productId: '665c62973b06c55205d8bdf2',
+        name: 'Cơm Tấm',
+        image:
+          'https://images.baodantoc.vn/uploads/2023/Th%C3%A1ng%205/Ng%C3%A0y_17/Thanh/quan-com-tam-o-ha-noi-.jpg',
+        description: 'Táo đẹp',
+        categoryId: '664e20aaac680825dd763e0f',
+        productPrice: 100000,
+        quantity: {
+          $numberLong: '1',
+        },
+        totalPrice: 100000,
+      },
+      {
+        productId: '665c62973b06c55205d8bdf3',
+        name: 'Cơm chiên',
+        image:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM_c6XTm15tF2sxCI1h22GKRFAEC3Qag764w&s',
+        description: 'Táo đẹp',
+        categoryId: '664e20aaac680825dd763e0f',
+        productPrice: 100000,
+        quantity: {
+          $numberLong: '2',
+        },
+        totalPrice: 200000,
+      },
+    ],
+    payment: {
+      method: 'CASH',
+      status: 'PENDING',
+      price: 300000,
+    },
+    createdAt: {
+      $date: '2024-06-10T11:05:37.059Z',
+    },
+    updatedAt: {
+      $date: '2024-06-10T11:05:37.059Z',
+    },
+    _class: 'com.foodey.server.order.Order',
+  },
+  {
+    _id: '3',
+    userId: '6660aec05a852b6a1e07785b',
+    shop: {
+      $ref: 'shops',
+      $id: {
+        $oid: '665c61e53b06c55205d8bded',
+      },
+    },
+    note: '',
+    voucherCode: '',
+    shippingAddress: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
+    status: 'PENDING',
+    items: [
+      {
+        productId: '665c62973b06c55205d8bdf2',
+        name: 'Cơm Tấm',
+        image:
+          'https://images.baodantoc.vn/uploads/2023/Th%C3%A1ng%205/Ng%C3%A0y_17/Thanh/quan-com-tam-o-ha-noi-.jpg',
+        description: 'Táo đẹp',
+        categoryId: '664e20aaac680825dd763e0f',
+        productPrice: 100000,
+        quantity: {
+          $numberLong: '1',
+        },
+        totalPrice: 100000,
+      },
+      {
+        productId: '665c62973b06c55205d8bdf3',
+        name: 'Cơm chiên',
+        image:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM_c6XTm15tF2sxCI1h22GKRFAEC3Qag764w&s',
+        description: 'Táo đẹp',
+        categoryId: '664e20aaac680825dd763e0f',
+        productPrice: 100000,
+        quantity: {
+          $numberLong: '2',
+        },
+        totalPrice: 200000,
+      },
+    ],
+    payment: {
+      method: 'CASH',
+      status: 'PENDING',
+      price: 300000,
+    },
+    createdAt: {
+      $date: '2024-06-10T11:05:37.059Z',
+    },
+    updatedAt: {
+      $date: '2024-06-10T11:05:37.059Z',
+    },
+    _class: 'com.foodey.server.order.Order',
+  },
+];

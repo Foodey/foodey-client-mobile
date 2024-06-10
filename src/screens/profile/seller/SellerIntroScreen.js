@@ -31,7 +31,7 @@ const SellerIntroScreen = ({ navigation }) => {
           title={'Start Registered Shop'}
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}
-          onPressFunction={() => navigation.navigate('RegisteredShopInfo_Screen')}
+          onPressFunction={() => navigation.navigate('SellerIdentification_Screen')}
         />
       </View>
     </SafeAreaView>

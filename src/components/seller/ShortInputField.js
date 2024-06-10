@@ -3,13 +3,22 @@ import React from 'react';
 import { COLOR } from '../../constants/Colors';
 import { TextInput } from 'react-native-gesture-handler';
 
-function ShortInputField({ style, title, placeholder, value, isRequired, onChangeText }) {
+function ShortInputField({
+  style,
+  title,
+  placeholder,
+  value,
+  keyboardType,
+  isRequired,
+  onChangeText,
+}) {
   return (
     <View style={[styles.container, style]}>
       <Text style={styles.text}>
         {title} {isRequired && <Text style={{ color: COLOR.text_errorMessage_color }}>*</Text>}
       </Text>
       <TextInput
+        keyboardType={keyboardType}
         multiline
         placeholder={placeholder}
         placeholderTextColor={COLOR.text_press_color}
