@@ -1,7 +1,9 @@
-import { View, Text, Pressable, StyleSheet, Image, StatusBar } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Image, StatusBar, FlatList } from 'react-native';
 import React, { useState } from 'react';
 import { COLOR } from '../../../constants/Colors';
-import { IntroHeader } from '../../../components/seller';
+import { IntroHeader, SellerOrderCard } from '../../../components/seller';
+import { sellerOrders } from '../../../constants/TempData';
+import { formatVND, getTime } from '../../../utils/ValueConverter';
 
 const SellerOrderScreen = ({ navigation }) => {
   const [page, setPage] = useState('0');
@@ -58,7 +60,7 @@ const SellerOrderScreen = ({ navigation }) => {
             style={[
               styles.switcher_option_text,
               {
-                color: page === '1' ? COLOR.button_press_primary_color : COLOR.text_secondary_color,
+                color: page === '1' ? COLOR.button_press_primary_color : COLOR.text_primary_color,
               },
             ]}
           >
@@ -79,7 +81,7 @@ const SellerOrderScreen = ({ navigation }) => {
             style={[
               styles.switcher_option_text,
               {
-                color: page === '2' ? COLOR.button_press_primary_color : COLOR.text_secondary_color,
+                color: page === '2' ? COLOR.button_press_primary_color : COLOR.text_primary_color,
               },
             ]}
           >
@@ -87,12 +89,27 @@ const SellerOrderScreen = ({ navigation }) => {
           </Text>
         </Pressable>
       </View>
+      <FlatList
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingHorizontal: 10, marginTop: 10 }}
+        data={sellerOrders}
+        renderItem={({ item }) => (
+          <SellerOrderCard
+            totalPrice={formatVND(item?.payment?.price)}
+            itemList={item?.items}
+            numOfItems={item?.items?.length}
+            createdTime={getTime(item?.createdAt)}
+          />
+        )}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
 
   switcher_container: {
     flexDirection: 'row',

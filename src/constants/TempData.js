@@ -753,7 +753,7 @@ export const deliveryInformation = [
   },
 ];
 
-export const SellerOrder = [
+export const sellerOrders = [
   {
     _id: '1',
     userId: '6660aec05a852b6a1e07785b',
@@ -776,9 +776,7 @@ export const SellerOrder = [
         description: 'Táo đẹp',
         categoryId: '664e20aaac680825dd763e0f',
         productPrice: 100000,
-        quantity: {
-          $numberLong: '1',
-        },
+        quantity: '1',
         totalPrice: 100000,
       },
       {
@@ -789,9 +787,7 @@ export const SellerOrder = [
         description: 'Táo đẹp',
         categoryId: '664e20aaac680825dd763e0f',
         productPrice: 100000,
-        quantity: {
-          $numberLong: '2',
-        },
+        quantity: '2',
         totalPrice: 200000,
       },
     ],
@@ -800,9 +796,7 @@ export const SellerOrder = [
       status: 'PENDING',
       price: 300000,
     },
-    createdAt: {
-      $date: '2024-06-10T11:05:37.059Z',
-    },
+    createdAt: '2024-06-10T11:05:37.059Z',
     updatedAt: {
       $date: '2024-06-10T11:05:37.059Z',
     },
@@ -830,9 +824,7 @@ export const SellerOrder = [
         description: 'Táo đẹp',
         categoryId: '664e20aaac680825dd763e0f',
         productPrice: 100000,
-        quantity: {
-          $numberLong: '1',
-        },
+        quantity: '1',
         totalPrice: 100000,
       },
       {
@@ -843,9 +835,7 @@ export const SellerOrder = [
         description: 'Táo đẹp',
         categoryId: '664e20aaac680825dd763e0f',
         productPrice: 100000,
-        quantity: {
-          $numberLong: '2',
-        },
+        quantity: '2',
         totalPrice: 200000,
       },
     ],
@@ -854,9 +844,7 @@ export const SellerOrder = [
       status: 'PENDING',
       price: 300000,
     },
-    createdAt: {
-      $date: '2024-06-10T11:05:37.059Z',
-    },
+    createdAt: '2024-06-10T11:05:37.059Z',
     updatedAt: {
       $date: '2024-06-10T11:05:37.059Z',
     },
@@ -884,9 +872,7 @@ export const SellerOrder = [
         description: 'Táo đẹp',
         categoryId: '664e20aaac680825dd763e0f',
         productPrice: 100000,
-        quantity: {
-          $numberLong: '1',
-        },
+        quantity: '1',
         totalPrice: 100000,
       },
       {
@@ -897,9 +883,7 @@ export const SellerOrder = [
         description: 'Táo đẹp',
         categoryId: '664e20aaac680825dd763e0f',
         productPrice: 100000,
-        quantity: {
-          $numberLong: '2',
-        },
+        quantity: '2',
         totalPrice: 200000,
       },
     ],
@@ -908,9 +892,7 @@ export const SellerOrder = [
       status: 'PENDING',
       price: 300000,
     },
-    createdAt: {
-      $date: '2024-06-10T11:05:37.059Z',
-    },
+    createdAt: '2024-06-10T11:05:37.059Z',
     updatedAt: {
       $date: '2024-06-10T11:05:37.059Z',
     },

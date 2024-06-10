@@ -49,3 +49,20 @@ export function formatDateTime(value) {
     return null; // Return None on parsing errors
   }
 }
+
+export function getTime(value) {
+  try {
+    // Parse the ISOString date time into a Date object
+    const date = new Date(value);
+
+    // Extract and format date components according to your custom format
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+
+    const result = `${hours}:${minutes}`;
+    return result;
+  } catch (error) {
+    console.error('Error parsing ISOString date:', error);
+    return null; // Return None on parsing errors
+  }
+}

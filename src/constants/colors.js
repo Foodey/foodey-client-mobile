@@ -7,6 +7,7 @@ const dark_100 = '#292D32';
 const dark_120 = '#151719';
 
 const blue_60 = '#BBE8FB';
+const blue_60_trans = '#BBE8FB44';
 const blue_80 = '#80D1F4';
 const blue_100 = '#45B8E9';
 const blue_120 = '#3294BD';
@@ -102,4 +103,6 @@ export const COLOR = {
   msgBox_title_text: pink_120,
 
   star_icon_color: yellow_star,
+
+  order_background_color: blue_60_trans,
 };
