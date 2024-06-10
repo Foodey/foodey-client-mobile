@@ -1,4 +1,13 @@
-import { View, Text, Pressable, SafeAreaView, StyleSheet, StatusBar, Image } from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  StatusBar,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import { SubmitButton } from '~/components';
 import { COLOR } from '~/constants/Colors';
 import React, { useContext, useState } from 'react';
@@ -7,10 +16,18 @@ import { Discount, Wallet, FillLocation, Note, Setting, Store } from '~/resource
 import ArrowRight from '~/resources/icons/arrow-right.svg';
 import { LocationDisplay } from '../../components/home';
 import { ConfirmActionModal } from '../../components/messageBoxes';
+import { AdvancedImage, upload } from 'cloudinary-react-native';
+import cld, { cldUpload } from '~/utils/cloudinary';
+import { auto } from '@cloudinary/url-gen/actions/resize';
+import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { privateRequest, publicRequest } from '~/utils/jwtRequests';
+import { ProfileEndpoint } from '~/constants/API_Endpoints';
 
 const ProfileScreen = ({ navigation }) => {
   const { logout, userInfo } = useContext(AppContext);
   const [isConfirmLogoutVisible, setConfirmLogoutVisible] = useState(false);
+  let avatar = cld.image('test/xsusycjenho14q5kk5h8.png').format('auto');
 
   const onLogoutOKPress = () => {
     setConfirmLogoutVisible(false);
@@ -37,6 +54,24 @@ const ProfileScreen = ({ navigation }) => {
     navigation.navigate('SellerIntro_Screen');
   };
 
+  const selectPhotoTapped = async () => {
+    const fileinfo = await launchImageLibrary();
+    const file = fileinfo?.assets[0];
+    console.log(file);
+
+    // console.log(fileinfo.assets[0]);
+    // const uri = fileinfo?.assets[0]?.uri;
+    // console.log(uri);
+    // console.log(filePath);
+
+    // `${UserEndpoint.GENERAL_USER_FAVORITE}/shops`
+    const upload_avtar_options = await privateRequest.get(ProfileEndpoint.AVATAR_UPLOAD_OPTIONS);
+    const result = await cldUpload(file, upload_avtar_options.data);
+
+    // console.log(result);
+
+    // const upload_avtar_options =
+  };
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
@@ -52,10 +87,13 @@ const ProfileScreen = ({ navigation }) => {
       <Text style={styles.header_text}>Profile</Text>
       <View style={{ flex: 1.25, justifyContent: 'center' }}>
         <View style={styles.header_container}>
-          <Image
-            source={{ uri: 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
-            style={styles.avatar}
-          />
+          <TouchableOpacity onPress={selectPhotoTapped}>
+            <AdvancedImage
+              cldImg={avatar}
+              // source={{ uri: 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
+              style={styles.avatar}
+            />
+          </TouchableOpacity>
           <Text style={styles.user_name_text}>{userInfo.name}</Text>
         </View>
       </View>

@@ -23,5 +23,6 @@ export const UserEndpoint = {
 };
 
 export const ProfileEndpoint = {
+  AVATAR_UPLOAD_OPTIONS: '/v1/users/avatar/upload-options',
   LOG_OUT: '/v1/auth/logout',
 };
