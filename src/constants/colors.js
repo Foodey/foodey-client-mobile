@@ -40,7 +40,8 @@ const green_malachite = '#0BDA51';
 const red_80 = '#FAD6D6';
 const red_100 = '#E47070';
 const red_100_trans = '#E4707011';
-const red_120 = '#B13E3E';
+const red_120 = '#B13E1E';
+const red_error = '#fc0d0d';
 
 const yellow_80 = '#FEDAAF';
 const yellow_100 = '#F5A94F';
@@ -98,7 +99,7 @@ export const COLOR = {
 
   orderStatus_completed_text: green_100,
   orderStatus_onGoing_text: blue_120,
-  orderStatus_Canceled_text: red_100,
+  orderStatus_Canceled_text: red_error,
 
   msgBox_title_text: pink_120,
 

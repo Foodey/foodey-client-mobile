@@ -9,7 +9,7 @@ function SellerOrderCard({
   totalPrice,
   itemList,
   createdTime,
-  isConfirmed,
+  status,
   onDetailPress,
 }) {
   return (
@@ -54,6 +54,33 @@ function SellerOrderCard({
         </View>
       </View>
       <View style={styles.action_container}>
+        <Text
+          style={[
+            styles.status_label_text,
+            {
+              color:
+                status === 'STORE_CONFIRMED'
+                  ? COLOR.text_pink_color
+                  : status === 'DELIVERING'
+                  ? COLOR.orderStatus_onGoing_text
+                  : status === 'DELIVERED'
+                  ? COLOR.orderStatus_completed_text
+                  : status === 'CANCELED'
+                  ? COLOR.orderStatus_Canceled_text
+                  : COLOR.indicator_current_color,
+            },
+          ]}
+        >
+          {status === 'STORE_CONFIRMED'
+            ? 'CONFIRMED'
+            : status === 'DELIVERING'
+            ? 'Ongoing'
+            : status === 'DELIVERED'
+            ? 'Delivered'
+            : status === 'CANCELED'
+            ? 'Canceled'
+            : 'Pending'}
+        </Text>
         <Pressable
           onPress={onDetailPress}
           style={[
@@ -104,6 +131,11 @@ const styles = StyleSheet.create({
     marginEnd: 10,
     paddingVertical: 5,
     paddingHorizontal: 10,
+  },
+
+  status_label_text: {
+    fontFamily: 'Manrope-Bold',
+    fontSize: 18,
   },
 
   button_text: {

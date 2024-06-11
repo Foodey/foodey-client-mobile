@@ -6,13 +6,16 @@ import { sellerOrders } from '../../../constants/TempData';
 import { formatVND, getTime } from '../../../utils/ValueConverter';
 
 const SellerOrderScreen = ({ navigation }) => {
+  const pendingOrders = sellerOrders?.filter((order) => order?.status === 'PENDING');
+  const confirmedOrders = sellerOrders?.filter((order) => order?.status === 'STORE_CONFIRMED');
+
   const [page, setPage] = useState('0');
 
   const onDetailPress = (item) => {
     navigation.navigate('SellerOrderDetail_Screen', { itemInfos: item?.items });
   };
 
-  const onNewPress = () => {
+  const onPendingPress = () => {
     if (page !== '0') setPage('0');
   };
 
@@ -20,7 +23,7 @@ const SellerOrderScreen = ({ navigation }) => {
     if (page !== '1') setPage('1');
   };
 
-  const onHistoryPress = () => {
+  const onAllPress = () => {
     if (page !== '2') setPage('2');
   };
 
@@ -30,7 +33,7 @@ const SellerOrderScreen = ({ navigation }) => {
       <IntroHeader title="Order List" onLeftButtonPress={() => navigation.goBack()} />
       <View style={styles.switcher_container}>
         <Pressable
-          onPress={onNewPress}
+          onPress={onPendingPress}
           style={[
             styles.switcher_option_container,
             {
@@ -47,7 +50,7 @@ const SellerOrderScreen = ({ navigation }) => {
               },
             ]}
           >
-            New
+            Pending
           </Text>
         </Pressable>
         <Pressable
@@ -72,7 +75,7 @@ const SellerOrderScreen = ({ navigation }) => {
           </Text>
         </Pressable>
         <Pressable
-          onPress={onHistoryPress}
+          onPress={onAllPress}
           style={[
             styles.switcher_option_container,
             {
@@ -89,14 +92,14 @@ const SellerOrderScreen = ({ navigation }) => {
               },
             ]}
           >
-            History
+            All
           </Text>
         </Pressable>
       </View>
       <FlatList
         style={{ flex: 1 }}
-        contentContainerStyle={{ paddingHorizontal: 10, marginTop: 10 }}
-        data={sellerOrders}
+        contentContainerStyle={{ paddingHorizontal: 10, marginTop: 10, paddingBottom: 10 }}
+        data={page === '0' ? pendingOrders : page === '1' ? confirmedOrders : sellerOrders}
         renderItem={({ item }) => (
           <SellerOrderCard
             onDetailPress={() => onDetailPress(item)}
@@ -104,6 +107,7 @@ const SellerOrderScreen = ({ navigation }) => {
             itemList={item?.items}
             numOfItems={item?.items?.length}
             createdTime={getTime(item?.createdAt)}
+            status={item?.status}
           />
         )}
       />
