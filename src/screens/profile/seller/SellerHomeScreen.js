@@ -19,6 +19,10 @@ const SellerHomeScreen = ({ navigation }) => {
     navigation.navigate('ShopNavigation_Screen');
   };
 
+  const onCreateShopPress = () => {
+    navigation.navigate('ShopCreation_Screen');
+  };
+
   const onBackPress = () => {
     // console.log('OnBackPress');
     navigation.goBack();
@@ -27,9 +31,9 @@ const SellerHomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <IntroHeader title="Seller Home Screen" onLeftButtonPress={onBackPress} />
+      <IntroHeader title="Seller Screen" onLeftButtonPress={onBackPress} />
       <View style={styles.static_container}>
-        <Pressable style={styles.create_button}>
+        <Pressable style={styles.create_button} onPress={onCreateShopPress}>
           <Text style={styles.create_button_text}>+ Create New Shop</Text>
         </Pressable>
         <Pressable
@@ -53,7 +57,7 @@ const SellerHomeScreen = ({ navigation }) => {
               //   },
             ]}
           >
-            My Shop (0)
+            My Shop ({restaurants.length})
           </Text>
         </Pressable>
       </View>

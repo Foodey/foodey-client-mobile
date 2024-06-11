@@ -10,38 +10,45 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { COLOR } from '../../../constants/Colors';
-import { IntroHeader, ShortInputField, ImageInput } from '../../../components/seller';
+import {
+  IntroHeader,
+  ShortInputField,
+  ImageInput,
+  PressableInputField,
+} from '../../../components/seller';
 import { SubmitButton } from '../../../components';
 import Checkbox from 'expo-checkbox';
 import { PhotoSelectionModal } from '../../../components/messageBoxes';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
-const SellerIdentificationScreen = ({ navigation }) => {
+const ShopCreationScreen = ({ navigation }) => {
   const onGoBackPress = () => {
-    // console.log('Back press');
-    navigation.pop();
+    navigation.goBack();
   };
 
-  const onNextPress = () => {
+  const onSelectAddressPress = () => {
+    //
+  };
+
+  const onCreatePress = () => {
     //verify inputs logic
-    navigation.navigate('RequestSentNoti_Screen');
   };
 
   const [toggleCheckbox, setToggleCheckbox] = useState(false);
 
-  const [isFrontModalVisible, setIsFrontModalVisible] = useState(false);
-  const [isBackModalVisible, setIsBackModalVisible] = useState(false);
+  const [isLogoModalVisible, setIsLogoModalVisible] = useState(false);
+  const [isWallpaperModalVisible, setIsWallpaperModalVisible] = useState(false);
 
-  const [selectedFrontPhotoURI, setSelectedFrontPhotoURI] = useState('');
-  const [selectedBackPhotoURI, setSelectedBackPhotoURI] = useState('');
+  const [selectedLogoURI, setSelectedLogoURI] = useState('');
+  const [selectedWallpaperURI, setSelectedWallpaperURI] = useState('');
 
-  const onFrontPhotoOpenCamera = async () => {
+  const onLogoOpenCamera = async () => {
     try {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
-        setSelectedFrontPhotoURI(result.assets[0].uri);
-        setIsFrontModalVisible(false);
+        setSelectedLogoURI(result.assets[0].uri);
+        setIsLogoModalVisible(false);
       } else {
         console.log('Camera permission denied');
       }
@@ -50,13 +57,13 @@ const SellerIdentificationScreen = ({ navigation }) => {
     }
   };
 
-  const onBackPhotoOpenCamera = async () => {
+  const onWallpaperOpenCamera = async () => {
     try {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
-        setSelectedBackPhotoURI(result.assets[0].uri);
-        setIsBackModalVisible(false);
+        setSelectedWallpaperURI(result.assets[0].uri);
+        setIsWallpaperModalVisible(false);
       } else {
         console.log('Camera permission denied');
       }
@@ -65,14 +72,14 @@ const SellerIdentificationScreen = ({ navigation }) => {
     }
   };
 
-  const onFrontPhotoOpenLibrary = async () => {
+  const onLogoOpenLibrary = async () => {
     try {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchImageLibrary({ mediaType: 'photo' });
         // console.log(result.assets[0].uri);
-        setSelectedFrontPhotoURI(result.assets[0].uri);
-        setIsFrontModalVisible(false);
+        setSelectedLogoURI(result.assets[0].uri);
+        setIsLogoModalVisible(false);
       } else {
         console.log('Library permission denied');
       }
@@ -81,14 +88,14 @@ const SellerIdentificationScreen = ({ navigation }) => {
     }
   };
 
-  const onBackPhotoOpenLibrary = async () => {
+  const onWallpaperOpenLibrary = async () => {
     try {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchImageLibrary({ mediaType: 'photo' });
         // console.log(result.assets[0].uri);
-        setSelectedBackPhotoURI(result.assets[0].uri);
-        setIsBackModalVisible(false);
+        setSelectedWallpaperURI(result.assets[0].uri);
+        setIsWallpaperModalVisible(false);
       } else {
         console.log('Library permission denied');
       }
@@ -101,75 +108,89 @@ const SellerIdentificationScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <StatusBar
         backgroundColor={
-          isFrontModalVisible || isBackModalVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color
+          isLogoModalVisible || isWallpaperModalVisible
+            ? 'rgba(0, 0, 0, 0.35)'
+            : COLOR.background_color
         }
       />
       <PhotoSelectionModal
-        isVisible={isFrontModalVisible}
-        backdropPress={() => setIsFrontModalVisible(false)}
-        openCameraPress={() => onFrontPhotoOpenCamera()}
-        openLibraryPress={() => onFrontPhotoOpenLibrary()}
+        isVisible={isLogoModalVisible}
+        backdropPress={() => setIsLogoModalVisible(false)}
+        openCameraPress={() => onLogoOpenCamera()}
+        openLibraryPress={() => onLogoOpenLibrary()}
       />
       <PhotoSelectionModal
-        isVisible={isBackModalVisible}
-        backdropPress={() => setIsBackModalVisible(false)}
-        openCameraPress={() => onBackPhotoOpenCamera()}
-        openLibraryPress={() => onBackPhotoOpenLibrary()}
+        isVisible={isWallpaperModalVisible}
+        backdropPress={() => setIsWallpaperModalVisible(false)}
+        openCameraPress={() => onWallpaperOpenCamera()}
+        openLibraryPress={() => onWallpaperOpenLibrary()}
       />
       <IntroHeader
         style={{ backgroundColor: COLOR.background_color }}
         onLeftButtonPress={onGoBackPress}
-        title="Seller Identification"
+        title="Shop Creation"
       />
       <View style={{ flex: 1 }}>
         {/*content container */}
-        <ScrollView style={{ height: '80%', marginTop: 10 }} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{ height: '80%' }} showsVerticalScrollIndicator={false}>
+          <Text style={styles.instruction_text}>Shop Information</Text>
+          <ShortInputField title="Shop Name" placeholder="Enter Shop Name" isRequired={true} />
           <Text
             style={[
               styles.instruction_text,
               {
                 fontSize: 16,
-                color: COLOR.indicator_current_color,
+                color: COLOR.text_pink_color,
                 fontFamily: 'Manrope-Bold',
-                paddingTop: 0,
+                paddingVertical: 0,
               },
             ]}
           >
-            To become a Foodey's Seller, please provide us the Shop Owner's citizen identification
-            information for Admin to verify and approve your request. We guarantee that all
-            information provided will be kept confidential.
+            To gain attention from the customer, your shop should be named in this order:
+          </Text>
+          <Text
+            style={[
+              {
+                fontSize: 16,
+                color: COLOR.text_pink_color,
+                fontFamily: 'Manrope-Bold',
+                marginBottom: 20,
+                paddingHorizontal: 15,
+              },
+            ]}
+          >
+            [Shop Name] + [Signature Dish] - [Name of Road]
           </Text>
           <ShortInputField
-            title="Citizen identification number"
-            placeholder="Enter"
-            isRequired={false}
+            title="Phone Number"
+            placeholder="Enter Phone Number"
+            isRequired={true}
             keyboardType="numeric"
           />
-          <ShortInputField title="Full Name" placeholder="Enter" isRequired={false} />
-          <Text style={styles.instruction_text}>Citizen Identification Card Photos</Text>
+          <ShortInputField title="Email" placeholder="Enter Your Email" isRequired={true} />
+          <PressableInputField title="Address" onPressFunction={onSelectAddressPress} />
+          <Text style={styles.instruction_text}>Shop Photos</Text>
           <ImageInput
             style={{}}
-            title="Photo of the front of your Citizen Identification card"
-            isRequired={true}
-            imageURI={selectedFrontPhotoURI}
-            onPhotoActionPress={() => setIsFrontModalVisible(true)}
-            onDeletePress={() => setSelectedFrontPhotoURI('')}
+            title="Photo of your Shop Logo (1:1)"
+            imageURI={selectedLogoURI}
+            onPhotoActionPress={() => setIsLogoModalVisible(true)}
+            onDeletePress={() => setSelectedLogoURI('')}
           />
           <Text style={styles.instruction_text}>
-            Please provide close-up photo of the front of your Citizen Identification card. The
-            information in the front of the Citizen Identification card must be clearly shown.
+            Shop with Logo are most likely to be visited by customers. Make sure the uploaded logo
+            has a a 1:1 image ratio.
           </Text>
           <ImageInput
             style={{}}
-            title="Photo of the back of your Citizen Identification card"
-            isRequired={true}
-            imageURI={selectedBackPhotoURI}
-            onPhotoActionPress={() => setIsBackModalVisible(true)}
-            onDeletePress={() => setSelectedBackPhotoURI('')}
+            title="Photo of your Shop Wallpaper (3:2)"
+            imageURI={selectedWallpaperURI}
+            onPhotoActionPress={() => setIsWallpaperModalVisible(true)}
+            onDeletePress={() => setSelectedWallpaperURI('')}
           />
           <Text style={styles.instruction_text}>
-            Please provide close-up photo of the back of your Citizen Identification card. The
-            information in the back of the Citizen Identification card must be clearly shown.
+            Wallpaper makes your Shop menu screen better. Make sure the uploaded wallpaper has a 3:2
+            image ratio.
           </Text>
           <View
             style={{
@@ -186,8 +207,7 @@ const SellerIdentificationScreen = ({ navigation }) => {
               onValueChange={(newValue) => setToggleCheckbox(newValue)}
             />
             <Text style={styles.policy_text}>
-              I confirm all data provided is true and correct. I have read and agree to Foodey
-              Seller's Privacy Policy.
+              I have read and agree to Foodey's Store Privacy Policy.
             </Text>
           </View>
         </ScrollView>
@@ -203,10 +223,10 @@ const SellerIdentificationScreen = ({ navigation }) => {
         >
           <SubmitButton
             style={{ flex: 1 }}
-            title={'Next'}
+            title={'Create Shop'}
             buttonColor={COLOR.button_primary_color}
             hoverColor={COLOR.button_press_primary_color}
-            onPressFunction={onNextPress}
+            // onPressFunction={onCreatePress}
           />
         </View>
       </View>
@@ -263,4 +283,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SellerIdentificationScreen;
+export default ShopCreationScreen;
