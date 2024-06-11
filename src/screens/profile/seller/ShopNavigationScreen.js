@@ -52,14 +52,14 @@ const ShopNavigationScreen = ({ navigation }) => {
             </Text>
           </Pressable>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.header_text}>
-            <Text style={{ color: COLOR.text_press_color }}>|</Text> Cơm Ông Già - Chi Nhánh 1
+            <Text style={{ color: COLOR.text_press_color }}>|{'  '}</Text> Cơm Ông Già - Chi Nhánh 1
           </Text>
-          <Bell
+          {/* <Bell
             width={24}
             height={24}
             color={COLOR.text_primary_color}
             style={{ marginStart: 'auto' }}
-          />
+          /> */}
         </View>
         <Image source={require('../../../resources/images/Foodey-LOGO.png')} style={styles.image} />
         {/* <Image source={{uri: wallpaper || 'https://lsvn.vn/html/lsvn-web/images/no-image.png'}} */}
