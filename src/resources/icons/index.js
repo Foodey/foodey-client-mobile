@@ -40,3 +40,5 @@ export { default as Bell } from './bell.svg';
 export { default as FullArrowLeft } from './full-arrow-left.svg';
 export { default as OrderList } from './order-list.svg';
 export { default as EditMenu } from './edit-menu.svg';
+export { default as PhoneCall } from './phone-call.svg';
+export { default as CloseCircle } from './close-circle.svg';

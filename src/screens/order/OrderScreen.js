@@ -99,7 +99,7 @@ const OrderScreen = ({ navigation }) => {
         <View style={{ marginHorizontal: 21 }}>
           <FlatList
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 250 }}
+            contentContainerStyle={{ paddingBottom: 130 }}
             data={pendingOrderList}
             renderItem={({ item }) => (
               <OrderCard
@@ -119,7 +119,7 @@ const OrderScreen = ({ navigation }) => {
         <View style={{ marginHorizontal: 21 }}>
           <FlatList
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 250 }}
+            contentContainerStyle={{ paddingBottom: 130 }}
             data={deliveredOrderList}
             renderItem={({ item }) => (
               <OrderCard

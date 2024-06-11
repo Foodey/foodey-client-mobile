@@ -1,10 +1,20 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import React from 'react';
 import { COLOR } from '../constants/Colors';
-import { FillLocation } from '../resources/icons';
+import { FillLocation, PhoneCall } from '../resources/icons';
 import ArrowRight from '~/resources/icons/arrow-right.svg';
 
-function AddressCard({ style, title, name, phoneNumber, address, disabled, onPressFunction }) {
+function AddressCard({
+  style,
+  title,
+  name,
+  phoneNumber,
+  address,
+  disabled,
+  onPressFunction,
+  isCanCall,
+  onCallPress,
+}) {
   return (
     <Pressable
       style={[styles.deliveryAddress_container, style]}
@@ -39,8 +49,14 @@ function AddressCard({ style, title, name, phoneNumber, address, disabled, onPre
         </Text>
       </View>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        {!disabled && (
+        {!disabled ? (
           <ArrowRight width={25} height={25} style={{ color: COLOR.text_press_color }} />
+        ) : isCanCall ? (
+          <Pressable onPress={onCallPress}>
+            <PhoneCall width={25} height={25} style={{ color: COLOR.text_blue_color }} />
+          </Pressable>
+        ) : (
+          ''
         )}
       </View>
     </Pressable>

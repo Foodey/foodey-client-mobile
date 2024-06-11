@@ -16,7 +16,7 @@ import ArrowRight from '~/resources/icons/arrow-right.svg';
 // import { orderedProducts } from '~/constants/TempData';
 import { SubmitButton, BackButton, AddressCard } from '../../components';
 import { HomeContext } from '~/contexts/HomeContext';
-import { SuccessNotifyModal } from '../../components/messageBoxes';
+import { SuccessNotifyModal, NoteModal } from '../../components/messageBoxes';
 import { formatVND } from '../../utils/ValueConverter';
 import { placeOrderAPI, deleteAllCartProductAPI } from '../../apiServices/HomeService';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
@@ -36,9 +36,26 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
   //Use states
   const [shippingFee, setShippingFee] = useState(25000);
   const [discountFee, setDiscountFee] = useState(0);
+  const [noteValue, setNoteValue] = useState('');
+
   const [successPlaceOrder, setSuccessPlaceOrder] = useState(false);
+  const [isNoteVisible, setIsNoteVisible] = useState(false);
 
   //Functions:
+  const onNotePress = () => {
+    setIsNoteVisible(true);
+    //
+  };
+
+  const onBackdropPres = () => {
+    setIsNoteVisible(false);
+    //
+  };
+
+  const onModalClosePress = () => {
+    setIsNoteVisible(false);
+    //
+  };
 
   const onOKPressHandler = async (restaurantID) => {
     setSuccessPlaceOrder(false);
@@ -72,6 +89,12 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
+      <NoteModal
+        noteValue={noteValue}
+        isVisible={isNoteVisible}
+        backdropPress={onBackdropPres}
+        onClosePress={onModalClosePress}
+      />
       <SuccessNotifyModal
         visible={successPlaceOrder}
         title="Your order is successfully placed!"
@@ -133,7 +156,10 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
           </Text>
           <ArrowRight width={25} height={25} style={{ color: COLOR.text_press_color }} />
         </Pressable>
-        <Pressable style={[styles.voucher_container, { borderColor: COLOR.text_primary_color }]}>
+        <Pressable
+          style={[styles.voucher_container, { borderColor: COLOR.text_primary_color }]}
+          onPress={onNotePress}
+        >
           <Note width={25} height={25} color={COLOR.text_tertiary_color} />
           <Text style={[styles.voucher_text, { marginStart: 5 }]}>Note</Text>
           <Text

@@ -26,6 +26,7 @@ import {
   SellerOrderScreen,
   SellerRatingScreen,
   SellerRestaurantMenuScreen,
+  SellerOrderDetailScreen,
 } from '../screens/profile/seller';
 
 const ProfileStack = createStackNavigator();
@@ -51,6 +52,7 @@ export default function ProfileStackNavigator({ navigation, route }) {
       'SellerOrder_Screen',
       'SellerRating_Screen',
       'SellerRestaurantMenu_Screen',
+      'SellerOrderDetail_Screen',
     ];
     if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
       navigation.setOptions({ tabBarStyle: { display: 'none' } });
@@ -100,6 +102,7 @@ export default function ProfileStackNavigator({ navigation, route }) {
         name="SellerRestaurantMenu_Screen"
         component={SellerRestaurantMenuScreen}
       />
+      <ProfileStack.Screen name="SellerOrderDetail_Screen" component={SellerOrderDetailScreen} />
     </ProfileStack.Navigator>
   );
 }

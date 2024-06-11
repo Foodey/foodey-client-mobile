@@ -8,6 +8,10 @@ import { formatVND, getTime } from '../../../utils/ValueConverter';
 const SellerOrderScreen = ({ navigation }) => {
   const [page, setPage] = useState('0');
 
+  const onDetailPress = (item) => {
+    navigation.navigate('SellerOrderDetail_Screen', { itemInfos: item?.items });
+  };
+
   const onNewPress = () => {
     if (page !== '0') setPage('0');
   };
@@ -95,6 +99,7 @@ const SellerOrderScreen = ({ navigation }) => {
         data={sellerOrders}
         renderItem={({ item }) => (
           <SellerOrderCard
+            onDetailPress={() => onDetailPress(item)}
             totalPrice={formatVND(item?.payment?.price)}
             itemList={item?.items}
             numOfItems={item?.items?.length}

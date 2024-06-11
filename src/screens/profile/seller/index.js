@@ -7,3 +7,4 @@ export { default as ShopNavigationScreen } from './ShopNavigationScreen.js';
 export { default as SellerOrderScreen } from './SellerOrderScreen.js';
 export { default as SellerRatingScreen } from './SellerRatingScreen.js';
 export { default as SellerRestaurantMenuScreen } from './SellerRestaurantMenuScreen.js';
+export { default as SellerOrderDetailScreen } from './SellerOrderDetailScreen.js';

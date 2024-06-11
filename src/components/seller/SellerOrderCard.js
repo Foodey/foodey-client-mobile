@@ -10,6 +10,7 @@ function SellerOrderCard({
   itemList,
   createdTime,
   isConfirmed,
+  onDetailPress,
 }) {
   return (
     <View style={styles.container}>
@@ -54,6 +55,7 @@ function SellerOrderCard({
       </View>
       <View style={styles.action_container}>
         <Pressable
+          onPress={onDetailPress}
           style={[
             styles.button,
             { marginStart: 'auto', borderWidth: 1, backgroundColor: COLOR.background_color },
@@ -61,14 +63,14 @@ function SellerOrderCard({
         >
           <Text style={[styles.button_text]}>Details</Text>
         </Pressable>
-        <Pressable
+        {/* <Pressable
           style={[
             styles.button,
-            { borderColor: COLOR.text_pink_color, backgroundColor: COLOR.background_color },
+            { borderColor: COLOR.indicator_current_color, backgroundColor: COLOR.background_color },
           ]}
         >
-          <Text style={[styles.button_text, { color: COLOR.text_pink_color }]}>Confirm</Text>
-        </Pressable>
+          <Text style={[styles.button_text, { color: COLOR.indicator_current_color }]}>Confirm</Text>
+        </Pressable> */}
       </View>
     </View>
   );
@@ -88,6 +90,7 @@ const styles = StyleSheet.create({
   action_container: {
     flexDirection: 'row',
     marginTop: 5,
+    paddingVertical: 10,
   },
 
   content_text: {
