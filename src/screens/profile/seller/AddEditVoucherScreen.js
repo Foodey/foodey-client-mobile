@@ -2,11 +2,11 @@ import { View, Text, Pressable, StyleSheet, Image, StatusBar } from 'react-nativ
 import React from 'react';
 import { COLOR } from '../../../constants/Colors';
 
-const SellerRestaurantMenuScreen = ({ navigation }) => {
+const AddEditVoucherScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={COLOR.button_primary_color} />
-      <Text>SellerRestaurantMenuScreen</Text>
+      <StatusBar backgroundColor={COLOR.background_color} />
+      <Text>AddEditVoucherScreen</Text>
     </View>
   );
 };
@@ -15,4 +15,4 @@ const styles = StyleSheet.create({
   container: {},
 });
 
-export default SellerRestaurantMenuScreen;
+export default AddEditVoucherScreen;
