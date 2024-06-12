@@ -13,29 +13,12 @@ import { COLOR } from '~/constants/Colors';
 import React, { useContext } from 'react';
 import { myVouchers } from '../../constants/TempData';
 import { ProfileScreenHeader } from '../../components/profile';
+import { formatTruncatedVND } from '../../utils/ValueConverter';
 
 const MyVouchersScreen = ({ navigation }) => {
   const onBackPressFunction = () => {
     navigation.goBack();
   };
-
-  function convertToVND(value) {
-    value = parseInt(value);
-
-    if (value < 0) return null;
-
-    const thousands = Math.floor(value / 1000);
-    const remainder = value % 1000;
-
-    if (remainder === 0) {
-      return `${thousands}`;
-    }
-
-    const formattedRemainder = remainder.toString().slice(0, -2); // Remove trailing zero
-
-    const result = `${thousands},${formattedRemainder}`;
-    return result;
-  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,22 +30,23 @@ const MyVouchersScreen = ({ navigation }) => {
         data={myVouchers}
         renderItem={({ item }) => (
           <VoucherCard
-            // imageURL={item.imageURL}
-            name={item.name}
-            maximum={convertToVND(item.maximum)}
-            percentages={item.percentages}
-            expiredDate={item.expiredDate}
-            minimumToApply={convertToVND(item.minimumToApply)}
             isIconVisible={true}
+            // imageURL={item.imageURL}
+            code={item?.code}
+            method={item?.method}
+            expiredDate={item?.expiredDate}
+            minimumToApply={formatTruncatedVND(item?.minimumToApply)}
             onPressFunction={() => {
               navigation.navigate('VoucherDetails_Screen', {
                 id: item?.id,
-                name: item?.name,
-                maximum: convertToVND(item?.maximum),
-                percentages: item?.percentages,
-                minimumToApply: convertToVND(item?.minimumToApply),
+                code: item?.code,
+                method: item?.method,
+                minimumToApply: formatTruncatedVND(item?.minimumToApply),
+                // quantity: item?.quantity,
+                // discountAmount: item?.discountAmount,
                 startDate: item?.startDate,
                 expiredDate: item?.expiredDate,
+                isSeller: false,
               });
             }}
           />

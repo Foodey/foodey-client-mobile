@@ -110,16 +110,16 @@ export default function SignInUpScreen({ navigation }) {
         await getFavoriteRestaurants();
         await getPendingOrder();
         await getDeliveredOrder();
-
         // await getFavoriteMeals();
-        setUserInfo(tempUserInfo);
-        setAccessToken(tempUserInfo.jwt.accessToken);
 
         handleLoginErrors('', 'phoneNumber');
         handleLoginErrors('', 'password');
 
         if (isAppFirstLaunch) setIsAppFirstLaunch(false);
         setIsLoading(false);
+
+        setUserInfo(tempUserInfo);
+        setAccessToken(tempUserInfo.jwt.accessToken);
       } else if (response.status === HTTPStatus.NOT_FOUND) {
         handleLoginErrors('   ', 'phoneNumber');
         handleLoginErrors('* Wrong phone number or password, please re-check', 'password');

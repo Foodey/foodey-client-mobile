@@ -88,7 +88,7 @@ const AddEditAddressScreen = ({ navigation, route }) => {
         />
       </View>
       <SubmitButton
-        style={{ height: '7%', margin: 21 }}
+        style={{ height: '7%', margin: 21, marginBottom: 250 }}
         title={'Save'}
         buttonColor={COLOR.button_primary_color}
         hoverColor={COLOR.button_press_primary_color}

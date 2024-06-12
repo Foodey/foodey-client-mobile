@@ -29,6 +29,10 @@ const OrderScreen = ({ navigation }) => {
     });
   };
 
+  const onRateOrderPress = (item) => {
+    navigation.navigate('Rating_Screen');
+  };
+
   const [isOnGoingSelected, setIsOnGoingSelected] = useState(true);
 
   const onOnGoingSelected = () => {
@@ -99,7 +103,7 @@ const OrderScreen = ({ navigation }) => {
         <View style={{ marginHorizontal: 21 }}>
           <FlatList
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 250 }}
+            contentContainerStyle={{ paddingBottom: 130 }}
             data={pendingOrderList}
             renderItem={({ item }) => (
               <OrderCard
@@ -119,7 +123,7 @@ const OrderScreen = ({ navigation }) => {
         <View style={{ marginHorizontal: 21 }}>
           <FlatList
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 250 }}
+            contentContainerStyle={{ paddingBottom: 130 }}
             data={deliveredOrderList}
             renderItem={({ item }) => (
               <OrderCard
@@ -134,6 +138,7 @@ const OrderScreen = ({ navigation }) => {
                 onViewResPress={() => {
                   onViewResPress(item?.shop);
                 }}
+                onRateOrderPress={() => onRateOrderPress(item)}
               />
             )}
           />

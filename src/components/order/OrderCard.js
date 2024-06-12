@@ -79,7 +79,7 @@ function OrderCard({
               {items[2].name}
             </Text>
           </View> */}
-          {items.slice(0, 3).map(({ image, name }, index) => (
+          {items?.slice(0, 3).map(({ image, name }, index) => (
             <View key={index} style={styles.product_container}>
               <Image
                 style={styles.product_image}
@@ -98,7 +98,7 @@ function OrderCard({
             {totalPrice === undefined ? '0.000' : formatVND(totalPrice)}đ
           </Text>
           <Text style={styles.numOfItem_text}>
-            {items.length} items {'>'}
+            {items?.length} items {'>'}
           </Text>
         </View>
       </View>
