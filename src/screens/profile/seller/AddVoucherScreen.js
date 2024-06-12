@@ -12,8 +12,11 @@ import React, { useState, useLayoutEffect } from 'react';
 import { COLOR } from '../../../constants/Colors';
 import { IntroHeader, ShortInputField, PressableInputField } from '../../../components/seller';
 import { SubmitButton } from '../../../components';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const AddEditVoucherScreen = ({ navigation, route }) => {
+  const [isDatePickerVisible, setIsDatePickerVisible] = useState(true);
+
   const onGoBackPress = () => {
     navigation.goBack();
   };
@@ -25,6 +28,7 @@ const AddEditVoucherScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
+      <DateTimePicker isVisible={isDatePickerVisible} mode="datetime" />
       <IntroHeader
         style={{ backgroundColor: COLOR.background_color }}
         onLeftButtonPress={onGoBackPress}
