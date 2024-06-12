@@ -24,7 +24,7 @@ import { getCategoriesAPI } from '../../../apiServices/HomeService';
 import HTTPStatus from '../../../constants/HTTPStatusCodes';
 
 const AddEditProductScreen = ({ navigation, route }) => {
-  const isEdit = false; //Control if the screen is Edit or Add Product Screen
+  const { isEdit } = route.params; //Control if the screen is Edit or Add Product Screen
 
   useLayoutEffect(() => {
     const getCategoriesFunction = async () => {
@@ -47,11 +47,15 @@ const AddEditProductScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  const onCancelPress = () => {
+  const onDeletePress = () => {
     //
   };
 
   const onSavePress = () => {
+    //
+  };
+
+  const onAddPress = () => {
     //
   };
 
@@ -197,10 +201,10 @@ const AddEditProductScreen = ({ navigation, route }) => {
           {isEdit && (
             <SubmitButton
               style={{ flex: 1, marginEnd: 10 }}
-              title={'Cancel Order'}
+              title={'Delete Product'}
               buttonColor={COLOR.button_red_color}
               hoverColor={COLOR.button_press_red_color}
-              // onPressFunction={onCancelPress}
+              onPressFunction={onDeletePress}
             />
           )}
           <SubmitButton
@@ -208,7 +212,7 @@ const AddEditProductScreen = ({ navigation, route }) => {
             title={isEdit ? 'Save' : 'Add'}
             buttonColor={COLOR.button_primary_color}
             hoverColor={COLOR.button_press_primary_color}
-            // onPressFunction={onSavePress}
+            onPressFunction={isEdit ? () => onSavePress : () => onAddPress}
           />
         </View>
       </View>
@@ -223,38 +227,6 @@ const styles = StyleSheet.create({
 
   footer_container: {
     flex: 1,
-  },
-
-  step_indicator: {
-    //separator
-    separatorFinishedColor: COLOR.text_blue_color,
-    separatorUnFinishedColor: COLOR.text_press_color,
-    //Step
-    stepStrokeCurrentColor: COLOR.text_blue_color,
-    stepStrokeWidth: 2,
-    stepStrokeFinishedColor: COLOR.text_blue_color,
-    stepStrokeUnFinishedColor: COLOR.text_press_color,
-    stepIndicatorFinishedColor: COLOR.text_blue_color,
-    stepIndicatorUnFinishedColor: COLOR.background_color,
-    stepIndicatorCurrentColor: COLOR.background_color,
-    //label
-    stepIndicatorLabelCurrentColor: COLOR.text_blue_color,
-    stepIndicatorLabelFinishedColor: COLOR.background_color,
-    stepIndicatorLabelUnFinishedColor: COLOR.text_press_color,
-
-    labelSize: 14,
-    labelFontFamily: 'Manrope-Medium',
-    currentStepLabelColor: COLOR.text_primary_color,
-    labelColor: COLOR.text_primary_color,
-  },
-
-  instruction_text: {
-    fontFamily: 'Manrope-Medium',
-    fontSize: 14,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    textAlign: 'justify',
-    color: COLOR.text_secondary_color,
   },
 
   policy_text: {

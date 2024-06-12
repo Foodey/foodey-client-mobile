@@ -572,7 +572,7 @@ export const pendingOrders = [
 export const myVouchers = [
   {
     id: 1,
-    name: 'Voucher 1',
+    name: 'Voucher 1', ///Should be "code" not "name"/Should be "code" not "name"
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
     maximum: '200000',
@@ -584,7 +584,7 @@ export const myVouchers = [
   {
     id: 2,
     name: 'Voucher 2',
-    imageURL: '../resources/images/Foodey-LOGO.png',
+    //Should be "code" not "name"    imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200000',
     minimumToApply: '150000',
@@ -595,7 +595,7 @@ export const myVouchers = [
   {
     id: 3,
     name: 'Voucher 3',
-    imageURL: '../resources/images/Foodey-LOGO.png',
+    //Should be "code" not "name"    imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
     maximum: '200000',
     minimumToApply: '150000',
@@ -606,7 +606,7 @@ export const myVouchers = [
   {
     id: 4,
     name: 'Voucher 4',
-    imageURL: '../resources/images/Foodey-LOGO.png',
+    //Should be "code" not "name"    imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
     maximum: '200000',
     minimumToApply: '150000',
@@ -617,7 +617,7 @@ export const myVouchers = [
   {
     id: 5,
     name: 'Voucher 5',
-    imageURL: '../resources/images/Foodey-LOGO.png',
+    //Should be "code" not "name"    imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200000',
     minimumToApply: '150000',
@@ -628,7 +628,7 @@ export const myVouchers = [
   {
     id: 6,
     name: 'Voucher 6',
-    imageURL: '../resources/images/Foodey-LOGO.png',
+    //Should be "code" not "name"    imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200000',
     minimumToApply: '150000',
@@ -639,7 +639,7 @@ export const myVouchers = [
   {
     id: 7,
     name: 'Voucher 7',
-    imageURL: '../resources/images/Foodey-LOGO.png',
+    //Should be "code" not "name"    imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200000',
     minimumToApply: '150000',
@@ -650,7 +650,7 @@ export const myVouchers = [
   {
     id: 8,
     name: 'Voucher 8',
-    imageURL: '../resources/images/Foodey-LOGO.png',
+    //Should be "code" not "name"    imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200000',
     minimumToApply: '150000',
@@ -661,7 +661,7 @@ export const myVouchers = [
   {
     id: 9,
     name: 'Voucher 9',
-    imageURL: '../resources/images/Foodey-LOGO.png',
+    //Should be "code" not "name"    imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200000',
     minimumToApply: '2500',
@@ -671,7 +671,7 @@ export const myVouchers = [
 
   {
     id: 10,
-    name: 'Voucher 10',
+    name: 'Voucher 10', //Should be "code" not "name"
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
     maximum: '200000',
@@ -682,7 +682,7 @@ export const myVouchers = [
 
   {
     id: 11,
-    name: 'Voucher 11',
+    name: 'Voucher 11', //Should be "code" not "name"
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '',
     maximum: '200000',
@@ -693,7 +693,7 @@ export const myVouchers = [
 
   {
     id: 12,
-    name: 'Voucher 12',
+    name: 'Voucher 12', //Should be "code" not "name"
     imageURL: '../resources/images/Foodey-LOGO.png',
     percentages: '12',
     maximum: '200000',

@@ -20,11 +20,11 @@ const SellerRestaurantMenuScreen = ({ navigation }) => {
   };
 
   const onAddPress = () => {
-    navigation.navigate('AddEditProduct_Screen');
+    navigation.navigate('AddEditProduct_Screen', { isEdit: false });
   };
 
   const onProductPress = (item) => {
-    //
+    navigation.navigate('AddEditProduct_Screen', { isEdit: true });
   };
 
   return (
