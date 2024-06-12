@@ -3,7 +3,14 @@ import { View, Text, Modal, Pressable, StyleSheet, FlatList, TextInput } from 'r
 import { COLOR } from '../../constants/Colors';
 import { CloseCircle } from '../../resources/icons';
 
-function NoteModal({ style, isVisible, backdropPress, noteValue, onClosePress }) {
+function NoteModal({
+  style,
+  isVisible,
+  backdropPress,
+  noteValue,
+  characterLimit = 100,
+  onClosePress,
+}) {
   const [note, setNote] = useState(noteValue);
   const onChangeText = (value) => {
     setNote(value);
@@ -40,10 +47,12 @@ function NoteModal({ style, isVisible, backdropPress, noteValue, onClosePress })
                 fontFamily: 'Manrope-Medium',
                 fontSize: 16,
                 color:
-                  note.length > 250 ? COLOR.text_errorMessage_color : COLOR.text_secondary_color,
+                  note.length > { characterLimit }
+                    ? COLOR.text_errorMessage_color
+                    : COLOR.text_secondary_color,
               }}
             >
-              {note.length}/250
+              {note.length}/{characterLimit}
             </Text>
           </View>
         </View>

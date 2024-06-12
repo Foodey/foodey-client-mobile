@@ -29,6 +29,10 @@ const OrderScreen = ({ navigation }) => {
     });
   };
 
+  const onRateOrderPress = (item) => {
+    navigation.navigate('Rating_Screen');
+  };
+
   const [isOnGoingSelected, setIsOnGoingSelected] = useState(true);
 
   const onOnGoingSelected = () => {
@@ -134,6 +138,7 @@ const OrderScreen = ({ navigation }) => {
                 onViewResPress={() => {
                   onViewResPress(item?.shop);
                 }}
+                onRateOrderPress={() => onRateOrderPress(item)}
               />
             )}
           />

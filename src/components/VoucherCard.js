@@ -17,6 +17,7 @@ function VoucherCard({
 }) {
   function calculateTimeTillExpired(value) {
     try {
+      //Parse current Date time
       const currentDateTime = new Date();
       const currentYear = currentDateTime.getFullYear();
       const currentMonth = currentDateTime.getMonth() + 1; // Add leading zero if needed
@@ -24,6 +25,7 @@ function VoucherCard({
       const currentHours = currentDateTime.getHours();
       const currentMinutes = currentDateTime.getMinutes();
 
+      //Parse expired Date time
       const expiredDateTime = new Date(value);
       const expiredYear = expiredDateTime.getUTCFullYear();
       const expiredMonth = expiredDateTime.getUTCMonth() + 1; // Add leading zero if needed

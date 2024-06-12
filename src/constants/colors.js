@@ -86,8 +86,6 @@ export const COLOR = {
 
   circleCategory_background_color: pink_100_trans,
 
-  star_background_color: yellow_100,
-
   not_disabled_resendCode_text: pink_100,
   disabled_resendCode_text: pink_60,
 
@@ -104,6 +102,7 @@ export const COLOR = {
   msgBox_title_text: pink_120,
 
   star_icon_color: yellow_star,
+  star_background_color: yellow_100,
 
   order_background_color: blue_60_trans,
 };
