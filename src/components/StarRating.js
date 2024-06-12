@@ -3,7 +3,14 @@ import React, { useState } from 'react';
 import { Star, RateStar } from '../resources/icons';
 import { COLOR } from '../constants/Colors';
 
-const StarRating = ({ style, maxStar, value = 0, onRatingChange }) => {
+const StarRating = ({
+  style,
+  starSize = 55,
+  maxStar,
+  value = 0,
+  isEditable = true,
+  onRatingChange,
+}) => {
   const [rateValue, setRateValue] = useState(value);
 
   const onStarPress = (star) => {
@@ -14,14 +21,14 @@ const StarRating = ({ style, maxStar, value = 0, onRatingChange }) => {
   };
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={[style, { flexDirection: 'row' }]}>
       {[...Array(maxStar)].map((_, index) => {
         const star = index + 1;
         return (
-          <Pressable key={star} onPress={() => onStarPress(star)}>
+          <Pressable key={star} onPress={isEditable ? () => onStarPress(star) : () => {}}>
             <Star
-              width={55}
-              height={55}
+              width={starSize}
+              height={starSize}
               color={star <= rateValue ? COLOR.star_background_color : COLOR.text_press_color}
             />
           </Pressable>

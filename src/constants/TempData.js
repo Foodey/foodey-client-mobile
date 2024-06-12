@@ -778,7 +778,7 @@ export const sellerOrders = [
     note: '',
     voucherCode: '',
     shippingAddress: '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
-    status: 'PENDING',
+    status: 'DELIVERED',
     items: [
       {
         productId: '665c62973b06c55205d8bdf2',

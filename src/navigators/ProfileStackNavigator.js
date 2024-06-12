@@ -31,6 +31,7 @@ import {
   AddEditProductScreen,
   AddEditVoucherScreen,
   AddVoucherScreen,
+  SellerRatingDetailScreen,
 } from '../screens/profile/seller';
 
 const ProfileStack = createStackNavigator();
@@ -61,6 +62,7 @@ export default function ProfileStackNavigator({ navigation, route }) {
       'AddEditProduct_Screen',
       'AddEditVoucher_Screen',
       'AddVoucher_Screen',
+      'SellerRatingDetail_Screen',
     ];
     if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
       navigation.setOptions({ tabBarStyle: { display: 'none' } });
@@ -101,6 +103,7 @@ export default function ProfileStackNavigator({ navigation, route }) {
         name="SellerIdentification_Screen"
         component={SellerIdentificationScreen}
       />
+      <ProfileStack.Screen name="SellerRatingDetail_Screen" component={SellerRatingDetailScreen} />
       <ProfileStack.Screen name="RequestSentNoti_Screen" component={RequestSentNotiScreen} />
       <ProfileStack.Screen name="SellerHome_Screen" component={SellerHomeScreen} />
       <ProfileStack.Screen name="ShopNavigation_Screen" component={ShopNavigationScreen} />

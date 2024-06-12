@@ -23,12 +23,8 @@ const SellerOrderDetailScreen = ({ navigation, route }) => {
     //
   };
 
-  const onBackdropPres = () => {
-    setIsNoteVisible(false);
-    //
-  };
-
-  const onModalClosePress = () => {
+  const onModalClosePress = (note) => {
+    setNoteValue(note);
     setIsNoteVisible(false);
     //
   };
@@ -38,12 +34,7 @@ const SellerOrderDetailScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={isNoteVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color} />
-      <NoteModal
-        noteValue={noteValue}
-        isVisible={isNoteVisible}
-        backdropPress={onBackdropPres}
-        onClosePress={onModalClosePress}
-      />
+      <NoteModal noteValue={noteValue} isVisible={isNoteVisible} onClosePress={onModalClosePress} />
       <IntroHeader title="Order Details" onLeftButtonPress={() => navigation.goBack()} />
       <AddressCard
         title="Delivery Address"

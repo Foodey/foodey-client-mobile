@@ -12,3 +12,4 @@ export { default as ShopCreationScreen } from './ShopCreationScreen.js';
 export { default as AddEditProductScreen } from './AddEditProductScreen.js';
 export { default as AddEditVoucherScreen } from './AddEditVoucherScreen.js';
 export { default as AddVoucherScreen } from './AddVoucherScreen.js';
+export { default as SellerRatingDetailScreen } from './SellerRatingDetailScreen.js';

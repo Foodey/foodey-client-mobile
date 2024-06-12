@@ -86,9 +86,25 @@ function SellerOrderCard({
           style={[
             styles.button,
             { marginStart: 'auto', borderWidth: 1, backgroundColor: COLOR.background_color },
+            {
+              borderColor:
+                status === 'DELIVERED' ? COLOR.indicator_current_color : COLOR.text_secondary_color,
+            },
           ]}
         >
-          <Text style={[styles.button_text]}>Details</Text>
+          <Text
+            style={[
+              styles.button_text,
+              {
+                color:
+                  status === 'DELIVERED'
+                    ? COLOR.indicator_current_color
+                    : COLOR.text_secondary_color,
+              },
+            ]}
+          >
+            {status === 'DELIVERED' ? 'View Order Rating' : 'Detail'}
+          </Text>
         </Pressable>
         {/* <Pressable
           style={[
@@ -141,6 +157,7 @@ const styles = StyleSheet.create({
   button_text: {
     fontFamily: 'Manrope-Bold',
     fontSize: 16,
+    color: COLOR.text_secondary_color,
   },
 });
 

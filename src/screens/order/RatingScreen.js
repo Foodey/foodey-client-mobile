@@ -15,8 +15,8 @@ const RatingScreen = ({ navigation }) => {
     //Validate before submit
   };
 
-  const [orderRate, setOrderRate] = useState(0);
-  const [note, setNote] = useState('');
+  const [orderRating, setOrderRating] = useState(0);
+  const [comment, setComment] = useState('');
 
   return (
     <View style={styles.container}>
@@ -28,29 +28,35 @@ const RatingScreen = ({ navigation }) => {
           source={require('../../resources/images/kfc-logo.png')}
         />
         <Text style={styles.shop_name_text}>Shop Name</Text>
-        <StarRating maxStar={5} value={orderRate} onRatingChange={(value) => setOrderRate(value)} />
+        <StarRating
+          maxStar={5}
+          value={orderRating}
+          onRatingChange={(value) => setOrderRating(value)}
+        />
         <Text style={[styles.shop_name_text, { color: COLOR.text_pink_color }]}>
-          {orderRate === 1
+          {orderRating === 1
             ? 'Very Bad'
-            : orderRate === 2
+            : orderRating === 2
             ? 'Bad'
-            : orderRate === 3
+            : orderRating === 3
             ? 'Normal'
-            : orderRate === 4
+            : orderRating === 4
             ? 'Good'
-            : 'Excellent'}
+            : orderRating === 5
+            ? 'Excellent'
+            : 'Not Rated'}
         </Text>
       </View>
       <View style={styles.second_content_container}>
         <Text style={[styles.shop_name_text, { marginTop: 0, marginBottom: 5 }]}>Comment: </Text>
         <View style={styles.text_input_container}>
           <TextInput
-            value={note}
+            value={comment}
             multiline
             placeholder="Leave your comment here..."
             style={styles.note_text}
             textAlignVertical="top"
-            onChangeText={(value) => setNote(value)}
+            onChangeText={(value) => setComment(value)}
           />
           <Text
             style={{
@@ -58,10 +64,11 @@ const RatingScreen = ({ navigation }) => {
               marginTop: 'auto',
               fontFamily: 'Manrope-Medium',
               fontSize: 16,
-              color: note.length > 200 ? COLOR.text_errorMessage_color : COLOR.text_secondary_color,
+              color:
+                comment.length > 200 ? COLOR.text_errorMessage_color : COLOR.text_secondary_color,
             }}
           >
-            {note.length}/200
+            {comment.length}/200
           </Text>
         </View>
       </View>

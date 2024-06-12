@@ -6,9 +6,9 @@ import { CloseCircle } from '../../resources/icons';
 function NoteModal({
   style,
   isVisible,
-  backdropPress,
   noteValue,
   characterLimit = 100,
+  editable = true,
   onClosePress,
 }) {
   const [note, setNote] = useState(noteValue);
@@ -16,24 +16,29 @@ function NoteModal({
     setNote(value);
   };
 
+  const onModalClose = () => {
+    onClosePress(note);
+  };
+
   return (
     <Modal
       visible={isVisible}
       animationType="fade"
-      onBackdropPress={backdropPress}
+      onBackdropPress={onModalClose}
       transparent={true}
     >
-      <Pressable style={styles.overlay_background} onPress={backdropPress} />
+      <Pressable style={styles.overlay_background} onPress={onModalClose} />
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <View style={[styles.container, style]}>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.header_text}>Add Note</Text>
-            <Pressable onPress={onClosePress} style={{ marginStart: 'auto', marginBottom: 5 }}>
+            <Pressable onPress={onModalClose} style={{ marginStart: 'auto', marginBottom: 5 }}>
               <CloseCircle width={43} height={43} />
             </Pressable>
           </View>
           <View style={styles.text_input_container}>
             <TextInput
+              editable={editable}
               value={note}
               multiline
               placeholder="Leave a note..."

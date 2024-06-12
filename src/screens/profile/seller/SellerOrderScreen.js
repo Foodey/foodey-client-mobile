@@ -12,7 +12,11 @@ const SellerOrderScreen = ({ navigation }) => {
   const [page, setPage] = useState('0');
 
   const onDetailPress = (item) => {
-    navigation.navigate('SellerOrderDetail_Screen', { itemInfos: item?.items });
+    if (item.status === 'DELIVERED') {
+      navigation.navigate('SellerRatingDetail_Screen', { itemInfos: item?.items });
+    } else {
+      navigation.navigate('SellerOrderDetail_Screen', { itemInfos: item?.items });
+    }
   };
 
   const onPendingPress = () => {
