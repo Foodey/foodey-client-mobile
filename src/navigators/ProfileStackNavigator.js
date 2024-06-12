@@ -25,11 +25,12 @@ import {
   ShopNavigationScreen,
   SellerOrderScreen,
   SellerRatingScreen,
-  SellerRestaurantMenuScreen,
+  SellerRestaurantScreen,
   SellerOrderDetailScreen,
   ShopCreationScreen,
   AddEditProductScreen,
   AddEditVoucherScreen,
+  AddVoucherScreen,
 } from '../screens/profile/seller';
 
 const ProfileStack = createStackNavigator();
@@ -54,11 +55,12 @@ export default function ProfileStackNavigator({ navigation, route }) {
       'ShopNavigation_Screen',
       'SellerOrder_Screen',
       'SellerRating_Screen',
-      'SellerRestaurantMenu_Screen',
+      'SellerRestaurant_Screen',
       'SellerOrderDetail_Screen',
       'ShopCreation_Screen',
       'AddEditProduct_Screen',
       'AddEditVoucher_Screen',
+      'AddVoucher_Screen',
     ];
     if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
       navigation.setOptions({ tabBarStyle: { display: 'none' } });
@@ -104,14 +106,12 @@ export default function ProfileStackNavigator({ navigation, route }) {
       <ProfileStack.Screen name="ShopNavigation_Screen" component={ShopNavigationScreen} />
       <ProfileStack.Screen name="SellerOrder_Screen" component={SellerOrderScreen} />
       <ProfileStack.Screen name="SellerRating_Screen" component={SellerRatingScreen} />
-      <ProfileStack.Screen
-        name="SellerRestaurantMenu_Screen"
-        component={SellerRestaurantMenuScreen}
-      />
+      <ProfileStack.Screen name="SellerRestaurant_Screen" component={SellerRestaurantScreen} />
       <ProfileStack.Screen name="SellerOrderDetail_Screen" component={SellerOrderDetailScreen} />
       <ProfileStack.Screen name="ShopCreation_Screen" component={ShopCreationScreen} />
       <ProfileStack.Screen name="AddEditProduct_Screen" component={AddEditProductScreen} />
       <ProfileStack.Screen name="AddEditVoucher_Screen" component={AddEditVoucherScreen} />
+      <ProfileStack.Screen name="AddVoucher_Screen" component={AddVoucherScreen} />
     </ProfileStack.Navigator>
   );
 }

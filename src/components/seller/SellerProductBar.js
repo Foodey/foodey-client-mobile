@@ -17,7 +17,7 @@ function SellerProductBar({ style, name, price, image, isDisable, onProductPress
           source={{ uri: image || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
         />
       </View>
-      <View style={{ flex: 5, marginStart: 10 }}>
+      <View style={{ flex: 5, marginStart: 15 }}>
         <View style={{ flexDirection: 'row' }}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.name_text}>
             {name}
@@ -31,7 +31,7 @@ function SellerProductBar({ style, name, price, image, isDisable, onProductPress
         </View>
         <Text style={styles.price_text}>{formatVND(price)} vnd</Text>
       </View>
-      <View style={{ flex: 1.1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ flex: 1.5, alignItems: 'center', justifyContent: 'center' }}>
         <Pressable onPress={onDeletePress}>
           <Text
             style={{

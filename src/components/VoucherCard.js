@@ -4,10 +4,12 @@ import ArrowRight from '~/resources/icons/arrow-right.svg';
 import { SelectedButton } from '~/components';
 
 function VoucherCard({
+  style,
   imageURL,
-  name,
-  percentages,
-  maximum,
+  code,
+  method,
+  quantity,
+  discountAmount,
   minimumToApply,
   expiredDate,
   onPressFunction,
@@ -75,7 +77,7 @@ function VoucherCard({
   }
 
   return (
-    <Pressable style={styles.container} onPress={onPressFunction}>
+    <Pressable style={[styles.container, style]} onPress={onPressFunction}>
       <View style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: 10 }}>
         <Image
           style={styles.voucher_image}
@@ -87,13 +89,11 @@ function VoucherCard({
         /> */}
       </View>
       <View style={styles.content_container}>
-        <Text style={styles.voucher_text}>Enter "{name}": </Text>
-        {percentages === '' ? (
-          <Text style={styles.voucher_text}>Maximum of {maximum}k</Text>
+        <Text style={styles.voucher_text}>Enter "{code}": </Text>
+        {method === 'SPECIAL_AMOUNT' ? (
+          <Text style={styles.voucher_text}>200k discount</Text>
         ) : (
-          <Text style={styles.voucher_text}>
-            {percentages}% off, maximum {maximum}k
-          </Text>
+          <Text style={styles.voucher_text}>20% off discount</Text>
         )}
         <Text style={styles.minimum_text}>Minimum order of {minimumToApply}k</Text>
         <Text style={styles.expiration_text}>

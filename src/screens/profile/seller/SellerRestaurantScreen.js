@@ -1,10 +1,12 @@
 import { View, Text, Pressable, StyleSheet, FlatList, StatusBar } from 'react-native';
 import React, { useState } from 'react';
 import { COLOR } from '../../../constants/Colors';
-import { sellerOrders } from '../../../constants/TempData';
+import { sellerOrders, myVouchers } from '../../../constants/TempData';
 import { SellerProductBar } from '../../../components/seller';
+import { VoucherCard } from '../../../components';
+import { formatTruncatedVND } from '../../../utils/ValueConverter';
 
-const SellerRestaurantMenuScreen = ({ navigation }) => {
+const SellerRestaurantScreen = ({ navigation }) => {
   const [page, setPage] = useState('0');
 
   const onMenuPress = () => {
@@ -19,8 +21,12 @@ const SellerRestaurantMenuScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const onAddPress = () => {
+  const onAddProductPress = () => {
     navigation.navigate('AddEditProduct_Screen', { isEdit: false });
+  };
+
+  const onAddVoucherPress = () => {
+    navigation.navigate('AddVoucher_Screen');
   };
 
   const onProductPress = (item) => {
@@ -29,7 +35,7 @@ const SellerRestaurantMenuScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={COLOR.button_primary_color} />
+      <StatusBar backgroundColor={COLOR.background_color} />
       <View style={styles.header_container}>
         <View
           style={{
@@ -108,7 +114,7 @@ const SellerRestaurantMenuScreen = ({ navigation }) => {
       <View style={{ flexDirection: 'row', padding: 10 }}>
         <Pressable
           style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}
-          onPress={onAddPress}
+          onPress={page === '0' ? () => onAddProductPress() : () => onAddVoucherPress()}
         >
           <Text
             style={{ fontFamily: 'Manrope-Bold', fontSize: 18, color: COLOR.text_secondary_color }}
@@ -124,22 +130,55 @@ const SellerRestaurantMenuScreen = ({ navigation }) => {
             marginStart: 'auto',
           }}
         >
-          {sellerOrders[0]?.items?.length} product(s)
+          {page === '0' ? sellerOrders[0]?.items?.length : myVouchers?.length}{' '}
+          {page === '0' ? 'product(s)' : 'voucher(s)'}
         </Text>
       </View>
-      <FlatList
-        style={{ flex: 1 }}
-        contentContainerStyle={{ paddingBottom: 5 }}
-        data={sellerOrders[0]?.items}
-        renderItem={({ item }) => (
-          <SellerProductBar
-            onProductPress={() => onProductPress(item)}
-            name={item?.name}
-            image={item?.image}
-            price={item?.productPrice}
-          />
-        )}
-      />
+      {page === '0' ? (
+        <FlatList
+          style={{ flex: 1 }}
+          contentContainerStyle={{ paddingBottom: 5, paddingHorizontal: 5 }}
+          data={sellerOrders[0]?.items}
+          renderItem={({ item }) => (
+            <SellerProductBar
+              style={{ borderRadius: 10 }}
+              onProductPress={() => onProductPress(item)}
+              name={item?.name}
+              image={item?.image}
+              price={item?.productPrice}
+            />
+          )}
+        />
+      ) : (
+        <FlatList
+          style={{ paddingHorizontal: 10 }}
+          showsVerticalScrollIndicator={false}
+          data={myVouchers}
+          renderItem={({ item }) => (
+            <VoucherCard
+              isIconVisible={true}
+              // imageURL={item.imageURL}
+              code={item?.code}
+              method={item?.method}
+              expiredDate={item?.expiredDate}
+              minimumToApply={formatTruncatedVND(item?.minimumToApply)}
+              onPressFunction={() => {
+                navigation.navigate('VoucherDetails_Screen', {
+                  id: item?.id,
+                  code: item?.code,
+                  method: item?.method,
+                  minimumToApply: formatTruncatedVND(item?.minimumToApply),
+                  quantity: item?.quantity,
+                  // discountAmount: item?.discountAmount,
+                  startDate: item?.startDate,
+                  expiredDate: item?.expiredDate,
+                  isSeller: true,
+                });
+              }}
+            />
+          )}
+        />
+      )}
     </View>
   );
 };
@@ -180,4 +219,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SellerRestaurantMenuScreen;
+export default SellerRestaurantScreen;

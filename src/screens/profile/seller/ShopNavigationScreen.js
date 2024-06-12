@@ -25,8 +25,8 @@ const ShopNavigationScreen = ({ navigation }) => {
     navigation.navigate('SellerRating_Screen');
   };
 
-  const onEditMenuPress = () => {
-    navigation.navigate('SellerRestaurantMenu_Screen');
+  const onEditShopInfoPress = () => {
+    navigation.navigate('SellerRestaurant_Screen');
   };
 
   return (
@@ -84,9 +84,9 @@ const ShopNavigationScreen = ({ navigation }) => {
           <Star width={50} height={50} color={COLOR.star_icon_color} />
           <Text style={styles.navigation_text}>View Rating</Text>
         </Pressable>
-        <Pressable onPress={onEditMenuPress} style={styles.navigation_button}>
+        <Pressable onPress={onEditShopInfoPress} style={styles.navigation_button}>
           <EditMenu width={50} height={50} color={COLOR.button_press_primary_color} />
-          <Text style={styles.navigation_text}>Edit Menu</Text>
+          <Text style={styles.navigation_text}>Edit Infos</Text>
         </Pressable>
       </View>
       <View style={{ flex: 2 }}></View>

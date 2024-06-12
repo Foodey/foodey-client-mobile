@@ -159,7 +159,6 @@ const AddEditProductScreen = ({ navigation, route }) => {
                 fontSize: 16,
                 color: COLOR.indicator_current_color,
                 fontFamily: 'Manrope-Bold',
-                paddingTop: 0,
               },
             ]}
           >
@@ -234,6 +233,13 @@ const styles = StyleSheet.create({
     fontSize: 16.5,
     textAlign: 'justify',
     color: COLOR.indicator_current_color,
+  },
+
+  instruction_text: {
+    textAlign: 'justify',
+    padding: 10,
+    paddingTop: 0,
+    marginBottom: 10,
   },
 });
 

@@ -12,7 +12,25 @@ export function formatVND(value) {
   return `${integerPart}`;
 }
 
-export function formatTruncateVND(value) {
+export function formatTruncatedVND(value) {
+  value = parseInt(value);
+
+  if (value < 0) return null;
+
+  const thousands = Math.floor(value / 1000);
+  const remainder = value % 1000;
+
+  if (remainder === 0) {
+    return `${thousands}`;
+  }
+
+  const formattedRemainder = remainder.toString().slice(0, -2); // Remove trailing zero
+
+  const result = `${thousands},${formattedRemainder}`;
+  return result;
+}
+
+export function formatTruncateWithCommaVND(value) {
   value = parseInt(value);
 
   if (value < 0) return null;
