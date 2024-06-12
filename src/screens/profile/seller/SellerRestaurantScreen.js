@@ -157,6 +157,7 @@ const SellerRestaurantScreen = ({ navigation }) => {
           renderItem={({ item }) => (
             <VoucherCard
               isIconVisible={true}
+              style={{ backgroundColor: COLOR.background_color }}
               // imageURL={item.imageURL}
               code={item?.code}
               method={item?.method}
