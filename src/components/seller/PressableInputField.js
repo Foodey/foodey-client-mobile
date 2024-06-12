@@ -14,15 +14,17 @@ function PressableInputField({ style, title, isRequired, value, onPressFunction 
       </View>
       <View style={{ width: '60%', flexDirection: 'row' }}>
         <Text
+          numberOfLines={1}
+          ellipsizeMode="tail"
           style={[
             styles.text,
             {
-              color: value === '' ? COLOR.text_press_color : COLOR.text_primary_color,
+              color: !value ? COLOR.text_press_color : COLOR.text_primary_color,
               marginStart: 'auto',
             },
           ]}
         >
-          {value === '' ? `Set ${title}` : value}
+          {!value ? `Set ${title}` : value}
         </Text>
         <ArrowRight style={{ color: COLOR.text_secondary_color, marginTop: 2 }} />
       </View>

@@ -106,13 +106,26 @@ const SellerRestaurantMenuScreen = ({ navigation }) => {
         </Pressable>
       </View>
       <View style={{ flexDirection: 'row', padding: 10 }}>
-        <Pressable style={{ alignItems: 'center', justifyContent: 'center' }} onPress={onAddPress}>
+        <Pressable
+          style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}
+          onPress={onAddPress}
+        >
           <Text
             style={{ fontFamily: 'Manrope-Bold', fontSize: 18, color: COLOR.text_secondary_color }}
           >
             + Add
           </Text>
         </Pressable>
+        <Text
+          style={{
+            fontFamily: 'Manrope-Bold',
+            fontSize: 16,
+            color: COLOR.text_secondary_color,
+            marginStart: 'auto',
+          }}
+        >
+          {sellerOrders[0]?.items?.length} product(s)
+        </Text>
       </View>
       <FlatList
         style={{ flex: 1 }}

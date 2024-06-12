@@ -18,8 +18,7 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 const SellerIdentificationScreen = ({ navigation }) => {
   const onGoBackPress = () => {
-    // console.log('Back press');
-    navigation.pop();
+    navigation.goBack();
   };
 
   const onNextPress = () => {

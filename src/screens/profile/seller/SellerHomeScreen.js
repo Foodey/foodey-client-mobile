@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
 
   create_button: {
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: COLOR.button_press_primary_color,
     borderRadius: 10,
     alignItems: 'center',

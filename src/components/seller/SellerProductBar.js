@@ -36,7 +36,7 @@ function SellerProductBar({ style, name, price, image, isDisable, onProductPress
           <Text
             style={{
               fontFamily: 'Manrope-Medium',
-              fontSize: 14,
+              fontSize: 15,
               color: COLOR.orderStatus_Canceled_text,
             }}
           >
