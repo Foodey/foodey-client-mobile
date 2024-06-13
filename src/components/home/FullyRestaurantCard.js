@@ -25,9 +25,13 @@ function FullyRestaurantCard({
             {name}
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Star width={17} height={17} style={{ color: COLOR.star_background_color }} />
+            {avgReview && (
+              <Star width={17} height={17} style={{ color: COLOR.star_background_color }} />
+            )}
             <Text style={styles.distance_text}>
-              {avgReview} | {distance} km | {estimateTime} mins
+              {avgReview}
+              {distance && `  |  ${distance} km `}
+              {estimateTime && ` |  ${estimateTime} mins`}
             </Text>
           </View>
         </View>
@@ -73,7 +77,7 @@ const styles = StyleSheet.create({
   distance_text: {
     fontFamily: 'Manrope-Medium',
     fontSize: 13,
-    marginStart: 5,
+    marginStart: 2,
   },
 });
 

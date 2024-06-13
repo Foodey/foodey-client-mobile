@@ -70,8 +70,8 @@ const CategoriesScreen = ({ navigation }) => {
             title={item.name}
             onPressFunction={() => {
               navigation.navigate('CategoryDetail_Screen', {
-                categoryID: item.id,
-                category: item.name,
+                categoryID: item?.id,
+                category: item?.name,
               });
             }}
           />

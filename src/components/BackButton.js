@@ -2,12 +2,12 @@ import React from 'react';
 import { Text, Pressable, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { COLOR } from '~/constants/Colors';
-import FullArrowLeft from '~/resources/icons/full-arrow-left.svg';
+import { FullArrowLeft } from '../resources/icons';
 
 function BackButton(props) {
   return (
     <Pressable style={[styles.button, props.style]} onPress={props.onPressFunction}>
-      <FullArrowLeft width={24} height={24} />
+      <FullArrowLeft width={24} height={24} color={COLOR.text_primary_color} />
       <Text style={styles.button_text}>Back</Text>
     </Pressable>
   );

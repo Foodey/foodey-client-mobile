@@ -22,6 +22,7 @@ import SplashScreen from '~/screens/onBoarding/SplashScreen';
 
 import { AppProvider, AppContext } from '~/contexts/AppContext';
 import { ConfirmOrderScreen } from '../screens/discover';
+import { PhotoSelectionModal } from '../components/messageBoxes';
 
 const MainStack = createStackNavigator();
 
@@ -121,7 +122,7 @@ function AppNav() {
     }
   };
 
-  //Official App Navigator
+  // Official App Navigator
   return (
     isAppFirstLaunch !== null && (
       <NavigationContainer>
@@ -133,7 +134,7 @@ function AppNav() {
     )
   );
 
-  // return <VoucherDetailsScreen />;
+  // return <PhotoSelectionModal />;
 }
 
 export default AppNav;

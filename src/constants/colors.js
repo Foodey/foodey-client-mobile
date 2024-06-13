@@ -7,6 +7,7 @@ const dark_100 = '#292D32';
 const dark_120 = '#151719';
 
 const blue_60 = '#BBE8FB';
+const blue_60_trans = '#BBE8FB44';
 const blue_80 = '#80D1F4';
 const blue_100 = '#45B8E9';
 const blue_120 = '#3294BD';
@@ -38,11 +39,14 @@ const green_malachite = '#0BDA51';
 
 const red_80 = '#FAD6D6';
 const red_100 = '#E47070';
-const red_120 = '#B13E3E';
+const red_100_trans = '#E4707011';
+const red_120 = '#B13E1E';
+const red_error = '#fc0d0d';
 
 const yellow_80 = '#FEDAAF';
 const yellow_100 = '#F5A94F';
 const yellow_120 = '#CA7816';
+const yellow_star = '#FFCD3C';
 
 /* ===== PROJECT COLOR DEFINITION ===== */
 export const COLOR = {
@@ -57,6 +61,7 @@ export const COLOR = {
   text_pink_color: pink_120,
 
   indicator_color: light_60,
+  indicator_current_light_color: peach_80,
   indicator_current_color: peach_100,
   indicator_trans_color: peach_trans,
 
@@ -81,8 +86,6 @@ export const COLOR = {
 
   circleCategory_background_color: pink_100_trans,
 
-  star_background_color: yellow_100,
-
   not_disabled_resendCode_text: pink_100,
   disabled_resendCode_text: pink_60,
 
@@ -94,7 +97,12 @@ export const COLOR = {
 
   orderStatus_completed_text: green_100,
   orderStatus_onGoing_text: blue_120,
-  orderStatus_Canceled_text: red_100,
+  orderStatus_Canceled_text: red_error,
 
   msgBox_title_text: pink_120,
+
+  star_icon_color: yellow_star,
+  star_background_color: yellow_100,
+
+  order_background_color: blue_60_trans,
 };
