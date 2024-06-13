@@ -105,4 +105,5 @@ export const COLOR = {
   star_background_color: yellow_100,
 
   order_background_color: blue_60_trans,
+  text_pending_color: yellow_120,
 };

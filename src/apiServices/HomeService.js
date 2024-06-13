@@ -93,6 +93,15 @@ export const placeOrderAPI = async (restaurantID, voucherCode, paymentMethod, ad
   }
 };
 
+export const cancelOrderAPI = async (orderID) => {
+  try {
+    const response = await request.private.patch(`${HomeEndpoint.PLACE_ORDER}/${orderID}/cancel`);
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
 export const searchResByNameAPI = async (searchValue, page, size) => {
   try {
     const response = await request.public.get(

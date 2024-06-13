@@ -157,7 +157,7 @@ const RestaurantMenuScreen = ({ navigation, route }) => {
         onBackdropPress={() => setCartVisible(false)}
         onClosePress={() => setCartVisible(false)}
         cartData={cartInfo.items}
-        subtotalPrice={cartInfo.totalPrice}
+        subtotalPrice={cartInfo.totalRealPrice}
         onDeletePress={() => onCartClearAllPress(restaurantID)}
         onCheckoutPress={onCartCheckoutPress}
       />

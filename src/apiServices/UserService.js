@@ -10,6 +10,35 @@ export const getPendingOrderAPI = async () => {
   }
 };
 
+export const getStoreConfirmedOrderAPI = async () => {
+  try {
+    const response = await request.private.get(
+      `${UserEndpoint.GET_USER_ORDER}?status=STORE_CONFIRMED`,
+    );
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
+export const getDeliveringOrderAPI = async () => {
+  try {
+    const response = await request.private.get(`${UserEndpoint.GET_USER_ORDER}?status=DELIVERING`);
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
+export const getCanceledOrderAPI = async () => {
+  try {
+    const response = await request.private.get(`${UserEndpoint.GET_USER_ORDER}?status=CANCELED`);
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
 export const getDeliveredOrderAPI = async () => {
   try {
     const response = await request.private.get(`${UserEndpoint.GET_USER_ORDER}?status=DELIVERED`);

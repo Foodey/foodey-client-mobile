@@ -113,7 +113,11 @@ const ProductDetailOrderScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={cartVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color} />
+      <StatusBar
+        backgroundColor={
+          cartVisible || successAddingToCartVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color
+        }
+      />
       <SuccessNotifyModal
         visible={successAddingToCartVisible}
         title="Product added to cart successfully"
@@ -125,7 +129,7 @@ const ProductDetailOrderScreen = ({ navigation, route }) => {
         onBackdropPress={() => setCartVisible(false)}
         onClosePress={() => setCartVisible(false)}
         cartData={cartInfo.items}
-        subtotalPrice={cartInfo.totalPrice}
+        subtotalPrice={cartInfo.totalRealPrice}
         onDeletePress={() => onCartClearAllPress(restaurantID)}
         onCheckoutPress={onCartCheckoutPress}
       />

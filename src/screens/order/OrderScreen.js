@@ -1,13 +1,27 @@
 import React, { useState, useLayoutEffect, useContext, useEffect } from 'react';
 import { View, Text, SafeAreaView, StatusBar, StyleSheet, Pressable, FlatList } from 'react-native';
 import { COLOR } from '~/constants/Colors';
-import { FavoriteMealBar, FavoriteRestaurantBar } from '~/components/favorite';
-import { restaurants, products, pendingOrders, doneOrders } from '~/constants/TempData';
 import { OrderCard } from '~/components/order';
 import { AppContext } from '~/contexts/AppContext';
+import { ConfirmActionModal } from '../../components/messageBoxes';
+import { cancelOrderAPI } from '../../apiServices/HomeService';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
 
 const OrderScreen = ({ navigation }) => {
-  const { pendingOrderList, deliveredOrderList, favoriteRestaurants } = useContext(AppContext);
+  const {
+    pendingOrderList,
+    getPendingOrder,
+    storeConfirmedOrderList,
+    getStoreConfirmedOrder,
+    deliveringOrderList,
+    getDeliveringOrder,
+    deliveredOrderList,
+    getDeliveredOrder,
+    canceledOrderList,
+    getCanceledOrder,
+
+    favoriteRestaurants,
+  } = useContext(AppContext);
 
   const onOrderCardPress = (item) => {
     navigation.navigate('ViewOnlyConfirmOrder_Screen', { orderInfos: item });
@@ -34,23 +48,144 @@ const OrderScreen = ({ navigation }) => {
   };
 
   const [isOnGoingSelected, setIsOnGoingSelected] = useState(true);
+  const [ongoingOrderList, setOngoingOrderList] = useState({});
+  const [completedOrderList, setCompletedOrderList] = useState({});
 
-  const onOnGoingSelected = () => {
-    if (!isOnGoingSelected) setIsOnGoingSelected(true);
+  const [isCancelConfirmVisible, setIsCancelConfirmVisible] = useState(false);
+
+  const [cancelOrderID, setCancelOrderID] = useState('');
+
+  useEffect(() => {
+    const sortList = sortOngoingOrderList(
+      pendingOrderList,
+      storeConfirmedOrderList,
+      deliveringOrderList,
+    );
+    // console.log(sortList.length);
+    setOngoingOrderList(sortList);
+  }, [pendingOrderList, storeConfirmedOrderList, deliveredOrderList]);
+
+  useEffect(() => {
+    const sortList = sortCompletedOrderList(deliveredOrderList, canceledOrderList);
+    // console.log(sortList.length);
+    setCompletedOrderList(sortList);
+  }, [deliveredOrderList, canceledOrderList]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      await getDeliveringOrder();
+      await getStoreConfirmedOrder();
+      await getPendingOrder();
+    };
+
+    fetch();
+  }, []);
+
+  const onOnGoingSelected = async () => {
+    if (!isOnGoingSelected) {
+      setIsOnGoingSelected(true);
+      await getDeliveringOrder();
+      await getStoreConfirmedOrder();
+      await getPendingOrder();
+    }
   };
 
-  const onCompletedSelected = () => {
-    if (isOnGoingSelected) setIsOnGoingSelected(false);
+  const onCompletedSelected = async () => {
+    if (isOnGoingSelected) {
+      setIsOnGoingSelected(false);
+      await getDeliveredOrder();
+      await getCanceledOrder();
+    }
+  };
+
+  const onCancelOrderPress = (item) => {
+    setCancelOrderID(item?.id);
+    setIsCancelConfirmVisible(true);
+  };
+
+  const onOKPress = async () => {
+    try {
+      const response = await cancelOrderAPI(cancelOrderID);
+      if (response?.status === HTTPStatus.OK) {
+        await getCanceledOrder();
+        await getPendingOrder();
+        setCancelOrderID('');
+        setIsCancelConfirmVisible(false);
+      } else {
+        console.log('Error when trying to cancel order');
+      }
+    } catch (err) {
+      console.log('Error when trying to cancel order: ' + err);
+    }
+  };
+
+  //Concat and sort the these 3 orderList into 1 single list to display (PENDING => STORE_CONFIRMED => DELIVERING)
+  const sortOngoingOrderList = (
+    tempPendingOrderList,
+    tempStoreConfirmedOrderList,
+    tempDeliveringOrderList,
+  ) => {
+    if (tempPendingOrderList && tempStoreConfirmedOrderList && tempDeliveringOrderList) {
+      const concatOrderList = [
+        ...tempPendingOrderList,
+        ...tempStoreConfirmedOrderList,
+        ...tempDeliveringOrderList,
+      ];
+
+      // console.log('P length' + tempPendingOrderList.length);
+      // console.log('SC length' + tempStoreConfirmedOrderList.length);
+      // console.log('D length' + tempDeliveringOrderList.length);
+
+      const sortedOrderList = concatOrderList.sort((a, b) => {
+        const statusOrder = ['PENDING', 'STORE_CONFIRMED', 'DELIVERING'];
+
+        return statusOrder.indexOf(a.status) + 1 - (statusOrder.indexOf(b.status) + 1);
+      });
+
+      // console.log(sortedOrderList);
+      return sortedOrderList;
+    }
+    return null;
+  };
+
+  //Concat and sort the these 2 orderList into 1 single list to display (DELIVERED => CANCELED)
+  const sortCompletedOrderList = (tempDeliveredOrderList, tempCanceledConfirmedOrderList) => {
+    if (tempDeliveredOrderList && tempCanceledConfirmedOrderList) {
+      const concatOrderList = [...tempDeliveredOrderList, ...tempCanceledConfirmedOrderList];
+
+      // console.log('P length' + tempPendingOrderList.length);
+      // console.log('SC length' + tempStoreConfirmedOrderList.length);
+      // console.log('D length' + tempDeliveringOrderList.length);
+
+      const sortedOrderList = concatOrderList.sort((a, b) => {
+        const statusOrder = ['DELIVERED', 'CANCELED'];
+
+        return statusOrder.indexOf(a.status) + 1 - (statusOrder.indexOf(b.status) + 1);
+      });
+
+      // console.log(sortedOrderList);
+      return sortedOrderList;
+    }
+    return null;
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={COLOR.background_color} />
+      <StatusBar
+        backgroundColor={isCancelConfirmVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color}
+      />
+      <ConfirmActionModal
+        title="Cancel Order"
+        content="Are you sure you want to cancel this order?"
+        visible={isCancelConfirmVisible}
+        onCancelPress={() => setIsCancelConfirmVisible(false)}
+        onOKPress={() => onOKPress()}
+      />
       <View style={{ paddingHorizontal: 21 }}>
         <Text style={styles.header_text}>Orders</Text>
         <View style={styles.switcher_container}>
           <Pressable
-            onPress={onOnGoingSelected}
+            onPress={() => onOnGoingSelected()}
             style={[
               styles.switcher_option_container,
               {
@@ -74,7 +209,7 @@ const OrderScreen = ({ navigation }) => {
             </Text>
           </Pressable>
           <Pressable
-            onPress={onCompletedSelected}
+            onPress={() => onCompletedSelected()}
             style={[
               styles.switcher_option_container,
               {
@@ -94,7 +229,7 @@ const OrderScreen = ({ navigation }) => {
                 },
               ]}
             >
-              History
+              Delivered
             </Text>
           </Pressable>
         </View>
@@ -104,17 +239,18 @@ const OrderScreen = ({ navigation }) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 130 }}
-            data={pendingOrderList}
+            data={ongoingOrderList}
             renderItem={({ item }) => (
               <OrderCard
                 // onPressFunction={onOrderCartPress}
-                completedOrder={false}
                 id={item?.id}
+                status={item?.status}
                 createdAt={item?.createdAt}
                 // date={item.date}
                 resName={item?.shop?.name}
                 items={item?.items}
                 totalPrice={item?.payment?.price}
+                onCancelOrderPress={() => onCancelOrderPress(item)}
               />
             )}
           />
@@ -124,12 +260,12 @@ const OrderScreen = ({ navigation }) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 130 }}
-            data={deliveredOrderList}
+            data={completedOrderList}
             renderItem={({ item }) => (
               <OrderCard
                 id={item?.id}
                 createdAt={item?.createdAt}
-                completedOrder={true}
+                status={item?.status}
                 // date={item.date}
                 resName={item?.shop?.name}
                 items={item?.items}

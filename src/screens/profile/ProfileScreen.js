@@ -44,15 +44,17 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={COLOR.background_color} />
+      <StatusBar
+        backgroundColor={isConfirmLogoutVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color}
+      />
       <ConfirmActionModal
         visible={isConfirmLogoutVisible}
         title="Log out"
         content="Do you want to log out Foodey?"
-        onEditPhoneNumCancelPress={() => {
+        onCancelPress={() => {
           setConfirmLogoutVisible(false);
         }}
-        onEditPhoneNumOKPress={onLogoutOKPress}
+        onOKPress={onLogoutOKPress}
       />
       <Text style={styles.header_text}>Profile</Text>
       <View style={{ flex: 1.25, justifyContent: 'center' }}>

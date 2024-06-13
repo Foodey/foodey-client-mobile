@@ -67,7 +67,7 @@ function SellerOrderCard({
                   ? COLOR.orderStatus_completed_text
                   : status === 'CANCELED'
                   ? COLOR.orderStatus_Canceled_text
-                  : COLOR.indicator_current_color,
+                  : COLOR.text_pending_color,
             },
           ]}
         >

@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet, Image } from 'react-native';
-import { COLOR } from '~/constants/Colors';
 import ArrowRight from '~/resources/icons/arrow-right.svg';
 import { formatVND, formatDateTime } from '../../utils/ValueConverter';
+import { COLOR } from '../../constants/Colors';
 
 function OrderCard({
   style,
@@ -12,10 +12,11 @@ function OrderCard({
   date,
   items,
   totalPrice,
-  completedOrder,
+  status,
   onPressFunction,
   onRateOrderPress,
   onViewResPress,
+  onCancelOrderPress,
 }) {
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
@@ -107,15 +108,30 @@ function OrderCard({
           style={[
             styles.status_text,
             {
-              color: completedOrder
-                ? COLOR.orderStatus_completed_text
-                : COLOR.orderStatus_onGoing_text,
+              color:
+                status === 'STORE_CONFIRMED'
+                  ? COLOR.text_pink_color
+                  : status === 'DELIVERING'
+                  ? COLOR.orderStatus_onGoing_text
+                  : status === 'DELIVERED'
+                  ? COLOR.orderStatus_completed_text
+                  : status === 'CANCELED'
+                  ? COLOR.orderStatus_Canceled_text
+                  : COLOR.text_pending_color,
             },
           ]}
         >
-          {completedOrder ? 'Completed' : 'Ongoing'}
+          {status === 'STORE_CONFIRMED'
+            ? 'CONFIRMED'
+            : status === 'DELIVERING'
+            ? 'Ongoing'
+            : status === 'DELIVERED'
+            ? 'Delivered'
+            : status === 'CANCELED'
+            ? 'Canceled'
+            : 'Pending'}
         </Text>
-        {completedOrder && (
+        {status === 'DELIVERED' && (
           <View style={{ flexDirection: 'row', marginStart: 'auto' }}>
             <Pressable
               style={[
@@ -136,6 +152,18 @@ function OrderCard({
             <Pressable style={styles.button} onPress={onViewResPress}>
               <Text style={[styles.button_text, { color: COLOR.background_color }]}>
                 View Restaurant
+              </Text>
+            </Pressable>
+          </View>
+        )}
+        {status === 'PENDING' && (
+          <View style={{ flexDirection: 'row', marginStart: 'auto' }}>
+            <Pressable
+              style={[styles.button, { backgroundColor: COLOR.text_errorMessage_color }]}
+              onPress={onCancelOrderPress}
+            >
+              <Text style={[styles.button_text, { color: COLOR.background_color }]}>
+                Cancel Order
               </Text>
             </Pressable>
           </View>
@@ -218,7 +246,7 @@ const styles = StyleSheet.create({
   },
 
   status_text: {
-    fontFamily: 'Manrope-Medium',
+    fontFamily: 'Manrope-Bold',
     fontSize: 16,
   },
 
@@ -227,12 +255,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 8,
     backgroundColor: COLOR.indicator_current_color,
-    marginHorizontal: 5,
+    marginStart: 5,
     padding: 5,
   },
 
   button_text: {
-    fontFamily: 'Manrope-Medium',
+    fontFamily: 'Manrope-SemiBold',
     fontSize: 16,
   },
 });

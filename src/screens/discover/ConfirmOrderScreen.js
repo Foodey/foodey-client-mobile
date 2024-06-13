@@ -173,7 +173,8 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
           <View style={{ flexDirection: 'row' }}>
             <Text style={[styles.price_text]}>Sub-total ({cartInfo?.items?.length} items)</Text>
             <Text style={[styles.price_text, { marginLeft: 'auto' }]}>
-              {cartInfo.totalPrice === undefined ? '0.000' : formatVND(cartInfo.totalPrice)} VND
+              {cartInfo.totalRealPrice === undefined ? '0.000' : formatVND(cartInfo.totalRealPrice)}{' '}
+              VND
             </Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
@@ -200,9 +201,9 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
                 { marginLeft: 'auto', color: COLOR.indicator_current_color },
               ]}
             >
-              {cartInfo.totalPrice === undefined
+              {cartInfo.totalRealPrice === undefined
                 ? '0.000'
-                : formatVND(cartInfo.totalPrice + shippingFee - discountFee)}{' '}
+                : formatVND(cartInfo.totalRealPrice + shippingFee - discountFee)}{' '}
               VND
             </Text>
           </View>

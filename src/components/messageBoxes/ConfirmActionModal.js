@@ -6,14 +6,7 @@ import { PhoneNumberBox } from '../authenticate';
 import { useState, useContext } from 'react';
 import { AuthContext } from '~/contexts/AuthContext';
 
-function ConfirmActionModal({
-  visible,
-  onClose,
-  title,
-  content,
-  onEditPhoneNumCancelPress,
-  onEditPhoneNumOKPress,
-}) {
+function ConfirmActionModal({ visible, onClose, title, content, onCancelPress, onOKPress }) {
   return (
     <Modal transparent={true} transition="fade" visible={visible} onRequestClose={onClose}>
       <View style={styles.overlay_background} />
@@ -33,7 +26,7 @@ function ConfirmActionModal({
           </View>
           <View style={styles.actions_container}>
             <SubmitButton
-              onPressFunction={onEditPhoneNumCancelPress}
+              onPressFunction={onCancelPress}
               showIcon={false}
               title="Cancel"
               style={{ flex: 1, marginEnd: 8, marginVertical: 20 }}
@@ -41,7 +34,7 @@ function ConfirmActionModal({
               hoverColor={COLOR.button_press_secondary_color}
             />
             <SubmitButton
-              onPressFunction={onEditPhoneNumOKPress}
+              onPressFunction={onOKPress}
               title="OK"
               showIcon={false}
               style={{ flex: 1, marginStart: 8, marginVertical: 20 }}

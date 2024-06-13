@@ -36,14 +36,10 @@ function AppNav() {
     setIsAppFirstLaunch,
     // setFavoriteRestaurants,
     // setFavoriteMeals,
-    getPendingOrder,
-    getDeliveredOrder,
     getFavoriteRestaurants,
   } = useContext(AppContext);
 
   const fetchUserData = async () => {
-    await getPendingOrder();
-    await getDeliveredOrder();
     await getFavoriteRestaurants();
     await getLocalSearchHistory();
   };

@@ -95,13 +95,8 @@ function CartScreen({
   };
 
   return (
-    <Modal
-      visible={isVisible}
-      animationType="slide"
-      onBackdropPress={backdropPress}
-      transparent={true}
-    >
-      <View style={styles.overlay_background} />
+    <Modal visible={isVisible} animationType="slide" transparent={true}>
+      <Pressable style={styles.overlay_background} onPress={backdropPress} />
       <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
         <View style={[styles.container, style]}>
           <CloseCircle width={43} height={43} style={styles.close_button} onPress={closeCart} />
