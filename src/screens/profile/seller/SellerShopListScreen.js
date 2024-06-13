@@ -8,23 +8,30 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useContext } from 'react';
 import { COLOR } from '../../../constants/Colors';
 import { IntroHeader } from '../../../components/seller';
 import { restaurants } from '../../../constants/TempData';
 import { FullyRestaurantCard } from '../../../components/home';
 import { getShopOfBrandAPI } from '../../../apiServices/SellerService';
 import HTTPStatus from '../../../constants/HTTPStatusCodes';
+import { SellerContext } from '../../../contexts/SellerContext';
 
 const SellerShopListScreen = ({ navigation, route }) => {
-  const { brandID, brandName } = route.params;
+  const { brandID, brandName, brandLogo, brandWallpaper } = route.params;
+
+  const { getShops, shopList } = useContext(SellerContext);
 
   const onResPress = (item) => {
     navigation.navigate('ShopNavigation_Screen');
   };
 
   const onCreateShopPress = () => {
-    navigation.navigate('ShopCreation_Screen');
+    navigation.navigate('ShopCreation_Screen', {
+      brandID: brandID,
+      brandLogo: brandLogo,
+      brandWallpaper: brandWallpaper,
+    });
   };
 
   const onBackPress = () => {
@@ -32,23 +39,12 @@ const SellerShopListScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  const [shopList, setShopList] = useState([]);
-
   useLayoutEffect(() => {
-    const fetchShop = async () => {
-      try {
-        const response = await getShopOfBrandAPI(brandID);
-        if (response.status === HTTPStatus.OK) {
-          setShopList(response.data.content);
-        } else {
-          console.log('Error when fetching seller brand list');
-        }
-      } catch (err) {
-        console.log('Error when fetching seller brand list ' + err);
-      }
+    const fetch = async () => {
+      await getShops(brandID);
     };
 
-    fetchShop();
+    fetch();
   }, []);
 
   return (

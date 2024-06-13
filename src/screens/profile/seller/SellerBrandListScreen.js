@@ -8,17 +8,25 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useContext } from 'react';
 import { COLOR } from '../../../constants/Colors';
 import { IntroHeader } from '../../../components/seller';
 import { restaurants } from '../../../constants/TempData';
 import { FullyRestaurantCard } from '../../../components/home';
 import { getSellerBrandAPI } from '../../../apiServices/SellerService';
 import HTTPStatus from '../../../constants/HTTPStatusCodes';
+import { SellerContext } from '../../../contexts/SellerContext';
 
 const SellerBrandListScreen = ({ navigation }) => {
+  const { getBrands, brandList } = useContext(SellerContext);
+
   const onBrandPress = (item) => {
-    navigation.navigate('SellerShopList_Screen', { brandID: item?.id, brandName: item?.name });
+    navigation.navigate('SellerShopList_Screen', {
+      brandID: item?.id,
+      brandName: item?.name,
+      brandLogo: item?.logo,
+      brandWallpaper: item?.wallpaper,
+    });
   };
 
   const onCreateBrandPress = () => {
@@ -31,23 +39,12 @@ const SellerBrandListScreen = ({ navigation }) => {
   };
 
   useLayoutEffect(() => {
-    const fetchBrand = async () => {
-      try {
-        const response = await getSellerBrandAPI(5);
-        if (response.status === HTTPStatus.OK) {
-          setBrandList(response.data.content);
-        } else {
-          console.log('Error when fetching seller brand list');
-        }
-      } catch (err) {
-        console.log('Error when fetching seller brand list ' + err);
-      }
+    const fetch = async () => {
+      await getBrands();
     };
 
-    fetchBrand();
+    fetch();
   }, []);
-
-  const [brandList, setBrandList] = useState([]);
 
   return (
     <View style={styles.container}>

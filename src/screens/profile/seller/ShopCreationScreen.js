@@ -8,31 +8,62 @@ import {
   ScrollView,
   PermissionsAndroid,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { COLOR } from '../../../constants/Colors';
-import {
-  IntroHeader,
-  ShortInputField,
-  ImageInput,
-  PressableInputField,
-} from '../../../components/seller';
+import { IntroHeader, ShortInputField, PressableInputField } from '../../../components/seller';
 import { SubmitButton } from '../../../components';
-import Checkbox from 'expo-checkbox';
-import { PhotoSelectionModal } from '../../../components/messageBoxes';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import HTTPStatus from '../../../constants/HTTPStatusCodes';
+import { getShopOfBrandAPI } from '../../../apiServices/SellerService';
+import { SellerContext } from '../../../contexts/SellerContext';
 
-const ShopCreationScreen = ({ navigation }) => {
+const ShopCreationScreen = ({ navigation, route }) => {
+  const { brandID, brandLogo, brandWallpaper } = route.params;
+
+  const { getShops } = useContext(SellerContext);
+
   const onGoBackPress = () => {
     navigation.goBack();
   };
 
   const onSelectAddressPress = () => {
     //
+    setShopAddressErr('');
+    //setShopAddress();
   };
 
-  const onCreatePress = () => {
+  const onCreatePress = async () => {
     //verify inputs logic
+    let isValid = true;
+
+    if (shopName === '') {
+      setShopNameErr('Please input your shop name');
+      isValid = false;
+    } else if (shopName.length > 18) {
+      setShopNameErr('Shop name should be maximum of 40 characters only');
+      isValid = false;
+    }
+
+    // if(shopAddress === ''){
+    //   setShopAddressErr('Please input your shop address');
+    //   isValid = false;
+    // }
+
+    if (isValid) {
+      //createNewShop();
+      await getShops(brandID);
+      setShopName('');
+      setShopNameErr('');
+      setShopAddress('');
+      setShopAddressErr('');
+      navigation.goBack();
+    }
   };
+
+  const [shopName, setShopName] = useState('');
+  const [shopAddress, setShopAddress] = useState('');
+
+  const [shopNameErr, setShopNameErr] = useState('');
+  const [shopAddressErr, setShopAddressErr] = useState('');
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,7 +77,17 @@ const ShopCreationScreen = ({ navigation }) => {
         {/*content container */}
         <ScrollView style={{ height: '80%' }} showsVerticalScrollIndicator={false}>
           <Text style={styles.instruction_text}>Shop Information</Text>
-          <ShortInputField title="Shop Name" placeholder="Enter Shop Name" isRequired={true} />
+          <ShortInputField
+            title="Shop Name"
+            placeholder="Enter Shop Name"
+            isRequired={true}
+            value={shopName}
+            errorMessage={shopNameErr}
+            onChangeText={(value) => {
+              setShopNameErr('');
+              setShopName(value);
+            }}
+          />
           <View style={styles.instruction_container}>
             <Text
               style={[
@@ -97,7 +138,12 @@ const ShopCreationScreen = ({ navigation }) => {
               [Signature Dish] [Brand Name] - [Name of Road]
             </Text>
           </View>
-          <PressableInputField title="Address" onPressFunction={onSelectAddressPress} />
+          <PressableInputField
+            title="Address"
+            onPressFunction={onSelectAddressPress}
+            value={shopAddress}
+            errorMessage={shopAddressErr}
+          />
         </ScrollView>
         {/*footer container */}
         <View
@@ -114,7 +160,7 @@ const ShopCreationScreen = ({ navigation }) => {
             title={'Create Shop'}
             buttonColor={COLOR.button_primary_color}
             hoverColor={COLOR.button_press_primary_color}
-            // onPressFunction={onCreatePress}
+            onPressFunction={() => onCreatePress()}
           />
         </View>
       </View>

@@ -28,5 +28,5 @@ export const ProfileEndpoint = {
 
 export const SellerEndpoint = {
   BRAND: '/v1/me/shop-brands',
-  SHOP: '/v1/shops/brands',
+  SHOP: '/v1/shops',
 };

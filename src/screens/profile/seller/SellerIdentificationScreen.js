@@ -51,7 +51,7 @@ const SellerIdentificationScreen = ({ navigation }) => {
       isValid = false;
     }
 
-    if (sellerInfoInput.identifyImageFront === '') {
+    if (sellerInfoInput.identifyImageBack === '') {
       handleSellerInfoErrorsChanged(
         'identifyImageBack',
         'Please provide the back side of the image',
@@ -62,6 +62,8 @@ const SellerIdentificationScreen = ({ navigation }) => {
     if (isValid) {
       clearInput();
       clearErrorMessage();
+
+      //sendSellerRoleRequest();
       navigation.navigate('RequestSentNoti_Screen');
     }
   };
