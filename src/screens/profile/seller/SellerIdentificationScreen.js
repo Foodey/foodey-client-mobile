@@ -21,9 +21,49 @@ const SellerIdentificationScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const onNextPress = () => {
+  const onSubmitPress = () => {
     //verify inputs logic
-    navigation.navigate('RequestSentNoti_Screen');
+    // const ciNumberRegex = '\\^d{12}$';
+    let isValid = true;
+
+    if (sellerInfoInput.ciNumber === '') {
+      handleSellerInfoErrorsChanged('ciNumber', 'Please input your citizen identification number');
+      isValid = false;
+    }
+    // else if (!sellerInfoInput.ciNumber.match(ciNumberRegex)) {
+    //   handleSellerInfoErrorsChanged(
+    //     'ciNumber',
+    //     'Invalid citizen identification number format, please re-check',
+    //   );
+    //   isValid = false;
+    // }
+
+    if (sellerInfoInput.fullName === '') {
+      handleSellerInfoErrorsChanged('fullName', 'Please input your full name');
+      isValid = false;
+    }
+
+    if (sellerInfoInput.identifyImageFront === '') {
+      handleSellerInfoErrorsChanged(
+        'identifyImageFront',
+        'Please provide the front side of the image',
+      );
+      isValid = false;
+    }
+
+    if (sellerInfoInput.identifyImageFront === '') {
+      handleSellerInfoErrorsChanged(
+        'identifyImageBack',
+        'Please provide the back side of the image',
+      );
+      isValid = false;
+    }
+
+    if (isValid) {
+      clearInput();
+      clearErrorMessage();
+      navigation.navigate('RequestSentNoti_Screen');
+    }
   };
 
   const [toggleCheckbox, setToggleCheckbox] = useState(false);
@@ -31,15 +71,53 @@ const SellerIdentificationScreen = ({ navigation }) => {
   const [isFrontModalVisible, setIsFrontModalVisible] = useState(false);
   const [isBackModalVisible, setIsBackModalVisible] = useState(false);
 
-  const [selectedFrontPhotoURI, setSelectedFrontPhotoURI] = useState('');
-  const [selectedBackPhotoURI, setSelectedBackPhotoURI] = useState('');
+  const [sellerInfoInput, setSellerInfoInput] = useState({
+    ciNumber: '',
+    fullName: '',
+    identifyImageFront: '',
+    identifyImageBack: '',
+  });
+
+  const [sellerInfoInputErrors, setSellerInfoInputErrors] = useState({
+    citizenIdentifyNumber: '',
+    fullName: '',
+    identifyImageFront: '',
+    identifyImageBack: '',
+  });
+
+  const handleSellerInfoChanged = (field, value) => {
+    setSellerInfoInput((prevState) => ({ ...prevState, [field]: value }));
+  };
+
+  const handleSellerInfoErrorsChanged = (field, errorMessage) => {
+    setSellerInfoInputErrors((prevState) => ({ ...prevState, [field]: errorMessage }));
+  };
+
+  const clearErrorMessage = () => {
+    setSellerInfoInputErrors({
+      ciNumber: '',
+      fullName: '',
+      identifyImageFront: '',
+      identifyImageBack: '',
+    });
+  };
+
+  const clearInput = () => {
+    setSellerInfoInput({
+      ciNumber: '',
+      fullName: '',
+      identifyImageFront: '',
+      identifyImageBack: '',
+    });
+  };
 
   const onFrontPhotoOpenCamera = async () => {
     try {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
-        setSelectedFrontPhotoURI(result.assets[0].uri);
+        handleSellerInfoErrorsChanged('identifyImageFront', '');
+        handleSellerInfoChanged('identifyImageFront', result.assets[0].uri);
         setIsFrontModalVisible(false);
       } else {
         console.log('Camera permission denied');
@@ -54,7 +132,8 @@ const SellerIdentificationScreen = ({ navigation }) => {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
-        setSelectedBackPhotoURI(result.assets[0].uri);
+        handleSellerInfoErrorsChanged('identifyImageBack', '');
+        handleSellerInfoChanged('identifyImageBack', result.assets[0].uri);
         setIsBackModalVisible(false);
       } else {
         console.log('Camera permission denied');
@@ -70,7 +149,8 @@ const SellerIdentificationScreen = ({ navigation }) => {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchImageLibrary({ mediaType: 'photo' });
         // console.log(result.assets[0].uri);
-        setSelectedFrontPhotoURI(result.assets[0].uri);
+        handleSellerInfoErrorsChanged('identifyImageFront', '');
+        handleSellerInfoChanged('identifyImageFront', result.assets[0].uri);
         setIsFrontModalVisible(false);
       } else {
         console.log('Library permission denied');
@@ -86,7 +166,8 @@ const SellerIdentificationScreen = ({ navigation }) => {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchImageLibrary({ mediaType: 'photo' });
         // console.log(result.assets[0].uri);
-        setSelectedBackPhotoURI(result.assets[0].uri);
+        handleSellerInfoErrorsChanged('identifyImageBack', '');
+        handleSellerInfoChanged('identifyImageBack', result.assets[0].uri);
         setIsBackModalVisible(false);
       } else {
         console.log('Library permission denied');
@@ -141,18 +222,35 @@ const SellerIdentificationScreen = ({ navigation }) => {
           <ShortInputField
             title="Citizen identification number"
             placeholder="Enter"
-            isRequired={false}
+            isRequired={true}
             keyboardType="numeric"
+            value={sellerInfoInput.citizenIdentifyNumber}
+            onChangeText={(value) => {
+              handleSellerInfoErrorsChanged('ciNumber', '');
+              handleSellerInfoChanged('ciNumber', value);
+            }}
+            errorMessage={sellerInfoInputErrors.ciNumber}
           />
-          <ShortInputField title="Full Name" placeholder="Enter" isRequired={false} />
+          <ShortInputField
+            title="Full Name"
+            placeholder="Enter"
+            isRequired={true}
+            value={sellerInfoInput.fullName}
+            onChangeText={(value) => {
+              handleSellerInfoErrorsChanged('fullName', '');
+              handleSellerInfoChanged('fullName', value);
+            }}
+            errorMessage={sellerInfoInputErrors.fullName}
+          />
           <Text style={styles.instruction_text}>Citizen Identification Card Photos</Text>
           <ImageInput
             style={{}}
             title="Photo of the front of your Citizen Identification card"
             isRequired={true}
-            imageURI={selectedFrontPhotoURI}
+            imageURI={sellerInfoInput.identifyImageFront}
             onPhotoActionPress={() => setIsFrontModalVisible(true)}
-            onDeletePress={() => setSelectedFrontPhotoURI('')}
+            onDeletePress={() => handleSellerInfoChanged('identifyImageFront', '')}
+            errorMessage={sellerInfoInputErrors.identifyImageFront}
           />
           <Text style={styles.instruction_text}>
             Please provide close-up photo of the front of your Citizen Identification card. The
@@ -162,9 +260,10 @@ const SellerIdentificationScreen = ({ navigation }) => {
             style={{}}
             title="Photo of the back of your Citizen Identification card"
             isRequired={true}
-            imageURI={selectedBackPhotoURI}
+            imageURI={sellerInfoInput.identifyImageBack}
             onPhotoActionPress={() => setIsBackModalVisible(true)}
-            onDeletePress={() => setSelectedBackPhotoURI('')}
+            onDeletePress={() => handleSellerInfoChanged('identifyImageBack', '')}
+            errorMessage={sellerInfoInputErrors.identifyImageBack}
           />
           <Text style={styles.instruction_text}>
             Please provide close-up photo of the back of your Citizen Identification card. The
@@ -179,11 +278,18 @@ const SellerIdentificationScreen = ({ navigation }) => {
               paddingHorizontal: 15,
             }}
           >
-            <Checkbox
-              tintColors={{ true: COLOR.indicator_current_color, false: COLOR.background_color }} //This only support Android, for iOS, view this link: https://github.com/react-native-checkbox/react-native-checkbox
-              value={toggleCheckbox}
-              onValueChange={(newValue) => setToggleCheckbox(newValue)}
-            />
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Checkbox
+                tintColors={{ true: COLOR.indicator_current_color, false: COLOR.background_color }} //This only support Android, for iOS, view this link: https://github.com/react-native-checkbox/react-native-checkbox
+                value={toggleCheckbox}
+                onValueChange={(newValue) => setToggleCheckbox(newValue)}
+              />
+              {!toggleCheckbox && (
+                <Text style={styles.errorMessage_text}>
+                  *Confirm this checkbox before submitting.
+                </Text>
+              )}
+            </View>
             <Text style={styles.policy_text}>
               I confirm all data provided is true and correct. I have read and agree to Foodey
               Seller's Privacy Policy.
@@ -202,10 +308,11 @@ const SellerIdentificationScreen = ({ navigation }) => {
         >
           <SubmitButton
             style={{ flex: 1 }}
-            title={'Next'}
+            title={'Submit'}
             buttonColor={COLOR.button_primary_color}
             hoverColor={COLOR.button_press_primary_color}
-            onPressFunction={onNextPress}
+            onPressFunction={onSubmitPress}
+            disabled={!toggleCheckbox}
           />
         </View>
       </View>
@@ -222,29 +329,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  step_indicator: {
-    //separator
-    separatorFinishedColor: COLOR.text_blue_color,
-    separatorUnFinishedColor: COLOR.text_press_color,
-    //Step
-    stepStrokeCurrentColor: COLOR.text_blue_color,
-    stepStrokeWidth: 2,
-    stepStrokeFinishedColor: COLOR.text_blue_color,
-    stepStrokeUnFinishedColor: COLOR.text_press_color,
-    stepIndicatorFinishedColor: COLOR.text_blue_color,
-    stepIndicatorUnFinishedColor: COLOR.background_color,
-    stepIndicatorCurrentColor: COLOR.background_color,
-    //label
-    stepIndicatorLabelCurrentColor: COLOR.text_blue_color,
-    stepIndicatorLabelFinishedColor: COLOR.background_color,
-    stepIndicatorLabelUnFinishedColor: COLOR.text_press_color,
-
-    labelSize: 14,
-    labelFontFamily: 'Manrope-Medium',
-    currentStepLabelColor: COLOR.text_primary_color,
-    labelColor: COLOR.text_primary_color,
-  },
-
   instruction_text: {
     fontFamily: 'Manrope-Medium',
     fontSize: 14,
@@ -259,6 +343,14 @@ const styles = StyleSheet.create({
     fontSize: 16.5,
     textAlign: 'justify',
     color: COLOR.indicator_current_color,
+  },
+
+  errorMessage_text: {
+    fontFamily: 'Manrope-Bold',
+    fontSize: 14,
+    color: COLOR.text_errorMessage_color,
+    marginStart: 10,
+    marginBottom: 3,
   },
 });
 

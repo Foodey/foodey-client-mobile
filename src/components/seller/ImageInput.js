@@ -10,34 +10,42 @@ function ImageInput({
   exampleImageURI,
   imageURI,
   onPhotoActionPress,
+  errorMessage,
   onDeletePress,
 }) {
   return (
-    <View style={[styles.container, style]}>
-      <Text style={styles.title_text}>
-        {title} {isRequired && <Text style={{ color: COLOR.text_errorMessage_color }}>*</Text>}
-      </Text>
-      <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 20 }}>
-        {!imageURI ? (
-          <Pressable style={styles.choose_image_button} onPress={onPhotoActionPress}>
-            <Add width={32} height={32} color={COLOR.text_press_color} />
-          </Pressable>
-        ) : (
-          <Image style={styles.IC_card_image} source={{ uri: imageURI }} />
-        )}
-        <Image
-          style={{ height: 60, width: 100, marginStart: 20, alignSelf: 'flex-end' }}
-          source={require('../../resources/images/Foodey-LOGO.png')}
-        />
-        {imageURI && (
-          <Pressable
-            style={{ marginStart: 'auto', justifyContent: 'flex-end' }}
-            onPress={onDeletePress}
-          >
-            <Text style={styles.delete_text}>Delete Image</Text>
-          </Pressable>
-        )}
+    <View style={style}>
+      <View style={[styles.container]}>
+        <Text style={styles.title_text}>
+          {title} {isRequired && <Text style={{ color: COLOR.text_errorMessage_color }}>*</Text>}
+        </Text>
+        <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 20 }}>
+          {!imageURI ? (
+            <Pressable style={styles.choose_image_button} onPress={onPhotoActionPress}>
+              <Add width={32} height={32} color={COLOR.text_press_color} />
+            </Pressable>
+          ) : (
+            <Image style={styles.IC_card_image} source={{ uri: imageURI }} />
+          )}
+          <Image
+            style={{ height: 60, width: 100, marginStart: 20, alignSelf: 'flex-end' }}
+            source={require('../../resources/images/Foodey-LOGO.png')}
+          />
+          {imageURI && (
+            <Pressable
+              style={{ marginStart: 'auto', justifyContent: 'flex-end' }}
+              onPress={onDeletePress}
+            >
+              <Text style={styles.delete_text}>Delete Image</Text>
+            </Pressable>
+          )}
+        </View>
       </View>
+      {errorMessage && (
+        <View style={styles.errorMessage_container}>
+          <Text style={styles.errorMessage_text}>* {errorMessage}</Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -76,6 +84,20 @@ const styles = StyleSheet.create({
     fontFamily: 'Manrope-Medium',
     fontSize: 15,
     textDecorationLine: 'underline',
+    color: COLOR.text_errorMessage_color,
+  },
+
+  errorMessage_container: {
+    backgroundColor: COLOR.errorMessage_background_Color,
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    marginBottom: 10,
+  },
+
+  errorMessage_text: {
+    fontFamily: 'Manrope-Bold',
+    fontSize: 16,
     color: COLOR.text_errorMessage_color,
   },
 });

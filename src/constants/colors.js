@@ -39,7 +39,7 @@ const green_malachite = '#0BDA51';
 
 const red_80 = '#FAD6D6';
 const red_100 = '#E47070';
-const red_100_trans = '#E4707011';
+const red_100_trans = '#fc0d0d25';
 const red_120 = '#B13E1E';
 const red_error = '#fc0d0d';
 
@@ -106,4 +106,5 @@ export const COLOR = {
 
   order_background_color: blue_60_trans,
   text_pending_color: yellow_120,
+  errorMessage_background_Color: red_100_trans,
 };

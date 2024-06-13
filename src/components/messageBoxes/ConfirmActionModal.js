@@ -29,7 +29,7 @@ function ConfirmActionModal({ visible, onClose, title, content, onCancelPress, o
               onPressFunction={onCancelPress}
               showIcon={false}
               title="Cancel"
-              style={{ flex: 1, marginEnd: 8, marginVertical: 20 }}
+              style={{ flex: 1, marginEnd: 8, marginVertical: 10 }}
               buttonColor={COLOR.button_secondary_color}
               hoverColor={COLOR.button_press_secondary_color}
             />
@@ -37,7 +37,7 @@ function ConfirmActionModal({ visible, onClose, title, content, onCancelPress, o
               onPressFunction={onOKPress}
               title="OK"
               showIcon={false}
-              style={{ flex: 1, marginStart: 8, marginVertical: 20 }}
+              style={{ flex: 1, marginStart: 8, marginVertical: 10 }}
               buttonColor={COLOR.button_primary_color}
               hoverColor={COLOR.button_press_primary_color}
             />
