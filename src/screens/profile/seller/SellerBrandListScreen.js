@@ -8,15 +8,17 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { COLOR } from '../../../constants/Colors';
 import { IntroHeader } from '../../../components/seller';
 import { restaurants } from '../../../constants/TempData';
 import { FullyRestaurantCard } from '../../../components/home';
+import { getSellerBrandAPI } from '../../../apiServices/SellerService';
+import HTTPStatus from '../../../constants/HTTPStatusCodes';
 
 const SellerBrandListScreen = ({ navigation }) => {
   const onBrandPress = (item) => {
-    navigation.navigate('SellerShopList_Screen');
+    navigation.navigate('SellerShopList_Screen', { brandID: item?.id, brandName: item?.name });
   };
 
   const onCreateBrandPress = () => {
@@ -27,6 +29,25 @@ const SellerBrandListScreen = ({ navigation }) => {
     // console.log('OnBackPress');
     navigation.goBack();
   };
+
+  useLayoutEffect(() => {
+    const fetchBrand = async () => {
+      try {
+        const response = await getSellerBrandAPI(5);
+        if (response.status === HTTPStatus.OK) {
+          setBrandList(response.data.content);
+        } else {
+          console.log('Error when fetching seller brand list');
+        }
+      } catch (err) {
+        console.log('Error when fetching seller brand list ' + err);
+      }
+    };
+
+    fetchBrand();
+  }, []);
+
+  const [brandList, setBrandList] = useState([]);
 
   return (
     <View style={styles.container}>
@@ -57,7 +78,7 @@ const SellerBrandListScreen = ({ navigation }) => {
               //   },
             ]}
           >
-            My Brand ({restaurants.length})
+            My Brand ({brandList.length})
           </Text>
         </Pressable>
       </View>
@@ -67,15 +88,15 @@ const SellerBrandListScreen = ({ navigation }) => {
           alignItems: 'center',
         }}
         style={styles.dynamic_container}
-        data={restaurants}
+        data={brandList}
         renderItem={({ item }) => (
           <FullyRestaurantCard
             // style={{ margin: 25 }}
-            wallpaper={item.wallpaper}
-            logo={item.logo}
-            name={item.name}
-            avgReview={item.rating}
+            wallpaper={item?.wallpaper}
+            logo={item?.logo}
+            name={item?.name}
             onPressFunction={() => onBrandPress(item)}
+            createdDate={item?.createdAt}
           />
         )}
       />

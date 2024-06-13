@@ -21,6 +21,7 @@ import {
   RegisteredShopInfoScreen,
   SellerIdentificationScreen,
   RequestSentNotiScreen,
+  SellerBrandListScreen,
   SellerShopListScreen,
   ShopNavigationScreen,
   SellerOrderScreen,
@@ -33,7 +34,6 @@ import {
   AddEditVoucherScreen,
   AddVoucherScreen,
   SellerRatingDetailScreen,
-  SellerBrandListScreen,
 } from '../screens/profile/seller';
 
 const ProfileStack = createStackNavigator();

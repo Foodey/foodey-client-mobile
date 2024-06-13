@@ -25,3 +25,8 @@ export const UserEndpoint = {
 export const ProfileEndpoint = {
   LOG_OUT: '/v1/auth/logout',
 };
+
+export const SellerEndpoint = {
+  BRAND: '/v1/me/shop-brands',
+  SHOP: '/v1/shops/brands',
+};

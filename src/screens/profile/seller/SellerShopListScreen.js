@@ -8,13 +8,17 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { COLOR } from '../../../constants/Colors';
 import { IntroHeader } from '../../../components/seller';
 import { restaurants } from '../../../constants/TempData';
 import { FullyRestaurantCard } from '../../../components/home';
+import { getShopOfBrandAPI } from '../../../apiServices/SellerService';
+import HTTPStatus from '../../../constants/HTTPStatusCodes';
 
-const SellerShopListScreen = ({ navigation }) => {
+const SellerShopListScreen = ({ navigation, route }) => {
+  const { brandID, brandName } = route.params;
+
   const onResPress = (item) => {
     navigation.navigate('ShopNavigation_Screen');
   };
@@ -28,10 +32,29 @@ const SellerShopListScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
+  const [shopList, setShopList] = useState([]);
+
+  useLayoutEffect(() => {
+    const fetchShop = async () => {
+      try {
+        const response = await getShopOfBrandAPI(brandID);
+        if (response.status === HTTPStatus.OK) {
+          setShopList(response.data.content);
+        } else {
+          console.log('Error when fetching seller brand list');
+        }
+      } catch (err) {
+        console.log('Error when fetching seller brand list ' + err);
+      }
+    };
+
+    fetchShop();
+  }, []);
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <IntroHeader title="Com Ong Gia" onLeftButtonPress={onBackPress} />
+      <IntroHeader title={brandName} onLeftButtonPress={onBackPress} />
       <View style={styles.static_container}>
         <Pressable style={styles.create_button} onPress={onCreateShopPress}>
           <Text style={styles.create_button_text}>+ Create New Shop</Text>
@@ -57,7 +80,7 @@ const SellerShopListScreen = ({ navigation }) => {
               //   },
             ]}
           >
-            My Shop ({restaurants.length})
+            My Shop ({shopList.length})
           </Text>
         </Pressable>
       </View>
@@ -67,7 +90,7 @@ const SellerShopListScreen = ({ navigation }) => {
           alignItems: 'center',
         }}
         style={styles.dynamic_container}
-        data={restaurants}
+        data={shopList}
         renderItem={({ item }) => (
           <FullyRestaurantCard
             // style={{ margin: 25 }}

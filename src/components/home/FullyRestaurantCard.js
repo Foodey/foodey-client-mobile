@@ -1,6 +1,7 @@
 import { View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { COLOR } from '~/constants/Colors';
 import { Star } from '~/resources/icons';
+import { formatDateTime } from '../../utils/ValueConverter';
 
 function FullyRestaurantCard({
   style,
@@ -11,14 +12,25 @@ function FullyRestaurantCard({
   distance,
   estimateTime,
   avgReview,
+  createdDate,
   onPressFunction,
 }) {
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
-      <Image source={wallpaper} style={[styles.wallpaper, imageStyle]}></Image>
+      <Image
+        source={{
+          uri: `${wallpaper}` || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
+        }}
+        style={[styles.wallpaper, imageStyle]}
+      ></Image>
       <View style={styles.content_container}>
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Image source={logo} style={styles.logo} />
+          <Image
+            source={{
+              uri: `${logo}` || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
+            }}
+            style={styles.logo}
+          />
         </View>
         <View style={styles.res_info_container}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.name_text}>
@@ -28,7 +40,8 @@ function FullyRestaurantCard({
             {avgReview && (
               <Star width={17} height={17} style={{ color: COLOR.star_background_color }} />
             )}
-            <Text style={styles.distance_text}>
+            <Text style={[styles.distance_text, { marginStart: createdDate ? 0 : 2 }]}>
+              {createdDate && 'Date created: ' + formatDateTime(createdDate)}
               {avgReview}
               {distance && `  |  ${distance} km `}
               {estimateTime && ` |  ${estimateTime} mins`}
@@ -77,7 +90,6 @@ const styles = StyleSheet.create({
   distance_text: {
     fontFamily: 'Manrope-Medium',
     fontSize: 13,
-    marginStart: 2,
   },
 });
 
