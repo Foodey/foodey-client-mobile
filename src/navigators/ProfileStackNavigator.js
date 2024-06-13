@@ -21,17 +21,19 @@ import {
   RegisteredShopInfoScreen,
   SellerIdentificationScreen,
   RequestSentNotiScreen,
-  SellerHomeScreen,
+  SellerShopListScreen,
   ShopNavigationScreen,
   SellerOrderScreen,
   SellerRatingScreen,
   SellerRestaurantScreen,
   SellerOrderDetailScreen,
+  BrandCreationScreen,
   ShopCreationScreen,
   AddEditProductScreen,
   AddEditVoucherScreen,
   AddVoucherScreen,
   SellerRatingDetailScreen,
+  SellerBrandListScreen,
 } from '../screens/profile/seller';
 
 const ProfileStack = createStackNavigator();
@@ -52,13 +54,15 @@ export default function ProfileStackNavigator({ navigation, route }) {
       'RegisteredShopInfo_Screen',
       'SellerIdentification_Screen',
       'RequestSentNoti_Screen',
-      'SellerHome_Screen',
+      'SellerShopList_Screen',
+      'SellerBrandList_Screen',
       'ShopNavigation_Screen',
       'SellerOrder_Screen',
       'SellerRating_Screen',
       'SellerRestaurant_Screen',
       'SellerOrderDetail_Screen',
       'ShopCreation_Screen',
+      'BrandCreation_Screen',
       'AddEditProduct_Screen',
       'AddEditVoucher_Screen',
       'AddVoucher_Screen',
@@ -105,13 +109,15 @@ export default function ProfileStackNavigator({ navigation, route }) {
       />
       <ProfileStack.Screen name="SellerRatingDetail_Screen" component={SellerRatingDetailScreen} />
       <ProfileStack.Screen name="RequestSentNoti_Screen" component={RequestSentNotiScreen} />
-      <ProfileStack.Screen name="SellerHome_Screen" component={SellerHomeScreen} />
+      <ProfileStack.Screen name="SellerShopList_Screen" component={SellerShopListScreen} />
+      <ProfileStack.Screen name="SellerBrandList_Screen" component={SellerBrandListScreen} />
       <ProfileStack.Screen name="ShopNavigation_Screen" component={ShopNavigationScreen} />
       <ProfileStack.Screen name="SellerOrder_Screen" component={SellerOrderScreen} />
       <ProfileStack.Screen name="SellerRating_Screen" component={SellerRatingScreen} />
       <ProfileStack.Screen name="SellerRestaurant_Screen" component={SellerRestaurantScreen} />
       <ProfileStack.Screen name="SellerOrderDetail_Screen" component={SellerOrderDetailScreen} />
       <ProfileStack.Screen name="ShopCreation_Screen" component={ShopCreationScreen} />
+      <ProfileStack.Screen name="BrandCreation_Screen" component={BrandCreationScreen} />
       <ProfileStack.Screen name="AddEditProduct_Screen" component={AddEditProductScreen} />
       <ProfileStack.Screen name="AddEditVoucher_Screen" component={AddEditVoucherScreen} />
       <ProfileStack.Screen name="AddVoucher_Screen" component={AddVoucherScreen} />

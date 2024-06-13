@@ -4,11 +4,16 @@ import BackButton from '../BackButton';
 import { COLOR } from '../../constants/Colors';
 import FullArrowLeft from '~/resources/icons/full-arrow-left.svg';
 
-function IntroHeader({ style, title, onLeftButtonPress }) {
+function IntroHeader({ style, titleStyle, title, onLeftButtonPress }) {
   return (
     <View style={[style, styles.container]}>
       <TouchableOpacity style={styles.button_left} onPress={onLeftButtonPress}>
-        <Text style={{ color: COLOR.text_blue_color, fontFamily: 'Manrope-Medium', fontSize: 16 }}>
+        <Text
+          style={[
+            { color: COLOR.text_blue_color, fontFamily: 'Manrope-Medium', fontSize: 16 },
+            titleStyle,
+          ]}
+        >
           Back
         </Text>
       </TouchableOpacity>

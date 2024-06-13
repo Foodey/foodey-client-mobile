@@ -26,7 +26,7 @@ function PressableInputField({ style, title, isRequired, value, onPressFunction 
         >
           {!value ? `Set ${title}` : value}
         </Text>
-        <ArrowRight style={{ color: COLOR.text_secondary_color, marginTop: 2 }} />
+        {!value && <ArrowRight style={{ color: COLOR.text_secondary_color, marginTop: 2 }} />}
       </View>
     </Pressable>
   );

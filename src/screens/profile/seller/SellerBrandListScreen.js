@@ -14,13 +14,13 @@ import { IntroHeader } from '../../../components/seller';
 import { restaurants } from '../../../constants/TempData';
 import { FullyRestaurantCard } from '../../../components/home';
 
-const SellerHomeScreen = ({ navigation }) => {
-  const onResPress = (item) => {
-    navigation.navigate('ShopNavigation_Screen');
+const SellerBrandListScreen = ({ navigation }) => {
+  const onBrandPress = (item) => {
+    navigation.navigate('SellerShopList_Screen');
   };
 
-  const onCreateShopPress = () => {
-    navigation.navigate('ShopCreation_Screen');
+  const onCreateBrandPress = () => {
+    navigation.navigate('BrandCreation_Screen');
   };
 
   const onBackPress = () => {
@@ -31,10 +31,10 @@ const SellerHomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
-      <IntroHeader title="Seller Screen" onLeftButtonPress={onBackPress} />
+      <IntroHeader title="Your Brands" onLeftButtonPress={onBackPress} />
       <View style={styles.static_container}>
-        <Pressable style={styles.create_button} onPress={onCreateShopPress}>
-          <Text style={styles.create_button_text}>+ Create New Shop</Text>
+        <Pressable style={styles.create_button} onPress={onCreateBrandPress}>
+          <Text style={styles.create_button_text}>+ Create New Brand</Text>
         </Pressable>
         <Pressable
           //   onPress={onRestaurantSelected} --Use Pressable here for future tab navigate when having more tab
@@ -57,7 +57,7 @@ const SellerHomeScreen = ({ navigation }) => {
               //   },
             ]}
           >
-            My Shop ({restaurants.length})
+            My Brand ({restaurants.length})
           </Text>
         </Pressable>
       </View>
@@ -75,7 +75,7 @@ const SellerHomeScreen = ({ navigation }) => {
             logo={item.logo}
             name={item.name}
             avgReview={item.rating}
-            onPressFunction={() => onResPress(item)}
+            onPressFunction={() => onBrandPress(item)}
           />
         )}
       />
@@ -97,8 +97,7 @@ const styles = StyleSheet.create({
   },
 
   create_button: {
-    borderWidth: 3,
-    borderColor: COLOR.button_press_primary_color,
+    backgroundColor: COLOR.button_primary_color,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -107,9 +106,9 @@ const styles = StyleSheet.create({
   },
 
   create_button_text: {
-    fontFamily: 'Manrope-Medium',
+    fontFamily: 'Manrope-Bold',
     fontSize: 18,
-    color: COLOR.button_primary_color,
+    color: COLOR.background_color,
   },
 
   switcher_option_container: {
@@ -129,4 +128,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SellerHomeScreen;
+export default SellerBrandListScreen;
