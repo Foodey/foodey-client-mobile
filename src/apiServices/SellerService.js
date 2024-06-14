@@ -1,5 +1,5 @@
 import * as request from '~/utils/jwtRequests';
-import { SellerEndpoint } from '../constants/API_Endpoints';
+import { SellerEndpoint, HomeEndpoint } from '../constants/API_Endpoints';
 
 export const getSellerBrandAPI = async (page) => {
   try {
@@ -61,6 +61,23 @@ export const getShopOrderByOrderStatusAPI = async (shopID, orderStatus) => {
   try {
     const response = await request.private.get(
       `${SellerEndpoint.SHOP_ORDER}/${shopID}?status=${orderStatus}`,
+    );
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
+export const addNewProductAPI = async (brandID, shopID, categoryID, name, description, price) => {
+  try {
+    const response = await request.private.get(
+      `${SellerEndpoint.BRAND_CREATION}/${brandID}/shops/${shopID}/menu/products?appliedToAllShops=false`,
+      {
+        name: name,
+        categoryID: categoryID,
+        description: description,
+        price: price,
+      },
     );
     return response;
   } catch (err) {

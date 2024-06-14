@@ -9,6 +9,7 @@ import { SellerContext } from '../../../contexts/SellerContext';
 
 const SellerRestaurantScreen = ({ navigation, route }) => {
   const { brandID, shopID, shopName } = route.params;
+  const { productList } = useContext(SellerContext);
 
   const [page, setPage] = useState('0');
 
@@ -25,7 +26,11 @@ const SellerRestaurantScreen = ({ navigation, route }) => {
   };
 
   const onAddProductPress = () => {
-    navigation.navigate('AddEditProduct_Screen', { isEdit: false });
+    navigation.navigate('AddEditProduct_Screen', {
+      isEdit: false,
+      brandID: brandID,
+      shopID: shopID,
+    });
   };
 
   const onAddVoucherPress = () => {
@@ -33,7 +38,11 @@ const SellerRestaurantScreen = ({ navigation, route }) => {
   };
 
   const onProductPress = (item) => {
-    navigation.navigate('AddEditProduct_Screen', { isEdit: true });
+    navigation.navigate('AddEditProduct_Screen', {
+      isEdit: true,
+      brandID: brandID,
+      shopID: shopID,
+    });
   };
 
   return (
@@ -132,7 +141,7 @@ const SellerRestaurantScreen = ({ navigation, route }) => {
             marginStart: 'auto',
           }}
         >
-          {page === '0' ? sellerOrders[0]?.items?.length : myVouchers?.length}{' '}
+          {page === '0' ? productList.length : myVouchers?.length}{' '}
           {page === '0' ? 'product(s)' : 'voucher(s)'}
         </Text>
       </View>
@@ -140,7 +149,7 @@ const SellerRestaurantScreen = ({ navigation, route }) => {
         <FlatList
           style={{ flex: 1 }}
           contentContainerStyle={{ paddingBottom: 5, paddingHorizontal: 5 }}
-          data={sellerOrders[0]?.items}
+          data={productList}
           renderItem={({ item }) => (
             <SellerProductBar
               style={{ borderRadius: 10 }}

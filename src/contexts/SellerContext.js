@@ -5,6 +5,7 @@ import {
   getShopOfBrandAPI,
   getShopOrderByOrderStatusAPI,
 } from '../apiServices/SellerService';
+import { getMenuByRestaurantAPI } from '../apiServices/HomeService';
 
 export const SellerContext = createContext({});
 
@@ -18,6 +19,8 @@ export const SellerProvider = ({ children }) => {
   const [deliveredOrderList, setDeliveredOrderList] = useState([]);
 
   const [contextShopLocation, setContextShopLocation] = useState({});
+
+  const [productList, setProductList] = useState([]);
 
   const getBrands = async () => {
     try {
@@ -108,6 +111,17 @@ export const SellerProvider = ({ children }) => {
     }
   };
 
+  const getProductList = async (brandID, shopID) => {
+    try {
+      const response = await getMenuByRestaurantAPI(brandID, shopID);
+      if (response.status === HTTPStatus.OK) {
+        setProductList(response.data.products);
+      }
+    } catch (err) {
+      console.log('Error when getting product list: ' + err);
+    }
+  };
+
   return (
     <SellerContext.Provider
       value={{
@@ -125,6 +139,8 @@ export const SellerProvider = ({ children }) => {
         setDeliveredOrderList,
         contextShopLocation,
         setContextShopLocation,
+        productList,
+        setProductList,
 
         //APIs
         getBrands,
@@ -134,6 +150,7 @@ export const SellerProvider = ({ children }) => {
         getConfirmedOrderOfShop,
         getCompletedOrderOfShop,
         getDeliveredOrderOfShop,
+        getProductList,
       }}
     >
       {children}

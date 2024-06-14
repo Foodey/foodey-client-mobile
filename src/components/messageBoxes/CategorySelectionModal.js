@@ -39,7 +39,7 @@ function CategorySelectionModal({
           >
             <FlatList
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ alignItems: 'center' }}
+              contentContainerStyle={{ alignItems: 'center', paddingVertical: 10 }}
               style={{}}
               data={categoryList}
               numColumns={2}

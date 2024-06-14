@@ -8,7 +8,7 @@ import {
   ScrollView,
   PermissionsAndroid,
 } from 'react-native';
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useContext } from 'react';
 import { COLOR } from '../../../constants/Colors';
 import {
   IntroHeader,
@@ -22,9 +22,76 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { CategorySelectionModal } from '../../../components/messageBoxes';
 import { getCategoriesAPI } from '../../../apiServices/HomeService';
 import HTTPStatus from '../../../constants/HTTPStatusCodes';
+import { SellerContext } from '../../../contexts/SellerContext';
+import { handleUploadImageFromDevice } from '../../../utils/Cloudinary';
+import { addNewProductAPI } from '../../../apiServices/SellerService';
 
 const AddEditProductScreen = ({ navigation, route }) => {
-  const { isEdit } = route.params; //Control if the screen is Edit or Add Product Screen
+  const { isEdit, brandID, shopID } = route.params; //Control if the screen is Edit or Add Product Screen
+  const { getProductList } = useContext(SellerContext);
+
+  const [isCategorySelectVisible, setIsCategorySelectVisible] = useState(false);
+  const [isPhotoModalVisible, setIsPhotoModalVisible] = useState(false);
+
+  const [categoryList, setCategoryList] = useState([]);
+
+  const [selectedCategory, setSelectedCategory] = useState({
+    categoryID: '',
+    categoryName: '',
+  });
+
+  const [selectedCategoryErr, setSelectedCategoryErr] = useState({
+    categoryID: '',
+    categoryName: '',
+  });
+
+  const [productInfoInput, setProductInfoInput] = useState({
+    photo: '',
+    name: '',
+    description: '',
+    price: '',
+  });
+
+  const [productInfoInputErrors, setProductInfoInputErrors] = useState({
+    photo: '',
+    name: '',
+    description: '',
+    price: '',
+  });
+
+  const handleSelectedCategoryChanged = (field, value) => {
+    setSelectedCategory((prevState) => ({ ...prevState, [field]: value }));
+  };
+
+  const handleSelectedCategoryErrorsChanged = (field, errorMessage) => {
+    setSelectedCategoryErr((prevState) => ({ ...prevState, [field]: errorMessage }));
+  };
+
+  const handleProductInfoChanged = (field, value) => {
+    setProductInfoInput((prevState) => ({ ...prevState, [field]: value }));
+  };
+
+  const handleProductInfoErrorsChanged = (field, errorMessage) => {
+    setProductInfoInputErrors((prevState) => ({ ...prevState, [field]: errorMessage }));
+  };
+
+  const clearInput = () => {
+    setProductInfoInput({
+      photo: '',
+      name: '',
+      description: '',
+      price: '',
+    });
+  };
+
+  const clearErrorMessage = () => {
+    setProductInfoInputErrors({
+      photo: '',
+      name: '',
+      description: '',
+      price: '',
+    });
+  };
 
   useLayoutEffect(() => {
     const getCategoriesFunction = async () => {
@@ -55,23 +122,97 @@ const AddEditProductScreen = ({ navigation, route }) => {
     //
   };
 
-  const onAddPress = () => {
-    //
+  const onAddPress = async () => {
+    let isValid = true;
+
+    if (productInfoInput.name === '') {
+      handleProductInfoErrorsChanged('name', 'Please input your product name');
+      isValid = false;
+    } else if (productInfoInput.name.length > 18) {
+      handleProductInfoErrorsChanged(
+        'name',
+        'Shop name should be short, maximum of 18 characters only',
+      );
+      isValid = false;
+    }
+
+    if (productInfoInput.description === '') {
+      handleProductInfoErrorsChanged('description', 'Please input your product description');
+      isValid = false;
+    }
+
+    if (productInfoInput.price === '') {
+      handleProductInfoErrorsChanged('price', 'Please input your product price');
+      isValid = false;
+    }
+
+    if (productInfoInput.photo === '') {
+      handleProductInfoErrorsChanged('photo', 'Please provide the photo of your product');
+      isValid = false;
+    }
+
+    if (selectedCategory.categoryName === '') {
+      handleSelectedCategoryErrorsChanged(
+        'categoryName',
+        'Please choose a category for your product',
+      );
+      isValid = false;
+    }
+
+    if (isValid) {
+      const isSuccess = await addNewProduct(
+        brandID,
+        shopID,
+        selectedCategory.categoryID,
+        productInfoInput,
+      );
+      if (isSuccess) {
+        await getProductList();
+        clearInput();
+        clearErrorMessage();
+        navigation.navigate('SellerRestaurant_Screen');
+      } else {
+        handleProductInfoErrorsChanged('name', 'Unexpected error, please try again later!!');
+        handleProductInfoErrorsChanged('description', 'Unexpected error, please try again later!!');
+        handleProductInfoErrorsChanged('price', 'Unexpected error, please try again later!!');
+        handleProductInfoErrorsChanged('photo', 'Unexpected error, please try again later!!');
+        handleProductInfoErrorsChanged(
+          'categoryName',
+          'Unexpected error, please try again later!!',
+        );
+      }
+    }
   };
 
-  const [isCategorySelectVisible, setIsCategorySelectVisible] = useState(false);
-  const [isPhotoModalVisible, setIsPhotoModalVisible] = useState(false);
+  const addNewProduct = async (brandID, shopID, categoryID, inputs) => {
+    try {
+      const response = await addNewProductAPI(
+        brandID,
+        shopID,
+        categoryID,
+        inputs?.name,
+        inputs?.description,
+        inputs?.price,
+      );
+      if (response.status === HTTPStatus.CREATED) {
+        await handleUploadImageFromDevice(inputs?.photo, response?.data?.logoUploadApiOptions);
 
-  const [selectedPhotoURI, setSelectedPhotoURI] = useState('');
-
-  const [categoryList, setCategoryList] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState({
-    categoryID: '',
-    categoryName: '',
-  });
+        console.log('Success all');
+        return true;
+      } else {
+        console.log('Error when create new brand');
+        return false;
+      }
+    } catch (err) {
+      console.log('Error when create new brand ' + err);
+      return false;
+    }
+  };
 
   const onCategorySelected = (category) => {
     setSelectedCategory(category);
+    handleSelectedCategoryErrorsChanged('categoryID', '');
+    handleSelectedCategoryErrorsChanged('categoryName', '');
     setIsCategorySelectVisible(false);
   };
 
@@ -80,7 +221,8 @@ const AddEditProductScreen = ({ navigation, route }) => {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
-        setSelectedPhotoURI(result.assets[0].uri);
+        handleProductInfoErrorsChanged('photo', '');
+        handleProductInfoChanged('photo', result.assets[0]);
         setIsPhotoModalVisible(false);
       } else {
         console.log('Camera permission denied');
@@ -95,8 +237,8 @@ const AddEditProductScreen = ({ navigation, route }) => {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchImageLibrary({ mediaType: 'photo' });
-        // console.log(result.assets[0].uri);
-        setSelectedPhotoURI(result.assets[0].uri);
+        handleProductInfoErrorsChanged('photo', '');
+        handleProductInfoChanged('photo', result.assets[0]);
         setIsPhotoModalVisible(false);
       } else {
         console.log('Library permission denied');
@@ -148,9 +290,10 @@ const AddEditProductScreen = ({ navigation, route }) => {
             style={{}}
             title="Photo of your Product"
             isRequired={false}
-            imageURI={selectedPhotoURI}
+            imageURI={productInfoInput?.photo?.uri}
             onPhotoActionPress={() => setIsPhotoModalVisible(true)}
-            onDeletePress={() => setSelectedPhotoURI('')}
+            onDeletePress={() => handleProductInfoChanged('photo', '')}
+            errorMessage={productInfoInputErrors.photo}
           />
           <Text
             style={[
@@ -165,17 +308,39 @@ const AddEditProductScreen = ({ navigation, route }) => {
             Product with good and attractive photo would likely got ordered by the customer. Make
             sure the uploaded photo has a a 1:1 image ratio.
           </Text>
-          <ShortInputField title="Name" placeholder="Enter Product Name" isRequired={true} />
+          <ShortInputField
+            title="Name"
+            placeholder="Enter Product Name"
+            isRequired={true}
+            value={productInfoInput.name}
+            errorMessage={productInfoInputErrors.name}
+            onChangeText={(value) => {
+              handleProductInfoErrorsChanged('name', '');
+              handleProductInfoChanged('name', value);
+            }}
+          />
           <ShortInputField
             title="Description"
             placeholder="Enter Product Description"
             isRequired={false}
+            value={productInfoInput.description}
+            errorMessage={productInfoInputErrors.description}
+            onChangeText={(value) => {
+              handleProductInfoErrorsChanged('description', '');
+              handleProductInfoChanged('description', value);
+            }}
           />
           <ShortInputField
             title="Price"
             placeholder="ex: 200000"
             isRequired={true}
             keyboardType="numeric"
+            value={productInfoInput.price}
+            errorMessage={productInfoInputErrors.price}
+            onChangeText={(value) => {
+              handleProductInfoErrorsChanged('price', '');
+              handleProductInfoChanged('price', value);
+            }}
           />
           <Text style={styles.instruction_text}>
             Make sure not to include splitting characters like ',' or '.' for Product Price.
@@ -185,6 +350,7 @@ const AddEditProductScreen = ({ navigation, route }) => {
             isRequired={true}
             onPressFunction={onOpenCategoryModalPress}
             value={selectedCategory?.categoryName}
+            errorMessage={selectedCategoryErr?.categoryName}
           />
         </ScrollView>
         {/*footer container */}
@@ -211,7 +377,7 @@ const AddEditProductScreen = ({ navigation, route }) => {
             title={isEdit ? 'Save' : 'Add'}
             buttonColor={COLOR.button_primary_color}
             hoverColor={COLOR.button_press_primary_color}
-            onPressFunction={isEdit ? () => onSavePress : () => onAddPress}
+            onPressFunction={isEdit ? () => onSavePress() : () => onAddPress()}
           />
         </View>
       </View>

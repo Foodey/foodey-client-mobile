@@ -7,12 +7,14 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { COLOR } from '../../../constants/Colors';
 import { Bell, FullArrowLeft, OrderList, EditMenu, Star } from '../../../resources/icons';
+import { SellerContext } from '../../../contexts/SellerContext';
 
 const ShopNavigationScreen = ({ navigation, route }) => {
   const { brandID, shopName, shopID } = route.params;
+  const { getProductList } = useContext(SellerContext);
 
   const onBackPress = () => {
     // console.log('On back Press');
@@ -27,7 +29,9 @@ const ShopNavigationScreen = ({ navigation, route }) => {
     navigation.navigate('SellerRating_Screen', { shopID: shopID });
   };
 
-  const onEditShopInfoPress = () => {
+  const onEditShopInfoPress = async () => {
+    await getProductList(brandID, shopID);
+
     navigation.navigate('SellerRestaurant_Screen', {
       shopID: shopID,
       shopName: shopName,
@@ -90,7 +94,7 @@ const ShopNavigationScreen = ({ navigation, route }) => {
           <Star width={50} height={50} color={COLOR.star_icon_color} />
           <Text style={styles.navigation_text}>View Rating</Text>
         </Pressable>
-        <Pressable onPress={onEditShopInfoPress} style={styles.navigation_button}>
+        <Pressable onPress={() => onEditShopInfoPress()} style={styles.navigation_button}>
           <EditMenu width={50} height={50} color={COLOR.button_press_primary_color} />
           <Text style={styles.navigation_text}>Edit Infos</Text>
         </Pressable>
