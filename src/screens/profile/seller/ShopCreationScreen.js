@@ -4,17 +4,24 @@ import {
   SafeAreaView,
   StyleSheet,
   StatusBar,
-  TextInput,
   ScrollView,
   PermissionsAndroid,
 } from 'react-native';
 import React, { useState, useContext } from 'react';
 import { COLOR } from '../../../constants/Colors';
-import { IntroHeader, ShortInputField, PressableInputField } from '../../../components/seller';
+import {
+  IntroHeader,
+  ShortInputField,
+  PressableInputField,
+  ImageInput,
+} from '../../../components/seller';
 import { SubmitButton } from '../../../components';
-import HTTPStatus from '../../../constants/HTTPStatusCodes';
-import { getShopOfBrandAPI } from '../../../apiServices/SellerService';
 import { SellerContext } from '../../../contexts/SellerContext';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { handleUploadImageFromDevice } from '../../../utils/Cloudinary';
+import { PhotoSelectionModal } from '../../../components/messageBoxes';
+import { createNewShopAPI } from '../../../apiServices/SellerService';
+import HTTPStatus from '../../../constants/HTTPStatusCodes';
 
 const ShopCreationScreen = ({ navigation, route }) => {
   const { brandID, brandLogo, brandWallpaper } = route.params;
@@ -23,6 +30,70 @@ const ShopCreationScreen = ({ navigation, route }) => {
 
   const onGoBackPress = () => {
     navigation.goBack();
+  };
+
+  const onLogoOpenCamera = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
+        setLogoImageErr('');
+        setLogoImage(result.assets[0]);
+        setIsLogoModalVisible(false);
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.log('Camera permission denied ' + err);
+    }
+  };
+
+  const onWallpaperOpenCamera = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
+        setWallpaperImageErr('');
+        setWallpaperImage(result.assets[0]);
+        setIsWallpaperModalVisible(false);
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.log('Camera permission denied ' + err);
+    }
+  };
+
+  const onLogoOpenLibrary = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        const result = await launchImageLibrary({ mediaType: 'photo' });
+        setLogoImageErr('');
+        setLogoImage(result.assets[0]);
+        setIsLogoModalVisible(false);
+      } else {
+        console.log('Library permission denied');
+      }
+    } catch (err) {
+      console.log('Library permission denied ' + err);
+    }
+  };
+
+  const onWallpaperOpenLibrary = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        const result = await launchImageLibrary({ mediaType: 'photo' });
+        setWallpaperImageErr('');
+        setWallpaperImage(result.assets[0]);
+        setIsWallpaperModalVisible(false);
+      } else {
+        console.log('Library permission denied');
+      }
+    } catch (err) {
+      console.log('Library permission denied ' + err);
+    }
   };
 
   const onSelectAddressPress = () => {
@@ -43,31 +114,96 @@ const ShopCreationScreen = ({ navigation, route }) => {
       isValid = false;
     }
 
+    if (logoImage === '') {
+      setLogoImageErr('Please provide the front side of the image');
+      isValid = false;
+    }
+
+    if (wallpaperImage === '') {
+      setWallpaperImageErr('Please provide the front side of the image');
+      isValid = false;
+    }
+
     // if(shopAddress === ''){
     //   setShopAddressErr('Please input your shop address');
     //   isValid = false;
     // }
 
     if (isValid) {
-      //createNewShop();
-      await getShops(brandID);
-      setShopName('');
-      setShopNameErr('');
-      setShopAddress('');
-      setShopAddressErr('');
-      navigation.goBack();
+      const isSuccess = await createNewShop(
+        brandID,
+        shopName,
+        shopAddress,
+        logoImage,
+        wallpaperImage,
+      );
+      if (isSuccess) {
+        await getShops(brandID);
+        setShopName('');
+        setShopNameErr('');
+        setShopAddress('');
+        setShopAddressErr('');
+        setLogoImage('');
+        setLogoImageErr('');
+        setWallpaperImage('');
+        setWallpaperImageErr('');
+        navigation.goBack();
+      } else {
+        setShopAddressErr('Unexpected error, please try again later!!');
+        setShopNameErr('Unexpected error, please try again later!!');
+        setLogoImageErr('Unexpected error, please try again later!!');
+        setWallpaperImageErr('Unexpected error, please try again later!!');
+      }
+    }
+  };
+
+  const createNewShop = async (brandID, name, address, logoURL, wallpaperURL) => {
+    try {
+      const response = await createNewShopAPI(brandID, name, address);
+      if (response.status === HTTPStatus.CREATED) {
+        await handleUploadImageFromDevice(logoURL, response?.data?.logoUploadApiOptions);
+        await handleUploadImageFromDevice(wallpaperURL, response?.data?.wallpaperUploadApiOptions);
+
+        console.log('Success all');
+        return true;
+      } else {
+        console.log('Error when create new shop');
+        return false;
+      }
+    } catch (err) {
+      console.log('Error when create new shop ' + err);
+      return false;
     }
   };
 
   const [shopName, setShopName] = useState('');
-  const [shopAddress, setShopAddress] = useState('');
+  const [shopAddress, setShopAddress] = useState('KTX Khu A, DHQG TPHCM'); //Temp Address
+  const [logoImage, setLogoImage] = useState('');
+  const [wallpaperImage, setWallpaperImage] = useState('');
 
   const [shopNameErr, setShopNameErr] = useState('');
+  const [logoImageErr, setLogoImageErr] = useState('');
   const [shopAddressErr, setShopAddressErr] = useState('');
+  const [wallpaperImageErr, setWallpaperImageErr] = useState('');
+
+  const [isLogoModalVisible, setIsLogoModalVisible] = useState(false);
+  const [isWallpaperModalVisible, setIsWallpaperModalVisible] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
+      <PhotoSelectionModal
+        isVisible={isLogoModalVisible}
+        backdropPress={() => setIsLogoModalVisible(false)}
+        openCameraPress={() => onLogoOpenCamera()}
+        openLibraryPress={() => onLogoOpenLibrary()}
+      />
+      <PhotoSelectionModal
+        isVisible={isWallpaperModalVisible}
+        backdropPress={() => setIsWallpaperModalVisible(false)}
+        openCameraPress={() => onWallpaperOpenCamera()}
+        openLibraryPress={() => onWallpaperOpenLibrary()}
+      />
       <IntroHeader
         style={{ backgroundColor: COLOR.background_color }}
         onLeftButtonPress={onGoBackPress}
@@ -143,6 +279,30 @@ const ShopCreationScreen = ({ navigation, route }) => {
             onPressFunction={onSelectAddressPress}
             value={shopAddress}
             errorMessage={shopAddressErr}
+          />
+          <Text style={[styles.instruction_text, { marginTop: 0 }]}>
+            Brand with Logo are most likely to be visited by customers. Make sure the uploaded logo
+            has a a 1:1 image ratio.
+          </Text>
+          <ImageInput
+            style={{}}
+            title="Photo of your Brand Logo (1:1)"
+            onPhotoActionPress={() => setIsLogoModalVisible(true)}
+            imageURI={logoImage?.uri}
+            onDeletePress={() => setLogoImage('')}
+            errorMessage={logoImageErr}
+          />
+          <Text style={[styles.instruction_text, { marginTop: 0 }]}>
+            Wallpaper makes your Brand menu screen better. Make sure the uploaded wallpaper has a
+            3:2 image ratio.
+          </Text>
+          <ImageInput
+            style={{}}
+            title="Photo of your Brand Wallpaper (3:2)"
+            onPhotoActionPress={() => setIsWallpaperModalVisible(true)}
+            imageURI={wallpaperImage?.uri}
+            onDeletePress={() => setWallpaperImage('')}
+            errorMessage={wallpaperImageErr}
           />
         </ScrollView>
         {/*footer container */}

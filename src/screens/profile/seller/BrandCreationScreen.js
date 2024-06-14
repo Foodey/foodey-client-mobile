@@ -21,9 +21,9 @@ import Checkbox from 'expo-checkbox';
 import { PhotoSelectionModal } from '../../../components/messageBoxes';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import HTTPStatus from '../../../constants/HTTPStatusCodes';
-import { getSellerBrandAPI, createNewBrandAPI } from '../../../apiServices/SellerService';
+import { createNewBrandAPI } from '../../../apiServices/SellerService';
 import { SellerContext } from '../../../contexts/SellerContext';
-import { cldUpload, handleUploadImage } from '../../../utils/Cloudinary';
+import { handleUploadImageFromDevice } from '../../../utils/Cloudinary';
 
 const BrandCreationScreen = ({ navigation }) => {
   const { getBrands } = useContext(SellerContext);
@@ -106,13 +106,10 @@ const BrandCreationScreen = ({ navigation }) => {
 
   const createNewBrand = async (name, phoneNumber, email, logoURL, wallpaperURL) => {
     try {
-      console.log(logoURL);
-      console.log(wallpaperURL);
       const response = await createNewBrandAPI(name, phoneNumber, email);
       if (response.status === HTTPStatus.CREATED) {
-        await handleUploadImage(logoURL, response?.data?.logoUploadApiOptions);
-        console.log('Success upload logo');
-        await handleUploadImage(wallpaperURL, response?.data?.wallpaperUploadApiOptions);
+        await handleUploadImageFromDevice(logoURL, response?.data?.logoUploadApiOptions);
+        await handleUploadImageFromDevice(wallpaperURL, response?.data?.wallpaperUploadApiOptions);
 
         console.log('Success all');
         return true;

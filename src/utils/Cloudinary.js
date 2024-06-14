@@ -1,9 +1,13 @@
 import axios from 'axios';
-import CloudinaryConfig from '../configs/cloudinaryConfig';
+import CloudinaryConfig from '../configs/CloudinaryConfig';
 
-export const cldUpload = async (file, params) => {
+export const cldUploadFromDevice = async (file, params) => {
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append('file', {
+    uri: file.uri,
+    type: file.type,
+    name: file.fileName,
+  });
   formData.append('api_key', CloudinaryConfig.API_KEY);
   // data.append("signature", params.signature);
 
@@ -22,9 +26,9 @@ export const cldUpload = async (file, params) => {
   );
 };
 
-export const handleUploadImage = async (file, params) => {
+export const handleUploadImageFromDevice = async (file, params) => {
   try {
-    const response = await cldUpload(file, params);
+    const response = await cldUploadFromDevice(file, params);
     return response.data.secure_url;
   } catch (error) {
     console.log(error);

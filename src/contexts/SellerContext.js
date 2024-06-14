@@ -9,13 +9,13 @@ import {
 export const SellerContext = createContext({});
 
 export const SellerProvider = ({ children }) => {
-  const [brandList, setBrandList] = useState({});
-  const [shopList, setShopList] = useState({});
+  const [brandList, setBrandList] = useState([]);
+  const [shopList, setShopList] = useState([]);
 
-  const [pendingOrderList, setPendingOrderList] = useState({});
-  const [confirmedOrderList, setConfirmedOrderList] = useState({});
-  const [completedOrderList, setCompletedOrderList] = useState({});
-  const [deliveredOrderList, setDeliveredOrderList] = useState({});
+  const [pendingOrderList, setPendingOrderList] = useState([]);
+  const [confirmedOrderList, setConfirmedOrderList] = useState([]);
+  const [completedOrderList, setCompletedOrderList] = useState([]);
+  const [deliveredOrderList, setDeliveredOrderList] = useState([]);
 
   const getBrands = async () => {
     try {
@@ -36,10 +36,10 @@ export const SellerProvider = ({ children }) => {
       if (response.status === HTTPStatus.OK) {
         setShopList(response.data.content);
       } else {
-        console.log('Error when fetching seller brand list');
+        console.log('Error when fetching seller shop list');
       }
     } catch (err) {
-      console.log('Error when fetching seller brand list ' + err);
+      console.log('Error when fetching seller shop list ' + err);
     }
   };
 

@@ -19,7 +19,7 @@ function FullyRestaurantCard({
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
       <Image
         source={{
-          uri: `${wallpaper}` || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
+          uri: wallpaper || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
         }}
         style={[styles.wallpaper, imageStyle]}
       ></Image>
@@ -27,7 +27,7 @@ function FullyRestaurantCard({
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Image
             source={{
-              uri: `${logo}` || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
+              uri: logo || 'https://lsvn.vn/html/lsvn-web/images/no-image.png',
             }}
             style={styles.logo}
           />

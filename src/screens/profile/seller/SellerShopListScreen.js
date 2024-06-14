@@ -1,24 +1,12 @@
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  Image,
-  StatusBar,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import { View, Text, Pressable, StyleSheet, StatusBar, FlatList } from 'react-native';
 import React, { useState, useLayoutEffect, useContext } from 'react';
 import { COLOR } from '../../../constants/Colors';
 import { IntroHeader } from '../../../components/seller';
-import { restaurants } from '../../../constants/TempData';
 import { FullyRestaurantCard } from '../../../components/home';
-import { getShopOfBrandAPI } from '../../../apiServices/SellerService';
-import HTTPStatus from '../../../constants/HTTPStatusCodes';
 import { SellerContext } from '../../../contexts/SellerContext';
 
 const SellerShopListScreen = ({ navigation, route }) => {
-  const { brandID, brandName, brandLogo, brandWallpaper } = route.params;
+  const { brandID, brandName } = route.params;
 
   const { getShops, shopList } = useContext(SellerContext);
 
@@ -29,8 +17,6 @@ const SellerShopListScreen = ({ navigation, route }) => {
   const onCreateShopPress = () => {
     navigation.navigate('ShopCreation_Screen', {
       brandID: brandID,
-      brandLogo: brandLogo,
-      brandWallpaper: brandWallpaper,
     });
   };
 
@@ -90,10 +76,10 @@ const SellerShopListScreen = ({ navigation, route }) => {
         renderItem={({ item }) => (
           <FullyRestaurantCard
             // style={{ margin: 25 }}
-            wallpaper={item.wallpaper}
-            logo={item.logo}
-            name={item.name}
-            avgReview={item.rating}
+            wallpaper={item?.wallpaper}
+            logo={item?.logo}
+            name={item?.name}
+            avgReview={item?.rating}
             onPressFunction={() => onResPress(item)}
           />
         )}
