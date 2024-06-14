@@ -23,7 +23,7 @@ const SellerShopListScreen = ({ navigation, route }) => {
   const { getShops, shopList } = useContext(SellerContext);
 
   const onResPress = (item) => {
-    navigation.navigate('ShopNavigation_Screen');
+    navigation.navigate('ShopNavigation_Screen', { shopID: item?.id, shopName: item?.name });
   };
 
   const onCreateShopPress = () => {

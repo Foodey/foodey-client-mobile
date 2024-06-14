@@ -11,14 +11,16 @@ import React from 'react';
 import { COLOR } from '../../../constants/Colors';
 import { Bell, FullArrowLeft, OrderList, EditMenu, Star } from '../../../resources/icons';
 
-const ShopNavigationScreen = ({ navigation }) => {
+const ShopNavigationScreen = ({ navigation, route }) => {
+  const { shopName, shopID } = route.params;
+
   const onBackPress = () => {
     // console.log('On back Press');
     navigation.goBack();
   };
 
   const onOrderListPress = () => {
-    navigation.navigate('SellerOrder_Screen');
+    navigation.navigate('SellerOrder_Screen', { shopID: shopID });
   };
 
   const onViewRatingPress = () => {
@@ -52,7 +54,7 @@ const ShopNavigationScreen = ({ navigation }) => {
             </Text>
           </Pressable>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.header_text}>
-            <Text style={{ color: COLOR.text_press_color }}>|{'  '}</Text> Cơm Ông Già - Chi Nhánh 1
+            <Text style={{ color: COLOR.text_press_color }}>|{'  '}</Text> {shopName}
           </Text>
           {/* <Bell
             width={24}

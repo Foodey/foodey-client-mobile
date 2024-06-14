@@ -1,11 +1,13 @@
 import { View, Text, StyleSheet, StatusBar, Pressable, Image, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect, useContext } from 'react';
 import { COLOR } from '../../../constants/Colors';
 import { IntroHeader } from '../../../components/seller';
 import { AddressCard, SubmitButton } from '../../../components';
 import { Note, ArrowRight, Buy } from '../../../resources/icons';
 import { formatVND } from '../../../utils/ValueConverter';
 import { NoteModal } from '../../../components/messageBoxes';
+import { SellerContext } from '../../../contexts/SellerContext';
+import { cancelOrderAPI } from '../../../apiServices/HomeService';
 
 const SellerOrderDetailScreen = ({ navigation, route }) => {
   const [isNoteVisible, setIsNoteVisible] = useState(false);
@@ -29,7 +31,11 @@ const SellerOrderDetailScreen = ({ navigation, route }) => {
     //
   };
 
-  const { itemInfos } = route.params;
+  const { itemInfos, status } = route.params;
+
+  useLayoutEffect(() => {
+    const fetchPending = async () => {};
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -106,20 +112,25 @@ const SellerOrderDetailScreen = ({ navigation, route }) => {
           marginVertical: 5,
         }}
       >
-        <SubmitButton
-          style={{ flex: 1, marginEnd: 10 }}
-          title={'Decline'}
-          buttonColor={COLOR.button_red_color}
-          hoverColor={COLOR.button_press_red_color}
-          onPressFunction={onDeclinePress}
-        />
-        <SubmitButton
-          style={{ flex: 1 }}
-          title={'Confirm'}
-          buttonColor={COLOR.button_primary_color}
-          hoverColor={COLOR.button_press_primary_color}
-          onPressFunction={onConfirmPress}
-        />
+        {status !== 'PENDING' ||
+          (status !== 'STORE_CONFIRMED' && (
+            <SubmitButton
+              style={{ flex: 1, marginEnd: 10 }}
+              title={'Decline'}
+              buttonColor={COLOR.button_red_color}
+              hoverColor={COLOR.button_press_red_color}
+              onPressFunction={onDeclinePress}
+            />
+          ))}
+        {status !== 'DELIVERING' && (
+          <SubmitButton
+            style={{ flex: 1 }}
+            title={status === 'STORE_CONFIRMED' ? 'Ready To Delivered' : 'Confirm'}
+            buttonColor={COLOR.button_primary_color}
+            hoverColor={COLOR.button_press_primary_color}
+            onPressFunction={onConfirmPress}
+          />
+        )}
       </View>
     </View>
   );

@@ -13,7 +13,6 @@ import { COLOR } from '../../../constants/Colors';
 import { IntroHeader } from '../../../components/seller';
 import { restaurants } from '../../../constants/TempData';
 import { FullyRestaurantCard } from '../../../components/home';
-import { getSellerBrandAPI } from '../../../apiServices/SellerService';
 import HTTPStatus from '../../../constants/HTTPStatusCodes';
 import { SellerContext } from '../../../contexts/SellerContext';
 

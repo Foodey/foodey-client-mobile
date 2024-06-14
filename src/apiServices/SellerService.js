@@ -56,3 +56,14 @@ export const createNewShopAPI = async (
     console.log(err.response);
   }
 };
+
+export const getShopOrderByOrderStatusAPI = async (shopID, orderStatus) => {
+  try {
+    const response = await request.private.get(
+      `${SellerEndpoint.SHOP_ORDER}/${shopID}?status=${orderStatus}`,
+    );
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};

@@ -1,13 +1,29 @@
 import { View, Text, Pressable, StyleSheet, Image, StatusBar, FlatList } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect, useContext } from 'react';
 import { COLOR } from '../../../constants/Colors';
 import { IntroHeader, SellerOrderCard } from '../../../components/seller';
 import { sellerOrders } from '../../../constants/TempData';
 import { formatVND, getTime } from '../../../utils/ValueConverter';
+import { SellerContext } from '../../../contexts/SellerContext';
 
-const SellerOrderScreen = ({ navigation }) => {
-  const pendingOrders = sellerOrders?.filter((order) => order?.status === 'PENDING');
-  const confirmedOrders = sellerOrders?.filter((order) => order?.status === 'STORE_CONFIRMED');
+const SellerOrderScreen = ({ navigation, route }) => {
+  const { shopID } = route.params;
+  const {
+    pendingOrderList,
+    confirmedOrderList,
+    completedOrderList,
+    getPendingOrderOfShop,
+    getConfirmedOrderOfShop,
+    getCompletedOrderOfShop,
+  } = useContext(SellerContext);
+
+  useLayoutEffect(() => {
+    const fetchPending = async () => {
+      await getPendingOrderOfShop(shopID);
+    };
+
+    fetchPending();
+  }, []);
 
   const [page, setPage] = useState('0');
 
@@ -15,20 +31,32 @@ const SellerOrderScreen = ({ navigation }) => {
     if (item.status === 'DELIVERED') {
       navigation.navigate('SellerRatingDetail_Screen', { itemInfos: item?.items });
     } else {
-      navigation.navigate('SellerOrderDetail_Screen', { itemInfos: item?.items });
+      navigation.navigate('SellerOrderDetail_Screen', {
+        itemInfos: item?.items,
+        status: item?.status,
+      });
     }
   };
 
-  const onPendingPress = () => {
-    if (page !== '0') setPage('0');
+  const onPendingPress = async () => {
+    if (page !== '0') {
+      setPage('0');
+      await getPendingOrderOfShop(shopID);
+    }
   };
 
-  const onConfirmedPress = () => {
-    if (page !== '1') setPage('1');
+  const onConfirmedPress = async () => {
+    if (page !== '1') {
+      setPage('1');
+      await getConfirmedOrderOfShop(shopID);
+    }
   };
 
-  const onAllPress = () => {
-    if (page !== '2') setPage('2');
+  const onAllPress = async () => {
+    if (page !== '2') {
+      setPage('2');
+      await getCompletedOrderOfShop(shopID);
+    }
   };
 
   return (
@@ -103,7 +131,9 @@ const SellerOrderScreen = ({ navigation }) => {
       <FlatList
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingHorizontal: 10, marginTop: 10, paddingBottom: 10 }}
-        data={page === '0' ? pendingOrders : page === '1' ? confirmedOrders : sellerOrders}
+        data={
+          page === '0' ? pendingOrderList : page === '1' ? confirmedOrderList : completedOrderList
+        }
         renderItem={({ item }) => (
           <SellerOrderCard
             onDetailPress={() => onDetailPress(item)}
