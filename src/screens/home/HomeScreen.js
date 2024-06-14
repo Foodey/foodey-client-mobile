@@ -8,8 +8,9 @@ import {
   Pressable,
   FlatList,
   TextInput,
+  PermissionsAndroid,
 } from 'react-native';
-import React, { useState, useContext, useLayoutEffect } from 'react';
+import React, { useState, useContext, useLayoutEffect, useEffect } from 'react';
 import { COLOR } from '~/constants/Colors';
 import { LocationDisplay, CircleCategory, TruncateRestaurantCard } from '~/components/home';
 import { FullArrowRight, Search } from '~/resources/icons';
@@ -21,9 +22,58 @@ import { AppContext } from '~/contexts/AppContext';
 import { restaurants, offers } from '~/constants/TempData';
 import { getCategoriesAPI } from '../../apiServices/HomeService';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
+import Geolocation from '@react-native-community/geolocation';
 
 const HomeScreen = ({ navigation }) => {
   const { categoriesList, setCategoriesList } = useContext(HomeContext);
+
+  const [location, setLocation] = useState({});
+  const [errorMsg, setErrorMsg] = useState(null);
+  console.log(location);
+
+  useEffect(() => {
+    const getLocation = async () => {
+      try {
+        const granted = await requestLocationPermission();
+        if (granted) {
+          Geolocation.getCurrentPosition(
+            (position) => {
+              // console.log(position);
+              const { latitude, longitude } = position.coords;
+              setLocation({ latitude: latitude, longitude: longitude });
+            },
+            (error) => setErrorMsg(error.message),
+          );
+        } else {
+          setErrorMsg('Location permission denied');
+        }
+      } catch (error) {
+        console.error('Error getting location permission:', error);
+        setErrorMsg(error.message);
+      }
+    };
+
+    getLocation();
+  }, []);
+
+  const requestLocationPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Location Permission',
+          message: 'This app needs access to your location.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      return granted === PermissionsAndroid.RESULTS.GRANTED;
+    } catch (error) {
+      console.error('Error requesting location permission:', error);
+      return false;
+    }
+  };
 
   useLayoutEffect(() => {
     const getCategoriesFunction = async () => {

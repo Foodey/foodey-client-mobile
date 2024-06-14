@@ -9,8 +9,8 @@ import { useDebounce } from '../../utils/hooks';
 
 const SelectAddressScreen = ({ navigation, route }) => {
   const [region, setRegion] = useState({
-    latitude: 10.8231,
-    longitude: 106.6297,
+    latitude: 37.4220936,
+    longitude: -122.083922,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
