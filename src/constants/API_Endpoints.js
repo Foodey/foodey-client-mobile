@@ -31,4 +31,6 @@ export const SellerEndpoint = {
   BRAND: '/v1/me/shop-brands',
   SHOP: '/v1/shops',
   SHOP_ORDER: '/v1/orders/shops',
+  BRAND_CREATION: '/v1/shop-brands',
+  SHOP_CREATION: 'v1/shops',
 };

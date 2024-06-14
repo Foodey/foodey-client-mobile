@@ -19,14 +19,12 @@ export const getShopOfBrandAPI = async (brandID) => {
   }
 };
 
-export const createNewBrandAPI = async (brandInputs) => {
+export const createNewBrandAPI = async (brandName, phoneNumber, email) => {
   try {
-    const response = await request.private.post(`${SellerEndpoint.BRAND}`, {
-      name: brandInputs.brandName,
-      phoneNumber: brandInputs.phoneNumber,
-      email: brandInputs.email,
-      logo: brandInputs.logoImage,
-      wallpaper: brandInputs.wallpaperImage,
+    const response = await request.private.post(`${SellerEndpoint.BRAND_CREATION}`, {
+      name: brandName,
+      phoneNumber: phoneNumber,
+      email: email,
     });
 
     return response;
@@ -35,19 +33,11 @@ export const createNewBrandAPI = async (brandInputs) => {
   }
 };
 
-export const createNewShopAPI = async (
-  brandID,
-  brandLogo,
-  brandWallpaper,
-  shopName,
-  shopAddress,
-) => {
+export const createNewShopAPI = async (brandID, shopName, shopAddress) => {
   try {
-    const response = await request.private.post(`${SellerEndpoint.SHOP}`, {
+    const response = await request.private.post(`${SellerEndpoint.SHOP_CREATION}`, {
       brandId: brandID,
       name: shopName,
-      logo: brandLogo,
-      wallpaper: brandWallpaper,
       address: shopAddress,
     });
 

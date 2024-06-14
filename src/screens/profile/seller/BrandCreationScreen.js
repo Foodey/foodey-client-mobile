@@ -21,8 +21,9 @@ import Checkbox from 'expo-checkbox';
 import { PhotoSelectionModal } from '../../../components/messageBoxes';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import HTTPStatus from '../../../constants/HTTPStatusCodes';
-import { getSellerBrandAPI } from '../../../apiServices/SellerService';
+import { getSellerBrandAPI, createNewBrandAPI } from '../../../apiServices/SellerService';
 import { SellerContext } from '../../../contexts/SellerContext';
+import { cldUpload, handleUploadImage } from '../../../utils/Cloudinary';
 
 const BrandCreationScreen = ({ navigation }) => {
   const { getBrands } = useContext(SellerContext);
@@ -78,11 +79,50 @@ const BrandCreationScreen = ({ navigation }) => {
     }
 
     if (isValid) {
-      //createNewBrand();
-      await getBrands();
-      clearInput();
-      clearErrorMessage();
-      navigation.navigate('SellerBrandList_Screen');
+      const isSuccess = await createNewBrand(
+        brandInfoInput.brandName,
+        brandInfoInput.phoneNumber,
+        brandInfoInput.email,
+        brandInfoInput.logoImage,
+        brandInfoInput.wallpaperImage,
+      );
+      if (isSuccess) {
+        await getBrands();
+        clearInput();
+        clearErrorMessage();
+        navigation.navigate('SellerBrandList_Screen');
+      } else {
+        handleBrandInfoErrorsChanged('brandName', 'Unexpected error, please try again later!!');
+        handleBrandInfoErrorsChanged('phoneNumber', 'Unexpected error, please try again later!!');
+        handleBrandInfoErrorsChanged('email', 'Unexpected error, please try again later!!');
+        handleBrandInfoErrorsChanged('logoImage', 'Unexpected error, please try again later!!');
+        handleBrandInfoErrorsChanged(
+          'wallpaperImage',
+          'Unexpected error, please try again later!!',
+        );
+      }
+    }
+  };
+
+  const createNewBrand = async (name, phoneNumber, email, logoURL, wallpaperURL) => {
+    try {
+      console.log(logoURL);
+      console.log(wallpaperURL);
+      const response = await createNewBrandAPI(name, phoneNumber, email);
+      if (response.status === HTTPStatus.CREATED) {
+        await handleUploadImage(logoURL, response?.data?.logoUploadApiOptions);
+        console.log('Success upload logo');
+        await handleUploadImage(wallpaperURL, response?.data?.wallpaperUploadApiOptions);
+
+        console.log('Success all');
+        return true;
+      } else {
+        console.log('Error when create new brand');
+        return false;
+      }
+    } catch (err) {
+      console.log('Error when create new brand ' + err);
+      return false;
     }
   };
 
@@ -140,7 +180,7 @@ const BrandCreationScreen = ({ navigation }) => {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
         handleBrandInfoErrorsChanged('logoImage', '');
-        handleBrandInfoChanged('logoImage', result.assets[0].uri);
+        handleBrandInfoChanged('logoImage', result.assets[0]);
         setIsLogoModalVisible(false);
       } else {
         console.log('Camera permission denied');
@@ -156,7 +196,7 @@ const BrandCreationScreen = ({ navigation }) => {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
         handleBrandInfoErrorsChanged('wallpaperImage', '');
-        handleBrandInfoChanged('wallpaperImage', result.assets[0].uri);
+        handleBrandInfoChanged('wallpaperImage', result.assets[0]);
         setIsWallpaperModalVisible(false);
       } else {
         console.log('Camera permission denied');
@@ -171,9 +211,9 @@ const BrandCreationScreen = ({ navigation }) => {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchImageLibrary({ mediaType: 'photo' });
-        // console.log(result.assets[0].uri);
+        // console.log(result.assets[0]);
         handleBrandInfoErrorsChanged('logoImage', '');
-        handleBrandInfoChanged('logoImage', result.assets[0].uri);
+        handleBrandInfoChanged('logoImage', result.assets[0]);
         setIsLogoModalVisible(false);
       } else {
         console.log('Library permission denied');
@@ -188,9 +228,9 @@ const BrandCreationScreen = ({ navigation }) => {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchImageLibrary({ mediaType: 'photo' });
-        // console.log(result.assets[0].uri);
+        // console.log(result.assets[0]);
         handleBrandInfoErrorsChanged('wallpaperImage', '');
-        handleBrandInfoChanged('wallpaperImage', result.assets[0].uri);
+        handleBrandInfoChanged('wallpaperImage', result.assets[0]);
         setIsWallpaperModalVisible(false);
       } else {
         console.log('Library permission denied');
@@ -298,7 +338,7 @@ const BrandCreationScreen = ({ navigation }) => {
             style={{}}
             title="Photo of your Brand Logo (1:1)"
             onPhotoActionPress={() => setIsLogoModalVisible(true)}
-            imageURI={brandInfoInput.logoImage}
+            imageURI={brandInfoInput.logoImage.uri}
             onDeletePress={() => handleBrandInfoChanged('logoImage', '')}
             errorMessage={brandInfoInputErrors.logoImage}
           />
@@ -310,7 +350,7 @@ const BrandCreationScreen = ({ navigation }) => {
             style={{}}
             title="Photo of your Brand Wallpaper (3:2)"
             onPhotoActionPress={() => setIsWallpaperModalVisible(true)}
-            imageURI={brandInfoInput.wallpaperImage}
+            imageURI={brandInfoInput.wallpaperImage.uri}
             onDeletePress={() => handleBrandInfoChanged('wallpaperImage', '')}
             errorMessage={brandInfoInputErrors.wallpaperImage}
           />
