@@ -29,7 +29,6 @@ const HomeScreen = ({ navigation }) => {
 
   const [location, setLocation] = useState({});
   const [errorMsg, setErrorMsg] = useState(null);
-  console.log(location);
 
   useEffect(() => {
     const getLocation = async () => {

@@ -8,7 +8,7 @@ import { formatTruncatedVND } from '../../../utils/ValueConverter';
 import { SellerContext } from '../../../contexts/SellerContext';
 
 const SellerRestaurantScreen = ({ navigation, route }) => {
-  const { shopID, shopName } = route.params;
+  const { brandID, shopID, shopName } = route.params;
 
   const [page, setPage] = useState('0');
 

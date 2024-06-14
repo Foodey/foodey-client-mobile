@@ -37,15 +37,20 @@ function FullyRestaurantCard({
             {name}
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {avgReview && (
+            {avgReview >= 0 && (
               <Star width={17} height={17} style={{ color: COLOR.star_background_color }} />
             )}
-            <Text style={[styles.distance_text, { marginStart: createdDate ? 0 : 2 }]}>
-              {createdDate && 'Date created: ' + formatDateTime(createdDate)}
-              {avgReview}
-              {distance && `  |  ${distance} km `}
-              {estimateTime && ` |  ${estimateTime} mins`}
-            </Text>
+            {createdDate ? (
+              <Text style={[styles.distance_text, { marginStart: 0 }]}>
+                {createdDate && 'Date created: ' + formatDateTime(createdDate)}
+              </Text>
+            ) : (
+              <Text style={[styles.distance_text, { marginStart: 2 }]}>
+                {avgReview ? avgReview : ''}
+                {distance && `  |  ${distance} km `}
+                {estimateTime && ` |  ${estimateTime} mins`}
+              </Text>
+            )}
           </View>
         </View>
       </View>

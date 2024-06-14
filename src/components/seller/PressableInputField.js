@@ -3,7 +3,21 @@ import React from 'react';
 import { COLOR } from '../../constants/Colors';
 import { ArrowRight } from '../../resources/icons';
 
-function PressableInputField({ style, title, isRequired, value, errorMessage, onPressFunction }) {
+function PressableInputField({
+  style,
+  title,
+  isRequired,
+  value,
+  isCoordinate,
+  errorMessage,
+  onPressFunction,
+}) {
+  const renderCoordinate = (coordinate) => {
+    const latitude = coordinate.latitude;
+    const longitude = coordinate.longitude;
+    return `latitude: ${latitude}, longitude: ${longitude}`;
+  };
+
   return (
     <View style={style}>
       <Pressable style={[styles.container]} onPress={onPressFunction}>

@@ -12,7 +12,7 @@ import { COLOR } from '../../../constants/Colors';
 import { Bell, FullArrowLeft, OrderList, EditMenu, Star } from '../../../resources/icons';
 
 const ShopNavigationScreen = ({ navigation, route }) => {
-  const { shopName, shopID } = route.params;
+  const { brandID, shopName, shopID } = route.params;
 
   const onBackPress = () => {
     // console.log('On back Press');
@@ -28,7 +28,11 @@ const ShopNavigationScreen = ({ navigation, route }) => {
   };
 
   const onEditShopInfoPress = () => {
-    navigation.navigate('SellerRestaurant_Screen', { shopID: shopID, shopName: shopName });
+    navigation.navigate('SellerRestaurant_Screen', {
+      shopID: shopID,
+      shopName: shopName,
+      brandID: brandID,
+    });
   };
 
   return (

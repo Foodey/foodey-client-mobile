@@ -17,6 +17,8 @@ export const SellerProvider = ({ children }) => {
   const [completedOrderList, setCompletedOrderList] = useState([]);
   const [deliveredOrderList, setDeliveredOrderList] = useState([]);
 
+  const [contextShopLocation, setContextShopLocation] = useState({});
+
   const getBrands = async () => {
     try {
       const response = await getSellerBrandAPI(20);
@@ -121,6 +123,8 @@ export const SellerProvider = ({ children }) => {
         setCompletedOrderList,
         deliveredOrderList,
         setDeliveredOrderList,
+        contextShopLocation,
+        setContextShopLocation,
 
         //APIs
         getBrands,

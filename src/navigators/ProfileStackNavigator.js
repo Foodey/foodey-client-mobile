@@ -73,6 +73,7 @@ export default function ProfileStackNavigator({ navigation, route }) {
       'AddEditVoucher_Screen',
       'AddVoucher_Screen',
       'SellerRatingDetail_Screen',
+      'SelectAddress_Screen',
     ];
     if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
       navigation.setOptions({ tabBarStyle: { display: 'none' } });

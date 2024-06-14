@@ -7,7 +7,7 @@ import {
   ScrollView,
   PermissionsAndroid,
 } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useLayoutEffect } from 'react';
 import { COLOR } from '../../../constants/Colors';
 import {
   IntroHeader,
@@ -26,7 +26,7 @@ import HTTPStatus from '../../../constants/HTTPStatusCodes';
 const ShopCreationScreen = ({ navigation, route }) => {
   const { brandID, brandLogo, brandWallpaper } = route.params;
 
-  const { getShops } = useContext(SellerContext);
+  const { getShops, contextShopLocation } = useContext(SellerContext);
 
   const onGoBackPress = () => {
     navigation.goBack();
@@ -124,10 +124,15 @@ const ShopCreationScreen = ({ navigation, route }) => {
       isValid = false;
     }
 
-    // if(shopAddress === ''){
-    //   setShopAddressErr('Please input your shop address');
-    //   isValid = false;
-    // }
+    if (Object.keys(contextShopLocation).length === 0) {
+      setShopLocationErr('Please picking your shop location');
+      isValid = false;
+    }
+
+    if (shopAddress === '') {
+      setShopAddressErr('Please input your shop address');
+      isValid = false;
+    }
 
     if (isValid) {
       const isSuccess = await createNewShop(
@@ -176,13 +181,25 @@ const ShopCreationScreen = ({ navigation, route }) => {
     }
   };
 
+  const onShopLocationPress = () => {
+    setShopLocationErr('');
+    navigation.navigate('SelectAddress_Screen');
+  };
+
+  const coordinateObjectToString = (coordObj) => {
+    const values = Object.values(coordObj);
+    return values.join(', ');
+  };
+
   const [shopName, setShopName] = useState('');
-  const [shopAddress, setShopAddress] = useState('KTX Khu A, DHQG TPHCM'); //Temp Address
+  const [shopLocation, setShopLocation] = useState({});
+  const [shopAddress, setShopAddress] = useState(''); //Temp Address
   const [logoImage, setLogoImage] = useState('');
   const [wallpaperImage, setWallpaperImage] = useState('');
 
   const [shopNameErr, setShopNameErr] = useState('');
   const [logoImageErr, setLogoImageErr] = useState('');
+  const [shopLocationErr, setShopLocationErr] = useState('');
   const [shopAddressErr, setShopAddressErr] = useState('');
   const [wallpaperImageErr, setWallpaperImageErr] = useState('');
 
@@ -274,11 +291,32 @@ const ShopCreationScreen = ({ navigation, route }) => {
               [Signature Dish] [Brand Name] - [Name of Road]
             </Text>
           </View>
+          <Text style={[styles.instruction_text, { marginTop: 0 }]}>
+            Input your Shop address and location. Make sure to choose your exact Shop location
+            because this will be used to recommend your shop to near-by user.
+          </Text>
           <PressableInputField
-            title="Address"
-            onPressFunction={onSelectAddressPress}
+            isRequired={true}
+            // isCoordinate={true}
+            title="Shop Location"
+            value={
+              Object.keys(contextShopLocation).length === 0
+                ? ''
+                : coordinateObjectToString(contextShopLocation)
+            }
+            errorMessage={shopLocationErr}
+            onPressFunction={() => onShopLocationPress()}
+          />
+          <ShortInputField
+            title="Shop Address"
+            placeholder="Enter Shop Address"
+            isRequired={true}
             value={shopAddress}
             errorMessage={shopAddressErr}
+            onChangeText={(value) => {
+              setShopAddressErr('');
+              setShopAddress(value);
+            }}
           />
           <Text style={[styles.instruction_text, { marginTop: 0 }]}>
             Brand with Logo are most likely to be visited by customers. Make sure the uploaded logo

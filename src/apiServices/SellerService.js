@@ -33,12 +33,22 @@ export const createNewBrandAPI = async (brandName, phoneNumber, email) => {
   }
 };
 
-export const createNewShopAPI = async (brandID, shopName, shopAddress) => {
+export const createNewShopAPI = async (
+  brandID,
+  shopName,
+  shopDetailsAddress,
+  shopLongitude,
+  shopLatitude,
+) => {
   try {
     const response = await request.private.post(`${SellerEndpoint.SHOP_CREATION}`, {
       brandId: brandID,
       name: shopName,
-      address: shopAddress,
+      address: {
+        detailsAddress: shopDetailsAddress,
+        latitude: shopLatitude,
+        longitude: shopLongitude,
+      },
     });
 
     return response;
