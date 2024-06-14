@@ -6,6 +6,7 @@ import CloseCircle from '~/resources/icons/close-circle.svg';
 
 function SearchBar({
   style,
+  textInputStyle,
   placeholder,
   editable,
   searchValue,
@@ -33,7 +34,7 @@ function SearchBar({
         value={searchValue}
         ref={searchRef}
         editable={editable}
-        style={[styles.location_text]}
+        style={[styles.location_text, textInputStyle]}
         placeholder={placeholder}
         placeholderTextColor={COLOR.text_press_color}
         onChangeText={onChangeText}

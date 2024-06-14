@@ -8,3 +8,4 @@ export { default as SettingScreen } from './SettingScreen';
 export { default as ContactInfoScreen } from './ContactInfoScreen';
 export { default as PassChangeScreen } from './PassChangeScreen';
 export { default as AccountDeletionScreen } from './AccountDeletionScreen';
+export { default as SelectAddressScreen } from './SelectAddressScreen';

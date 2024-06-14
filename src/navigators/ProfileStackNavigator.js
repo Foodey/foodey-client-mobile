@@ -14,6 +14,7 @@ import {
   ContactInfoScreen,
   PassChangeScreen,
   AccountDeletionScreen,
+  SelectAddressScreen,
 } from '../screens/profile';
 
 import {
@@ -50,8 +51,11 @@ export default function ProfileStackNavigator({ navigation, route }) {
       'Policy_Screen',
       'Setting_Screen',
       'ContactInfo_Screen',
+      'SelectAddress_Screen',
       'PassChange_Screen',
       'AccountDeletion_Screen',
+
+      //Seller
       'SellerIntro_Screen',
       'RegisteredShopInfo_Screen',
       'SellerIdentification_Screen',
@@ -100,6 +104,7 @@ export default function ProfileStackNavigator({ navigation, route }) {
         <ProfileStack.Screen name="Policy_Screen" component={PolicyScreen} />
         <ProfileStack.Screen name="Setting_Screen" component={SettingScreen} />
         <ProfileStack.Screen name="ContactInfo_Screen" component={ContactInfoScreen} />
+        <ProfileStack.Screen name="SelectAddress_Screen" component={SelectAddressScreen} />
         <ProfileStack.Screen name="PassChange_Screen" component={PassChangeScreen} />
         <ProfileStack.Screen name="AccountDeletion_Screen" component={AccountDeletionScreen} />
 

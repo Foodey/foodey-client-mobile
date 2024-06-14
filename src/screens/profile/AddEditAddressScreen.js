@@ -33,6 +33,10 @@ const AddEditAddressScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
+  const onSelectAddressPress = () => {
+    navigation.navigate('SelectAddress_Screen');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLOR.background_color} />
@@ -65,15 +69,12 @@ const AddEditAddressScreen = ({ navigation, route }) => {
         />
 
         <ProfileTextInput
-          editable={true}
-          style={{ marginHorizontal: 21, marginTop: 31 }} //The address should be uneditable and when user click on it it will navigate to the screen for user to choose address based on map
+          editable={false}
+          style={{ marginHorizontal: 21, marginTop: 31, marginBottom: 21 }} //The address should be uneditable and when user click on it it will navigate to the screen for user to choose address based on map
           value={inputs.address}
           placeholder="Select Address"
           errorMessage={inputsErrorMessage.address}
-          onChangeText={(text) => {
-            handleInputsErrors('', 'address');
-            handleInputsChanged(text, 'address');
-          }}
+          onPressFunction={() => onSelectAddressPress()}
         />
         <ProfileTextInput
           editable={true}
