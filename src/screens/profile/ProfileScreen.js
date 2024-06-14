@@ -12,9 +12,9 @@ const ProfileScreen = ({ navigation }) => {
   const { logout, userInfo } = useContext(AppContext);
   const [isConfirmLogoutVisible, setConfirmLogoutVisible] = useState(false);
 
-  const onLogoutOKPress = () => {
+  const onLogoutOKPress = async () => {
     setConfirmLogoutVisible(false);
-    logout();
+    await logout();
   };
 
   const onMyVouchersPress = () => {

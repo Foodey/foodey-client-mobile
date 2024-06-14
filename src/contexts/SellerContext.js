@@ -19,7 +19,7 @@ export const SellerProvider = ({ children }) => {
 
   const getBrands = async () => {
     try {
-      const response = await getSellerBrandAPI(15);
+      const response = await getSellerBrandAPI(20);
       if (response.status === HTTPStatus.OK) {
         setBrandList(response.data.content);
       } else {

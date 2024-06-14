@@ -44,9 +44,11 @@ export const AppProvider = ({ children }) => {
     try {
       const refreshToken = await MyAsyncStorage.getItem(StorageKey.REFRESH_TOKEN);
 
-      axios.post(`${BASE_URL}${ProfileEndpoint.LOG_OUT}`, null, {
+      const response = await axios.post(`${BASE_URL}${ProfileEndpoint.LOG_OUT}`, null, {
         headers: { Authorization: 'Bearer ' + refreshToken },
       });
+
+      console.log(response.status);
 
       await MyAsyncStorage.removeItem(StorageKey.USER_INFO);
       await MyAsyncStorage.removeItem(StorageKey.ACCESS_TOKEN);
