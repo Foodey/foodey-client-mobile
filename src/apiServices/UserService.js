@@ -48,6 +48,30 @@ export const getDeliveredOrderAPI = async () => {
   }
 };
 
+export const getOrderEvaluationAPI = async (orderID) => {
+  try {
+    const response = await request.private.get(
+      `${UserEndpoint.ORDER_EVALUATION}/${orderID}?type=ORDER`,
+    );
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
+export const orderEvaluateAPI = async (orderID, rating, comment) => {
+  try {
+    const response = await request.private.get(`${UserEndpoint.ORDER_EVALUATION}?type=ORDER`, {
+      orderId: orderID,
+      rating: rating,
+      comment: comment,
+    });
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
 export const getFavoriteRestaurantsAPI = async () => {
   try {
     const response = await request.private.get(`${UserEndpoint.GENERAL_USER_FAVORITE}/shops`);

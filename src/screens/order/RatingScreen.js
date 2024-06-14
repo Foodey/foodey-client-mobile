@@ -1,22 +1,45 @@
 import { View, Text, TextInput, StyleSheet, Image, StatusBar } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { COLOR } from '../../constants/Colors';
 import { IntroHeader } from '../../components/seller';
 import { StarRating } from '../../components';
 import { Star } from '../../resources/icons';
 import { SubmitButton } from '../../components';
+import { orderEvaluateAPI } from '../../apiServices/UserService';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
 
-const RatingScreen = ({ navigation }) => {
+const RatingScreen = ({ navigation, route }) => {
+  const { orderID, isRated, orderRating, orderComment } = route.params;
+
   const onBackPress = () => {
     navigation.goBack();
   };
 
-  const onSubmitPress = () => {
-    //Validate before submit
+  const onSubmitPress = async (orderID, rating, comment) => {
+    try {
+      const response = await orderEvaluateAPI(orderID, rating, comment);
+      if (
+        response.status === HTTPStatus.OK ||
+        response.status === HTTPStatus.CREATED ||
+        response.status === HTTPStatus.NO_CONTENT
+      ) {
+        setRating(0);
+        setComment('');
+        navigation.goBack();
+      } else if (response.status === HTTPStatus.CONFLICT) {
+        console.log('User already evaluate this order');
+      } else {
+        console.log('Error when submit order evaluation');
+      }
+    } catch (err) {
+      console.log('Error when submit order evaluation ' + err);
+    }
   };
 
-  const [orderRating, setOrderRating] = useState(0);
-  const [comment, setComment] = useState('');
+  const [rating, setRating] = useState(orderRating);
+  const [comment, setComment] = useState(orderComment);
+  const [isAlreadyRated, setIsAlreadyRate] = useState(isRated);
+  const [canSubmit, setCanSubmit] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -29,20 +52,21 @@ const RatingScreen = ({ navigation }) => {
         />
         <Text style={styles.shop_name_text}>Shop Name</Text>
         <StarRating
+          isEditable={!isAlreadyRated}
           maxStar={5}
-          value={orderRating}
-          onRatingChange={(value) => setOrderRating(value)}
+          value={rating}
+          onRatingChange={(value) => setRating(value)}
         />
         <Text style={[styles.shop_name_text, { color: COLOR.text_pink_color }]}>
-          {orderRating === 1
+          {rating === 1
             ? 'Very Bad'
-            : orderRating === 2
+            : rating === 2
             ? 'Bad'
-            : orderRating === 3
+            : rating === 3
             ? 'Normal'
-            : orderRating === 4
+            : rating === 4
             ? 'Good'
-            : orderRating === 5
+            : rating === 5
             ? 'Excellent'
             : 'Not Rated'}
         </Text>
@@ -51,6 +75,7 @@ const RatingScreen = ({ navigation }) => {
         <Text style={[styles.shop_name_text, { marginTop: 0, marginBottom: 5 }]}>Comment: </Text>
         <View style={styles.text_input_container}>
           <TextInput
+            editable={!isAlreadyRated}
             value={comment}
             multiline
             placeholder="Leave your comment here..."
@@ -73,13 +98,16 @@ const RatingScreen = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.footer_container}>
-        <SubmitButton
-          style={{ flex: 1 }}
-          title={'Next'}
-          buttonColor={COLOR.button_primary_color}
-          hoverColor={COLOR.button_press_primary_color}
-          onPressFunction={() => onSubmitPress()}
-        />
+        {!isAlreadyRated && (
+          <SubmitButton
+            disabled={canSubmit}
+            style={{ flex: 1 }}
+            title={'Submit Evaluation'}
+            buttonColor={COLOR.button_primary_color}
+            hoverColor={COLOR.button_press_primary_color}
+            onPressFunction={() => onSubmitPress(orderID, rating, comment)}
+          />
+        )}
       </View>
     </View>
   );

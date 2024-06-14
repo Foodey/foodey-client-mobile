@@ -11,6 +11,7 @@ function SellerOrderCard({
   createdTime,
   status,
   onDetailPress,
+  onViewRatingPress,
 }) {
   return (
     <View style={styles.container}>
@@ -30,7 +31,7 @@ function SellerOrderCard({
             ellipsizeMode="tail"
             style={[styles.content_text, { fontSize: 18, color: COLOR.text_primary_color }]}
           >
-            Nguyen Phu Thinh
+            {customerName}
           </Text>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.content_text}>
             <Text style={{ color: COLOR.text_primary_color }}>{numOfItems}</Text> item(s){'  '}|
@@ -82,7 +83,7 @@ function SellerOrderCard({
             : 'Pending'}
         </Text>
         <Pressable
-          onPress={onDetailPress}
+          onPress={status === 'DELIVERED' ? onViewRatingPress : onDetailPress}
           style={[
             styles.button,
             { marginStart: 'auto', borderWidth: 1, backgroundColor: COLOR.background_color },

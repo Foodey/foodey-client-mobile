@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { Star, RateStar } from '../resources/icons';
 import { COLOR } from '../constants/Colors';
 
@@ -12,6 +12,10 @@ const StarRating = ({
   onRatingChange,
 }) => {
   const [rateValue, setRateValue] = useState(value);
+
+  useLayoutEffect(() => {
+    setRateValue(value);
+  }, [value]);
 
   const onStarPress = (star) => {
     setRateValue(star);

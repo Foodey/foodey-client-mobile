@@ -5,6 +5,7 @@ import { OrderCard } from '~/components/order';
 import { AppContext } from '~/contexts/AppContext';
 import { ConfirmActionModal } from '../../components/messageBoxes';
 import { cancelOrderAPI } from '../../apiServices/HomeService';
+import { getOrderEvaluationAPI } from '../../apiServices/UserService';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
 
 const OrderScreen = ({ navigation }) => {
@@ -43,8 +44,28 @@ const OrderScreen = ({ navigation }) => {
     });
   };
 
-  const onRateOrderPress = (item) => {
-    navigation.navigate('Rating_Screen');
+  const onRateOrderPress = async (item) => {
+    try {
+      const response = await getOrderEvaluationAPI(item?.id);
+      if (response.status === HTTPStatus.OK) {
+        const isRated = response?.data?.rated;
+        const orderRating = Math.round(response?.data?.rating);
+        const orderComment = response?.data?.comment;
+
+        if (orderRating !== null || orderRating !== undefined) {
+          navigation.navigate('Rating_Screen', {
+            isRated: isRated,
+            orderRating: orderRating,
+            orderComment: orderComment,
+            orderID: item?.id,
+          });
+        }
+      } else {
+        console.log('Error when fetching order evaluation');
+      }
+    } catch (err) {
+      console.log('Error when fetching order evaluation ' + err);
+    }
   };
 
   const [isOnGoingSelected, setIsOnGoingSelected] = useState(true);

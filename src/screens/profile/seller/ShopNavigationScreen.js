@@ -24,11 +24,11 @@ const ShopNavigationScreen = ({ navigation, route }) => {
   };
 
   const onViewRatingPress = () => {
-    navigation.navigate('SellerRating_Screen');
+    navigation.navigate('SellerRating_Screen', { shopID: shopID });
   };
 
   const onEditShopInfoPress = () => {
-    navigation.navigate('SellerRestaurant_Screen');
+    navigation.navigate('SellerRestaurant_Screen', { shopID: shopID });
   };
 
   return (

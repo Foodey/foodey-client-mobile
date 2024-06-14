@@ -17,12 +17,12 @@ import { formatVND } from '../../../utils/ValueConverter';
 import { NoteModal } from '../../../components/messageBoxes';
 
 const SellerRatingDetailScreen = ({ navigation, route }) => {
-  const { itemInfos } = route.params;
+  const { itemInfos, orderRating, orderComment } = route.params;
 
   const [isNoteVisible, setIsNoteVisible] = useState(false);
   const [noteValue, setNoteValue] = useState('');
-  const [orderRating, setOrderRating] = useState(0);
-  const [comment, setComment] = useState('');
+  const [rating, setRating] = useState(orderRating);
+  const [comment, setComment] = useState(orderComment);
 
   const onConfirmPress = () => {
     //
@@ -65,8 +65,8 @@ const SellerRatingDetailScreen = ({ navigation, route }) => {
         <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
           <StarRating
             maxStar={5}
-            value={orderRating}
-            onRatingChange={(value) => setOrderRating(value)}
+            value={rating}
+            onRatingChange={(value) => setRating(value)}
             isEditable={false}
           />
           <Text
@@ -79,15 +79,15 @@ const SellerRatingDetailScreen = ({ navigation, route }) => {
               },
             ]}
           >
-            {orderRating === 1
+            {rating === 1
               ? 'Very Bad'
-              : orderRating === 2
+              : rating === 2
               ? 'Bad'
-              : orderRating === 3
+              : rating === 3
               ? 'Normal'
-              : orderRating === 4
+              : rating === 4
               ? 'Good'
-              : orderRating === 5
+              : rating === 5
               ? 'Excellent'
               : 'Not Rated'}
           </Text>

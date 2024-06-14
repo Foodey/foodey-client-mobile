@@ -5,6 +5,8 @@ import { IntroHeader, SellerOrderCard } from '../../../components/seller';
 import { sellerOrders } from '../../../constants/TempData';
 import { formatVND, getTime } from '../../../utils/ValueConverter';
 import { SellerContext } from '../../../contexts/SellerContext';
+import { getOrderEvaluationAPI } from '../../../apiServices/UserService';
+import HTTPStatus from '../../../constants/HTTPStatusCodes';
 
 const SellerOrderScreen = ({ navigation, route }) => {
   const { shopID } = route.params;
@@ -35,6 +37,27 @@ const SellerOrderScreen = ({ navigation, route }) => {
         itemInfos: item?.items,
         status: item?.status,
       });
+    }
+  };
+
+  const onViewRatingPress = async (item) => {
+    try {
+      const response = await getOrderEvaluationAPI(item?.id);
+      if (response.status === HTTPStatus.OK) {
+        const orderRating = Math.round(response?.data?.rating);
+        const orderComment = response?.data?.comment;
+
+        if (orderRating !== null || orderRating !== undefined) {
+          navigation.navigate('SellerRatingDetail_Screen', {
+            orderRating: orderRating,
+            orderComment: orderComment,
+          });
+        }
+      } else {
+        console.log('Error when fetching order evaluation');
+      }
+    } catch (err) {
+      console.log('Error when fetching order evaluation ' + err);
     }
   };
 
@@ -136,12 +159,14 @@ const SellerOrderScreen = ({ navigation, route }) => {
         }
         renderItem={({ item }) => (
           <SellerOrderCard
-            onDetailPress={() => onDetailPress(item)}
+            customerName={item?.userName}
             totalPrice={formatVND(item?.payment?.price)}
             itemList={item?.items}
             numOfItems={item?.items?.length}
             createdTime={getTime(item?.createdAt)}
             status={item?.status}
+            onDetailPress={() => onDetailPress(item)}
+            onViewRatingPress={() => onViewRatingPress(item)}
           />
         )}
       />

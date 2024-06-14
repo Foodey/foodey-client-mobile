@@ -15,6 +15,7 @@ export const SellerProvider = ({ children }) => {
   const [pendingOrderList, setPendingOrderList] = useState({});
   const [confirmedOrderList, setConfirmedOrderList] = useState({});
   const [completedOrderList, setCompletedOrderList] = useState({});
+  const [deliveredOrderList, setDeliveredOrderList] = useState({});
 
   const getBrands = async () => {
     try {
@@ -68,6 +69,19 @@ export const SellerProvider = ({ children }) => {
     }
   };
 
+  const getDeliveredOrderOfShop = async (shopID) => {
+    try {
+      const response = await getShopOrderByOrderStatusAPI(shopID, 'DELIVERED');
+      if (response.status === HTTPStatus.OK) {
+        setDeliveredOrderList(response?.data?.content);
+      } else {
+        console.log('Error when fetching shop delivered order list');
+      }
+    } catch (err) {
+      console.log('Error when fetching shop delivered order list ' + err);
+    }
+  };
+
   const getCompletedOrderOfShop = async (shopID) => {
     try {
       const deliveringResponse = await getShopOrderByOrderStatusAPI(shopID, 'DELIVERING');
@@ -105,13 +119,17 @@ export const SellerProvider = ({ children }) => {
         setConfirmedOrderList,
         completedOrderList,
         setCompletedOrderList,
+        deliveredOrderList,
+        setDeliveredOrderList,
 
         //APIs
         getBrands,
         getShops,
+
         getPendingOrderOfShop,
         getConfirmedOrderOfShop,
         getCompletedOrderOfShop,
+        getDeliveredOrderOfShop,
       }}
     >
       {children}
