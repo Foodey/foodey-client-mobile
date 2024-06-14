@@ -28,7 +28,7 @@ const ShopNavigationScreen = ({ navigation, route }) => {
   };
 
   const onEditShopInfoPress = () => {
-    navigation.navigate('SellerRestaurant_Screen', { shopID: shopID });
+    navigation.navigate('SellerRestaurant_Screen', { shopID: shopID, shopName: shopName });
   };
 
   return (

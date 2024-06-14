@@ -1,12 +1,15 @@
 import { View, Text, Pressable, StyleSheet, FlatList, StatusBar } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect, useContext } from 'react';
 import { COLOR } from '../../../constants/Colors';
 import { sellerOrders, myVouchers } from '../../../constants/TempData';
 import { SellerProductBar } from '../../../components/seller';
 import { VoucherCard } from '../../../components';
 import { formatTruncatedVND } from '../../../utils/ValueConverter';
+import { SellerContext } from '../../../contexts/SellerContext';
 
-const SellerRestaurantScreen = ({ navigation }) => {
+const SellerRestaurantScreen = ({ navigation, route }) => {
+  const { shopID, shopName } = route.params;
+
   const [page, setPage] = useState('0');
 
   const onMenuPress = () => {
@@ -56,8 +59,7 @@ const SellerRestaurantScreen = ({ navigation }) => {
             </Text>
           </Pressable>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.header_text}>
-            <Text style={{ color: COLOR.text_press_color }}>|{'  '}</Text> Cơm tấm Ông Già - KTX Khu
-            B DHQG
+            <Text style={{ color: COLOR.text_press_color }}>|{'  '}</Text> {shopName}
           </Text>
           {/* <Bell
             width={24}
