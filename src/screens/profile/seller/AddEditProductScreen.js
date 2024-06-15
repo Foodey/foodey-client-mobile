@@ -27,7 +27,7 @@ import { handleUploadImageFromDevice } from '../../../utils/Cloudinary';
 import { addNewProductAPI } from '../../../apiServices/SellerService';
 
 const AddEditProductScreen = ({ navigation, route }) => {
-  const { isEdit, brandID, shopID } = route.params; //Control if the screen is Edit or Add Product Screen
+  const { isEdit, brandID, shopID, shopName } = route.params; //Control if the screen is Edit or Add Product Screen
   const { getProductList } = useContext(SellerContext);
 
   const [isCategorySelectVisible, setIsCategorySelectVisible] = useState(false);
@@ -136,11 +136,6 @@ const AddEditProductScreen = ({ navigation, route }) => {
       isValid = false;
     }
 
-    if (productInfoInput.description === '') {
-      handleProductInfoErrorsChanged('description', 'Please input your product description');
-      isValid = false;
-    }
-
     if (productInfoInput.price === '') {
       handleProductInfoErrorsChanged('price', 'Please input your product price');
       isValid = false;
@@ -167,10 +162,12 @@ const AddEditProductScreen = ({ navigation, route }) => {
         productInfoInput,
       );
       if (isSuccess) {
-        await getProductList();
+        await getProductList(brandID, shopID);
         clearInput();
         clearErrorMessage();
-        navigation.navigate('SellerRestaurant_Screen');
+
+        console.log(brandID);
+        navigation.goBack();
       } else {
         handleProductInfoErrorsChanged('name', 'Unexpected error, please try again later!!');
         handleProductInfoErrorsChanged('description', 'Unexpected error, please try again later!!');
@@ -195,7 +192,7 @@ const AddEditProductScreen = ({ navigation, route }) => {
         inputs?.price,
       );
       if (response.status === HTTPStatus.CREATED) {
-        await handleUploadImageFromDevice(inputs?.photo, response?.data?.logoUploadApiOptions);
+        await handleUploadImageFromDevice(inputs?.photo, response?.data?.imageApiUploadOptions);
 
         console.log('Success all');
         return true;

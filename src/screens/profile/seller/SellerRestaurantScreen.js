@@ -30,6 +30,7 @@ const SellerRestaurantScreen = ({ navigation, route }) => {
       isEdit: false,
       brandID: brandID,
       shopID: shopID,
+      shopName: shopName,
     });
   };
 
@@ -42,6 +43,7 @@ const SellerRestaurantScreen = ({ navigation, route }) => {
       isEdit: true,
       brandID: brandID,
       shopID: shopID,
+      shopName: shopName,
     });
   };
 
@@ -156,7 +158,7 @@ const SellerRestaurantScreen = ({ navigation, route }) => {
               onProductPress={() => onProductPress(item)}
               name={item?.name}
               image={item?.image}
-              price={item?.productPrice}
+              price={item?.price}
             />
           )}
         />

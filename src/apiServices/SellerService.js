@@ -37,8 +37,8 @@ export const createNewShopAPI = async (
   brandID,
   shopName,
   shopDetailsAddress,
-  shopLongitude,
   shopLatitude,
+  shopLongitude,
 ) => {
   try {
     const response = await request.private.post(`${SellerEndpoint.SHOP_CREATION}`, {
@@ -70,11 +70,11 @@ export const getShopOrderByOrderStatusAPI = async (shopID, orderStatus) => {
 
 export const addNewProductAPI = async (brandID, shopID, categoryID, name, description, price) => {
   try {
-    const response = await request.private.get(
+    const response = await request.private.post(
       `${SellerEndpoint.BRAND_CREATION}/${brandID}/shops/${shopID}/menu/products?appliedToAllShops=false`,
       {
         name: name,
-        categoryID: categoryID,
+        categoryId: categoryID,
         description: description,
         price: price,
       },

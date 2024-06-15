@@ -139,6 +139,8 @@ const ShopCreationScreen = ({ navigation, route }) => {
         brandID,
         shopName,
         shopAddress,
+        contextShopLocation.latitude,
+        contextShopLocation.longitude,
         logoImage,
         wallpaperImage,
       );
@@ -162,9 +164,17 @@ const ShopCreationScreen = ({ navigation, route }) => {
     }
   };
 
-  const createNewShop = async (brandID, name, address, logoURL, wallpaperURL) => {
+  const createNewShop = async (
+    brandID,
+    name,
+    address,
+    latitude,
+    longitude,
+    logoURL,
+    wallpaperURL,
+  ) => {
     try {
-      const response = await createNewShopAPI(brandID, name, address);
+      const response = await createNewShopAPI(brandID, name, address, latitude, longitude);
       if (response.status === HTTPStatus.CREATED) {
         await handleUploadImageFromDevice(logoURL, response?.data?.logoUploadApiOptions);
         await handleUploadImageFromDevice(wallpaperURL, response?.data?.wallpaperUploadApiOptions);
@@ -319,24 +329,24 @@ const ShopCreationScreen = ({ navigation, route }) => {
             }}
           />
           <Text style={[styles.instruction_text, { marginTop: 0 }]}>
-            Brand with Logo are most likely to be visited by customers. Make sure the uploaded logo
+            Shop with Logo are most likely to be visited by customers. Make sure the uploaded logo
             has a a 1:1 image ratio.
           </Text>
           <ImageInput
             style={{}}
-            title="Photo of your Brand Logo (1:1)"
+            title="Photo of your Shop Logo (1:1)"
             onPhotoActionPress={() => setIsLogoModalVisible(true)}
             imageURI={logoImage?.uri}
             onDeletePress={() => setLogoImage('')}
             errorMessage={logoImageErr}
           />
           <Text style={[styles.instruction_text, { marginTop: 0 }]}>
-            Wallpaper makes your Brand menu screen better. Make sure the uploaded wallpaper has a
-            3:2 image ratio.
+            Wallpaper makes your Shop menu screen better. Make sure the uploaded wallpaper has a 3:2
+            image ratio.
           </Text>
           <ImageInput
             style={{}}
-            title="Photo of your Brand Wallpaper (3:2)"
+            title="Photo of your Shop Wallpaper (3:2)"
             onPhotoActionPress={() => setIsWallpaperModalVisible(true)}
             imageURI={wallpaperImage?.uri}
             onDeletePress={() => setWallpaperImage('')}
