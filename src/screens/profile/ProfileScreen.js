@@ -9,7 +9,7 @@ import { LocationDisplay } from '../../components/home';
 import { ConfirmActionModal } from '../../components/messageBoxes';
 
 const ProfileScreen = ({ navigation }) => {
-  const { logout, userInfo } = useContext(AppContext);
+  const { logout, userInfo, userRole } = useContext(AppContext);
   const [isConfirmLogoutVisible, setConfirmLogoutVisible] = useState(false);
 
   const onLogoutOKPress = async () => {
@@ -34,7 +34,7 @@ const ProfileScreen = ({ navigation }) => {
   };
 
   const onMyStorePress = () => {
-    const isSeller = true; //Getting the user role later thru API
+    const isSeller = userRole.some((role) => role.name === 'SELLER'); //Getting the user role later thru API
     if (isSeller) {
       navigation.navigate('SellerBrandList_Screen');
     } else {

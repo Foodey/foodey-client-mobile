@@ -32,7 +32,7 @@ const SearchResultScreen = ({ navigation }) => {
       restaurantName: item.name,
       restaurantLogo: item.logo,
       restaurantWallpaper: item.wallpaper,
-      restaurantAddress: item.address,
+      restaurantAddress: item.address.detailsAddress, //edit this to an address object later
       isUserFavorite: isUserFavorite,
     });
   };

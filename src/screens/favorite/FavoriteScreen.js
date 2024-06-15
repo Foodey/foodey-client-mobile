@@ -29,7 +29,7 @@ const FavoriteScreen = ({ navigation }) => {
         restaurantName: item.name,
         restaurantLogo: item.logo,
         restaurantWallpaper: item.wallpaper,
-        restaurantAddress: item.address,
+        restaurantAddress: item.address.detailsAddress,
         isUserFavorite: isUserFavorite,
       },
     });
@@ -99,7 +99,7 @@ const FavoriteScreen = ({ navigation }) => {
             <FavoriteRestaurantBar
               name={item?.name}
               logo={item?.logo}
-              address={item?.address}
+              address={item?.address.detailsAddress}
               // distance={1.5}
               // estimateTime={15}
               rating={item?.rating}
@@ -115,7 +115,7 @@ const FavoriteScreen = ({ navigation }) => {
             <FavoriteRestaurantBar
               name={item?.name}
               logo={item?.logo}
-              address={item?.address}
+              address={item?.address.detailsAddress}
               // distance={1.5}
               // estimateTime={15}
               rating={item?.rating}

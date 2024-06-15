@@ -26,9 +26,7 @@ import Geolocation from '@react-native-community/geolocation';
 
 const HomeScreen = ({ navigation }) => {
   const { categoriesList, setCategoriesList } = useContext(HomeContext);
-
-  const [location, setLocation] = useState({});
-  const [errorMsg, setErrorMsg] = useState(null);
+  const { setUserLocation } = useContext(AppContext);
 
   useEffect(() => {
     const getLocation = async () => {
@@ -39,16 +37,16 @@ const HomeScreen = ({ navigation }) => {
             (position) => {
               // console.log(position);
               const { latitude, longitude } = position.coords;
-              setLocation({ latitude: latitude, longitude: longitude });
+              setUserLocation({ latitude: latitude, longitude: longitude });
             },
-            (error) => setErrorMsg(error.message),
+            (error) => console.log('Error getting user location ' + error),
           );
         } else {
-          setErrorMsg('Location permission denied');
+          console.log('Location permission denied');
         }
       } catch (error) {
         console.error('Error getting location permission:', error);
-        setErrorMsg(error.message);
+        console.log(error.message);
       }
     };
 

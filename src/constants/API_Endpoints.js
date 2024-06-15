@@ -15,12 +15,15 @@ export const HomeEndpoint = {
   GENERAL_SHOP_CART_ENDPOINT: '/v1/shopcarts',
   PLACE_ORDER: '/v1/orders',
   SEARCH: '/v1/shops/search',
+  RECOMMENDATION: '/v1/recommendation/shop',
 };
 
 export const UserEndpoint = {
   GET_USER_ORDER: '/v1/orders/me',
   GENERAL_USER_FAVORITE: '/v1/users/favorite',
   ORDER_EVALUATION: '/v1/evaluations/orders',
+  ROLE_REQUEST: '/v1/users/role/seller',
+  USER_ROLE: '/v1/users/me/roles',
 };
 
 export const ProfileEndpoint = {
@@ -32,5 +35,5 @@ export const SellerEndpoint = {
   SHOP: '/v1/shops',
   SHOP_ORDER: '/v1/orders/shops',
   BRAND_CREATION: '/v1/shop-brands',
-  SHOP_CREATION: 'v1/shops',
+  SHOP_CREATION: '/v1/shops',
 };

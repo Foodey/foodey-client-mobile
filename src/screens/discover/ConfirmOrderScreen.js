@@ -29,7 +29,8 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  const { getPendingOrder } = useContext(AppContext);
+  const { getPendingOrder, userLocation } = useContext(AppContext);
+
   const { cartInfo, setCartInfo } = useContext(HomeContext);
   // const { restaurantName, isViewOnly } = route.params;
   const { restaurantID, restaurantName } = route.params;
@@ -52,7 +53,8 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
     //
   };
 
-  const onModalClosePress = () => {
+  const onModalClosePress = (value) => {
+    setNoteValue(value);
     setIsNoteVisible(false);
     //
   };
@@ -73,9 +75,25 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
     }
   };
 
-  const onPlaceOrderPress = async (restaurantID, voucherCode, paymentMethod, address) => {
+  const onPlaceOrderPress = async (
+    restaurantID,
+    voucherCode,
+    paymentMethod,
+    detailsAddress,
+    latitude,
+    longitude,
+    note,
+  ) => {
     try {
-      const response = await placeOrderAPI(restaurantID, voucherCode, paymentMethod, address);
+      const response = await placeOrderAPI(
+        restaurantID,
+        voucherCode,
+        paymentMethod,
+        detailsAddress,
+        latitude,
+        longitude,
+        note,
+      );
       if (response.status === HTTPStatus.CREATED) {
         setSuccessPlaceOrder(true);
       } else {
@@ -92,8 +110,7 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
       <NoteModal
         noteValue={noteValue}
         isVisible={isNoteVisible}
-        backdropPress={onBackdropPres}
-        onClosePress={onModalClosePress}
+        onClosePress={(data) => onModalClosePress(data)}
       />
       <SuccessNotifyModal
         visible={successPlaceOrder}
@@ -219,7 +236,15 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
           )} */}
         <SubmitButton
           onPressFunction={() =>
-            onPlaceOrderPress(restaurantID, '', 'CASH', '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương')
+            onPlaceOrderPress(
+              restaurantID,
+              '',
+              'CASH',
+              '69 Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
+              userLocation.latitude,
+              userLocation.longitude,
+              noteValue,
+            )
           } //voucherCode, paymentMethod and address hardcoded value should be replaced later
           buttonColor={COLOR.button_primary_color}
           hoverColor={COLOR.button_press_primary_color}

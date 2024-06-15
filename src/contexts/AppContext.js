@@ -5,6 +5,7 @@ import axios from 'axios';
 import MyAsyncStorage from '../utils/MyAsyncStorage';
 import StorageKey from '../constants/StorageKey';
 import {
+  getUserRoleAPI,
   getPendingOrderAPI,
   getStoreConfirmedOrderAPI,
   getDeliveringOrderAPI,
@@ -39,6 +40,9 @@ export const AppProvider = ({ children }) => {
   const [favoriteMeals, setFavoriteMeals] = useState({});
   const [searchHistory, setSearchHistory] = useState([]);
 
+  const [userLocation, setUserLocation] = useState({});
+  const [userRole, setUserRole] = useState([]);
+
   const logout = async () => {
     // setIsLoading(true);
     try {
@@ -69,6 +73,21 @@ export const AppProvider = ({ children }) => {
       console.log('Error when logging out: ' + err);
     }
     // setIsLoading(false);
+  };
+
+  const getUserRole = async () => {
+    try {
+      const response = await getUserRoleAPI();
+      if (response.status === HTTPStatus.OK) {
+        // console.log('Pending Order: ' + response.data.content);
+        setUserRole(response.data);
+        // console.log('Successfully');
+      } else {
+        console.log('Unexpected error when fetching user pending order');
+      }
+    } catch (err) {
+      console.log('Unexpected error when fetching user pending order ' + err);
+    }
   };
 
   const getPendingOrder = async () => {
@@ -235,6 +254,10 @@ export const AppProvider = ({ children }) => {
         setDeliveredOrderList,
         canceledOrderList,
         setCanceledOrderList,
+        userLocation,
+        setUserLocation,
+        userRole,
+        setUserRole,
 
         favoriteRestaurants,
         setFavoriteRestaurants,
@@ -252,6 +275,7 @@ export const AppProvider = ({ children }) => {
         // getFavoriteMeals,
         addFavoriteRestaurants,
         removeFavoriteRestaurants,
+        getUserRole,
       }}
     >
       {children}

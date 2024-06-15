@@ -49,12 +49,12 @@ const CategoryDetailScreen = ({ navigation, route }) => {
   const onResPressFunction = (item) => {
     const isUserFavorite = favoriteRestaurants.some((restaurant) => restaurant.id === item.id);
     navigation.navigate('RestaurantMenu_Screen', {
-      brandID: item.brandId,
-      restaurantID: item.id, //try replace the restaurantsByCategoryList with passing the item as the param of the callback function
-      restaurantName: item.name,
-      restaurantLogo: item.logo,
-      restaurantWallpaper: item.wallpaper,
-      restaurantAddress: item.address,
+      brandID: item?.brandId,
+      restaurantID: item?.id, //try replace the restaurantsByCategoryList with passing the item? as the param of the callback function
+      restaurantName: item?.name,
+      restaurantLogo: item?.logo,
+      restaurantWallpaper: item?.wallpaper,
+      restaurantAddress: item?.address?.detailsAddress,
       isUserFavorite: isUserFavorite,
     });
   };

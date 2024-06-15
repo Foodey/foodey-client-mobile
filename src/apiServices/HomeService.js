@@ -79,13 +79,26 @@ export const deleteAllCartProductAPI = async (restaurantID) => {
   }
 };
 
-export const placeOrderAPI = async (restaurantID, voucherCode, paymentMethod, address) => {
+export const placeOrderAPI = async (
+  restaurantID,
+  voucherCode,
+  paymentMethod,
+  detailsAddress,
+  latitude,
+  longitude,
+  note,
+) => {
   try {
     const response = await request.private.post(`${HomeEndpoint.PLACE_ORDER}`, {
       shopId: restaurantID,
       voucherCode: voucherCode,
       paymentMethod: paymentMethod,
-      address: address,
+      shippingAddress: {
+        detailsAddress: detailsAddress,
+        latitude: latitude,
+        longitude: longitude,
+      },
+      note: note,
     });
     return response;
   } catch (err) {
@@ -106,6 +119,19 @@ export const searchResByNameAPI = async (searchValue, page, size) => {
   try {
     const response = await request.public.get(
       `${HomeEndpoint.SEARCH}?page=${page}&size=${size}&q=${searchValue}`,
+    );
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
+export const getRecommendShopAPI = async (latitude, longitude) => {
+  try {
+    const response = await request.public.get(
+      `${
+        HomeEndpoint.RECOMMENDATION
+      }?page=${0}&size=${15}&longitude=${longitude}&latitude=${latitude}&maxDistanceKms=5`,
     );
     return response;
   } catch (err) {

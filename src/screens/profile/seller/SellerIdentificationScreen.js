@@ -15,13 +15,14 @@ import { SubmitButton } from '../../../components';
 import Checkbox from 'expo-checkbox';
 import { PhotoSelectionModal } from '../../../components/messageBoxes';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { requestSellerRoleAPI } from '../../../apiServices/UserService';
 
 const SellerIdentificationScreen = ({ navigation }) => {
   const onGoBackPress = () => {
     navigation.goBack();
   };
 
-  const onSubmitPress = () => {
+  const onSubmitPress = async () => {
     //verify inputs logic
     // const ciNumberRegex = '\\^d{12}$';
     let isValid = true;
@@ -60,14 +61,47 @@ const SellerIdentificationScreen = ({ navigation }) => {
     }
 
     if (isValid) {
-      clearInput();
-      clearErrorMessage();
-
-      //sendSellerRoleRequest();
-      navigation.navigate('RequestSentNoti_Screen');
+      const isSuccess = await createSellerRole(
+        sellerInfoInput.identifyImageFront,
+        sellerInfoInput.identifyImageBack,
+      );
+      if (isSuccess) {
+        clearInput();
+        clearErrorMessage();
+        navigation.navigate('RequestSentNoti_Screen');
+      } else {
+        handleSellerInfoErrorsChanged('ciNumber', 'Unexpected error, please try again later!!');
+        handleSellerInfoErrorsChanged('fullName', 'Unexpected error, please try again later!!');
+        handleSellerInfoErrorsChanged(
+          'identifyImageFront',
+          'Unexpected error, please try again later!!',
+        );
+        handleSellerInfoErrorsChanged(
+          'identifyImageBack',
+          'Unexpected error, please try again later!!',
+        );
+      }
     }
   };
 
+  const createSellerRole = async (frontImage, backImage) => {
+    try {
+      const response = await requestSellerRoleAPI(frontImage, backImage);
+      if (response.status === HTTPStatus.OK) {
+        await handleUploadImageFromDevice(logoURL, response?.data?.identifyImageFrontOptions);
+        await handleUploadImageFromDevice(wallpaperURL, response?.data?.identifyImageBackOptions);
+
+        console.log('Success all');
+        return true;
+      } else {
+        console.log('Error when create new brand');
+        return false;
+      }
+    } catch (err) {
+      console.log('Error when create new brand ' + err);
+      return false;
+    }
+  };
   const [toggleCheckbox, setToggleCheckbox] = useState(false);
 
   const [isFrontModalVisible, setIsFrontModalVisible] = useState(false);
@@ -119,7 +153,7 @@ const SellerIdentificationScreen = ({ navigation }) => {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
         handleSellerInfoErrorsChanged('identifyImageFront', '');
-        handleSellerInfoChanged('identifyImageFront', result.assets[0].uri);
+        handleSellerInfoChanged('identifyImageFront', result.assets[0]);
         setIsFrontModalVisible(false);
       } else {
         console.log('Camera permission denied');
@@ -135,7 +169,7 @@ const SellerIdentificationScreen = ({ navigation }) => {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
         handleSellerInfoErrorsChanged('identifyImageBack', '');
-        handleSellerInfoChanged('identifyImageBack', result.assets[0].uri);
+        handleSellerInfoChanged('identifyImageBack', result.assets[0]);
         setIsBackModalVisible(false);
       } else {
         console.log('Camera permission denied');
@@ -150,9 +184,9 @@ const SellerIdentificationScreen = ({ navigation }) => {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchImageLibrary({ mediaType: 'photo' });
-        // console.log(result.assets[0].uri);
+        // console.log(result.assets[0]);
         handleSellerInfoErrorsChanged('identifyImageFront', '');
-        handleSellerInfoChanged('identifyImageFront', result.assets[0].uri);
+        handleSellerInfoChanged('identifyImageFront', result.assets[0]);
         setIsFrontModalVisible(false);
       } else {
         console.log('Library permission denied');
@@ -167,9 +201,9 @@ const SellerIdentificationScreen = ({ navigation }) => {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const result = await launchImageLibrary({ mediaType: 'photo' });
-        // console.log(result.assets[0].uri);
+        // console.log(result.assets[0]);
         handleSellerInfoErrorsChanged('identifyImageBack', '');
-        handleSellerInfoChanged('identifyImageBack', result.assets[0].uri);
+        handleSellerInfoChanged('identifyImageBack', result.assets[0]);
         setIsBackModalVisible(false);
       } else {
         console.log('Library permission denied');
@@ -249,7 +283,7 @@ const SellerIdentificationScreen = ({ navigation }) => {
             style={{}}
             title="Photo of the front of your Citizen Identification card"
             isRequired={true}
-            imageURI={sellerInfoInput.identifyImageFront}
+            imageURI={sellerInfoInput.identifyImageFront.uri}
             onPhotoActionPress={() => setIsFrontModalVisible(true)}
             onDeletePress={() => handleSellerInfoChanged('identifyImageFront', '')}
             errorMessage={sellerInfoInputErrors.identifyImageFront}
@@ -262,7 +296,7 @@ const SellerIdentificationScreen = ({ navigation }) => {
             style={{}}
             title="Photo of the back of your Citizen Identification card"
             isRequired={true}
-            imageURI={sellerInfoInput.identifyImageBack}
+            imageURI={sellerInfoInput.identifyImageBack.uri}
             onPhotoActionPress={() => setIsBackModalVisible(true)}
             onDeletePress={() => handleSellerInfoChanged('identifyImageBack', '')}
             errorMessage={sellerInfoInputErrors.identifyImageBack}
@@ -313,7 +347,7 @@ const SellerIdentificationScreen = ({ navigation }) => {
             title={'Submit'}
             buttonColor={COLOR.button_primary_color}
             hoverColor={COLOR.button_press_primary_color}
-            onPressFunction={onSubmitPress}
+            onPressFunction={() => onSubmitPress()}
             disabled={!toggleCheckbox}
           />
         </View>

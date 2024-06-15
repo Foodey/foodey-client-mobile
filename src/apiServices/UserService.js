@@ -138,3 +138,24 @@ export const removeFavoriteRestaurantsAPI = async (restaurantID) => {
 //     console.log(err);
 //   }
 // };
+
+export const getUserRoleAPI = async () => {
+  try {
+    const response = await request.private.get(`${UserEndpoint.USER_ROLE}`);
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
+export const requestSellerRoleAPI = async (frontImage, backImage) => {
+  try {
+    const response = await request.private.post(`${UserEndpoint.ROLE_REQUEST}`, {
+      identifyImageFront: frontImage,
+      identifyImageBack: backImage,
+    });
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};

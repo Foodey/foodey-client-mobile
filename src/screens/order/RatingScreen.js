@@ -98,7 +98,7 @@ const RatingScreen = ({ navigation, route }) => {
         </View>
       </View>
       <View style={styles.footer_container}>
-        {!isAlreadyRated && (
+        {!(orderRating >= 0) && (
           <SubmitButton
             disabled={canSubmit}
             style={{ flex: 1 }}
