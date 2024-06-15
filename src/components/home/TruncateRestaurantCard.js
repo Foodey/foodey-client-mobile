@@ -8,6 +8,7 @@ function TruncateRestaurantCard({
   wallpaper,
   logo,
   name,
+  addressDetails,
   distance,
   isLocalImage, //temp props, delete later
   onPressFunction,
@@ -15,11 +16,7 @@ function TruncateRestaurantCard({
   return (
     <Pressable style={[styles.container, style]} onPress={onPressFunction}>
       <Image
-        source={
-          isLocalImage
-            ? wallpaper
-            : { uri: wallpaper || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }
-        }
+        source={{ uri: wallpaper || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
         style={[styles.wallpaper, imageStyle]}
       ></Image>
       <View style={styles.content_container}>

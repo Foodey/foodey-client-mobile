@@ -128,10 +128,8 @@ export const searchResByNameAPI = async (searchValue, page, size) => {
 
 export const getRecommendShopAPI = async (latitude, longitude) => {
   try {
-    const response = await request.public.get(
-      `${
-        HomeEndpoint.RECOMMENDATION
-      }?page=${0}&size=${15}&longitude=${longitude}&latitude=${latitude}&maxDistanceKms=5`,
+    const response = await request.private.get(
+      `${HomeEndpoint.RECOMMENDATION}?page=0&size=15&longitude=${longitude}&latitude=${latitude}&maxDistanceKms=5`,
     );
     return response;
   } catch (err) {

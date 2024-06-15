@@ -20,57 +20,76 @@ import { SearchScreen } from '~/screens/home';
 import { HomeContext } from '~/contexts/HomeContext';
 import { AppContext } from '~/contexts/AppContext';
 import { restaurants, offers } from '~/constants/TempData';
-import { getCategoriesAPI } from '../../apiServices/HomeService';
+import { getCategoriesAPI, getRecommendShopAPI } from '../../apiServices/HomeService';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
 import Geolocation from '@react-native-community/geolocation';
 
 const HomeScreen = ({ navigation }) => {
   const { categoriesList, setCategoriesList } = useContext(HomeContext);
-  const { setUserLocation } = useContext(AppContext);
+  const { userLocation, setUserLocation } = useContext(AppContext);
+  const [recommendShops, setRecommendShops] = useState([]);
 
-  useEffect(() => {
-    const getLocation = async () => {
+  // useEffect(() => {
+  //   const getLocation = async () => {
+  //     try {
+  //       const granted = await requestLocationPermission();
+  //       if (granted) {
+  //         Geolocation.getCurrentPosition(
+  //           (position) => {
+  //             // console.log(position);
+  //             const { latitude, longitude } = position.coords;
+  //             setUserLocation({ latitude: latitude, longitude: longitude });
+  //           },
+  //           (error) => console.log('Error getting user location ' + error),
+  //         );
+  //       } else {
+  //         console.log('Location permission denied');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error getting location permission:', error);
+  //       console.log(error.message);
+  //     }
+  //   };
+
+  //   getLocation();
+  // }, []);
+
+  // const requestLocationPermission = async () => {
+  //   try {
+  //     const granted = await PermissionsAndroid.request(
+  //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  //       {
+  //         title: 'Location Permission',
+  //         message: 'This app needs access to your location.',
+  //         buttonNeutral: 'Ask Me Later',
+  //         buttonNegative: 'Cancel',
+  //         buttonPositive: 'OK',
+  //       },
+  //     );
+  //     return granted === PermissionsAndroid.RESULTS.GRANTED;
+  //   } catch (error) {
+  //     console.error('Error requesting location permission:', error);
+  //     return false;
+  //   }
+  // };
+
+  useLayoutEffect(() => {
+    const fetch = async () => {
       try {
-        const granted = await requestLocationPermission();
-        if (granted) {
-          Geolocation.getCurrentPosition(
-            (position) => {
-              // console.log(position);
-              const { latitude, longitude } = position.coords;
-              setUserLocation({ latitude: latitude, longitude: longitude });
-            },
-            (error) => console.log('Error getting user location ' + error),
-          );
+        // const response = await getRecommendShopAPI(userLocation.latitude, userLocation.longitude);
+        const response = await getRecommendShopAPI(50.1113, 90.5);
+        if (response.status === HTTPStatus.OK) {
+          setRecommendShops(response?.data?.content);
         } else {
-          console.log('Location permission denied');
+          console.log('Error');
         }
-      } catch (error) {
-        console.error('Error getting location permission:', error);
-        console.log(error.message);
+      } catch (err) {
+        console.log('Error when fetching recommend shops');
       }
     };
 
-    getLocation();
-  }, []);
-
-  const requestLocationPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: 'Location Permission',
-          message: 'This app needs access to your location.',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        },
-      );
-      return granted === PermissionsAndroid.RESULTS.GRANTED;
-    } catch (error) {
-      console.error('Error requesting location permission:', error);
-      return false;
-    }
-  };
+    fetch();
+  }, [userLocation]);
 
   useLayoutEffect(() => {
     const getCategoriesFunction = async () => {
@@ -252,63 +271,6 @@ const HomeScreen = ({ navigation }) => {
             </View>
           </View>
         </View>
-        <View style={styles.offerNearby_container}>
-          <View style={styles.offerNearby_header_container}>
-            <Text style={styles.section_title_text}>Offers Near you</Text>
-            <Pressable
-              style={{ marginLeft: 'auto', flexDirection: 'row' }}
-              onPress={seeAllOfferNearbyHandler}
-            >
-              <Text
-                style={{
-                  fontFamily: 'Manrope-Medium',
-                  fontSize: 15,
-                  color: COLOR.text_secondary_color,
-                }}
-              >
-                See all
-              </Text>
-              <FullArrowRight
-                width={24}
-                height={24}
-                style={{ color: COLOR.text_secondary_color, marginStart: 5 }}
-              />
-            </Pressable>
-          </View>
-          {/* Offers Nearby list */}
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ marginTop: 15 }}
-            data={offers}
-            renderItem={({ item }) => (
-              <TruncateRestaurantCard
-                isLocalImage={true}
-                style={{ marginStart: 21 }}
-                wallpaper={item.voucherImageLink}
-                logo={item.logoLink}
-                name={item.owner}
-                distance={1.2} // this distance should be calculated depends on the current location of user
-              />
-            )}
-            ListFooterComponent={() => (
-              <View style={[styles.list_footer_container, { width: 100, height: 200 }]}>
-                <Pressable style={styles.seeAll_round_button} onPress={seeAllOfferNearbyHandler}>
-                  <ArrowRight width={18} height={18} style={{ color: COLOR.background_color }} />
-                </Pressable>
-                <Text
-                  style={{
-                    fontFamily: 'Manrope-Medium',
-                    fontSize: 15,
-                    color: COLOR.text_secondary_color,
-                  }}
-                >
-                  See All
-                </Text>
-              </View>
-            )}
-          />
-        </View>
         <View style={styles.new_trending_container}>
           <View style={styles.offerNearby_header_container}>
             <Text style={styles.section_title_text}>New & Trending</Text>
@@ -337,15 +299,15 @@ const HomeScreen = ({ navigation }) => {
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ marginTop: 15 }}
-            data={restaurants}
+            data={recommendShops}
             renderItem={({ item }) => (
               <TruncateRestaurantCard
                 style={{ marginStart: 21, width: 202, height: 163 }}
-                isLocalImage={true}
                 imageStyle={{ height: 113 }}
-                wallpaper={item.wallpaper}
-                logo={item.logo}
-                name={item.name}
+                wallpaper={item?.wallpaper}
+                logo={item?.logo}
+                name={item?.name}
+                addressDetails={item?.address?.addressDetails}
                 distance={1.2} // this distance should be calculated depends on the current location of user
               />
             )}

@@ -15,7 +15,7 @@ export const HomeEndpoint = {
   GENERAL_SHOP_CART_ENDPOINT: '/v1/shopcarts',
   PLACE_ORDER: '/v1/orders',
   SEARCH: '/v1/shops/search',
-  RECOMMENDATION: '/v1/recommendation/shop',
+  RECOMMENDATION: '/v1/recommendation/shops',
 };
 
 export const UserEndpoint = {

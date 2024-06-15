@@ -24,6 +24,9 @@ import { AppProvider, AppContext } from '~/contexts/AppContext';
 import { ConfirmOrderScreen } from '../screens/discover';
 import { PhotoSelectionModal } from '../components/messageBoxes';
 
+import { PermissionsAndroid } from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
+
 const MainStack = createStackNavigator();
 
 function AppNav() {
@@ -50,6 +53,52 @@ function AppNav() {
       setSearchHistory(JSON.parse(tempData));
     } else {
       setSearchHistory([]);
+    }
+  };
+
+  const { setUserLocation } = useContext(AppContext);
+
+  useEffect(() => {
+    const getLocation = async () => {
+      try {
+        const granted = await requestLocationPermission();
+        if (granted) {
+          Geolocation.getCurrentPosition(
+            (position) => {
+              // console.log(position);
+              const { latitude, longitude } = position.coords;
+              setUserLocation({ latitude: latitude, longitude: longitude });
+            },
+            (error) => console.log('Error getting user location ' + error),
+          );
+        } else {
+          console.log('Location permission denied');
+        }
+      } catch (error) {
+        console.error('Error getting location permission:', error);
+        console.log(error.message);
+      }
+    };
+
+    getLocation();
+  }, []);
+
+  const requestLocationPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Location Permission',
+          message: 'This app needs access to your location.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      return granted === PermissionsAndroid.RESULTS.GRANTED;
+    } catch (error) {
+      console.error('Error requesting location permission:', error);
+      return false;
     }
   };
 

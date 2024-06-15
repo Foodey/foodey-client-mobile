@@ -16,6 +16,8 @@ import Checkbox from 'expo-checkbox';
 import { PhotoSelectionModal } from '../../../components/messageBoxes';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { requestSellerRoleAPI } from '../../../apiServices/UserService';
+import HTTPStatus from '../../../constants/HTTPStatusCodes';
+import { handleUploadImageFromDevice } from '../../../utils/Cloudinary';
 
 const SellerIdentificationScreen = ({ navigation }) => {
   const onGoBackPress = () => {
@@ -62,8 +64,8 @@ const SellerIdentificationScreen = ({ navigation }) => {
 
     if (isValid) {
       const isSuccess = await createSellerRole(
-        sellerInfoInput.identifyImageFront,
-        sellerInfoInput.identifyImageBack,
+        sellerInfoInput.identifyImageFront.uri,
+        sellerInfoInput.identifyImageBack.uri,
       );
       if (isSuccess) {
         clearInput();
@@ -88,17 +90,17 @@ const SellerIdentificationScreen = ({ navigation }) => {
     try {
       const response = await requestSellerRoleAPI(frontImage, backImage);
       if (response.status === HTTPStatus.OK) {
-        await handleUploadImageFromDevice(logoURL, response?.data?.identifyImageFrontOptions);
-        await handleUploadImageFromDevice(wallpaperURL, response?.data?.identifyImageBackOptions);
+        await handleUploadImageFromDevice(frontImage, response?.data?.identifyImageFrontOptions);
+        await handleUploadImageFromDevice(backImage, response?.data?.identifyImageBackOptions);
 
         console.log('Success all');
         return true;
       } else {
-        console.log('Error when create new brand');
+        console.log('Error when create request seller');
         return false;
       }
     } catch (err) {
-      console.log('Error when create new brand ' + err);
+      console.log('Error when create request seller ' + err);
       return false;
     }
   };

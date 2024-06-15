@@ -7,14 +7,34 @@ import { Discount, Wallet, FillLocation, Note, Setting, Store } from '~/resource
 import ArrowRight from '~/resources/icons/arrow-right.svg';
 import { LocationDisplay } from '../../components/home';
 import { ConfirmActionModal } from '../../components/messageBoxes';
+import { getUserRoleAPI } from '../../apiServices/UserService';
+import HTTPStatus from '../../constants/HTTPStatusCodes';
 
 const ProfileScreen = ({ navigation }) => {
-  const { logout, userInfo, userRole } = useContext(AppContext);
+  const { logout, userInfo, userRole, getUserRole } = useContext(AppContext);
   const [isConfirmLogoutVisible, setConfirmLogoutVisible] = useState(false);
+  const [role, setRole] = useState([]);
 
   const onLogoutOKPress = async () => {
     setConfirmLogoutVisible(false);
     await logout();
+  };
+
+  const getRole = async () => {
+    try {
+      const response = await getUserRoleAPI();
+      if (response.status === HTTPStatus.OK) {
+        // console.log('Pending Order: ' + response.data.content);
+        setRole(response.data);
+        return response.data;
+      } else {
+        console.log('Unexpected error when fetching user pending order');
+        return null;
+      }
+    } catch (err) {
+      console.log('Unexpected error when fetching user pending order ' + err);
+      return null;
+    }
   };
 
   const onMyVouchersPress = () => {
@@ -33,12 +53,15 @@ const ProfileScreen = ({ navigation }) => {
     navigation.navigate('Setting_Screen');
   };
 
-  const onMyStorePress = () => {
-    const isSeller = userRole.some((role) => role.name === 'SELLER'); //Getting the user role later thru API
-    if (isSeller) {
-      navigation.navigate('SellerBrandList_Screen');
-    } else {
-      navigation.navigate('SellerIntro_Screen');
+  const onMyStorePress = async () => {
+    const role = await getRole();
+    if (role) {
+      const isSeller = role.some((role) => role.name === 'SELLER'); //Getting the user role later thru API
+      if (isSeller) {
+        navigation.navigate('SellerBrandList_Screen');
+      } else {
+        navigation.navigate('SellerIntro_Screen');
+      }
     }
   };
 
