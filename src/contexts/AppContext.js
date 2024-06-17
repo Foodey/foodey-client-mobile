@@ -22,8 +22,8 @@ import { ProfileEndpoint } from '../constants/API_Endpoints';
 export const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
-  // BASE_URL = 'http://10.0.2.2:8080/api';
-  BASE_URL = 'https://59ad-203-205-32-65.ngrok-free.app/api';
+  BASE_URL = 'http://10.0.2.2:8080/api';
+  // BASE_URL = 'https://59ad-203-205-32-65.ngrok-free.app/api';
 
   const [userInfo, setUserInfo] = useState({});
   const [accessToken, setAccessToken] = useState('');

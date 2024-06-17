@@ -109,7 +109,7 @@ const ShopCreationScreen = ({ navigation, route }) => {
     if (shopName === '') {
       setShopNameErr('Please input your shop name');
       isValid = false;
-    } else if (shopName.length > 18) {
+    } else if (shopName.length > 40) {
       setShopNameErr('Shop name should be maximum of 40 characters only');
       isValid = false;
     }

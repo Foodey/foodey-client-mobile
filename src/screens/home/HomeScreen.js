@@ -120,7 +120,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const seeAllNewTrendingHandler = () => {
-    navigation.navigate('NewTrending_Screen');
+    navigation.navigate('NewTrending_Screen', { currentRecommendedShops: recommendShops });
   };
 
   const seeSearchResultHandler = () => {
@@ -276,7 +276,7 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.section_title_text}>New & Trending</Text>
             <Pressable
               style={{ marginLeft: 'auto', flexDirection: 'row' }}
-              onPress={seeAllNewTrendingHandler}
+              onPress={() => seeAllNewTrendingHandler()}
             >
               <Text
                 style={{
@@ -313,7 +313,10 @@ const HomeScreen = ({ navigation }) => {
             )}
             ListFooterComponent={() => (
               <View style={[styles.list_footer_container, { width: 100, height: 163 }]}>
-                <Pressable style={styles.seeAll_round_button} onPress={seeAllNewTrendingHandler}>
+                <Pressable
+                  style={styles.seeAll_round_button}
+                  onPress={() => seeAllNewTrendingHandler()}
+                >
                   <ArrowRight width={18} height={18} style={{ color: COLOR.background_color }} />
                 </Pressable>
                 <Text

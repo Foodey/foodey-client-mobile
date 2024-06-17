@@ -7,10 +7,12 @@ import Style from './HomeStyle';
 import { HomeContext } from '~/contexts/HomeContext';
 import { restaurants } from '~/constants/TempData';
 
-const NewTrendingScreen = ({ navigation }) => {
+const NewTrendingScreen = ({ navigation, route }) => {
   const onBackHandler = () => {
     navigation.goBack();
   };
+
+  const { currentRecommendedShops } = route.params;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -27,16 +29,16 @@ const NewTrendingScreen = ({ navigation }) => {
           alignItems: 'center',
           paddingBottom: 120,
         }}
-        data={restaurants}
+        data={currentRecommendedShops}
         renderItem={({ item }) => (
           <FullyRestaurantCard
             // style={{ margin: 25 }}
-            wallpaper={item.wallpaper}
-            logo={item.logo}
-            name={item.name}
+            wallpaper={item?.wallpaper}
+            logo={item?.logo}
+            name={item?.name}
             distance={1.2} // this distance should be calculated depends on the current location of user
             estimateTime={32} // this estimateTime should be calculated depends on the current location of user
-            rating={item.rating}
+            rating={item?.rating}
           />
         )}
       />
@@ -47,6 +49,7 @@ const NewTrendingScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLOR.background_color,
+    flex: 1,
   },
 
   filter_button: {
