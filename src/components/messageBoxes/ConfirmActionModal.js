@@ -26,20 +26,20 @@ function ConfirmActionModal({ visible, onClose, title, content, onCancelPress, o
           </View>
           <View style={styles.actions_container}>
             <SubmitButton
+              onPressFunction={onOKPress}
+              title="Confirm"
+              showIcon={false}
+              style={{ flex: 1, marginVertical: 15, marginEnd: 16 }}
+              buttonColor={COLOR.button_primary_color}
+              hoverColor={COLOR.button_press_primary_color}
+            />
+            <SubmitButton
               onPressFunction={onCancelPress}
               showIcon={false}
               title="Cancel"
-              style={{ flex: 1, marginEnd: 8, marginVertical: 10 }}
+              style={{ flex: 1, marginVertical: 15 }}
               buttonColor={COLOR.button_secondary_color}
               hoverColor={COLOR.button_press_secondary_color}
-            />
-            <SubmitButton
-              onPressFunction={onOKPress}
-              title="OK"
-              showIcon={false}
-              style={{ flex: 1, marginStart: 8, marginVertical: 10 }}
-              buttonColor={COLOR.button_primary_color}
-              hoverColor={COLOR.button_press_primary_color}
             />
           </View>
         </View>

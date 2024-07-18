@@ -26,7 +26,7 @@ function SuccessNotifyModal(props) {
               }}
               title="OK"
               showIcon={false}
-              style={{ flex: 1, marginBottom: 28, marginHorizontal: 100, marginTop: 10 }}
+              style={{ flex: 1, marginHorizontal: 100, marginVertical: 10 }}
               buttonColor={COLOR.button_primary_color}
               hoverColor={COLOR.button_press_primary_color}
             />
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
 
   title_container: {
-    flex: 1,
+    flex: 1.25,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
   },
 
   actions_container: {
-    flex: 1,
+    flex: 0.75,
+    // backgroundColor: "#ff0"
   },
 });
 

@@ -52,8 +52,6 @@ export const AppProvider = ({ children }) => {
         headers: { Authorization: 'Bearer ' + refreshToken },
       });
 
-      console.log(response.status);
-
       await MyAsyncStorage.removeItem(StorageKey.USER_INFO);
       await MyAsyncStorage.removeItem(StorageKey.ACCESS_TOKEN);
       await MyAsyncStorage.removeItem(StorageKey.REFRESH_TOKEN);

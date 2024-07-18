@@ -5,7 +5,7 @@ import MyAsyncStorage from '~/utils/MyAsyncStorage';
 export const getCategoriesAPI = async () => {
   try {
     const response = await request.public.get(
-      `${HomeEndpoint.GET_CATEGORIES}?limit=${12}&page=${0}`,
+      `${HomeEndpoint.GET_CATEGORIES}?size=${12}&page=${0}`,
     );
     return response;
   } catch (err) {

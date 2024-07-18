@@ -65,7 +65,7 @@ const CategoriesScreen = ({ navigation }) => {
         renderItem={({ item }) => (
           <CircleCategory
             style={{ margin: 10 }}
-            imageStyle={{ width: 50, height: 50 }}
+            imageStyle={{ width: 65, height: 65 }}
             imageLink={item.image}
             title={item.name}
             onPressFunction={() => {
@@ -84,6 +84,7 @@ const CategoriesScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLOR.background_color,
+    flex: 1,
   },
 
   filter_button: {

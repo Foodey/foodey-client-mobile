@@ -29,6 +29,9 @@ const HomeScreen = ({ navigation }) => {
   const { userLocation, setUserLocation } = useContext(AppContext);
   const [recommendShops, setRecommendShops] = useState([]);
 
+  const renderedCategoryList = categoriesList.filter((category) => !category.deleted).slice(0, 5);
+  // console.log(categoriesList);
+
   // useEffect(() => {
   //   const getLocation = async () => {
   //     try {
@@ -179,7 +182,7 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.categories_container}>
             <View style={styles.categories_row_container}>
               <CircleCategory
-                imageStyle={{ width: 50, height: 50 }}
+                imageStyle={{ width: 65, height: 65 }}
                 imageLink={categoriesList[0]?.image}
                 title={categoriesList[0]?.name}
                 onPressFunction={() =>
@@ -190,7 +193,7 @@ const HomeScreen = ({ navigation }) => {
                 }
               />
               <CircleCategory
-                imageStyle={{ width: 50, height: 50 }}
+                imageStyle={{ width: 65, height: 65 }}
                 imageLink={categoriesList[1]?.image}
                 title={categoriesList[1]?.name}
                 onPressFunction={() =>
@@ -201,7 +204,7 @@ const HomeScreen = ({ navigation }) => {
                 }
               />
               <CircleCategory
-                imageStyle={{ width: 50, height: 50 }}
+                imageStyle={{ width: 65, height: 65 }}
                 imageLink={categoriesList[2]?.image}
                 title={categoriesList[2]?.name}
                 onPressFunction={() =>
@@ -214,7 +217,7 @@ const HomeScreen = ({ navigation }) => {
             </View>
             <View style={styles.categories_row_container}>
               <CircleCategory
-                imageStyle={{ width: 50, height: 50 }}
+                imageStyle={{ width: 65, height: 65 }}
                 imageLink={categoriesList[3]?.image}
                 title={categoriesList[3]?.name}
                 onPressFunction={() =>
@@ -225,7 +228,7 @@ const HomeScreen = ({ navigation }) => {
                 }
               />
               <CircleCategory
-                imageStyle={{ width: 50, height: 50 }}
+                imageStyle={{ width: 65, height: 65 }}
                 imageLink={categoriesList[4]?.image}
                 title={categoriesList[4]?.name}
                 onPressFunction={() =>
