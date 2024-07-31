@@ -351,6 +351,7 @@ const ShopCreationScreen = ({ navigation, route }) => {
             imageURI={wallpaperImage?.uri}
             onDeletePress={() => setWallpaperImage('')}
             errorMessage={wallpaperImageErr}
+            imageRatio="3:2"
           />
         </ScrollView>
         {/*footer container */}

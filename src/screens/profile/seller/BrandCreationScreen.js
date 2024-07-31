@@ -297,8 +297,10 @@ const BrandCreationScreen = ({ navigation }) => {
                 fontSize: 16,
                 color: COLOR.text_pink_color,
                 fontFamily: 'Manrope-Bold',
+                marginTop: 5,
                 marginBottom: 20,
                 paddingHorizontal: 15,
+                textAlign: 'center',
               },
             ]}
           >
@@ -329,7 +331,7 @@ const BrandCreationScreen = ({ navigation }) => {
           />
           <Text style={[styles.instruction_text, { marginTop: 0 }]}>
             Brand with Logo are most likely to be visited by customers. Make sure the uploaded logo
-            has a a 1:1 image ratio.
+            has a 1:1 image ratio.
           </Text>
           <ImageInput
             style={{}}
@@ -350,6 +352,7 @@ const BrandCreationScreen = ({ navigation }) => {
             imageURI={brandInfoInput.wallpaperImage.uri}
             onDeletePress={() => handleBrandInfoChanged('wallpaperImage', '')}
             errorMessage={brandInfoInputErrors.wallpaperImage}
+            imageRatio="3:2"
           />
           <View
             style={{
@@ -360,15 +363,16 @@ const BrandCreationScreen = ({ navigation }) => {
               paddingHorizontal: 15,
             }}
           >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row' }}>
               <Checkbox
                 tintColors={{ true: COLOR.indicator_current_color, false: COLOR.background_color }} //This only support Android, for iOS, view this link: https://github.com/react-native-checkbox/react-native-checkbox
                 value={toggleCheckbox}
                 onValueChange={(newValue) => setToggleCheckbox(newValue)}
+                style={{ width: 22, height: 22 }} //need to fix for responsiveness
               />
               {!toggleCheckbox && (
-                <Text style={styles.errorMessage_text}>
-                  *Confirm this checkbox before submitting.
+                <Text style={[styles.errorMessage_text, { marginBottom: 0 }]}>
+                  * Confirm this checkbox before submitting.
                 </Text>
               )}
             </View>

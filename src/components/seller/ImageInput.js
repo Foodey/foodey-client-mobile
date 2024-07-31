@@ -9,6 +9,7 @@ function ImageInput({
   isRequired,
   exampleImageURI,
   imageURI,
+  imageRatio = '1:1',
   onPhotoActionPress,
   errorMessage,
   onDeletePress,
@@ -25,12 +26,35 @@ function ImageInput({
               <Add width={32} height={32} color={COLOR.text_press_color} />
             </Pressable>
           ) : (
-            <Image style={styles.IC_card_image} source={{ uri: imageURI }} />
+            <Image style={styles.card_image} source={{ uri: imageURI }} />
           )}
-          <Image
-            style={{ height: 60, width: 100, marginStart: 20, alignSelf: 'flex-end' }}
-            source={require('../../resources/images/Foodey-LOGO.png')}
-          />
+          {imageRatio === '1:1' ? (
+            <Image
+              style={{
+                height: 60, // need to fix for responsiveness
+                width: 60,
+                marginStart: 20,
+                alignSelf: 'flex-end',
+                borderWidth: 1,
+                borderColor: COLOR.text_secondary_color,
+                borderRadius: 5,
+              }}
+              source={require('../../resources/images/Foodey-LOGO.png')}
+            />
+          ) : (
+            <Image
+              style={{
+                height: 60, //need to fix for responsiveness
+                width: 90,
+                marginStart: 20,
+                alignSelf: 'flex-end',
+                borderWidth: 1,
+                borderColor: COLOR.text_secondary_color,
+                borderRadius: 5,
+              }}
+              source={require('../../resources/images/Foodey-LOGO.png')}
+            />
+          )}
           {imageURI && (
             <Pressable
               style={{ marginStart: 'auto', justifyContent: 'flex-end' }}
@@ -53,6 +77,7 @@ function ImageInput({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLOR.background_color,
+    // backgroundColor: "#f0f",
     paddingHorizontal: 15,
   },
 
@@ -63,14 +88,14 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
 
-  IC_card_image: {
+  card_image: {
     width: 80,
     height: 80,
     borderRadius: 5,
   },
 
   choose_image_button: {
-    width: 80,
+    width: 80, //need to fix for responsiveness
     height: 80,
     borderWidth: 2,
     borderColor: COLOR.text_press_color,
