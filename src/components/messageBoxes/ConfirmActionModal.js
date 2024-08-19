@@ -6,14 +6,23 @@ import { PhoneNumberBox } from '../authenticate';
 import { useState, useContext } from 'react';
 import { AuthContext } from '~/contexts/AuthContext';
 
-function ConfirmActionModal({ visible, onClose, title, content, onCancelPress, onOKPress }) {
+function ConfirmActionModal({
+  visible,
+  onClose,
+  title,
+  content,
+  onCancelPress,
+  onOKPress,
+  contentFontSize = 22,
+  titleFontSize = 30,
+}) {
   return (
     <Modal transparent={true} transition="fade" visible={visible} onRequestClose={onClose}>
       <View style={styles.overlay_background} />
       <View style={styles.wrapped_container}>
         <View style={styles.modal_container}>
           <View style={styles.title_container}>
-            <Text style={styles.title_text}>{title}</Text>
+            <Text style={[styles.title_text, { fontSize: titleFontSize }]}>{title}</Text>
           </View>
           {/* <PhoneNumberBox
             value={props.newPhoneNumber}
@@ -22,7 +31,7 @@ function ConfirmActionModal({ visible, onClose, title, content, onCancelPress, o
             onChangeText={props.onPhoneNumberTextChange}
           /> */}
           <View style={styles.content_container}>
-            <Text style={styles.content_text}>{content}</Text>
+            <Text style={[styles.content_text, { fontSize: contentFontSize }]}>{content}</Text>
           </View>
           <View style={styles.actions_container}>
             <SubmitButton
@@ -76,7 +85,6 @@ const styles = StyleSheet.create({
 
   title_text: {
     fontFamily: 'Manrope-Bold',
-    fontSize: 30,
     color: COLOR.msgBox_title_text,
     textAlign: 'center',
     marginTop: 10,
@@ -91,7 +99,6 @@ const styles = StyleSheet.create({
 
   content_text: {
     fontFamily: 'Manrope-Bold',
-    fontSize: 22,
     color: COLOR.text_primary_color,
     textAlign: 'center',
   },

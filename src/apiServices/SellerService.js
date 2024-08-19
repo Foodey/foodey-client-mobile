@@ -84,3 +84,13 @@ export const addNewProductAPI = async (brandID, shopID, categoryID, name, descri
     console.log(err.response);
   }
 };
+
+export const confirmOrderAPI = async (orderID) => {
+  try {
+    const response = await request.private.patch(`${SellerEndpoint.ORDER}/${orderID}/confirm`);
+
+    return response;
+  } catch (err) {
+    console.log(err.response);
+  }
+};

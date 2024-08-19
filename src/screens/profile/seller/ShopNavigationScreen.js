@@ -13,7 +13,7 @@ import { Bell, FullArrowLeft, OrderList, EditMenu, Star } from '../../../resourc
 import { SellerContext } from '../../../contexts/SellerContext';
 
 const ShopNavigationScreen = ({ navigation, route }) => {
-  const { brandID, shopName, shopID } = route.params;
+  const { brandID, shopName, shopID, shopWallpaper } = route.params;
   const { getProductList } = useContext(SellerContext);
 
   const onBackPress = () => {
@@ -71,8 +71,11 @@ const ShopNavigationScreen = ({ navigation, route }) => {
             style={{ marginStart: 'auto' }}
           /> */}
         </View>
-        <Image source={require('../../../resources/images/Foodey-LOGO.png')} style={styles.image} />
-        {/* <Image source={{uri: wallpaper || 'https://lsvn.vn/html/lsvn-web/images/no-image.png'}} */}
+        {/* <Image source={require('../../../resources/images/Foodey-LOGO.png')} style={styles.image} /> */}
+        <Image
+          source={{ uri: shopWallpaper || 'https://lsvn.vn/html/lsvn-web/images/no-image.png' }}
+          style={styles.image}
+        />
       </View>
       <View style={styles.navigation_bar_container}>
         <Pressable onPress={onOrderListPress} style={styles.navigation_button}>
@@ -133,8 +136,8 @@ const styles = StyleSheet.create({
 
   image: {
     flex: 1,
-    width: '80%',
-    height: '80%',
+    width: '100%',
+    height: '80%', //nothing happen when adjusting this
     alignSelf: 'center',
   },
 

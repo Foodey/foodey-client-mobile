@@ -73,7 +73,6 @@ const OrderScreen = ({ navigation }) => {
   const [completedOrderList, setCompletedOrderList] = useState({});
 
   const [isCancelConfirmVisible, setIsCancelConfirmVisible] = useState(false);
-
   const [cancelOrderID, setCancelOrderID] = useState('');
 
   useEffect(() => {

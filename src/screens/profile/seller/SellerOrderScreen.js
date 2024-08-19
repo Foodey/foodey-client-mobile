@@ -34,6 +34,8 @@ const SellerOrderScreen = ({ navigation, route }) => {
       navigation.navigate('SellerRatingDetail_Screen', { itemInfos: item?.items });
     } else {
       navigation.navigate('SellerOrderDetail_Screen', {
+        shopID: shopID,
+        orderID: item?.id,
         itemInfos: item?.items,
         status: item?.status,
       });

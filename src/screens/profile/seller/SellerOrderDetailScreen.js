@@ -5,24 +5,56 @@ import { IntroHeader } from '../../../components/seller';
 import { AddressCard, SubmitButton } from '../../../components';
 import { Note, ArrowRight, Buy } from '../../../resources/icons';
 import { formatVND } from '../../../utils/ValueConverter';
-import { NoteModal } from '../../../components/messageBoxes';
-import { SellerContext } from '../../../contexts/SellerContext';
+import { NoteModal, ConfirmActionModal } from '../../../components/messageBoxes';
 import { cancelOrderAPI } from '../../../apiServices/HomeService';
+import HTTPStatus from '../../../constants/HTTPStatusCodes';
+import { AppContext } from '../../../contexts/AppContext';
+import { SellerContext } from '../../../contexts/SellerContext';
+import { confirmOrderAPI } from '../../../apiServices/SellerService';
 
 const SellerOrderDetailScreen = ({ navigation, route }) => {
   const [isNoteVisible, setIsNoteVisible] = useState(false);
   const [noteValue, setNoteValue] = useState('');
+  const [isCancelConfirmVisible, setIsCancelConfirmVisible] = useState(false);
 
-  const onConfirmPress = () => {
+  const { getPendingOrderOfShop } = useContext(SellerContext);
+
+  const onConfirmPress = async (orderID) => {
     //
+    try {
+      const response = await confirmOrderAPI(orderID);
+
+      if (response?.status === HTTPStatus.OK) {
+        await getPendingOrderOfShop();
+        navigation.goBack();
+      }
+    } catch (err) {
+      console.log('Error when confirming order ' + err);
+    }
   };
 
   const onDeclinePress = () => {
     //
+    setIsCancelConfirmVisible(true);
   };
 
   const onCallPress = () => {
     //
+  };
+
+  const onOKPress = async () => {
+    try {
+      const response = await cancelOrderAPI(orderID);
+      if (response?.status === HTTPStatus.OK) {
+        await getPendingOrderOfShop(shopID);
+        setIsCancelConfirmVisible(false);
+        navigation.goBack();
+      } else {
+        console.log('Error when trying to decline order');
+      }
+    } catch (err) {
+      console.log('Error when trying to decline order: ' + err);
+    }
   };
 
   const onModalClosePress = (note) => {
@@ -31,7 +63,7 @@ const SellerOrderDetailScreen = ({ navigation, route }) => {
     //
   };
 
-  const { itemInfos, status } = route.params;
+  const { itemInfos, status, orderID, shopID } = route.params;
 
   useLayoutEffect(() => {
     const fetchPending = async () => {};
@@ -40,7 +72,21 @@ const SellerOrderDetailScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={isNoteVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color} />
-      <NoteModal noteValue={noteValue} isVisible={isNoteVisible} onClosePress={onModalClosePress} />
+      <NoteModal
+        noteValue={noteValue}
+        isVisible={isNoteVisible}
+        onClosePress={onModalClosePress}
+        editable={false}
+      />
+      <ConfirmActionModal
+        title="Decline Order"
+        content="Are you sure you want to decline this order? Make sure to inform customer by call about the declination"
+        visible={isCancelConfirmVisible}
+        onCancelPress={() => setIsCancelConfirmVisible(false)}
+        onOKPress={() => onOKPress()}
+        contentFontSize={21}
+        titleFontSize={28}
+      />
       <IntroHeader title="Order Details" onLeftButtonPress={() => navigation.goBack()} />
       <AddressCard
         title="Delivery Address"
@@ -128,7 +174,7 @@ const SellerOrderDetailScreen = ({ navigation, route }) => {
             title={status === 'STORE_CONFIRMED' ? 'Ready To Delivered' : 'Confirm'}
             buttonColor={COLOR.button_primary_color}
             hoverColor={COLOR.button_press_primary_color}
-            onPressFunction={onConfirmPress}
+            onPressFunction={() => onConfirmPress(orderID)}
           />
         )}
       </View>

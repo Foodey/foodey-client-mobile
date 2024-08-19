@@ -14,6 +14,8 @@ const SellerShopListScreen = ({ navigation, route }) => {
     navigation.navigate('ShopNavigation_Screen', {
       shopID: item?.id,
       shopName: item?.name,
+      shopLogo: item?.logo,
+      shopWallpaper: item?.wallpaper,
       brandID: brandID,
     });
   };
