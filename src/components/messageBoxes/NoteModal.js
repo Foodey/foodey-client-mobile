@@ -52,12 +52,12 @@ function NoteModal({
                 fontFamily: 'Manrope-Medium',
                 fontSize: 16,
                 color:
-                  note.length > { characterLimit }
+                  note?.length > { characterLimit }
                     ? COLOR.text_errorMessage_color
                     : COLOR.text_secondary_color,
               }}
             >
-              {note.length}/{characterLimit}
+              {note?.length}/{characterLimit}
             </Text>
           </View>
         </View>

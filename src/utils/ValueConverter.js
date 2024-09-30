@@ -96,8 +96,8 @@ export function getTime(value) {
     const date = new Date(value);
 
     // Extract and format date components according to your custom format
-    const hours = String(date.getUTCHours()).padStart(2, '0');
-    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
 
     const result = `${hours}:${minutes}`;
     return result;

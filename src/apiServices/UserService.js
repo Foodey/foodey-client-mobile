@@ -51,7 +51,7 @@ export const getDeliveredOrderAPI = async () => {
 export const getOrderEvaluationAPI = async (orderID) => {
   try {
     const response = await request.private.get(
-      `${UserEndpoint.ORDER_EVALUATION}/${orderID}?type=ORDER`,
+      `${UserEndpoint.EVALUATION}/orders/${orderID}?type=ORDER`,
     );
     return response;
   } catch (err) {
@@ -61,7 +61,7 @@ export const getOrderEvaluationAPI = async (orderID) => {
 
 export const orderEvaluateAPI = async (orderID, rating, comment) => {
   try {
-    const response = await request.private.get(`${UserEndpoint.ORDER_EVALUATION}?type=ORDER`, {
+    const response = await request.private.post(`${UserEndpoint.EVALUATION}?type=ORDER`, {
       orderId: orderID,
       rating: rating,
       comment: comment,

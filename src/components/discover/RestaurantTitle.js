@@ -22,7 +22,7 @@ function RestaurantTitle({ style, logo, name, address }) {
             style={{ color: COLOR.text_primary_color, marginEnd: 5 }}
           />
           <Text ellipsizeMode="tail" numberOfLines={1} style={styles.address_text}>
-            {address}
+            {address?.detailsAddress}
           </Text>
         </View>
       </View>

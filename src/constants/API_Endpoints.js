@@ -21,7 +21,7 @@ export const HomeEndpoint = {
 export const UserEndpoint = {
   GET_USER_ORDER: '/v1/orders/me',
   GENERAL_USER_FAVORITE: '/v1/users/favorite',
-  ORDER_EVALUATION: '/v1/evaluations/orders',
+  EVALUATION: '/v1/evaluations',
   ROLE_REQUEST: '/v1/users/role/seller',
   USER_ROLE: '/v1/users/me/roles',
 };

@@ -76,23 +76,23 @@ const HomeScreen = ({ navigation }) => {
   //   }
   // };
 
-  useLayoutEffect(() => {
-    const fetch = async () => {
-      try {
-        // const response = await getRecommendShopAPI(userLocation.latitude, userLocation.longitude);
-        const response = await getRecommendShopAPI(50.1113, 90.5);
-        if (response.status === HTTPStatus.OK) {
-          setRecommendShops(response?.data?.content);
-        } else {
-          console.log('Error');
-        }
-      } catch (err) {
-        console.log('Error when fetching recommend shops');
-      }
-    };
+  // useLayoutEffect(() => {
+  //   const fetch = async () => {
+  //     try {
+  //       // const response = await getRecommendShopAPI(userLocation.latitude, userLocation.longitude);
+  //       const response = await getRecommendShopAPI(50.1113, 90.5);
+  //       if (response.status === HTTPStatus.OK) {
+  //         setRecommendShops(response?.data?.content);
+  //       } else {
+  //         console.log('Error');
+  //       }
+  //     } catch (err) {
+  //       console.log('Error when fetching recommend shops');
+  //     }
+  //   };
 
-    fetch();
-  }, [userLocation]);
+  //   fetch();
+  // }, [userLocation]);
 
   useLayoutEffect(() => {
     const getCategoriesFunction = async () => {

@@ -37,9 +37,7 @@ const RatingScreen = ({ navigation, route }) => {
   };
 
   const [rating, setRating] = useState(orderRating);
-  const [comment, setComment] = useState(orderComment);
-  const [isAlreadyRated, setIsAlreadyRate] = useState(isRated);
-  const [canSubmit, setCanSubmit] = useState(false);
+  const [comment, setComment] = useState(orderComment === null ? '' : orderComment); //in some case, the order is rated without a comment, so it gonna be null
 
   return (
     <View style={styles.container}>
@@ -52,7 +50,7 @@ const RatingScreen = ({ navigation, route }) => {
         />
         <Text style={styles.shop_name_text}>Shop Name</Text>
         <StarRating
-          isEditable={!isAlreadyRated}
+          isEditable={!isRated}
           maxStar={5}
           value={rating}
           onRatingChange={(value) => setRating(value)}
@@ -75,7 +73,7 @@ const RatingScreen = ({ navigation, route }) => {
         <Text style={[styles.shop_name_text, { marginTop: 0, marginBottom: 5 }]}>Comment: </Text>
         <View style={styles.text_input_container}>
           <TextInput
-            editable={!isAlreadyRated}
+            editable={!isRated}
             value={comment}
             multiline
             placeholder="Leave your comment here..."
@@ -90,7 +88,7 @@ const RatingScreen = ({ navigation, route }) => {
               fontFamily: 'Manrope-Medium',
               fontSize: 16,
               color:
-                comment.length > 200 ? COLOR.text_errorMessage_color : COLOR.text_secondary_color,
+                comment?.length > 200 ? COLOR.text_errorMessage_color : COLOR.text_secondary_color,
             }}
           >
             {comment.length}/200
@@ -98,9 +96,9 @@ const RatingScreen = ({ navigation, route }) => {
         </View>
       </View>
       <View style={styles.footer_container}>
-        {!(orderRating >= 0) && (
+        {!isRated && (
           <SubmitButton
-            disabled={canSubmit}
+            disabled={rating <= 0 ? true : false}
             style={{ flex: 1 }}
             title={'Submit Evaluation'}
             buttonColor={COLOR.button_primary_color}

@@ -38,6 +38,7 @@ const SellerOrderScreen = ({ navigation, route }) => {
         orderID: item?.id,
         itemInfos: item?.items,
         status: item?.status,
+        note: item?.note,
       });
     }
   };

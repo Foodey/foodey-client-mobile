@@ -45,7 +45,7 @@ function AddressCard({
           <Text style={styles.customer_info_text}>{phoneNumber}</Text>
         </View>
         <Text style={styles.customer_info_text} ellipsizeMode="tail" numberOfLines={2}>
-          {address}{' '}
+          {address?.detailsAddress}{' '}
         </Text>
       </View>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

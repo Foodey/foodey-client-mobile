@@ -180,9 +180,19 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
           <Note width={25} height={25} color={COLOR.text_tertiary_color} />
           <Text style={[styles.voucher_text, { marginStart: 5 }]}>Note</Text>
           <Text
-            style={[styles.voucher_text, { marginLeft: 'auto', color: COLOR.text_secondary_color }]}
+            ellipsizeMode="tail"
+            numberOfLines={1}
+            style={[
+              styles.voucher_text,
+              {
+                width: '35%',
+                marginLeft: 'auto',
+                color: COLOR.text_secondary_color,
+                textAlign: 'right',
+              },
+            ]}
           >
-            None
+            {noteValue}
           </Text>
           <ArrowRight width={25} height={25} style={{ color: COLOR.text_press_color }} />
         </Pressable>
@@ -195,7 +205,7 @@ const ConfirmOrderScreen = ({ navigation, route }) => {
             </Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={[styles.price_text]}>Shipping fee</Text>
+            <Text style={[styles.price_text]}>Delivering fee</Text>
             <Text style={[styles.price_text, { marginLeft: 'auto' }]}>
               {formatVND(shippingFee)} VND
             </Text>

@@ -13,8 +13,10 @@ import { SellerContext } from '../../../contexts/SellerContext';
 import { confirmOrderAPI } from '../../../apiServices/SellerService';
 
 const SellerOrderDetailScreen = ({ navigation, route }) => {
+  const { itemInfos, status, orderID, shopID, note } = route.params;
+
   const [isNoteVisible, setIsNoteVisible] = useState(false);
-  const [noteValue, setNoteValue] = useState('');
+  const [noteValue, setNoteValue] = useState(note === null ? '' : note);
   const [isCancelConfirmVisible, setIsCancelConfirmVisible] = useState(false);
 
   const { getPendingOrderOfShop } = useContext(SellerContext);
@@ -63,8 +65,6 @@ const SellerOrderDetailScreen = ({ navigation, route }) => {
     //
   };
 
-  const { itemInfos, status, orderID, shopID } = route.params;
-
   useLayoutEffect(() => {
     const fetchPending = async () => {};
   }, []);
@@ -104,9 +104,19 @@ const SellerOrderDetailScreen = ({ navigation, route }) => {
         <Note width={25} height={25} color={COLOR.text_tertiary_color} />
         <Text style={[styles.voucher_text, { marginStart: 5 }]}>Note</Text>
         <Text
-          style={[styles.voucher_text, { marginLeft: 'auto', color: COLOR.text_secondary_color }]}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+          style={[
+            styles.voucher_text,
+            {
+              width: '40%',
+              marginLeft: 'auto',
+              textAlign: 'right',
+              color: COLOR.text_secondary_color,
+            },
+          ]}
         >
-          None
+          {noteValue}
         </Text>
         <ArrowRight width={25} height={25} style={{ color: COLOR.text_press_color }} />
       </Pressable>
@@ -158,8 +168,19 @@ const SellerOrderDetailScreen = ({ navigation, route }) => {
           marginVertical: 5,
         }}
       >
-        {status !== 'PENDING' ||
-          (status !== 'STORE_CONFIRMED' && (
+        {/* CANCEL */}
+        {(status === 'CANCELED' || status === 'DELIVERING' || status === 'DELIVERED') && (
+          <SubmitButton
+            style={{ flex: 1 }}
+            title={'BACK'}
+            buttonColor={COLOR.button_primary_color}
+            hoverColor={COLOR.button_press_primary_color}
+            onPressFunction={() => navigation.goBack()}
+          />
+        )}
+
+        {status === 'PENDING' && (
+          <>
             <SubmitButton
               style={{ flex: 1, marginEnd: 10 }}
               title={'Decline'}
@@ -167,14 +188,23 @@ const SellerOrderDetailScreen = ({ navigation, route }) => {
               hoverColor={COLOR.button_press_red_color}
               onPressFunction={onDeclinePress}
             />
-          ))}
-        {status !== 'DELIVERING' && (
+            <SubmitButton
+              style={{ flex: 1 }}
+              title={status === 'STORE_CONFIRMED' ? 'Ready To Delivered' : 'Confirm'}
+              buttonColor={COLOR.button_primary_color}
+              hoverColor={COLOR.button_press_primary_color}
+              onPressFunction={() => onConfirmPress(orderID)}
+            />
+          </>
+        )}
+
+        {status === 'STORE_CONFIRMED' && (
           <SubmitButton
             style={{ flex: 1 }}
-            title={status === 'STORE_CONFIRMED' ? 'Ready To Delivered' : 'Confirm'}
+            title={'Ready to Delivery'}
             buttonColor={COLOR.button_primary_color}
             hoverColor={COLOR.button_press_primary_color}
-            onPressFunction={() => onConfirmPress(orderID)}
+            // onPressFunction={() => navigation.goBack()}
           />
         )}
       </View>

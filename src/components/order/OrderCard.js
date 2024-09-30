@@ -13,6 +13,7 @@ function OrderCard({
   items,
   totalPrice,
   status,
+  isRated,
   onPressFunction,
   onRateOrderPress,
   onViewResPress,
@@ -81,7 +82,7 @@ function OrderCard({
             </Text>
           </View> */}
           {items?.slice(0, 3).map(({ image, name }, index) => (
-            <View key={index} style={styles.product_container}>
+            <View key={index} style={[styles.product_container]}>
               <Image
                 style={styles.product_image}
                 source={{
@@ -146,7 +147,7 @@ function OrderCard({
               onPress={onRateOrderPress}
             >
               <Text style={[styles.button_text, { color: COLOR.indicator_current_color }]}>
-                Rate Order
+                {isRated === false ? 'Rate Order' : 'View Rating'}
               </Text>
             </Pressable>
             <Pressable style={styles.button} onPress={onViewResPress}>
@@ -209,7 +210,9 @@ const styles = StyleSheet.create({
   },
 
   product_container: {
-    flex: 1,
+    // flex: 1,
+    alignItems: 'center',
+    marginEnd: 8,
   },
 
   product_image: {
@@ -222,7 +225,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Manrope-Medium',
     fontSize: 12,
     color: COLOR.text_primary_color,
-    width: 75,
   },
 
   totalPrice_text: {

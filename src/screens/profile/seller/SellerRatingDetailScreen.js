@@ -18,11 +18,10 @@ import { NoteModal } from '../../../components/messageBoxes';
 
 const SellerRatingDetailScreen = ({ navigation, route }) => {
   const { itemInfos, orderRating, orderComment } = route.params;
+  // console.log(itemInfos);
 
   const [isNoteVisible, setIsNoteVisible] = useState(false);
-  const [noteValue, setNoteValue] = useState('');
-  const [rating, setRating] = useState(orderRating);
-  const [comment, setComment] = useState(orderComment);
+  const comment = orderComment === null ? '' : orderComment;
 
   const onConfirmPress = () => {
     //
@@ -50,7 +49,7 @@ const SellerRatingDetailScreen = ({ navigation, route }) => {
     <View style={styles.container}>
       <StatusBar backgroundColor={isNoteVisible ? 'rgba(0, 0, 0, 0.35)' : COLOR.background_color} />
       <NoteModal
-        noteValue={noteValue}
+        noteValue={''}
         isVisible={isNoteVisible}
         backdropPress={onBackdropPres}
         onClosePress={onModalClosePress}
@@ -63,12 +62,7 @@ const SellerRatingDetailScreen = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
       >
         <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
-          <StarRating
-            maxStar={5}
-            value={rating}
-            onRatingChange={(value) => setRating(value)}
-            isEditable={false}
-          />
+          <StarRating maxStar={5} value={orderRating} isEditable={false} />
           <Text
             style={[
               {
@@ -79,15 +73,15 @@ const SellerRatingDetailScreen = ({ navigation, route }) => {
               },
             ]}
           >
-            {rating === 1
+            {orderRating === 1
               ? 'Very Bad'
-              : rating === 2
+              : orderRating === 2
               ? 'Bad'
-              : rating === 3
+              : orderRating === 3
               ? 'Normal'
-              : rating === 4
+              : orderRating === 4
               ? 'Good'
-              : rating === 5
+              : orderRating === 5
               ? 'Excellent'
               : 'Not Rated'}
           </Text>
@@ -170,9 +164,8 @@ const SellerRatingDetailScreen = ({ navigation, route }) => {
             value={comment}
             multiline
             placeholder="Leave your comment here..."
-            style={styles.note_text}
+            style={styles.comment_text}
             textAlignVertical="top"
-            onChangeText={(value) => setComment(value)}
           />
           <Text
             style={{
@@ -253,10 +246,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     marginVertical: 5,
   },
-  note_text: {
+
+  comment_text: {
     fontFamily: 'Manrope-Regular',
     color: COLOR.text_primary_color,
-    fontSize: 20,
+    fontSize: 18,
   },
 });
 

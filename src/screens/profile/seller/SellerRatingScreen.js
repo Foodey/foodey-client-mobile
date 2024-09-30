@@ -32,6 +32,7 @@ const SellerRatingScreen = ({ navigation, route }) => {
           navigation.navigate('SellerRatingDetail_Screen', {
             orderRating: orderRating,
             orderComment: orderComment,
+            itemInfos: item?.items,
           });
         }
       } else {

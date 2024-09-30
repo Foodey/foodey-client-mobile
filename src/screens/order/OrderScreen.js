@@ -25,34 +25,50 @@ const OrderScreen = ({ navigation }) => {
   } = useContext(AppContext);
 
   const onOrderCardPress = (item) => {
+    // console.log(item?.id);
     navigation.navigate('ViewOnlyConfirmOrder_Screen', { orderInfos: item });
   };
 
-  const onViewResPress = (item) => {
-    const isUserFavorite = favoriteRestaurants.some((restaurant) => restaurant.id === item.id);
+  const onViewResPress = (shop) => {
+    // console.log(shop)
+    const isUserFavorite = favoriteRestaurants.some((restaurant) => restaurant.id === shop?.id);
     navigation.navigate('Home', {
       screen: 'RestaurantMenu_Screen',
       params: {
-        brandID: item.brandId,
-        restaurantID: item.id,
-        restaurantName: item.name,
-        restaurantLogo: item.logo,
-        restaurantWallpaper: item.wallpaper,
-        restaurantAddress: item.address,
+        brandID: shop?.brandId,
+        restaurantID: shop?.id,
+        restaurantName: shop?.name,
+        restaurantLogo: shop?.logo,
+        restaurantWallpaper: shop?.wallpaper,
+        restaurantAddress: shop?.address,
         isUserFavorite: isUserFavorite,
       },
     });
   };
 
   const onRateOrderPress = async (item) => {
-    try {
-      const response = await getOrderEvaluationAPI(item?.id);
-      if (response.status === HTTPStatus.OK) {
-        const isRated = response?.data?.rated;
-        const orderRating = Math.round(response?.data?.rating);
-        const orderComment = response?.data?.comment;
+    if (item?.rated === false) {
+      //order has not been rated yet
+      const isRated = false;
+      const orderRating = 0;
+      const orderComment = '';
 
-        if (orderRating !== null || orderRating !== undefined) {
+      navigation.navigate('Rating_Screen', {
+        isRated: isRated,
+        orderRating: orderRating,
+        orderComment: orderComment,
+        orderID: item?.id,
+      });
+    } else {
+      //order has already been rated
+      try {
+        const response = await getOrderEvaluationAPI(item?.id);
+
+        if (response.status === HTTPStatus.OK) {
+          const isRated = true;
+          const orderRating = Math.round(response.data?.rating);
+          const orderComment = response.data?.comment;
+
           navigation.navigate('Rating_Screen', {
             isRated: isRated,
             orderRating: orderRating,
@@ -60,11 +76,9 @@ const OrderScreen = ({ navigation }) => {
             orderID: item?.id,
           });
         }
-      } else {
-        console.log('Error when fetching order evaluation');
+      } catch (err) {
+        console.log('Error when fetching order evaluation ' + err);
       }
-    } catch (err) {
-      console.log('Error when fetching order evaluation ' + err);
     }
   };
 
@@ -290,8 +304,10 @@ const OrderScreen = ({ navigation }) => {
                 resName={item?.shop?.name}
                 items={item?.items}
                 totalPrice={item?.payment?.price}
+                isRated={item?.rated}
                 onPressFunction={() => onOrderCardPress(item)}
                 onViewResPress={() => {
+                  // console.log(item?.shop)
                   onViewResPress(item?.shop);
                 }}
                 onRateOrderPress={() => onRateOrderPress(item)}
