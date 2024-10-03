@@ -1,110 +1,60 @@
-/* ===== COLOR NAME ===== */
-const dark_60 = '#B3BFCB';
-const dark_60_trans30 = '#B3BFCB4D';
-const dark_80 = '#6A798A';
-const dark_90 = '#46505D';
-const dark_100 = '#292D32';
-const dark_120 = '#151719';
-
-const blue_60 = '#BBE8FB';
-const blue_60_trans = '#BBE8FB44';
-const blue_80 = '#80D1F4';
-const blue_100 = '#45B8E9';
-const blue_120 = '#3294BD';
-const blue_140 = '#1A6C8E';
-
-const pink_60 = '#FDD3E1';
-const pink_60_trans = '#FDD3E1';
-const pink_80 = '#F69DBB';
-const pink_100 = '#F4739E';
-const pink_100_trans = '#f4739e1f';
-const pink_120 = '#D55881';
-const pink_140 = '#953756';
-
-const peach_trans = '#FCE2CF80';
-const peach_60 = '#FCE2CF';
-const peach_80 = '#F6BA8D';
-const peach_100 = '#EA985B';
-const peach_120 = '#D47F40';
-const peach_140 = '#A4602D';
-
-const light_100 = '#FFFFFF';
-const light_80 = '#EFF2F5';
-const light_60 = '#D5DEE7';
-
-const green_80 = '#BCEBE0';
-const green_100 = '#28B996';
-const green_120 = '#276D5C';
-const green_malachite = '#0BDA51';
-
-const red_80 = '#FAD6D6';
-const red_100 = '#E47070';
-const red_100_trans = '#fc0d0d25';
-const red_120 = '#B13E1E';
-const red_error = '#fc0d0d';
-
-const yellow_80 = '#FEDAAF';
-const yellow_100 = '#F5A94F';
-const yellow_120 = '#CA7816';
-const yellow_star = '#FFCD3C';
-
 /* ===== PROJECT COLOR DEFINITION ===== */
 export const COLOR = {
-  background_color: light_100,
+  background_color: '#FFFFFF',
 
-  text_primary_color: dark_100,
-  text_secondary_color: dark_80,
-  text_tertiary_color: dark_90,
-  text_press_color: dark_60,
-  text_light_color: light_100,
-  text_blue_color: blue_120,
-  text_pink_color: pink_120,
+  text_primary_color: '#292D32',
+  text_secondary_color: '#6A798A',
+  text_tertiary_color: '#46505D',
+  text_press_color: '#B3BFCB',
+  text_light_color: '#FFFFFF',
+  text_blue_color: '#3294BD',
+  text_pink_color: '#D55881',
 
-  indicator_color: light_60,
-  indicator_current_light_color: peach_80,
-  indicator_current_color: peach_100,
-  indicator_trans_color: peach_trans,
+  indicator_color: '#D5DEE7',
+  indicator_current_light_color: '#F6BA8D',
+  indicator_current_color: '#EA985B',
+  indicator_trans_color: '#FCE2CF80',
 
-  button_primary_color: blue_100,
-  button_press_primary_color: blue_80,
-  button_secondary_color: pink_100,
-  button_press_secondary_color: pink_80,
-  button_orange_color: yellow_100,
-  button_press_orange_color: yellow_80,
-  button_red_color: red_100,
-  button_press_red_color: red_80,
+  button_primary_color: '#45B8E9',
+  button_press_primary_color: '#80D1F4',
+  button_secondary_color: '#F4739E',
+  button_press_secondary_color: '#F69DBB',
+  button_orange_color: '#F5A94F',
+  button_press_orange_color: '#FEDAAF',
+  button_red_color: '#E47070',
+  button_press_red_color: '#FAD6D6',
 
-  switcher_background_color: pink_60_trans,
+  switcher_background_color: '#FDD3E1',
 
-  text_errorMessage_color: red_100,
+  text_errorMessage_color: '#E47070',
   // border_correct_color: green_malachite,
 
-  input_background_color: light_80,
+  input_background_color: '#EFF2F5',
 
-  edtButton_background_color: peach_60,
-  edtButton_pressed_background_color: peach_80,
+  edtButton_background_color: '#FCE2CF',
+  edtButton_pressed_background_color: '#F6BA8D',
 
-  circleCategory_background_color: pink_100_trans,
+  circleCategory_background_color: '#f4739e1f',
 
-  not_disabled_resendCode_text: pink_100,
-  disabled_resendCode_text: pink_60,
+  not_disabled_resendCode_text: '#F4739E',
+  disabled_resendCode_text: '#FDD3E1',
 
-  isFavorite_background_color: pink_60,
-  isFavorite_icon_color: pink_100,
-  isNotFavorite_icon_color: dark_60,
+  isFavorite_background_color: '#FDD3E1',
+  isFavorite_icon_color: '#F4739E',
+  isNotFavorite_icon_color: '#B3BFCB',
 
-  resInfo_background_color: dark_60_trans30,
+  resInfo_background_color: '#B3BFCB4D',
 
-  orderStatus_completed_text: green_100,
-  orderStatus_onGoing_text: blue_120,
-  orderStatus_Canceled_text: red_error,
+  orderStatus_completed_text: '#28B996',
+  orderStatus_onGoing_text: '#3294BD',
+  orderStatus_Canceled_text: '#fc0d0d',
 
-  msgBox_title_text: pink_120,
+  msgBox_title_text: '#D55881',
 
-  star_icon_color: yellow_star,
-  star_background_color: yellow_100,
+  star_icon_color: '#FFCD3C',
+  star_background_color: '#F5A94F',
 
-  order_background_color: blue_60_trans,
-  text_pending_color: yellow_120,
-  errorMessage_background_Color: red_100_trans,
+  order_background_color: '#BBE8FB44',
+  text_pending_color: '#CA7816',
+  errorMessage_background_Color: '#fc0d0d25',
 };
