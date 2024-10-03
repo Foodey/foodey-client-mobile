@@ -5,7 +5,7 @@ import { IntroHeader } from '../../components/seller';
 import { StarRating } from '../../components';
 import { Star } from '../../resources/icons';
 import { SubmitButton } from '../../components';
-import { orderEvaluateAPI } from '../../apiServices/UserService';
+import { orderEvaluateAPI, getDeliveredOrderAPI } from '../../apiServices/UserService';
 import HTTPStatus from '../../constants/HTTPStatusCodes';
 
 const RatingScreen = ({ navigation, route }) => {
@@ -25,7 +25,14 @@ const RatingScreen = ({ navigation, route }) => {
       ) {
         setRating(0);
         setComment('');
-        navigation.goBack();
+        try {
+          const response = await getDeliveredOrderAPI();
+          if (response.status === HTTPStatus.OK) navigation.push('Order_Screen');
+          {
+          }
+        } catch (err) {
+          console.log('Error when re-fetching delivered order after user rate an order' + err);
+        }
       } else if (response.status === HTTPStatus.CONFLICT) {
         console.log('User already evaluate this order');
       } else {
