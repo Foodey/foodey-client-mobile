@@ -78,7 +78,6 @@ The frontend source code for client to order foods
 - <img width="171" height="284" alt="image" src="https://github.com/user-attachments/assets/fca3e096-f74f-4f90-9f63-b102ce0a1a7a" />
 
 
-- ![Uploading image.png…]()
 
 
 
